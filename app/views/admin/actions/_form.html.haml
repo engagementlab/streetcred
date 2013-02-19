@@ -1,0 +1,10 @@
+- if @action.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@action.errors.count, "error")} prohibited this admin_action from being saved:"
+    %ul
+      - @action.errors.full_messages.each do |msg|
+        %li= msg
+
+.actions
+  = f.submit 'Save', :class => 'btn btn-success'
+  = link_to 'Cancel', admin_actions_path

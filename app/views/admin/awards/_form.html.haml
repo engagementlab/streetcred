@@ -1,0 +1,45 @@
+- if @award.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@award.errors.count, "error")} prohibited this admin_award from being saved:"
+    %ul
+      - @award.errors.full_messages.each do |msg|
+        %li= msg
+        
+.field
+  = f.label :name
+  = f.text_field :name
+
+.field
+  = f.label :badge_url, "Badge URL"
+  = f.text_field :badge_url
+
+.field
+  = f.label :message, "Success message"
+  = f.text_area :message, rows: 7
+
+%h3 Award Conditions
+
+.field
+  = f.label :action_types
+  %div.checkboxes
+    - for action_type in ActionType.asc(:name)
+      = check_box_tag '[action_type_ids][]', action_type.id, @award.action_types.include?(action_type)
+      = action_type.name
+      %br/
+
+.field
+  = f.label :required_volume
+  = f.text_field :required_volume      
+
+.field
+  = f.label :start_date
+  = f.text_field :start_time, :placeholder => '2013-02-01'
+
+.field
+  = f.label :end_date
+  = f.text_field :end_time, :placeholder => '2013-03-31'
+
+%br/
+.actions
+  = f.submit 'Save', :class => 'btn btn-success'
+  = link_to 'Cancel', admin_awards_path

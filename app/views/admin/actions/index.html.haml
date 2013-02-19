@@ -1,0 +1,20 @@
+%h1 Actions
+%p.well
+  Actions are created through the StreetCred API by submitting a POST request to http://streetcred.herokuapp.com/actions/
+
+%table.table
+  %tr
+    %th Action Type
+    %th Source
+    %th User Email
+    %th Created At
+    %th
+    %th
+  - @actions.each do |action|
+    %tr
+      %td= action.action_type
+      %td= action.source
+      %td= action.user.try(:email)
+      %td= action.created_at
+      %td{width: 45}= link_to 'Show', admin_action_path(action), :class => 'btn btn-mini'
+      %td{width: 55}= link_to 'Destroy', admin_action_path(action), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'

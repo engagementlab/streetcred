@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Streetcred</title>
+  <title>StreetCred :: Admin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -9,7 +9,7 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <style>body { padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */ }</style>
+  <style>body { padding-top: 70px; /* 60px to make the container go all the way to the bottom of the topbar */ }</style>
 </head>
   <body>
     <div class="navbar navbar-fixed-top">
@@ -22,9 +22,9 @@
           </a>
           <div class="nav-collapse pull-right">
             <ul class="nav">
-              <li><%= link_to 'Awards', admin_rules_path %></li>
-              <li><%= link_to 'Rules', admin_rules_path %></li>
-              <li><%= link_to 'Users', admin_rules_path %></li>
+              <li><%= link_to 'Users', admin_users_path %></li>
+              <li><%= link_to 'Actions', admin_actions_path %></li>
+              <li><%= link_to 'Awards', admin_awards_path %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>

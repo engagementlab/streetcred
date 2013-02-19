@@ -1,0 +1,4 @@
+%h1 Editing Action
+
+= form_for(:action, :url => admin_action_path(@action), :html => {:method => :put}) do |f|
+  = render :partial => 'form', :locals => {:f => f}

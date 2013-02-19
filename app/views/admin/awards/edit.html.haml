@@ -1,0 +1,4 @@
+%h1 Editing Award
+
+= form_for(:award, :url => admin_award_path(@award), :html => {:method => :put}) do |f|
+  = render :partial => 'form', :locals => {:f => f}
