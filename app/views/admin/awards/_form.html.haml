@@ -22,9 +22,9 @@
 .field
   = f.label :action_types
   %div.checkboxes
-    - for action_type in ActionType.asc(:name)
-      = check_box_tag '[action_type_ids][]', action_type.id, @award.action_types.include?(action_type)
-      = action_type.name
+    - for action_type in ["Streetlight", "Sidewalk Patch", "Un-shoveled Sidewalk", "Pothole", "Damaged Sign", "Roadway Plowing/Sanding", "Graffiti", "Other"]
+      = check_box_tag '[action_type_names][]', action_type, @award.action_types.where(name: action_type).present?
+      = action_type
       %br/
 
 .field

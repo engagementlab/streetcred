@@ -43,10 +43,12 @@ class Admin::AwardsController < ApplicationController
   # POST /admin/awards.json
   def create
     @award = Award.new(params[:award])
-    @award.action_types << ActionType.find(params[:action_type_ids])
 
     respond_to do |format|
       if @award.save
+        params[:action_type_names].each do |action_type|
+          @award.action_types.create(name: action_type)
+        end
         format.html { redirect_to admin_awards_url, notice: 'Award was successfully created.' }
         format.json { render json: @award, status: :created, location: @award }
       else
@@ -64,8 +66,9 @@ class Admin::AwardsController < ApplicationController
     respond_to do |format|
       if @award.update_attributes(params[:award])
         @award.action_types.clear
-        @award.action_types = ActionType.find(params[:action_type_ids])
-        @award.save!
+        params[:action_type_names].each do |action_type|
+          @award.action_types.create(name: action_type)
+        end
         format.html { redirect_to admin_awards_url, notice: 'Award was successfully updated.' }
         format.json { head :no_content }
       else
