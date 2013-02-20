@@ -1,6 +1,16 @@
-%p#notice= notice
+%h1= @user.email
 
+%table
+  %tr
+    %td First Name:
+    %td= @user.first_name
+  %tr
+    %td Last Name:
+    %td= @user.last_name
+  
+%table
+  - for award in @user.awards
+    %h3= award.name
 
-= link_to 'Edit', edit_admin_user_path(@user)
-\|
+%br/    
 = link_to 'Back', admin_users_path

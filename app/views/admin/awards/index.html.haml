@@ -4,8 +4,7 @@
   - @awards.each do |award|
     %tr
       %td= award.name
-      %td= award.required_volume
-      %td{width: 45}= link_to 'Show', admin_award_path(award), :class => 'btn btn-mini'
+      %td= award.occurences
       %td{width: 35}= link_to 'Edit', edit_admin_award_path(award), :class => 'btn btn-mini'
       %td{width: 55}= link_to 'Destroy', admin_award_path(award), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
 
