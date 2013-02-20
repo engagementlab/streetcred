@@ -1,10 +1,9 @@
 Streetcred::Application.routes.draw do
   
   namespace :admin do
-    resources :actions
+    resources :actions, :only => [:index, :show]
     resources :awards
-    resources :rules
-    resources :users
+    resources :users, :only => [:index, :show]
   end
   
   namespace :api do
