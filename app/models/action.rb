@@ -32,7 +32,7 @@ class Action
       occurences  = award.occurences.to_i
       
       if start_time.present? && end_time.present? && occurences.present?
-        matching_actions  = user.actions.in(action_type: award.action_types.collect {|x| x.name})
+        matching_actions  = user.actions.gt(created_at: award.start_time).lt(created_at: award.end_time).in(action_type: award.action_types.collect {|x| x.name})
         if start_time < Time.now && end_time > Time.now && occurences == matching_actions.count
           self.awards << award
           user.awards << award
