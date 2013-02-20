@@ -6,7 +6,9 @@ class Api::ActionsController < ApplicationController
   def create
     if params['email'].present?
       user = User.find_or_create_by(email: params['email'])
-      @action = user.actions.create(params['action'])
+      action = user.actions.create(params['action'])
+      @awards = action.awards
+      respond_with(@awards)
     end
     
   end
