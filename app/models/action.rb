@@ -27,14 +27,24 @@ class Action
     
     matching_awards.each do |award|
       # find all actions that match at least one of the action_types definied in the award   
-      matching_actions = user.actions.in(action_type: award.action_types.collect {|x| x.name})
-      logger.info "*************** #{award.name} = #{matching_actions.count}/#{award.required_volume}"
-      if award.required_volume.to_i == matching_actions.count
-        logger.info "**************** pushing #{award.name} award into #{user.email} awards"
-        self.awards << award
-        user.awards << award
+      matching_actions  = user.actions.in(action_type: award.action_types.collect {|x| x.name})
+      start_time        = award.start_time
+      end_time          = award.end_time
+      occurences   = award.occurences.to_i
+      
+      if start_time.present? && end_time.present? && occurences.present?
+        if start_time < Time.now && end_time > Time.now && occurences == matching_actions.count
+          self.awards << award
+          user.awards << award
+        end
+      elsif occurences.present?
+        if occurences == matching_actions.count
+          self.awards << award
+          user.awards << award
+        end
       end
     end
+    self.save
     user.save
   end
 end

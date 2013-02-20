@@ -11,6 +11,17 @@ class Admin::ActionsController < ApplicationController
       format.json { render json: @actions }
     end
   end
+  
+  # GET /admin/actions/1
+  # GET /admin/actions/1.json
+  def show
+    @action = Action.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @action }
+    end
+  end
 
   # GET /admin/actions/new
   # GET /admin/actions/new.json

@@ -9,7 +9,7 @@ class Award
   # validate :action_types, :presence
     
   field :name
-  field :required_volume
+  field :occurences
   field :start_time, type: DateTime
   field :end_time, type: DateTime
   field :message

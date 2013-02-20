@@ -12,16 +12,6 @@ class Admin::AwardsController < ApplicationController
     end
   end
 
-  # GET /admin/awards/1
-  # GET /admin/awards/1.json
-  def show
-    @award = Award.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @award }
-    end
-  end
 
   # GET /admin/awards/new
   # GET /admin/awards/new.json
