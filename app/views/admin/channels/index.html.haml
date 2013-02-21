@@ -1,0 +1,20 @@
+%h1 Channels
+
+%table.table
+  %tr
+    %th Name
+    %th API Key
+    %th Actions
+    %th
+    %th
+
+  - @channels.each do |channel|
+    %tr
+      %td= channel.name
+      %td= channel.key
+      %td= channel.actions.try(:count)
+      %td{width: 35}= link_to 'Edit', edit_admin_channel_path(channel), :class => 'btn btn-mini'
+      %td{width: 55}= link_to 'Destroy', admin_channel_path(channel), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
+
+
+= link_to 'New Channel', new_admin_channel_path, :class => 'btn btn-success'

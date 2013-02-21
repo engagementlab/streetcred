@@ -1,0 +1,15 @@
+- if @campaign.errors.any?
+  .alert.alert-error
+    %h3= "#{pluralize(@campaign.errors.count, "error")} prohibited this admin_campaign from being saved:"
+    %ul
+      - @campaign.errors.full_messages.each do |msg|
+        %li= msg
+
+.field
+  = f.label :name
+  = f.text_field :name
+
+%br/
+.actions
+  = f.submit 'Save', :class => 'btn btn-success'
+  = link_to 'Cancel', admin_campaigns_path

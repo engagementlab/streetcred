@@ -1,10 +1,9 @@
 class Admin::AwardsController < ApplicationController
   layout 'admin'
+  before_filter :load_campaign
   
-  # GET /admin/awards
-  # GET /admin/awards.json
   def index
-    @awards = Award.all
+    @awards = @campaign.awards.asc(:name)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,8 +12,6 @@ class Admin::AwardsController < ApplicationController
   end
 
 
-  # GET /admin/awards/new
-  # GET /admin/awards/new.json
   def new
     @award = Award.new
 
@@ -24,22 +21,16 @@ class Admin::AwardsController < ApplicationController
     end
   end
 
-  # GET /admin/awards/1/edit
   def edit
     @award = Award.find(params[:id])
   end
 
-  # POST /admin/awards
-  # POST /admin/awards.json
   def create
     @award = Award.new(params[:award])
 
     respond_to do |format|
       if @award.save
-        params[:action_type_names].each do |action_type|
-          @award.action_types.create(name: action_type)
-        end
-        format.html { redirect_to admin_awards_url, notice: 'Award was successfully created.' }
+        format.html { redirect_to admin_campaign_awards_url(@campaign), notice: 'Award was successfully created.' }
         format.json { render json: @award, status: :created, location: @award }
       else
         format.html { render action: "new" }
@@ -48,18 +39,14 @@ class Admin::AwardsController < ApplicationController
     end
   end
 
-  # PUT /admin/awards/1
-  # PUT /admin/awards/1.json
   def update
     @award = Award.find(params[:id])
+    @award.channels.clear if params[:award][:channel_ids].blank?
+    @award.action_types.clear if params[:award][:action_type_ids].blank?
   
     respond_to do |format|
       if @award.update_attributes(params[:award])
-        @award.action_types.clear
-        params[:action_type_names].each do |action_type|
-          @award.action_types.create(name: action_type)
-        end
-        format.html { redirect_to admin_awards_url, notice: 'Award was successfully updated.' }
+        format.html { redirect_to admin_campaign_awards_url(@campaign), notice: 'Award was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -68,15 +55,18 @@ class Admin::AwardsController < ApplicationController
     end
   end
 
-  # DELETE /admin/awards/1
-  # DELETE /admin/awards/1.json
   def destroy
     @award = Award.find(params[:id])
     @award.destroy
 
     respond_to do |format|
-      format.html { redirect_to admin_awards_url }
+      format.html { redirect_to admin_campaign_awards_url(@campaign) }
       format.json { head :no_content }
     end
+  end
+  
+  private
+  def load_campaign
+    @campaign = Campaign.find(params[:campaign_id])
   end
 end

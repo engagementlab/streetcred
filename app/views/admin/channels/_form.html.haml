@@ -1,0 +1,24 @@
+- if @channel.errors.any?
+  .alert.alert-error
+    %h3= "#{pluralize(@channel.errors.count, "error")} prohibited this admin_channel from being saved:"
+    %ul
+      - @channel.errors.full_messages.each do |msg|
+        %li= msg
+
+.field
+  = f.label :name
+  = f.text_field :name
+
+- if @channel.key.present?
+  .field
+    Key: 
+    = @channel.key
+  .field
+    %br/
+    = check_box_tag :rekey
+    Regenerate key
+  
+%br/
+.actions
+  = f.submit 'Save', :class => 'btn btn-success'
+  = link_to 'Cancel', admin_channels_path

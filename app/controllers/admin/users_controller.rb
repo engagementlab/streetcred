@@ -1,10 +1,8 @@
 class Admin::UsersController < ApplicationController
   layout 'admin'
   
-  # GET /admin/users
-  # GET /admin/users.json
   def index
-    @users = User.all
+    @users = User.desc(:created_at)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,8 +10,6 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  # GET /admin/users/1
-  # GET /admin/users/1.json
   def show
     @user = User.find(params[:id])
 
@@ -23,8 +19,6 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  # GET /admin/users/new
-  # GET /admin/users/new.json
   def new
     @user = User.new
 
@@ -34,13 +28,10 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  # GET /admin/users/1/edit
   def edit
     @user = User.find(params[:id])
   end
 
-  # POST /admin/users
-  # POST /admin/users.json
   def create
     @user = User.new(params[:user])
 
@@ -55,8 +46,6 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  # PUT /admin/users/1
-  # PUT /admin/users/1.json
   def update
     @user = User.find(params[:id])
 
@@ -71,8 +60,6 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  # DELETE /admin/users/1
-  # DELETE /admin/users/1.json
   def destroy
     @user = User.find(params[:id])
     @user.destroy

@@ -1,0 +1,4 @@
+%h1 Editing Channel
+
+= form_for(:channel, :url => admin_channel_path(@channel), :html => {:method => :put}) do |f|
+  = render :partial => 'form', :locals => {:f => f}

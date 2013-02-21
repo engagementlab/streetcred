@@ -1,10 +1,12 @@
 - if @award.errors.any?
-  #error_explanation
-    %h2= "#{pluralize(@award.errors.count, "error")} prohibited this admin_award from being saved:"
+  .alert.alert-error
+    %h3= "#{pluralize(@award.errors.count, "error")} prohibited this admin_award from being saved:"
     %ul
       - @award.errors.full_messages.each do |msg|
         %li= msg
         
+= hidden_field(:award, :campaign_id, :value => @campaign.id)
+     
 .field
   = f.label :name
   = f.text_field :name
@@ -17,14 +19,22 @@
   = f.label :message, "Success message"
   = f.text_area :message, rows: 4
 
-%h3 Award Conditions
+%h3 Award Rules
+
+.field
+  = f.label :channels
+  %div.checkboxes
+    - for channel in Channel.asc(:name)
+      = check_box_tag '[award][channel_ids][]', channel.id, @award.channels.include?(channel)
+      = channel.name
+      %br/
 
 .field
   = f.label :action_types
   %div.checkboxes
-    - for action_type in ["Streetlight", "Sidewalk Patch", "Un-shoveled Sidewalk", "Pothole", "Damaged Sign", "Roadway Plowing/Sanding", "Graffiti", "Other"]
-      = check_box_tag '[action_type_names][]', action_type, @award.action_types.where(name: action_type).present?
-      = action_type
+    - for action_type in ActionType.asc(:name)
+      = check_box_tag '[award][action_type_ids][]', action_type.id, @award.action_types.include?(action_type)
+      = action_type.name
       %br/
 
 .field
@@ -42,4 +52,4 @@
 %br/
 .actions
   = f.submit 'Save', :class => 'btn btn-success'
-  = link_to 'Cancel', admin_awards_path
+  = link_to 'Cancel', admin_campaign_awards_path(@campaign)

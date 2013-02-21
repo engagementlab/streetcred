@@ -1,8 +1,6 @@
 class Admin::ActionsController < ApplicationController
   layout 'admin'
   
-  # GET /admin/actions
-  # GET /admin/actions.json
   def index
     @actions = Action.desc(:created_at)
 
@@ -12,8 +10,6 @@ class Admin::ActionsController < ApplicationController
     end
   end
   
-  # GET /admin/actions/1
-  # GET /admin/actions/1.json
   def show
     @action = Action.find(params[:id])
 
@@ -23,8 +19,6 @@ class Admin::ActionsController < ApplicationController
     end
   end
 
-  # GET /admin/actions/new
-  # GET /admin/actions/new.json
   def new
     @action = Action.new
 
@@ -34,13 +28,10 @@ class Admin::ActionsController < ApplicationController
     end
   end
 
-  # GET /admin/actions/1/edit
   def edit
     @action = Action.find(params[:id])
   end
 
-  # POST /admin/actions
-  # POST /admin/actions.json
   def create
     @action = Action.new(params[:action])
 
@@ -55,8 +46,6 @@ class Admin::ActionsController < ApplicationController
     end
   end
 
-  # PUT /admin/actions/1
-  # PUT /admin/actions/1.json
   def update
     @action = Action.find(params[:id])
 
@@ -71,8 +60,6 @@ class Admin::ActionsController < ApplicationController
     end
   end
 
-  # DELETE /admin/actions/1
-  # DELETE /admin/actions/1.json
   def destroy
     @action = Action.find(params[:id])
     @action.destroy

@@ -1,8 +1,12 @@
 Streetcred::Application.routes.draw do
-  
+
   namespace :admin do
     resources :actions, :only => [:index, :show]
-    resources :awards
+    resources :action_types
+    resources :campaigns do
+      resources :awards      
+    end
+    resources :channels
     resources :users, :only => [:index, :show]
   end
   

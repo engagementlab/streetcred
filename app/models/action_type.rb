@@ -1,5 +1,7 @@
 class ActionType
   include Mongoid::Document
   
-  embedded_in :awards
+  has_and_belongs_to_many :awards
+  
+  field :name
 end
