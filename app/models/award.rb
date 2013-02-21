@@ -14,12 +14,15 @@ class Award
   validates_presence_of :channels
   validates_presence_of :action_types
   validates_presence_of :occurences
+  validates_presence_of :start_time
+  validates_presence_of :end_time
     
-  field :name
-  field :occurences
+  field :name, type: String
+  field :occurences, type: Integer
   field :start_time, type: DateTime
   field :end_time, type: DateTime
-  field :message
-  field :badge_url
+  field :message, type: String
+  field :badge_url, type: String
+
   
 end

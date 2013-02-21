@@ -7,7 +7,7 @@ class Action
   has_and_belongs_to_many :awards
   
   
-  field :channel_name
+  field :key
   field :case_id
   field :action_type
   field :description
@@ -36,12 +36,6 @@ class Action
         # find all actions that match at least one of the action_types definied in the award   
         matching_actions  = user.actions.gt(created_at: award.start_time).lt(created_at: award.end_time).in(action_type: award.action_types.collect {|x| x.name}).in(key: award.channels.collect {|x| x.key})
         if start_time < Time.now && end_time > Time.now && occurences == matching_actions.count
-          self.awards << award
-          user.awards << award
-        end
-      elsif occurences.present?
-        matching_actions  = user.actions.in(action_type: award.action_types.collect {|x| x.name}).in(key: award.channels.collect {|x| x.key})
-        if occurences == matching_actions.count
           self.awards << award
           user.awards << award
         end
