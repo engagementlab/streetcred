@@ -1,7 +1,6 @@
 %h1 Users
 %p.well
-  Users are saved when actions are created through the StreetCred API (by submitting a POST request to http://streetcred.herokuapp.com/api/actions.json?params )
-
+  Users are created when actions are POSTed to the StreetCred API (using the included email param). Actions that match an existing email address will be associated with the existing user.
 %table.table
   %tr
     %th User Email
