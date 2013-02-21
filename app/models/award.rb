@@ -11,6 +11,7 @@ class Award
   accepts_nested_attributes_for :channels
   
   validates_presence_of :name
+  validates_presence_of :points
   validates_presence_of :channels
   validates_presence_of :action_types
   validates_presence_of :occurences
@@ -18,11 +19,12 @@ class Award
   validates_presence_of :end_time
     
   field :name, type: String
-  field :occurences, type: Integer
+  field :occurences, type: Integer, default: 1
   field :start_time, type: DateTime
   field :end_time, type: DateTime
   field :message, type: String
   field :badge_url, type: String
+  field :points, type: Integer, default: 0
 
   
 end
