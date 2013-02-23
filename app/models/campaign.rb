@@ -2,7 +2,7 @@ class Campaign
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  has_many :awards
+  has_many :awards, dependent: :delete
   
   field :name, type: String
   

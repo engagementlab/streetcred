@@ -2,8 +2,8 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  has_many :actions
-  has_and_belongs_to_many :awards
+  has_many :actions, dependent: :delete
+  has_and_belongs_to_many :awards, dependent: :delete
   
   
   field :email, type: String
