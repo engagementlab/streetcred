@@ -3,17 +3,21 @@
 %table.table
   %tr
     %th Name
+    %th Channels
+    %th Action Types
+    %th Occurrences
     %th Date Range
     %th Points
-    %th Occurrences
     %th
     %th
   - @awards.each do |award|
     %tr
       %td= award.name
+      %td= award.channels.size
+      %td= award.required_actions.size
+      %td= award.required_occurences
       %td== #{award.start_time.try(:to_date)} &mdash; #{award.end_time.try(:to_date)}
       %td= award.points
-      %td= award.occurences
       %td{width: 35}= link_to 'Edit', edit_admin_campaign_award_path(@campaign, award), :class => 'btn btn-mini'
       %td{width: 55}= link_to 'Destroy', admin_campaign_award_path(@campaign, award), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
 
