@@ -13,19 +13,19 @@ class Award
   validate :required_actions_unique
   
   field :name, type: String
-  field :occurences, type: Integer, default: 1
+  field :occurrences, type: Integer, default: 1
   field :start_time, type: DateTime
   field :end_time, type: DateTime
   field :message, type: String
   field :badge_url, type: String
   field :points, type: Integer, default: 0
 
-  def required_occurences
-    occurences = 0
+  def required_occurrences
+    occurrences = 0
     self.required_actions.each do |x|
-      occurences += x.occurences if x.occurences.present?
+      occurrences += x.occurrences if x.occurrences.present?
     end
-    return occurences
+    return occurrences
   end
   private
   def required_actions_unique

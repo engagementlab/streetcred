@@ -6,14 +6,14 @@ class RequiredAction
   belongs_to :action_type
   
   field :name, type: String
-  field :occurences, type: Integer, default: 1
+  field :occurrences, type: Integer, default: 1
   
-  validates :occurences, numericality: true, presence: true
-  validate :occurences_greater_than_zero
+  validates :occurrences, numericality: true, presence: true
+  validate :occurrences_greater_than_zero
   
   private
-  def occurences_greater_than_zero
-    errors[:base] << "Required action occurences must be greater than zero" if occurences == 0
+  def occurrences_greater_than_zero
+    errors[:base] << "Required action occurrences must be greater than zero" if occurrences == 0
   end
   
 end

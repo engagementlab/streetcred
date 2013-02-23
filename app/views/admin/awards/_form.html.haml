@@ -38,7 +38,7 @@
 .field.required_actions
   %h4 Required Actions
   %p
-    %em What actions contribute to this award and how many occurences are required?
+    %em What actions contribute to this award and how many occurrences are required?
   - @award.required_actions.each do |ra|
     = f.fields_for 'required_actions_attributes[]', ra do |builder|
       = render :partial => 'required_action_fields', :locals => {f: builder}

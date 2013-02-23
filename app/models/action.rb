@@ -33,7 +33,7 @@ class Action
       # find all actions that match at least one of the action_types definied in the award   
       matching_actions  = user.actions.gt(created_at: award.start_time).lt(created_at: award.end_time).in(action_type: award.required_actions.collect {|x| x.name}).in(key: award.channels.collect {|x| x.key})
       # assign the award
-      if award.required_occurences == matching_actions.count
+      if award.required_occurrences == matching_actions.count
         self.awards << award
         user.awards << award
       end
