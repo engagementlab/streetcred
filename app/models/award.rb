@@ -11,7 +11,8 @@ class Award
   accepts_nested_attributes_for :required_actions, allow_destroy: true
     
   validates_presence_of :name, :points, :channels, :required_actions, :start_time, :end_time
-    
+  validate :required_actions_unique
+  
   field :name, type: String
   field :occurences, type: Integer, default: 1
   field :start_time, type: DateTime
@@ -20,5 +21,10 @@ class Award
   field :badge_url, type: String
   field :points, type: Integer, default: 0
 
+  private
+  def required_actions_unique
+    errors[:base] << "Required actions can't contain duplicates" if required_actions.collect {|x| x.name}.uniq.length != required_actions.length
+  end
+  
   
 end
