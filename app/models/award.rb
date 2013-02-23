@@ -7,16 +7,10 @@ class Award
   has_and_belongs_to_many :channels
   has_and_belongs_to_many :users
   has_and_belongs_to_many :action_types
-  
-  accepts_nested_attributes_for :channels
-  
-  validates_presence_of :name
-  validates_presence_of :points
-  validates_presence_of :channels
-  validates_presence_of :action_types
-  validates_presence_of :occurences
-  validates_presence_of :start_time
-  validates_presence_of :end_time
+  has_many :required_actions
+  accepts_nested_attributes_for :required_actions, allow_destroy: true
+    
+  validates_presence_of :name, :points, :channels, :required_actions, :start_time, :end_time
     
   field :name, type: String
   field :occurences, type: Integer, default: 1

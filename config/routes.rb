@@ -1,6 +1,7 @@
 Streetcred::Application.routes.draw do
 
   namespace :admin do
+    match 'awards/add_required_action' => 'awards#add_required_action', :as => 'add_required_action'
     resources :actions, :only => [:index, :show]
     resources :action_types
     resources :campaigns do

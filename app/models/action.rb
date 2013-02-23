@@ -22,23 +22,16 @@ class Action
   
   def assign_awards
     user = self.user
-    # find awards marked with the same action_type as the current action
-    matching_awards = Award.elem_match(action_types: {name: self.action_type})
+    # find in-range awards marked with the same action_type as the current action
+    matching_awards = Award.elem_match(action_types: {name: self.action_type}).lt(start_time: Time.now).gt(end_time: Time.now)
     
-    matching_awards.each do |award|
-      channels      = award.channels
-      action_types  = award.action_types
-      occurences    = award.occurences.to_i
-      start_time    = award.start_time
-      end_time      = award.end_time
-      
-      if start_time.present? && end_time.present? && occurences.present?
-        # find all actions that match at least one of the action_types definied in the award   
-        matching_actions  = user.actions.gt(created_at: award.start_time).lt(created_at: award.end_time).in(action_type: award.action_types.collect {|x| x.name}).in(key: award.channels.collect {|x| x.key})
-        if start_time < Time.now && end_time > Time.now && occurences == matching_actions.count
-          self.awards << award
-          user.awards << award
-        end
+    matching_awards.each do |award|      
+      # find all actions that match at least one of the action_types definied in the award   
+      matching_actions  = user.actions.gt(created_at: award.start_time).lt(created_at: award.end_time).in(action_type: award.action_types.collect {|x| x.name}).in(key: award.channels.collect {|x| x.key})
+      # assign the award
+      if award.occurences.to_i == matching_actions.count
+        self.awards << award
+        user.awards << award
       end
     end
     self.save

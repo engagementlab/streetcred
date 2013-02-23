@@ -8,3 +8,13 @@
 h1{
   padding-bottom: 15px;
 }
+.required_action_occurences{
+  width: 28px !important;
+  padding-left: 3px;
+}
+.field.required_actions{
+  margin-bottom: 25px;
+}
+.delete_icon{
+  margin-bottom: 10px;
+}

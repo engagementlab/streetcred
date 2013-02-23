@@ -1,0 +1,4 @@
+%fieldset
+  = f.select(:name, ActionType.all.collect {|x| [x.name, x.name]})
+  = f.text_field :occurences, :placeholder => 0, :class => 'required_action_occurences'
+  = link_to 'remove', '#', class: "remove_fields"

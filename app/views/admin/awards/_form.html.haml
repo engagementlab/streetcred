@@ -5,15 +5,11 @@
       - @award.errors.full_messages.each do |msg|
         %li= msg
         
-= hidden_field(:award, :campaign_id, :value => @campaign.id)
+= f.hidden_field(:campaign_id, :value => @campaign.id)
      
 .field
   = f.label :name
   = f.text_field :name
-  
-.field
-  = f.label :points
-  = f.text_field :points
 
 .field
   = f.label :badge_url, "Badge URL"
@@ -23,28 +19,32 @@
   = f.label :message, "Success message"
   = f.text_area :message, rows: 4
 
+.field
+  = f.label :points
+  = f.text_field :points
+  
 %h3 Award Rules
 
 .field
-  = f.label :channels
-  %div.checkboxes
+  %h4 Channels
+  %p
+    %em Where can the actions come from?
+  .checkboxes
     - for channel in Channel.asc(:name)
       = check_box_tag '[award][channel_ids][]', channel.id, @award.channels.include?(channel)
       = channel.name
       %br/
 
-.field
-  = f.label :action_types
-  %div.checkboxes
-    - for action_type in ActionType.asc(:name)
-      = check_box_tag '[award][action_type_ids][]', action_type.id, @award.action_types.include?(action_type)
-      = action_type.name
-      %br/
-
-.field
-  = f.label :occurences
-  = f.text_field :occurences      
-
+.field.required_actions
+  %h4 Actions
+  %p
+    %em What actions contribute to this award and how many occurences are required?
+  - @award.required_actions.each do |ra|
+    = f.fields_for 'required_actions_attributes[]', ra do |builder|
+      = render :partial => 'required_action_fields', :locals => {f: builder}
+  
+  = link_to_add_fields "Add Action", @award, f, :required_actions
+        
 .field
   = f.label :start_date
   = f.text_field :start_time, :placeholder => '2013-02-01'

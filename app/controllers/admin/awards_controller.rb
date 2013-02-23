@@ -1,6 +1,6 @@
 class Admin::AwardsController < ApplicationController
   layout 'admin'
-  before_filter :load_campaign
+  before_filter :load_campaign, :except => [:add_required_action]
   
   def index
     @awards = @campaign.awards.asc(:name)
@@ -42,8 +42,8 @@ class Admin::AwardsController < ApplicationController
   def update
     @award = Award.find(params[:id])
     @award.channels.clear if params[:award][:channel_ids].blank?
-    @award.action_types.clear if params[:award][:action_type_ids].blank?
-  
+    @award.required_actions.clear
+    
     respond_to do |format|
       if @award.update_attributes(params[:award])
         format.html { redirect_to admin_campaign_awards_url(@campaign), notice: 'Award was successfully updated.' }
@@ -62,6 +62,12 @@ class Admin::AwardsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to admin_campaign_awards_url(@campaign) }
       format.json { head :no_content }
+    end
+  end
+  
+  def add_required_action
+    respond_to do |format|
+      format.json
     end
   end
   
