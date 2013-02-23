@@ -17,28 +17,33 @@ class Action
   field :image, type: Boolean
   
   after_create :associate_channel, :assign_awards
-  
-  private
-  
+    
   def associate_channel
-    self.update_attribute(:channel_id, Channel.where(key: key).first.try(:id))
+    channel = Channel.where(key: self.key).first
+    channel.actions << self if channel.present? 
   end
   
   def assign_awards
     user = self.user
-    # find in-range awards with a required_action with the same name as the incoming action
+    # find awards that are in-range and that match the action_type and channel of the incoming action
     matching_awards = Award.elem_match(required_actions: {name: self.action_type}).lt(start_time: Time.now).gt(end_time: Time.now)
     
-    matching_awards.each do |award|      
-      # find all actions that match at least one of the action_types definied in the award   
-      matching_actions  = user.actions.gt(created_at: award.start_time).lt(created_at: award.end_time).in(action_type: award.required_actions.collect {|x| x.name}).in(key: award.channels.collect {|x| x.key})
-      # assign the award
-      if award.required_occurrences == matching_actions.count
+    # iterate through the awards and determine whether their requirements have been met
+    matching_awards.each do |award|
+      award_requirements_met = []
+      actions_that_match_the_award = user.actions.where(key: self.key).gt(created_at: award.start_time).lt(created_at: award.end_time)
+      # iterate through the requirements and determine whether each has been met
+      award.required_actions.each do |requirement|
+        actions_that_match_the_requirement = actions_that_match_the_award.where(action_type: requirement.name)
+        requirement_met = (actions_that_match_the_requirement.count >= requirement.occurrences)
+        award_requirements_met << requirement_met
+      end
+      
+      # assign the award to the user and action (for tracking purposes) if the award's requirements have all been met
+      if award_requirements_met.all? == true
         self.awards << award
         user.awards << award
       end
     end
-    self.save
-    user.save
   end
 end
