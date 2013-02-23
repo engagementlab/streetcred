@@ -16,9 +16,13 @@ class Action
   field :lng, type: BigDecimal
   field :image, type: Boolean
   
-  after_create :assign_awards
+  after_create :associate_channel, :assign_awards
   
   private
+  
+  def associate_channel
+    self.update_attribute(:channel_id, Channel.where(key: key).first.try(:id))
+  end
   
   def assign_awards
     user = self.user
