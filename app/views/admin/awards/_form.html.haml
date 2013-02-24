@@ -6,7 +6,7 @@
         %li= msg
         
 = f.hidden_field(:campaign_id, :value => @campaign.id)
-     
+   
 .field
   = f.label :name
   = f.text_field :name
@@ -25,8 +25,9 @@
   
 %h3 Award Rules
 
-.field
-  %h4 Channels
+%h4 Channels
+.fields_group
+  .field
   %p
     %em Where can the actions come from?
   .checkboxes
@@ -35,23 +36,32 @@
       = channel.name
       %br/
 
-.field.required_actions
-  %h4 Required Actions
-  %p
-    %em What actions contribute to this award and how many occurrences are required?
-  - @award.required_actions.each do |ra|
-    = f.fields_for 'required_actions_attributes[]', ra do |builder|
-      = render :partial => 'required_action_fields', :locals => {f: builder}
+%h4 Actions
+.fields_group
+  .field.required_actions
+    %p
+      %em What actions contribute to this award and how many occurrences are required?
+    - @award.required_actions.each do |ra|
+      = f.fields_for 'required_actions_attributes[]', ra do |builder|
+        = render :partial => 'required_action_fields', :locals => {f: builder}
   
-  = link_to_add_fields "Add Action", @award, f, :required_actions
-        
-.field
-  = f.label :start_date
-  = f.text_field :start_time, :placeholder => '2013-02-01'
+    = link_to_add_fields "Add Another", @award, f, :required_actions
 
-.field
-  = f.label :end_date
-  = f.text_field :end_time, :placeholder => '2013-03-31'
+  .field
+    = f.label :operator
+    %p
+      %em Require all of the above actions, or any one of them?
+    = f.select(:operator, [['AND', 'AND'], ['OR', 'OR']])
+  
+%h4 Date Range
+.fields_group
+  .field
+    = f.label :start_date
+    = f.text_field :start_time, :placeholder => '2013-02-01'
+
+  .field
+    = f.label :end_date
+    = f.text_field :end_time, :placeholder => '2013-03-31'
 
 %br/
 .actions

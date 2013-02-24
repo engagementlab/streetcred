@@ -5,6 +5,9 @@
   font-weight: bold;
   margin-top: 10px;
 }
+.fields_group{
+  margin-bottom: 20px;
+}
 h1{
   padding-bottom: 15px;
 }
@@ -13,7 +16,7 @@ h1{
   padding-left: 3px;
 }
 .field.required_actions{
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 .delete_icon{
   margin-bottom: 10px;

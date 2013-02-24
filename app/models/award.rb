@@ -19,6 +19,8 @@ class Award
   field :message, type: String
   field :badge_url, type: String
   field :points, type: Integer, default: 0
+  field :operator, type: String
+  
 
   def required_occurrences
     occurrences = 0
@@ -27,6 +29,11 @@ class Award
     end
     return occurrences
   end
+  
+  def channel_keys
+    channels.collect {|x| x.key}
+  end
+  
   private
   def required_actions_unique
     errors[:base] << "Required actions can't contain duplicates" if required_actions.collect {|x| x.name}.uniq.length != required_actions.length
