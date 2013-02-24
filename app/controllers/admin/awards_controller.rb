@@ -14,6 +14,8 @@ class Admin::AwardsController < ApplicationController
 
   def new
     @award = Award.new
+    # build a required action so the drop-down shows up in the form
+    @award.required_actions.new
 
     respond_to do |format|
       format.html # new.html.erb
