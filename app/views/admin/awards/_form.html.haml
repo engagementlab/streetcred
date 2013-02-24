@@ -40,7 +40,7 @@
 .fields_group
   .field.required_actions
     %p
-      %em What actions contribute to this award and how many occurrences are required?
+      %em What actions count towards this award and how many occurrences are required?
     - @award.required_actions.each do |ra|
       = f.fields_for 'required_actions_attributes[]', ra do |builder|
         = render :partial => 'required_action_fields', :locals => {f: builder}
@@ -51,7 +51,7 @@
     = f.label :operator
     %p
       %em Require all of the above actions, or any one of them?
-    = f.select(:operator, [['AND', 'AND'], ['OR', 'OR']])
+    = f.select(:operator, [['ALL', 'ALL'], ['ANY', 'ANY']])
   
 %h4 Date Range
 .fields_group

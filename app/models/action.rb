@@ -50,7 +50,7 @@ class Action
           self.awards << award
           user.awards << award
         end
-      elsif award.operator == 'OR' && award_requirements_met.include?(true)
+      elsif award.operator == 'ANY' && award_requirements_met.include?(true)
         unless user.awards.include?(award)
           self.awards << award
           user.awards << award
