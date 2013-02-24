@@ -41,8 +41,9 @@
   .field.required_actions
     %p
       %em What actions count towards this award and how many occurrences are required?
+      
     - @award.required_actions.each do |ra|
-      = f.fields_for 'required_actions_attributes[]', ra do |builder|
+      = f.fields_for "required_actions_attributes[]", ra, index: ra.id do |builder|
         = render :partial => 'required_action_fields', :locals => {f: builder}
   
     = link_to_add_fields "Add Another", @award, f, :required_actions

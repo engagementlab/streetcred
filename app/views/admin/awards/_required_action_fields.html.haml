@@ -1,12 +1,4 @@
 %fieldset
-  == <select id='award_required_actions_attributes_#{f.object.id}_name' name='award[required_actions_attributes][#{f.object.id}][name]'>
-  - ActionType.all.each do |action|
-    - if action.name == f.object.name
-      == <option value='#{action.name}' selected='selected'>#{action.name}</option>
-    - else
-      == <option value='#{action.name}'>#{action.name}</option>
-  </select>
-  
-  == <input class='required_action_occurrences' id='award_required_actions_attributes_#{f.object.id}_occurrences' name='award[required_actions_attributes][#{f.object.id}][occurrences]' size='30' type='text' value='#{f.object.occurrences}' />
-  
-  = link_to 'remove', '#', class: 'remove_fields'
+  = f.select(:name, ActionType.all.collect {|x| [x.name, x.name]})
+  = f.text_field :occurrences, :class => 'required_action_occurrences'
+  = link_to 'remove', '#', class: "remove_fields"
