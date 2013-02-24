@@ -45,7 +45,7 @@ class Action
       logger.info "************ award requirements look like #{award_requirements_met}"
       
       # assign the award to the user and action (for tracking purposes) if the award's requirements have been met
-      if award.operator == 'AND' && award_requirements_met.all?
+      if award.operator == 'ALL' && award_requirements_met.all?
         unless user.awards.include?(award)
           self.awards << award
           user.awards << award
