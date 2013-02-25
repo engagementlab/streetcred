@@ -5,6 +5,6 @@ module Admin::AwardsHelper
     fields = f.fields_for("required_actions_attributes[]", new_object, index: id) do |builder|
       render(association.to_s.singularize + "_fields", f: builder)
     end
-    link_to(("<i class='icon-plus'></i> &nbsp;Add").html_safe, '#', class: "add_fields btn btn-small btn-success", data: {id: id, fields: fields.gsub("\n", "")})
+    link_to("Add Another", '#', class: "add_fields btn btn-small btn-success", data: {id: id, fields: fields.gsub("\n", "")})
   end
 end
