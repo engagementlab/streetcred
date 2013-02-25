@@ -18,6 +18,9 @@ h1{
 .field.required_actions{
   margin-bottom: 20px;
 }
-.delete_icon{
-  margin-bottom: 10px;
+.remove_fields{
+  margin-top: -10px;
+}
+.add_fields{
+  margin-top: 5px;
 }

@@ -6,7 +6,7 @@
         %li= msg
         
 = f.hidden_field(:campaign_id, :value => @campaign.id)
-   
+
 .field
   = f.label :name
   = f.text_field :name
@@ -46,10 +46,9 @@
       = f.fields_for "required_actions_attributes[]", ra, index: ra.id do |builder|
         = render :partial => 'required_action_fields', :locals => {f: builder}
   
-    = link_to_add_fields "Add Another", @award, f, :required_actions
+    = link_to_add_fields "add another", @award, f, :required_actions
 
   .field
-    = f.label :operator
     %p
       %em Require all of the above actions, or any one of them?
     = f.select(:operator, [['ALL', 'ALL'], ['ANY', 'ANY']])
@@ -67,4 +66,4 @@
 %br/
 .actions
   = f.submit 'Save', :class => 'btn btn-success'
-  = link_to 'Cancel', admin_campaign_awards_path(@campaign)
+  = link_to 'Cancel', admin_campaign_awards_path(@campaign), :class => 'btn'
