@@ -31,6 +31,8 @@ class Action
     
     # iterate through the awards and determine whether their requirements have been met
     matching_awards.each do |award|
+      # assign the incoming action to the matching award for tracking purposes
+      award.actions << self
       award_requirements_met = []
       award_actions = user.actions.in(key: award.channel_keys).gt(created_at: award.start_time).lt(created_at: award.end_time)
       logger.info "************ found #{award_actions.count} actions that match the award criteria"
@@ -44,15 +46,13 @@ class Action
 
       logger.info "************ award requirements look like #{award_requirements_met}"
       
-      # assign the award to the user and action (for tracking purposes) if the award's requirements have been met
+      # assign the award to the user if the award's requirements have been met
       if award.operator == 'ALL' && award_requirements_met.all?
         unless user.awards.include?(award)
-          self.awards << award
           user.awards << award
         end
       elsif award.operator == 'ANY' && award_requirements_met.include?(true)
         unless user.awards.include?(award)
-          self.awards << award
           user.awards << award
         end
       end
