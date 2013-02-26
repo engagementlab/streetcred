@@ -5,8 +5,14 @@
       - @award.errors.full_messages.each do |msg|
         %li= msg
         
-= f.hidden_field(:campaign_id, :value => @campaign.id)
-
+.field
+  = f.label :campaigns
+  .checkboxes
+    - for campaign in Campaign.asc(:name)
+      = check_box_tag '[award][campaign_ids][]', campaign.id, @award.campaigns.include?(campaign)
+      = campaign.name
+      %br/
+      
 .field
   = f.label :name
   = f.text_field :name
@@ -28,13 +34,13 @@
 %h4 Channels
 .fields_group
   .field
-  %p
-    %em Where can the actions come from?
-  .checkboxes
-    - for channel in Channel.asc(:name)
-      = check_box_tag '[award][channel_ids][]', channel.id, @award.channels.include?(channel)
-      = channel.name
-      %br/
+    %p
+      %em Where can the actions come from?
+    .checkboxes
+      - for channel in Channel.asc(:name)
+        = check_box_tag '[award][channel_ids][]', channel.id, @award.channels.include?(channel)
+        = channel.name
+        %br/
 
 %h4 Actions
 .fields_group

@@ -2,14 +2,14 @@ class Award
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  belongs_to :campaign
+  has_and_belongs_to_many :campaigns
   has_and_belongs_to_many :actions
   has_and_belongs_to_many :channels
   has_and_belongs_to_many :users
   embeds_many :required_actions
   accepts_nested_attributes_for :required_actions, allow_destroy: true
     
-  validates_presence_of :name, :points, :channels, :required_actions, :start_time, :end_time
+  validates_presence_of :name, :points, :channels, :campaigns, :required_actions, :start_time, :end_time
   validate :required_actions_unique
   
   field :name, type: String

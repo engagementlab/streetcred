@@ -44,6 +44,7 @@ class Admin::AwardsController < ApplicationController
   def update
     @award = Award.find(params[:id])
     @award.channels.clear if params[:award][:channel_ids].blank?
+    @award.campaigns.clear if params[:award][:campaign_ids].blank?
     @award.required_actions.clear
     
     respond_to do |format|
