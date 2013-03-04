@@ -1,5 +1,8 @@
 Streetcred::Application.routes.draw do
 
+  resources :users
+
+  match '/admin' => 'campaigns#index'
   namespace :admin do
     match 'awards/add_required_action' => 'awards#add_required_action', :as => 'add_required_action'
     resources :actions, :only => [:index, :show]
