@@ -13,19 +13,19 @@ class Award
   validate :required_actions_unique
   
   field :name, type: String
-  field :occurrences, type: Integer, default: 1
   field :start_time, type: DateTime
   field :end_time, type: DateTime
+  field :description, type: String
   field :message, type: String
   field :badge_url, type: String
   field :points, type: Integer, default: 0
   field :operator, type: String
   
-
+      
   def required_occurrences
     occurrences = 0
-    self.required_actions.each do |x|
-      occurrences += x.occurrences if x.occurrences.present?
+    self.required_actions.each do |action|
+      occurrences += action.occurrences if action.occurrences.present?
     end
     return occurrences
   end
@@ -35,6 +35,7 @@ class Award
   end
   
   private
+  
   def required_actions_unique
     errors[:base] << "Required actions can't contain duplicates" if required_actions.collect {|x| x.name}.uniq.length != required_actions.length
   end

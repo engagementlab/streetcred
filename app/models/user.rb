@@ -10,20 +10,39 @@ class User
   field :first_name, type: String
   field :last_name, type: String
 
-  def progress(award)
-    if matching_actions(award).count == 0
-      number_to_percentage(0, :precision => 0)
+  def progress_toward_campaign(campaign)
+    progress = 0
+    awards = campaign.awards
+    awards.each do |award|
+      progress += progress_toward_award(award)
+    end
+    progress / awards.count
+  end
+
+  def progress_toward_award(award)
+    if self.matching_actions(award).count == 0
+      0
     else
-      number_to_percentage((matching_actions(award).count / award.occurrences.to_i), :precision => 0)
+      self.matching_actions(award).count / award.required_occurrences.to_f
     end
   end
 
   def matching_actions(award)
-    if award.start_time.present? && award.end_time.present? && award.occurrences.present?
+    if award.start_time.present? && award.end_time.present? && award.required_occurrences > 0
       # find all actions that match at least one of the action_types definied in the award
-      self.actions.gt(created_at: award.start_time).lt(created_at: award.end_time).in(action_type: award.action_types.collect {|x| x.name}).in(key: award.channels.collect {|x| x.key})
-    elsif award.occurrences.present?
+      self.actions.gt(created_at: award.start_time).lt(created_at: award.end_time).in(action_type: award.required_actions.collect {|x| x.name}).in(key: award.channels.collect {|x| x.key})
+    elsif award.required_occurrences > 0
       self.actions.in(action_type: award.action_types.collect {|x| x.name}).in(key: award.channels.collect {|x| x.key})
     end
   end
 end
+
+
+
+
+
+
+
+
+
+

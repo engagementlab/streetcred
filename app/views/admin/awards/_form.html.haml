@@ -4,38 +4,43 @@
     %ul
       - @award.errors.full_messages.each do |msg|
         %li= msg
-        
-.field
-  = f.label :campaigns
-  .checkboxes
-    - for campaign in Campaign.asc(:name)
-      = check_box_tag '[award][campaign_ids][]', campaign.id, @award.campaigns.include?(campaign)
-      = campaign.name
-      %br/
       
 .field
   = f.label :name
   = f.text_field :name
 
 .field
-  = f.label :badge_url, "Badge URL"
-  = f.text_field :badge_url
+  = f.label :description
+  = f.text_area :description, rows: 6
 
 .field
   = f.label :message, "Success message"
   = f.text_area :message, rows: 4
 
 .field
+  = f.label :badge_url, "Badge URL"
+  = f.text_field :badge_url
+    
+.field
   = f.label :points
   = f.text_field :points
   
 %h3 Award Rules
 
+%h4 Campaigns
+.checkboxes
+  %p
+    %em Which campaigns should the award be associated with?
+  - for campaign in Campaign.asc(:name)
+    = check_box_tag '[award][campaign_ids][]', campaign.id, @award.campaigns.include?(campaign)
+    = campaign.name
+    %br/
+      
 %h4 Channels
 .fields_group
   .field
     %p
-      %em Where can the actions come from?
+      %em Which channels can the incoming actions come from?
     .checkboxes
       - for channel in Channel.asc(:name)
         = check_box_tag '[award][channel_ids][]', channel.id, @award.channels.include?(channel)
