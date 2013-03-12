@@ -8,6 +8,7 @@ class Campaign
   field :description, type: String
   field :start_time, type: DateTime
   field :end_time, type: DateTime
+  field :points, type: Integer, default: 0
   
   validates_presence_of :name
   
