@@ -2,11 +2,11 @@ module Admin::CampaignsHelper
   
   def awards_count_helper(campaign)
     if campaign.awards.blank? || campaign.awards.count == 0
-      link_to '0 Awards', new_admin_campaign_award_path(campaign)
+      '0 Awards'
     elsif campaign.awards.count == 1
-      link_to "#{campaign.awards.count} Award", admin_campaign_awards_path(campaign)
+      "#{campaign.awards.count} Award"
     else
-      link_to "#{campaign.awards.count} Awards", admin_campaign_awards_path(campaign)
+      "#{campaign.awards.count} Awards"
     end
   end
 end

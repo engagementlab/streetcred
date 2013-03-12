@@ -9,7 +9,7 @@ class Award
   embeds_many :required_actions
   accepts_nested_attributes_for :required_actions, allow_destroy: true
     
-  validates_presence_of :name, :points, :channels, :campaigns, :required_actions, :start_time, :end_time
+  validates_presence_of :name, :points, :channels, :required_actions, :start_time, :end_time
   validate :required_actions_unique
   
   field :name, type: String

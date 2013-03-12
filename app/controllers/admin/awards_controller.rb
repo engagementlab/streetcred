@@ -1,9 +1,8 @@
 class Admin::AwardsController < ApplicationController
   layout 'admin'
-  before_filter :load_campaign, :except => [:add_required_action]
   
   def index
-    @awards = @campaign.awards.asc(:name)
+    @awards = Award.asc(:name)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -32,7 +31,7 @@ class Admin::AwardsController < ApplicationController
 
     respond_to do |format|
       if @award.save
-        format.html { redirect_to admin_campaign_awards_url(@campaign), notice: 'Award was successfully created.' }
+        format.html { redirect_to admin_awards_url, notice: 'Award was successfully created.' }
         format.json { render json: @award, status: :created, location: @award }
       else
         format.html { render action: "new" }
@@ -49,7 +48,7 @@ class Admin::AwardsController < ApplicationController
     
     respond_to do |format|
       if @award.update_attributes(params[:award])
-        format.html { redirect_to admin_campaign_awards_url(@campaign), notice: 'Award was successfully updated.' }
+        format.html { redirect_to admin_awards_url, notice: 'Award was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -63,7 +62,7 @@ class Admin::AwardsController < ApplicationController
     @award.destroy
 
     respond_to do |format|
-      format.html { redirect_to admin_campaign_awards_url(@campaign) }
+      format.html { redirect_to admin_awards_url }
       format.json { head :no_content }
     end
   end
@@ -72,10 +71,5 @@ class Admin::AwardsController < ApplicationController
     respond_to do |format|
       format.json
     end
-  end
-  
-  private
-  def load_campaign
-    @campaign = Campaign.find(params[:campaign_id])
   end
 end
