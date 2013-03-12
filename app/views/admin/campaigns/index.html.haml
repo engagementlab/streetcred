@@ -4,6 +4,7 @@
   %tr
     %th Name
     %th Awards
+    %th Points
     %th
     %th
 
@@ -11,6 +12,7 @@
     %tr
       %td= campaign.name
       %td= awards_count_helper(campaign)
+      %td= campaign.points
       %td{width: 35}= link_to 'Edit', edit_admin_campaign_path(campaign), :class => 'btn btn-mini'
       %td{width: 55}= link_to 'Destroy', admin_campaign_path(campaign), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
 
