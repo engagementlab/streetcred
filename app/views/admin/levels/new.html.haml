@@ -1,0 +1,4 @@
+%h1 New Level
+
+= form_for(:level, :url => admin_levels_path, :html => {:method => :post}) do |f|
+  = render :partial => 'form', :locals => {:f => f}

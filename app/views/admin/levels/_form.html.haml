@@ -1,0 +1,23 @@
+- if @level.errors.any?
+  .alert.alert-error
+    %h3= "#{pluralize(@level.errors.count, "error")} prohibited this level from being saved:"
+    %ul
+      - @level.errors.full_messages.each do |msg|
+        %li= msg
+
+.field
+  = f.label :name
+  = f.text_field :name
+
+.field
+  = f.label :description
+  = f.text_area :description, :rows => 10
+  
+.field
+  = f.label :points, "Required Points"
+  = f.text_field :points
+
+%br/
+.actions
+  = f.submit 'Save', :class => 'btn btn-success'
+  = link_to 'Cancel', admin_levels_path, :class => 'btn'

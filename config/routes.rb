@@ -10,6 +10,7 @@ Streetcred::Application.routes.draw do
     resources :campaigns do
       resources :awards      
     end
+    resources :levels
     resources :channels
     resources :users, :only => [:index, :show]
   end
