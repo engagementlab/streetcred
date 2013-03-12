@@ -1,6 +1,6 @@
 - if @channel.errors.any?
   .alert.alert-error
-    %h3= "#{pluralize(@channel.errors.count, "error")} prohibited this admin_channel from being saved:"
+    %h3= "#{pluralize(@channel.errors.count, "error")} prohibited this channel from being saved:"
     %ul
       - @channel.errors.full_messages.each do |msg|
         %li= msg

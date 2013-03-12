@@ -1,6 +1,6 @@
 - if @admin_user.errors.any?
   .alert.alert-error
-    %h3= "#{pluralize(@admin_user.errors.count, "error")} prohibited this admin_user from being saved:"
+    %h3= "#{pluralize(@admin_user.errors.count, "error")} prohibited this user from being saved:"
     %ul
       - @admin_user.errors.full_messages.each do |msg|
         %li= msg

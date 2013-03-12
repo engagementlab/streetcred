@@ -1,6 +1,6 @@
 - if @action_type.errors.any?
   .alert.alert-error
-    %h3= "#{pluralize(@action_type.errors.count, "error")} prohibited this admin_action_type from being saved:"
+    %h3= "#{pluralize(@action_type.errors.count, "error")} prohibited this action type from being saved:"
     %ul
       - @action_type.errors.full_messages.each do |msg|
         %li= msg

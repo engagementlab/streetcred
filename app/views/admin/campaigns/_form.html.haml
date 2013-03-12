@@ -1,6 +1,6 @@
 - if @campaign.errors.any?
   .alert.alert-error
-    %h3= "#{pluralize(@campaign.errors.count, "error")} prohibited this admin_campaign from being saved:"
+    %h3= "#{pluralize(@campaign.errors.count, "error")} prohibited this campaign from being saved:"
     %ul
       - @campaign.errors.full_messages.each do |msg|
         %li= msg
