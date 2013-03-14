@@ -6,6 +6,7 @@ class Campaign
   
   field :name, type: String
   field :description, type: String
+  field :message, type: String
   field :start_time, type: DateTime
   field :end_time, type: DateTime
   field :points, type: Integer, default: 0

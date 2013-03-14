@@ -3,6 +3,7 @@ class Level
   
   field :name, type: String
   field :description, type: String
+  field :message, type: String
   field :points, type: Integer
   
   validates_presence_of :name
