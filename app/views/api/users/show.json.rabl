@@ -2,7 +2,7 @@ object @user
 attributes :first_name, :last_name, :email
 
 child :actions do
-  attributes :_id, :field, :case_id, :action_type, :description, :location, :lat, :lng
+  attributes :_id, :field, :case_id, :action_type, :description, :location, :latitude, :longitude
 end
 
 child :awards do

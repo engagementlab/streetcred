@@ -12,8 +12,8 @@ class Action
   field :action_type
   field :description
   field :location
-  field :lat, type: BigDecimal
-  field :lng, type: BigDecimal
+  field :latitude, type: BigDecimal
+  field :longitude, type: BigDecimal
   field :image, type: Boolean
   
   before_save :set_channel_id
@@ -27,24 +27,20 @@ class Action
     user = self.user
     # find awards that are in-range and match the action_type and channel of the incoming action
     matching_awards = Award.elem_match(required_actions: {name: self.action_type}).in(channel_ids: [self.channel_id]).lt(start_time: self.created_at).gt(end_time: self.created_at)
-    logger.info "************ found #{matching_awards.count} matching awards"
     
     # iterate through the awards and determine whether their requirements have been met
     matching_awards.each do |award|
       # assign the incoming action to the matching award for tracking purposes
       award.actions << self
-      award_requirements_met = []
       award_actions = user.actions.in(key: award.channel_keys).gt(created_at: award.start_time).lt(created_at: award.end_time)
-      logger.info "************ found #{award_actions.count} actions that match the award criteria"
       
-      # iterate through the requirements and determine if their conditions have been met
+      # iterate through the requirements and determine if they have been met
+      award_requirements_met = []
       award.required_actions.each do |requirement|
         requirement_actions = award_actions.where(action_type: requirement.name)
         requirement_met = (requirement_actions.count >= requirement.occurrences)
         award_requirements_met << requirement_met
       end
-
-      logger.info "************ award requirements look like #{award_requirements_met}"
       
       # assign the award to the user if the award's requirements have been met
       if award.operator == 'ALL' && award_requirements_met.all?
