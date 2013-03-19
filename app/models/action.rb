@@ -3,7 +3,7 @@ class Action
   include Mongoid::Timestamps
   
   belongs_to :user
-  belongs_to :channel
+  belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
   has_and_belongs_to_many :awards, dependent: :nullify
   
   
@@ -16,12 +16,7 @@ class Action
   field :longitude, type: BigDecimal
   field :image, type: Boolean
   
-  before_save :set_channel_id
   after_create :assign_awards
-    
-  def set_channel_id
-    self.channel_id = Channel.where(key: key).first.try(:id)
-  end
   
   def assign_awards
     user = self.user

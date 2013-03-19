@@ -52,7 +52,6 @@ class Admin::LevelsController < ApplicationController
 
     respond_to do |format|
       if @level.update_attributes(params[:level])
-        @level.rekey! if params[:rekey] == '1'
         format.html { redirect_to admin_levels_url, notice: 'Level was successfully updated.' }
         format.json { head :no_content }
       else

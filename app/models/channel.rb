@@ -2,7 +2,7 @@ class Channel
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  has_many :actions
+  has_many :actions, :foreign_key => 'api_key', :primary_key => 'api_key'
   has_and_belongs_to_many :awards
   
   field :name, type: String
