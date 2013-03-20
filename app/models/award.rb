@@ -31,7 +31,7 @@ class Award
   end
   
   def channel_keys
-    channels.collect {|x| x.key}
+    channels.collect {|x| x.api_key}
   end
   
   private

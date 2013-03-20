@@ -7,7 +7,7 @@ class Action
   has_and_belongs_to_many :awards, dependent: :nullify
   
   
-  field :key
+  field :api_key
   field :case_id
   field :action_type
   field :description
@@ -27,7 +27,7 @@ class Action
     matching_awards.each do |award|
       # assign the incoming action to the matching award for tracking purposes
       award.actions << self
-      award_actions = user.actions.in(key: award.channel_keys).gt(created_at: award.start_time).lt(created_at: award.end_time)
+      award_actions = user.actions.in(api_key: award.channel_keys).gt(created_at: award.start_time).lt(created_at: award.end_time)
       
       # iterate through the requirements and determine if they have been met
       award_requirements_met = []

@@ -6,18 +6,18 @@ class Channel
   has_and_belongs_to_many :awards
   
   field :name, type: String
-  field :key, type: String
+  field :api_key, type: String
   
   validates_presence_of :name
   
-  before_create :generate_key
+  before_create :generate_api_key
   
   def rekey!
-    self.update_attribute(:key, SecureRandom.hex(20)) 
+    self.update_attribute(:api_key, SecureRandom.hex(20)) 
   end
   
   private
-  def generate_key
-    self.key = SecureRandom.hex(20) 
+  def generate_api_key
+    self.api_key = SecureRandom.hex(20) 
   end
 end
