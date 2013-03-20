@@ -21,7 +21,7 @@ class Action
   def assign_awards
     user = self.user
     # find awards that are in-range and match the action_type and channel of the incoming action
-    matching_awards = Award.elem_match(required_actions: {name: self.action_type}).in(channel_ids: [self.channel_id]).lt(start_time: self.created_at).gt(end_time: self.created_at)
+    matching_awards = Award.elem_match(required_actions: {name: self.action_type}).in(channel_ids: [self.channel.try(:id)]).lt(start_time: self.created_at).gt(end_time: self.created_at)
     
     # iterate through the awards and determine whether their requirements have been met
     matching_awards.each do |award|
