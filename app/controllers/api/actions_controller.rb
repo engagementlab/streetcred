@@ -10,7 +10,7 @@ class Api::ActionsController < ApplicationController
       action = user.actions.create(params['action'])
       @earned_awards = user.awards_earned_by_action(action)
       NotificationMailer.status_email(user, action).deliver
-      respond_with(@awards)
+      respond_with(@earned_awards)
     end
     
   end
