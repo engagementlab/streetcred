@@ -15,9 +15,9 @@
         <%= @earned_awards.first.success_message %>
       <% end %>
     <% else %>
-      <p>Nice work! You're on your way to earning the following awards:</p>
+      <p>You're on your way to earning the following awards:</p>
       <% for award in @in_progress_awards %>
-        <h3><%= award.name %> <%= number_to_percentage(@user.progress_toward_award(award)) %></h3>
+        <h3><%= award.name %> &mdash; <%= progress_toward_award_helper(@user, award) %></h3>
       <% end %>
     <% end %>
     <p>Monitor your progress by visiting <%= link_to 'www.streetcred.us', 'www.streetcred.us' %></p>
