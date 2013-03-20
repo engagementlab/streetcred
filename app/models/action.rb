@@ -25,7 +25,7 @@ class Action
     
     # iterate through the awards and determine whether their requirements have been met
     matching_awards.each do |award|
-      # assign the incoming action to the matching award for tracking purposes
+      # assign the incoming action to the matching awards for tracking purposes
       award.actions << self
       award_actions = user.actions.in(api_key: award.channel_keys).gt(created_at: award.start_time).lt(created_at: award.end_time)
       
