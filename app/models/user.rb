@@ -40,6 +40,17 @@ class User
       self.actions.in(action_type: award.action_types.collect {|x| x.name}).in(api_key: award.channels.collect {|x| x.api_key})
     end
   end
+  
+  def awards_earned_by_action(action)
+    # all user.awards have been earned; those associated with the action were earned by the action
+    # however, this is probably not ideal since it's only the award.actions.last that actually earned the award
+    action.awards.in(user_ids: self.id)
+    # self.awards.in(action_ids: action.id)
+  end
+  
+  def awards_in_progress_by_action(action)
+    action.awards.nin(user_ids: self.id)
+  end
 end
 
 
