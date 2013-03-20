@@ -24,8 +24,24 @@ class Award
       
   def required_occurrences
     occurrences = 0
-    self.required_actions.each do |action|
-      occurrences += action.occurrences if action.occurrences.present?
+    if self.operator == 'ALL'
+      self.required_actions.each do |action|
+        occurrences += action.occurrences if action.occurrences.present?
+      end
+    elsif self.operator == 'ANY'
+      occurrences = self.required_actions.asc(:occurrences).first.occurrences
+    end
+    return occurrences
+  end
+  
+  def required_occurrences_by_action(action)
+    occurrences = 0
+    if self.operator == 'ALL'
+      self.required_actions.each do |action|
+        occurrences += action.occurrences if action.occurrences.present?
+      end
+    elsif self.operator == 'ANY'
+      occurrences = self.required_actions.where(name: action.action_type).first.occurrences
     end
     return occurrences
   end
