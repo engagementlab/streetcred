@@ -9,10 +9,10 @@
   = f.label :name
   = f.text_field :name
 
-- if @channel.key.present?
+- if @channel.api_key.present?
   .field
     Key: 
-    = @channel.key
+    = @channel.api_key
   .field
     %br/
     = check_box_tag :rekey
