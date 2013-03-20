@@ -1,5 +1,6 @@
 class NotificationMailer < ActionMailer::Base
   default from: "notifications@streetcred.us"
+  add_template_helper(ApplicationHelper)
   
   def status_email(user, action)
     @user = user
