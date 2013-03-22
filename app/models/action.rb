@@ -19,7 +19,6 @@ class Action
   field :url, type: String
   field :photo_url, type: String
 
-  
   after_create :assign_awards
   
   # this callback assigns incoming actions to relevant awards, and assigns awards to users if the award's 
@@ -34,18 +33,8 @@ class Action
       unless user.awards.include?(award)
         # assign the action to the award in order to track progress
         award.actions << self
-        matching_user_actions = user.actions.in(api_key: award.channel_keys).gt(created_at: award.start_time).lt(created_at: award.end_time)
-      
-        # iterate through the requirements and determine if they have been met
-        award_requirements_met = []
-        award.required_actions.each do |requirement|
-          award_requirements_met << (matching_user_actions.where(action_type: requirement.name).count >= requirement.occurrences)
-        end
-      
-        # assign the award to the user if the award's requirements have been met
-        if award.operator == 'ALL' && award_requirements_met.all?
-          user.awards << award
-        elsif award.operator == 'ANY' && award_requirements_met.include?(true)
+        
+        if award.requirements_met?(user)
           user.awards << award
         end
       end

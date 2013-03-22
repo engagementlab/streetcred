@@ -50,6 +50,21 @@ class Award
     channels.collect {|x| x.api_key}
   end
   
+  def requirements_met?(user)
+    # find the actions dynamically, not based on which ones have been associated with the award
+    # in other words, actions from before the award was created, but which meet its criteria
+    matching_user_actions = user.actions.in(api_key: self.channel_keys).gt(created_at: self.start_time).lt(created_at: self.end_time)
+    award_requirements_met = []
+    self.required_actions.each do |requirement|
+      award_requirements_met << (matching_user_actions.where(action_type: requirement.name).count >= requirement.occurrences)
+    end
+    if self.operator == 'ALL'
+      award_requirements_met.all?
+    elsif self.operator == 'ANY'
+      award_requirements_met.include?(true)
+    end
+  end
+  
   private
   
   def required_actions_unique
