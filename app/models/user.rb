@@ -3,13 +3,14 @@ class User
   include Mongoid::Timestamps
   
   has_many :actions, dependent: :delete
-  has_and_belongs_to_many :awards, dependent: :delete
+  has_and_belongs_to_many :awards
   embeds_many :points
   
   
   field :email, type: String
   field :first_name, type: String
   field :last_name, type: String
+  field :phone, type: String
   
   def total_points
     (self.points.collect {|x| x.amount}).try(:sum)
@@ -32,7 +33,8 @@ class User
     end
   end
 
-  def matching_actions(award)
+  # TODO do we need to account for ALL / ANY logic here?
+  def matching_actions(award)    
     if award.start_time.present? && award.end_time.present? && award.required_occurrences > 0
       # find all actions that match at least one of the action_types definied in the award
       self.actions.gt(created_at: award.start_time).lt(created_at: award.end_time).in(action_type: award.required_actions.collect {|x| x.name}).in(api_key: award.channels.collect {|x| x.api_key})
@@ -44,12 +46,23 @@ class User
   def awards_earned_by_action(action)
     # all user.awards have been earned; those associated with the action were earned by the action
     # however, this is probably not ideal since it's only the award.actions.last that actually earned the award
-    action.awards.in(user_ids: self.id)
-    # self.awards.in(action_ids: action.id)
+    if action.user == self
+      awards_earned_by_action = []
+      self.awards.each do |award|
+        awards_earned_by_action << award if award.actions.where(user_id: self.id).asc(:created_at).last == action
+      end
+      return awards_earned_by_action
+    else
+      nil
+    end
   end
   
   def awards_in_progress_by_action(action)
-    action.awards.nin(user_ids: self.id)
+    if action.user == self
+      action.awards.nin(user_ids: self.id)
+    else
+      nil
+    end
   end
 end
 

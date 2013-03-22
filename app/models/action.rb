@@ -7,43 +7,45 @@ class Action
   has_and_belongs_to_many :awards, dependent: :nullify
   
   
-  field :api_key
-  field :case_id
-  field :action_type
-  field :description
-  field :location
+  field :api_key, type: String
+  field :record_id, type: String # provider UID
+  field :case_id, type: String
+  field :action_type, type: String
+  field :description, type: String
+  field :shared, type: Boolean
+  field :location, type: String
   field :latitude, type: BigDecimal
   field :longitude, type: BigDecimal
-  field :image, type: Boolean
+  field :url, type: String
+  field :photo_url, type: String
+
   
   after_create :assign_awards
   
+  # this callback assigns incoming actions to relevant awards, and assigns awards to users if the award's 
+  # requirements have been met
   def assign_awards
     user = self.user
     # find awards that are in-range and match the action_type and channel of the incoming action
     matching_awards = Award.elem_match(required_actions: {name: self.action_type}).in(channel_ids: [self.channel.try(:id)]).lt(start_time: self.created_at).gt(end_time: self.created_at)
     
-    # iterate through the awards and determine whether their requirements have been met
+    # iterate through the matching awards and determine whether their requirements have been met
     matching_awards.each do |award|
-      # assign the incoming action to the matching awards for tracking purposes
-      award.actions << self
-      award_actions = user.actions.in(api_key: award.channel_keys).gt(created_at: award.start_time).lt(created_at: award.end_time)
+      unless user.awards.include?(award)
+        # assign the action to the award in order to track progress
+        award.actions << self
+        matching_user_actions = user.actions.in(api_key: award.channel_keys).gt(created_at: award.start_time).lt(created_at: award.end_time)
       
-      # iterate through the requirements and determine if they have been met
-      award_requirements_met = []
-      award.required_actions.each do |requirement|
-        requirement_actions = award_actions.where(action_type: requirement.name)
-        requirement_met = (requirement_actions.count >= requirement.occurrences)
-        award_requirements_met << requirement_met
-      end
-      
-      # assign the award to the user if the award's requirements have been met
-      if award.operator == 'ALL' && award_requirements_met.all?
-        unless user.awards.include?(award)
-          user.awards << award
+        # iterate through the requirements and determine if they have been met
+        award_requirements_met = []
+        award.required_actions.each do |requirement|
+          award_requirements_met << (matching_user_actions.where(action_type: requirement.name).count >= requirement.occurrences)
         end
-      elsif award.operator == 'ANY' && award_requirements_met.include?(true)
-        unless user.awards.include?(award)
+      
+        # assign the award to the user if the award's requirements have been met
+        if award.operator == 'ALL' && award_requirements_met.all?
+          user.awards << award
+        elsif award.operator == 'ANY' && award_requirements_met.include?(true)
           user.awards << award
         end
       end
