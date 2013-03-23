@@ -1,0 +1,9 @@
+%h1 Admin Users
+
+%table.table
+  %tr
+    %th Email
+
+  - @admin_users.each do |user|
+    %tr
+      %td= user.email      

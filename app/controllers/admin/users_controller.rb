@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   layout 'admin'
+  before_filter :authenticate_admin_user!
   
   def index
     @users = User.desc(:created_at)

@@ -1,5 +1,6 @@
 class Admin::ActionTypesController < ApplicationController
   layout 'admin'
+  before_filter :authenticate_admin_user!
   
   def index
     @action_types = ActionType.asc(:name)

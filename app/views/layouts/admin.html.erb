@@ -15,13 +15,15 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <div class="nav-collapse pull-left">
-            <ul class="nav">
+          <ul class="nav pull-right">
+            <% if current_admin_user %>
+              <li><%= link_to 'Log Out', sign_out_path %></li>
+            <% else %>
+              <li><%= link_to 'Log In', sign_in_path %></li>            
+            <% end %>
+          </ul>
+          <% if current_admin_user %>
+            <ul class="nav pull-lef">
               <li><%= link_to 'Levels', admin_levels_path %></li>
               <li><%= link_to 'Campaigns', admin_campaigns_path %></li>
               <li><%= link_to 'Awards', admin_awards_path %></li>
@@ -29,8 +31,9 @@
               <li><%= link_to 'Actions', admin_actions_path %></li>
               <li><%= link_to 'Action Types', admin_action_types_path %></li>
               <li><%= link_to 'Users', admin_users_path %></li>
+              <li><%= link_to 'Admin Users', admin_admin_users_path %></li>
             </ul>
-          </div><!--/.nav-collapse -->
+          <% end %>
         </div>
       </div>
     </div>

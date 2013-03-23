@@ -1,5 +1,6 @@
 class Admin::ActionsController < ApplicationController
   layout 'admin'
+  before_filter :authenticate_admin_user!
   
   def index
     @actions = Action.desc(:created_at)

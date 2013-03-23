@@ -1,6 +1,6 @@
 class Admin::LevelsController < ApplicationController
-
   layout 'admin'
+  before_filter :authenticate_admin_user!
   
   def index
     @levels = Level.desc(:points)

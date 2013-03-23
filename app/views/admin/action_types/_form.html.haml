@@ -13,7 +13,6 @@
   = f.label :points
   = f.text_field :points
 
-%br/
 .actions
   - if Action.where(action_type: @action_type.name).count > 0
     = f.submit 'Save', :class => 'btn btn-success', :data => { :confirm => "#{Action.where(action_type: @action_type.name).count} actions are associated with this action type. Changing the action type name will orphan these records. Do you wish to continue?" }
