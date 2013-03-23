@@ -4,6 +4,7 @@ Streetcred::Application.routes.draw do
   devise_scope :admin_user do
     get "sign_in", :to => "admin/sessions#new"
     get "sign_out", :to => "admin/sessions#destroy"
+    get "edit_registration", :to => "admin/registrations#edit"
   end
   
   resources :users

@@ -3,7 +3,10 @@
 %table.table
   %tr
     %th Email
+    %th
 
   - @admin_users.each do |user|
     %tr
-      %td= user.email      
+      %td= user.email
+      %td{width: 35}= link_to 'Edit', edit_registration_path(user), :class => 'btn btn-mini'
+      
