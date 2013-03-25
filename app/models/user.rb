@@ -47,11 +47,7 @@ class User
     # all user.awards have been earned; those associated with the action were earned by the action
     # however, this is probably not ideal since it's only the award.actions.last that actually earned the award
     if action.user == self
-      awards_earned_by_action = []
-      self.awards.each do |award|
-        awards_earned_by_action << award if award.actions.where(user_id: self.id).asc(:created_at).last == action
-      end
-      return awards_earned_by_action
+      self.awards.collect {|award| award if award.actions.where(user_id: self.id).asc(:created_at).last == action}.compact
     else
       nil
     end
