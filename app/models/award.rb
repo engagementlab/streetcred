@@ -2,10 +2,10 @@ class Award
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  has_and_belongs_to_many :campaigns
-  has_and_belongs_to_many :actions
-  has_and_belongs_to_many :channels
-  has_and_belongs_to_many :users
+  has_and_belongs_to_many :campaigns, index: true
+  has_and_belongs_to_many :actions, index: true
+  has_and_belongs_to_many :channels, index: true
+  has_and_belongs_to_many :users, index: true
   embeds_many :required_actions
   accepts_nested_attributes_for :required_actions, allow_destroy: true
     

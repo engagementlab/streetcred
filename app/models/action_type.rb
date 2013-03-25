@@ -1,7 +1,7 @@
 class ActionType
   include Mongoid::Document
   
-  has_and_belongs_to_many :awards
+  has_and_belongs_to_many :awards, index: true
   
   field :name
   field :points, type: Integer, default: 0

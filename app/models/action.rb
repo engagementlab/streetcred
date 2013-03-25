@@ -4,7 +4,7 @@ class Action
   
   belongs_to :user
   belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
-  has_and_belongs_to_many :awards, dependent: :nullify
+  has_and_belongs_to_many :awards, dependent: :nullify, index: true
   
   
   field :api_key, type: String

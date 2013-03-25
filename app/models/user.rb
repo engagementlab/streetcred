@@ -3,7 +3,7 @@ class User
   include Mongoid::Timestamps
   
   has_many :actions, dependent: :delete
-  has_and_belongs_to_many :awards
+  has_and_belongs_to_many :awards, index: true
   embeds_many :points
   
   
