@@ -1,4 +1,6 @@
-Streetcred::Application.routes.draw do  
+Streetcred::Application.routes.draw do
+  root :to => 'users#index' 
+  
   resources :users, :only => [:index, :show]
   
   devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations'}
