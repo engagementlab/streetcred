@@ -1,0 +1,16 @@
+%h2= @user.email
+
+%table.table
+  %tr
+    %th Name
+    %th Description
+    %th Points
+  - for award in @user.awards
+    %tr
+      %td= award.name
+      %td= award.description
+      %td= award.points
+      
+%p
+  Is this you?
+  = link_to "Claim your profile!", new_password_path(@user, :claim_profile => true)

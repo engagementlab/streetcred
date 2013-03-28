@@ -1,0 +1,14 @@
+%table.table
+  %tr
+    %th 
+    %th Awards
+    %th Points
+
+  - @users.each do |user|
+    %tr
+      %td
+        %h3= link_to user.email, user_path(user)
+      %td
+        %h3= user.awards.count
+      %td
+        %h3= user.total_points

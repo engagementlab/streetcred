@@ -1,0 +1,27 @@
+- if params[:claim_profile] == 'true'
+  %h2 Claim your profile
+  .well
+    Enter your email address and we'll send you instructions on how to claim your profile.
+  = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+    = devise_error_messages!
+
+    .field
+      = f.label :email
+      = f.email_field :email, :autofocus => true
+
+    .actions
+      = f.submit "Send", :class => 'btn'
+- else
+  %h2 Forgot your password?
+
+  = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+    = devise_error_messages!
+
+    .field
+      = f.label :email
+      = f.email_field :email, :autofocus => true
+
+    .actions
+      = f.submit "Send me reset password instructions", :class => 'btn'
+
+  = render "devise/shared/links"

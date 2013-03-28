@@ -25,7 +25,6 @@ class Api::ActionsController < ApplicationController
         end
         user.update_attributes(params['user'])
         params['report']['api_key'] = params['api_key']
-        logger.info "These are the report params #{params['report']}"
         action = user.actions.create(
           api_key: params['api_key'],
           record_id: params['report']['record_id'],

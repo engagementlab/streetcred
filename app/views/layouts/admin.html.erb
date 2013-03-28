@@ -17,9 +17,9 @@
         <div class="container">
           <ul class="nav pull-right">
             <% if current_admin_user %>
-              <li><%= link_to 'Log Out', sign_out_path %></li>
+              <li><%= link_to 'Log Out', admin_sign_out_path %></li>
             <% else %>
-              <li><%= link_to 'Log In', sign_in_path %></li>            
+              <li><%= link_to 'Log In', admin_sign_in_path %></li>            
             <% end %>
           </ul>
           <% if current_admin_user %>
