@@ -1,10 +1,18 @@
 Streetcred::Application.routes.draw do
   root :to => 'users#index' 
-  devise_for :admin_users, :controllers => {:sessions => 'admin/sessions', :registrations => 'admin/registrations'}
-  devise_scope :admin_user do
+  
+  devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations'}
+  devise_scope :user do
     get "sign_in", :to => "admin/sessions#new"
     get "sign_out", :to => "admin/sessions#destroy"
     get "edit_registration", :to => "admin/registrations#edit"
+  end
+  
+  devise_for :admin_users, :controllers => {:sessions => 'admin/sessions', :registrations => 'admin/registrations'}
+  devise_scope :admin_user do
+    get "admin_sign_in", :to => "admin/sessions#new"
+    get "admin_sign_out", :to => "admin/sessions#destroy"
+    get "edit_admin_registration", :to => "admin/registrations#edit"
   end
   
   resources :users
@@ -23,7 +31,12 @@ Streetcred::Application.routes.draw do
   end
   
   namespace :api do
-    resources :actions
+    resources :actions do
+      collection do
+        post 'citizens_connect'
+        post 'foursquare'
+      end
+    end
     resources :awards
     resources :users
   end
