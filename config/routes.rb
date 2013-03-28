@@ -1,6 +1,8 @@
 Streetcred::Application.routes.draw do
   root :to => 'users#index' 
   
+  resources :users, :only => [:index, :show]
+  
   devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations'}
   devise_scope :user do
     get "sign_in", :to => "admin/sessions#new"
@@ -15,8 +17,6 @@ Streetcred::Application.routes.draw do
     get "edit_admin_registration", :to => "admin/registrations#edit"
   end
   
-  resources :users
-
   match '/admin' => 'admin/awards#index'
   namespace :admin do
     match 'awards/add_required_action' => 'awards#add_required_action', :as => 'add_required_action'
