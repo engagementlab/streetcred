@@ -3,7 +3,7 @@ Streetcred::Application.routes.draw do
   
   resources :users, :only => [:index, :show]
   
-  devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations'}
+  devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks", :sessions => 'sessions', :registrations => 'registrations'}
   devise_scope :user do
     get "sign_in", :to => "admin/sessions#new"
     get "sign_out", :to => "admin/sessions#destroy"
