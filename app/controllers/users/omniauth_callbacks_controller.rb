@@ -1,40 +1,17 @@
 class Users::OmniauthCallbacksController < ApplicationController
   def foursquare
-    puts env['omniauth.auth']
-    # @user = Oauth.find_or_create_from_google_oauth(env['omniauth.auth'], current_user)
-    # 
-    # if @user.persisted?
-    #   sign_in @user, :event => :authentication
-    #   redirect_logic
-    # else
-    #   session["devise.twitter_data"] = env["omniauth.auth"]
-    #   redirect_to new_user_registration_url
-    # end
+    @user = Oauth.find_or_create_from_foursquare_oauth(env['omniauth.auth'], current_user)
+
+    if @user.persisted?
+      sign_in @user, :event => :authentication
+      redirect_to users_url
+      # redirect_logic
+    else
+      session["devise.foursquare_data"] = env["omniauth.auth"]
+      redirect_to users_url
+    end
   end
   
-  # def facebook
-  #   @user = Oauth.find_or_create_from_facebook_oauth(env["omniauth.auth"], current_user)
-  #   if @user.persisted?
-  #     sign_in @user, :event => :authentication
-  #     redirect_logic
-  #   else
-  #     session["devise.facebook_data"] = env["omniauth.auth"]
-  #     redirect_to new_user_registration_url
-  #   end
-  # end
-  # 
-  # def twitter
-  #   @user = Oauth.find_or_create_from_twitter_oauth(env['omniauth.auth'], current_user)    
-  # 
-  #   if @user.persisted?
-  #     sign_in @user, :event => :authentication
-  #     redirect_logic
-  #   else
-  #     session["devise.twitter_data"] = env["omniauth.auth"]
-  #     redirect_to new_user_registration_url
-  #   end
-  # end
-
   private
 
   def redirect_logic

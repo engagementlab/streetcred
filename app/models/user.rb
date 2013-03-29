@@ -17,7 +17,7 @@ class User
 
   # Omniauth
   field :provider, type: String
-  field :uid, type: String
+  field :provider_uid, type: String
   field :info, type: String
   field :credentials, type: String
   field :extra, type: String
