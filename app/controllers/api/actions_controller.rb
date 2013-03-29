@@ -7,11 +7,40 @@ class Api::ActionsController < ApplicationController
   # generic create
   def create
     if params['email'].present?
-      user = User.find_or_create_by(email: params['email'])
+      user = User.where(email: params['email']).first_or_create
       action = user.actions.create(params['action'])
       @earned_awards = user.awards_earned_by_action(action)
       NotificationMailer.status_email(user, action).deliver
       respond_with(@earned_awards)
+    end
+  end
+  
+  def foursquare
+    posted_json = request.body.read
+    
+    if posted_json.blank?
+      render :nothing => true
+      return
+    else
+      parsed_json = JSON.parse(posted_json.to_s)
+      user = User.where(provider_uid: parsed_json['user']['id']).first
+      if user.present?
+        action = user.actions.create(
+          api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
+          record_id: params['checkin']['id'],
+          case_id: params['checkin']['case_id'],
+          action_type: "#{params['checkin']['venue']['name']} Checkin", # is this smart? has to match ActionType
+          latitude: params['checkin']['venue']['location']['lat'],
+          longitude: params['checkin']['venue']['location']['lng'],
+          address: params['checkin']['venue']['location']['address'],
+          city: params['checkin']['venue']['location']['city'],
+          zipcode: params['checkin']['venue']['location']['postalCode'],
+          state: params['checkin']['venue']['location']['state'],
+          url: params['checkin']['url'],
+          image_url: params['checkin']['image_url'],
+          timestamp: params['checkin']['createdAt']
+        )
+      render :nothing => true
     end
   end
   
