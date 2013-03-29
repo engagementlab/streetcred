@@ -16,6 +16,10 @@ class Action
   field :location, type: String
   field :latitude, type: BigDecimal
   field :longitude, type: BigDecimal
+  field :address, type: String
+  field :city, type: String
+  field :zipcode, type: String
+  field :state, type: String
   field :url, type: String
   field :photo_url, type: String
 

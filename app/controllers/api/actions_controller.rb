@@ -20,12 +20,12 @@ class Api::ActionsController < ApplicationController
     
     if posted_json.blank?
       render :nothing => true
-      return
     else
       parsed_json = JSON.parse(posted_json.to_s)
       user = User.where(provider_uid: parsed_json['user']['id']).first
       if user.present?
-        action = user.actions.create(
+        logger.info "******* Here's the json we got from foursquare: #{parsed_json}"
+        user.actions.create(
           api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
           record_id: params['checkin']['id'],
           case_id: params['checkin']['case_id'],
@@ -40,6 +40,7 @@ class Api::ActionsController < ApplicationController
           image_url: params['checkin']['image_url'],
           timestamp: params['checkin']['createdAt']
         )
+      end
       render :nothing => true
     end
   end
