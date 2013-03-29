@@ -16,34 +16,34 @@ class Api::ActionsController < ApplicationController
   end
   
   def foursquare
-    posted_json = request.body.read
-    logger.info "posted_json looks like this: #{posted_json}"
+    logger.info "params look like this: #{params}"
+    logger.info "request body looks like this: #{request.body.read}"
     
-    if posted_json.blank?
-      render :nothing => true
-    else
-      parsed_json = Oj.dump(posted_json.to_s)
-      logger.info "parsed_json looks like this: #{parsed_json}"
-      user = User.where(provider_uid: parsed_json['user']['id']).first
-      if user.present?
-        user.actions.create(
-          api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
-          record_id: params['checkin']['id'],
-          case_id: params['checkin']['case_id'],
-          action_type: "#{params['checkin']['venue']['name']} Checkin", # is this smart? has to match ActionType
-          latitude: params['checkin']['venue']['location']['lat'],
-          longitude: params['checkin']['venue']['location']['lng'],
-          address: params['checkin']['venue']['location']['address'],
-          city: params['checkin']['venue']['location']['city'],
-          zipcode: params['checkin']['venue']['location']['postalCode'],
-          state: params['checkin']['venue']['location']['state'],
-          url: params['checkin']['url'],
-          image_url: params['checkin']['image_url'],
-          timestamp: params['checkin']['createdAt']
-        )
-      end
-      render :nothing => true
-    end
+    # if posted_json.blank?
+    #   render :nothing => true
+    # else
+    #   parsed_json = Oj.dump(posted_json.to_s)
+    #   logger.info "parsed_json looks like this: #{parsed_json}"
+    #   user = User.where(provider_uid: parsed_json['user']['id']).first
+    #   if user.present?
+    #     user.actions.create(
+    #       api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
+    #       record_id: params['checkin']['id'],
+    #       case_id: params['checkin']['case_id'],
+    #       action_type: "#{params['checkin']['venue']['name']} Checkin", # is this smart? has to match ActionType
+    #       latitude: params['checkin']['venue']['location']['lat'],
+    #       longitude: params['checkin']['venue']['location']['lng'],
+    #       address: params['checkin']['venue']['location']['address'],
+    #       city: params['checkin']['venue']['location']['city'],
+    #       zipcode: params['checkin']['venue']['location']['postalCode'],
+    #       state: params['checkin']['venue']['location']['state'],
+    #       url: params['checkin']['url'],
+    #       image_url: params['checkin']['image_url'],
+    #       timestamp: params['checkin']['createdAt']
+    #     )
+    #   end
+    #   render :nothing => true
+    # end
   end
   
   def citizens_connect
