@@ -16,16 +16,15 @@ class Api::ActionsController < ApplicationController
   end
   
   def foursquare
-    logger.info "****************** #{params} ****************************"
     if params['secret'] == 'BOL410IIRYOQ1FEAYT1PZYGYDVN5OYUYI1JO5CI2SW3UNO20' # ENV['FOURSQUARE_PUSH_SECRET']
       if params['checkin'].blank?
         render :nothing => true
       else
         checkin = Oj.load(params['checkin'])
         user = User.where(provider_uid: checkin['user']['id']).first
-        action_type = ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").first_or_create
         if user.present?
-          logger.info "*************** Found user **********************"
+          # find or create a Foursquare Checkin action type but only if we found a user
+          action_type = ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").first_or_create
           user.actions.create(
             api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
             record_id: checkin['id'],
@@ -38,7 +37,7 @@ class Api::ActionsController < ApplicationController
             city: checkin['venue']['location']['city'],
             zipcode: checkin['venue']['location']['postalCode'],
             state: checkin['venue']['location']['state'],
-            timestamp: Time.strptime(checkin['createdAt'],'%s')
+            timestamp: Time.now
           )
         end
         render :nothing => true
