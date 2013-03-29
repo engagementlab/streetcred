@@ -16,7 +16,7 @@ class Api::ActionsController < ApplicationController
   end
   
   def foursquare
-    logger.info params
+    logger.info "****************** #{params} ****************************"
     if params['secret'] == 'BOL410IIRYOQ1FEAYT1PZYGYDVN5OYUYI1JO5CI2SW3UNO20' # ENV['FOURSQUARE_PUSH_SECRET']
       if params['checkin'].blank?
         render :nothing => true
@@ -25,6 +25,7 @@ class Api::ActionsController < ApplicationController
         user = User.where(provider_uid: checkin['user']['id']).first
         action_type = ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").first_or_create
         if user.present?
+          logger.info "*************** Found user **********************"
           user.actions.create(
             api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
             record_id: checkin['id'],
