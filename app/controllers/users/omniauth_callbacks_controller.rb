@@ -1,4 +1,4 @@
-class Users::OmniauthCallbacksController < ApplicationController
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def foursquare
     @user = Oauth.find_or_create_from_foursquare_oauth(env['omniauth.auth'], current_user)
 
