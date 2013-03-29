@@ -1,5 +1,7 @@
 %h2= @user.email
 
+%hr/
+%h3 Awards
 %table.table
   %tr
     %th Name
@@ -10,7 +12,17 @@
       %td= award.name
       %td= award.description
       %td= award.points
-      
-%p
-  Is this you?
-  = link_to "Claim your profile!", new_password_path(@user, :claim_profile => true)
+
+%hr/
+%h3 Actions
+%table.table
+  %tr
+    %th Action Type
+    %th Channel
+    %th Created At
+    %th
+  - for action in @user.actions
+    %tr
+      %td= action.action_type
+      %td= action.channel.try(:name)
+      %td= action.created_at
