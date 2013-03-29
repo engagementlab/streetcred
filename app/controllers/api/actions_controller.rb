@@ -16,34 +16,34 @@ class Api::ActionsController < ApplicationController
   end
   
   def foursquare
-    logger.info "params look like this: #{params}"
-    logger.info "request body looks like this: #{request.body.read}"
-    
-    # if posted_json.blank?
-    #   render :nothing => true
-    # else
-    #   parsed_json = Oj.dump(posted_json.to_s)
-    #   logger.info "parsed_json looks like this: #{parsed_json}"
-    #   user = User.where(provider_uid: parsed_json['user']['id']).first
-    #   if user.present?
-    #     user.actions.create(
-    #       api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
-    #       record_id: params['checkin']['id'],
-    #       case_id: params['checkin']['case_id'],
-    #       action_type: "#{params['checkin']['venue']['name']} Checkin", # is this smart? has to match ActionType
-    #       latitude: params['checkin']['venue']['location']['lat'],
-    #       longitude: params['checkin']['venue']['location']['lng'],
-    #       address: params['checkin']['venue']['location']['address'],
-    #       city: params['checkin']['venue']['location']['city'],
-    #       zipcode: params['checkin']['venue']['location']['postalCode'],
-    #       state: params['checkin']['venue']['location']['state'],
-    #       url: params['checkin']['url'],
-    #       image_url: params['checkin']['image_url'],
-    #       timestamp: params['checkin']['createdAt']
-    #     )
-    #   end
-    #   render :nothing => true
-    # end
+    if params['secret'] == 'BOL410IIRYOQ1FEAYT1PZYGYDVN5OYUYI1JO5CI2SW3UNO20' # ENV['FOURSQUARE_PUSH_SECRET']
+      if params['checkin'].blank?
+        render :nothing => true
+      else
+        checkin = Oj.load(params['checkin'])
+        user = User.where(provider_uid: checkin['user']['id']).first
+        action_type = ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").first_or_create
+        if user.present?
+          user.actions.create(
+            api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
+            record_id: checkin['id'],
+            case_id: checkin['id'],
+            action_type: action_type.name,
+            description: checkin['shout'],
+            latitude: checkin['venue']['location']['lat'],
+            longitude: checkin['venue']['location']['lng'],
+            address: checkin['venue']['location']['address'],
+            city: checkin['venue']['location']['city'],
+            zipcode: checkin['venue']['location']['postalCode'],
+            state: checkin['venue']['location']['state'],
+            timestamp: Time.strptime(checkin['createdAt'],'%s')
+          )
+        end
+        render :nothing => true
+      end
+    else
+      return "Invalid FOURSQUARE_PUSH_SECRET"
+    end
   end
   
   def citizens_connect
@@ -55,13 +55,13 @@ class Api::ActionsController < ApplicationController
           user = User.where(contact_id: params['user']['contact_id']).first_or_create
         end
         user.update_attributes(params['user'])
-        params['report']['api_key'] = params['api_key']
+        action_type = ActionType.where(name: params['report']['service']).first_or_create
         action = user.actions.create(
           api_key: params['api_key'],
           record_id: params['report']['record_id'],
           case_id: params['report']['case_id'],
           event: params['report']['event'],
-          action_type: params['report']['service'],
+          action_type: action_type.name,
           description: params['report']['description'],
           shared: params['report']['shared'],
           latitude: params['report']['latitude'],
