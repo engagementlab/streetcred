@@ -51,7 +51,11 @@ class User
   # field :authentication_token, :type => String
 
   def full_name
-    "#{self.first_name} #{self.last_name}"
+    if self.first_name.blank? && self.last_name.blank?
+      self.id
+    else
+      "#{self.first_name} #{self.last_name}"
+    end
   end
   
   def total_points
