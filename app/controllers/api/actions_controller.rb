@@ -17,14 +17,15 @@ class Api::ActionsController < ApplicationController
   
   def foursquare
     posted_json = request.body.read
+    logger.info "posted_json looks like this: #{posted_json}"
     
     if posted_json.blank?
       render :nothing => true
     else
-      parsed_json = JSON.parse(posted_json.to_s)
+      parsed_json = Oj.dump(posted_json.to_s)
+      logger.info "parsed_json looks like this: #{parsed_json}"
       user = User.where(provider_uid: parsed_json['user']['id']).first
       if user.present?
-        logger.info "******* Here's the json we got from foursquare: #{parsed_json}"
         user.actions.create(
           api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
           record_id: params['checkin']['id'],
