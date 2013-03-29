@@ -16,6 +16,7 @@ class Api::ActionsController < ApplicationController
   end
   
   def foursquare
+    logger.info params
     if params['secret'] == 'BOL410IIRYOQ1FEAYT1PZYGYDVN5OYUYI1JO5CI2SW3UNO20' # ENV['FOURSQUARE_PUSH_SECRET']
       if params['checkin'].blank?
         render :nothing => true
