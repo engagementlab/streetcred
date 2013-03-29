@@ -26,3 +26,7 @@
       %td= action.action_type
       %td= action.channel.try(:name)
       %td= action.created_at
+      
+- if @user.provider_uid.blank?
+  %br/
+  = link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
