@@ -16,7 +16,9 @@ class Award
   field :start_time, type: DateTime
   field :end_time, type: DateTime
   field :description, type: String
-  field :message, type: String
+  field :start_message, type: String
+  field :mid_message, type: String
+  field :success_message, type: String  
   field :badge_url, type: String
   field :points, type: Integer, default: 0
   field :operator, type: String

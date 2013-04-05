@@ -14,9 +14,17 @@
   = f.text_area :description, rows: 6
 
 .field
-  = f.label :message, "Success message"
-  = f.text_area :message, rows: 4
+  = f.label :start_message, "Start message"
+  = f.text_area :start_message, rows: 4
 
+.field
+  = f.label :mid_message, "Halfway message"
+  = f.text_area :mid_message, rows: 4
+  
+.field
+  = f.label :success_message, "Success message"
+  = f.text_area :success_message, rows: 4
+      
 .field
   = f.label :badge_url, "Badge URL"
   = f.text_field :badge_url
