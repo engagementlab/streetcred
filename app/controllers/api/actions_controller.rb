@@ -22,9 +22,8 @@ class Api::ActionsController < ApplicationController
       else
         checkin = Oj.load(params['checkin'])
         user = User.where(provider_uid: checkin['user']['id']).first
-        if user.present?
-          # find or create a Foursquare Checkin action type but only if we found a user
-          action_type = ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").first_or_create
+        action_type = ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").first
+        if user.present? && action_type.present?
           user.actions.create(
             api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
             record_id: checkin['id'],
@@ -43,7 +42,7 @@ class Api::ActionsController < ApplicationController
         render :nothing => true
       end
     else
-      return "Invalid FOURSQUARE_PUSH_SECRET"
+      logger.info "Invalid FOURSQUARE_PUSH_SECRET"
       render :nothing => true
     end
   end
@@ -79,7 +78,7 @@ class Api::ActionsController < ApplicationController
         return "No user info supplied"
       end
     else
-      return "Invalid api_key"
+      return "Invalid API_KEY"
     end
   end
   
