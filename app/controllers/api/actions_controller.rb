@@ -44,6 +44,7 @@ class Api::ActionsController < ApplicationController
       end
     else
       return "Invalid FOURSQUARE_PUSH_SECRET"
+      render :nothing => true
     end
   end
   
