@@ -8,8 +8,8 @@ class Channel
   field :name, type: String
   field :api_key, type: String
   
-  index({ name: 1 }, { unique: true, name: "name_index" })
-  index({ api_key: 1 }, { unique: true, name: "api_key_index" })
+  index({ name: 1 }, { unique: true})
+  index({ api_key: 1 }, { unique: true})
   
   validates_presence_of :name
   
