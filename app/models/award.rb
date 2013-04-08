@@ -22,7 +22,7 @@ class Award
   field :badge_url, type: String
   field :points, type: Integer, default: 0
   field :operator, type: String
-  field :radius, type: Integer
+  field :radius, type: BigDecimal
   
   index({ name: 1 }, { unique: true})
   index({ start_time: 1 })
