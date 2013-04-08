@@ -1,4 +1,4 @@
-class Action
+class Action  
   include Mongoid::Document
   include Mongoid::Timestamps
   
@@ -27,12 +27,12 @@ class Action
   index({ api_key: 1 })
   index({ coordinates: "2d" })
 
-  after_create :assign_awards
   before_save :set_coordinates
+  after_create :assign_awards
   
   def set_coordinates
-    if self.latitude.present? && self.longitude.present?
-      self.coordinates = [self.longitude.to_f, self.latitude.to_f]
+    if (self.latitude.present? && self.longitude.present?)
+      self.coordinates = [self.longitude.try(:to_f), self.latitude.try(:to_f)]
     end
   end
   
@@ -49,7 +49,7 @@ class Action
         # assign the action to the award in order to track progress
         award.actions << self
         
-        if award.requirements_met?(user)
+        if award.requirements_met?(user, self)
           user.awards << award
         end
       end

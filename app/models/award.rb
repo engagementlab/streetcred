@@ -22,6 +22,7 @@ class Award
   field :badge_url, type: String
   field :points, type: Integer, default: 0
   field :operator, type: String
+  field :radius, type: Integer
   
   index({ name: 1 }, { unique: true})
   index({ start_time: 1 })
@@ -56,16 +57,22 @@ class Award
     channels.collect {|x| x.api_key}
   end
   
-  def requirements_met?(user)
+  def requirements_met?(user, action)
     # find the actions dynamically, not based on which ones have been associated with the award
-    # in other words, actions from before the award was created, but which meet its criteria
+    # in other words, including actions from before the award was created, but which meet its criteria
     matching_user_actions = user.actions.in(api_key: self.channel_keys).gt(created_at: self.start_time).lt(created_at: self.end_time)
-    award_requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
+    
+    # return false if the radius has been set on the award but hasn't been met by the incoming action
+    if self.radius.present? && action.coordinates.present? && self.radius > matching_user_actions.geo_near(action.coordinates).spherical.max_distance * 3959
+      return false
+    else      
+      award_requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
 
-    if self.operator == 'ALL'
-      award_requirements_met.all?
-    elsif self.operator == 'ANY'
-      award_requirements_met.include?(true)
+      if self.operator == 'ALL'
+        award_requirements_met.all?
+      elsif self.operator == 'ANY'
+        award_requirements_met.include?(true)
+      end
     end
   end
   
