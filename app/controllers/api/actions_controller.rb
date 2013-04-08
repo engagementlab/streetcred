@@ -22,7 +22,11 @@ class Api::ActionsController < ApplicationController
       else
         checkin = Oj.load(params['checkin'])
         user = User.where(provider_uid: checkin['user']['id']).first
-        action_type = ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").first
+        if ActionType.where(provider_uid: checkin['venue']['id']).present?
+          action_type = ActionType.where(provider_uid: checkin['venue']['id']).first
+        elsif ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").present?
+          action_type = ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").first
+        end
         if user.present? && action_type.present?
           user.actions.create(
             api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
