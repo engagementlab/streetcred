@@ -8,6 +8,9 @@ class Channel
   field :name, type: String
   field :api_key, type: String
   
+  index({ name: 1 }, { unique: true, name: "name_index" })
+  index({ api_key: 1 }, { unique: true, name: "api_key_index" })
+  
   validates_presence_of :name
   
   before_create :generate_api_key

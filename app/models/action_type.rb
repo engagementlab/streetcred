@@ -7,6 +7,10 @@ class ActionType
   field :provider_uid, type: String
   field :points, type: Integer, default: 0
   
+  index({ name: 1 })
+  index({ provider_uid: 1 })
+  
+  
   before_save :strip_name, :strip_provider_uid
   
   private

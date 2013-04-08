@@ -23,6 +23,9 @@ class Award
   field :points, type: Integer, default: 0
   field :operator, type: String
   
+  index({ name: 1 }, { unique: true})
+  index({ start_time: 1 })
+  index({ end_time: 1 })
       
   def required_occurrences
     occurrences = 0
