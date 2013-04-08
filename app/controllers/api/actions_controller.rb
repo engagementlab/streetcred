@@ -28,6 +28,9 @@ class Api::ActionsController < ApplicationController
           action_type = ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").first
         end
         if user.present? && action_type.present?
+          if action_type.name.blank?
+            action_type.update_attribute(:name, "Foursquare Checkin: #{checkin['venue']['name']}")
+          end
           user.actions.create(
             api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
             record_id: checkin['id'],
