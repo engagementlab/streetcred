@@ -24,7 +24,7 @@ class Action
   field :url, type: String
   field :photo_url, type: String
   
-  index({ api_key: 1 }, { unique: true})
+  index({ api_key: 1 })
   index({ coordinates: "2d" })
 
   after_create :assign_awards
