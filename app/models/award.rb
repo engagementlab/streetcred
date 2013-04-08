@@ -63,7 +63,7 @@ class Award
     matching_user_actions = user.actions.in(api_key: self.channel_keys).gt(created_at: self.start_time).lt(created_at: self.end_time)
     
     # return false if the radius has been set on the award but hasn't been met by the incoming action
-    if self.radius.present? && action.coordinates.present? && self.radius > matching_user_actions.geo_near(action.coordinates).spherical.max_distance * 3959
+    if self.radius.present? && action.coordinates.present? && (matching_user_actions.geo_near(action.coordinates).spherical.max_distance * 3959) < self.radius 
       return false
     else      
       award_requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
