@@ -26,6 +26,7 @@ class Award
   index({ name: 1 }, { unique: true})
   index({ start_time: 1 })
   index({ end_time: 1 })
+  index "required_actions.name" => 1
       
   def required_occurrences
     occurrences = 0
