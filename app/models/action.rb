@@ -32,7 +32,7 @@ class Action
   
   def set_coordinates
     if self.latitude.present? && self.longitude.present?
-      self.coordinates = [self.longitude, self.latitude]
+      self.coordinates = [self.longitude.to_f, self.latitude.to_f]
     end
   end
   
