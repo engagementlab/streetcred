@@ -2,7 +2,7 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  has_many :actions, index: true, dependent: :delete
+  has_many :actions, dependent: :delete
   has_and_belongs_to_many :awards, index: true
   embeds_many :points
   
