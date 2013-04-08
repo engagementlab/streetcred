@@ -2,7 +2,7 @@ class Action
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  belongs_to :user
+  belongs_to :user, index: true
   belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
   has_and_belongs_to_many :awards, dependent: :nullify, index: true
   
@@ -16,14 +16,25 @@ class Action
   field :location, type: String
   field :latitude, type: BigDecimal
   field :longitude, type: BigDecimal
+  field :coordinates, type: Array
   field :address, type: String
   field :city, type: String
   field :zipcode, type: String
   field :state, type: String
   field :url, type: String
   field :photo_url, type: String
+  
+  index({ api_key_uid: 1 }, { unique: true, name: "api_key_index" })
+  index({ coordinates: "2d" })
 
   after_create :assign_awards
+  before_save :set_coordinates
+  
+  def set_coordinates
+    if self.latitude.present? && self.longitude.present?
+      self.coordinates = [self.longitude, self.latitude]
+    end
+  end
   
   # this callback assigns incoming actions to relevant awards, and assigns awards to users if the award's 
   # requirements have been met
