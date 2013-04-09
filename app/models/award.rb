@@ -88,7 +88,7 @@ class Award
   def radius_not_exceeded?(actions)
     actions_with_coordinates = actions.select {|x| x.coordinates.present?}
     geographic_center = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates.reverse})
-    (actions_with_coordinates.geo_near(weighted_center).spherical.max_distance * 3959) <= self.radius
+    (actions_with_coordinates.geo_near(geographic_center).spherical.max_distance * 3959) <= self.radius
   end
   
   def requirements_met(actions)
