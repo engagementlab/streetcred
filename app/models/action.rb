@@ -50,7 +50,7 @@ class Action
         # assign the action to the award in order to track progress
         award.actions << self
         
-        if award.requirements_met?(user, self)
+        if award.requirements_met?(user)
           user.awards << award
         end
       end

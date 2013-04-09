@@ -61,7 +61,7 @@ class Award
     required_actions.collect {|x| x.name}
   end
   
-  def requirements_met?(user, action)
+  def requirements_met?(user)
     # find the actions dynamically, not based on which ones have been associated with the award
     # in other words, including actions from before the award was created, but which meet its criteria
     matching_user_actions = user.actions.in(api_key: self.channel_keys).in(action_type: self.required_action_types).gt(created_at: self.start_time).lt(created_at: self.end_time)
@@ -69,24 +69,30 @@ class Award
     if matching_user_actions.blank?
       return false
     else
-      # if the radius is set on the award, check to see if it has been exceeded
-      if self.radius.present?
-        if action.coordinates.present? && (matching_user_actions.geo_near(action.coordinates).spherical.max_distance * 3959) > self.radius
-          award_requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
-        else
-          award_requirements_met = [false]
-        end
-      # otherwise, just check the number of occurrences
+      # if the radius is set but hasn't been exceeded, return false regardless of occurrences
+      if self.radius.present? && self.radius_not_exceeded?(matching_user_actions)
+        requirements_met = [false]
+      # otherwise, check the number of occurrences
       else      
-        award_requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
+        requirements_met = self.requirements_met(matching_user_actions)
       end
 
       if self.operator == 'ALL'
-        award_requirements_met.all?
+        requirements_met.all?
       elsif self.operator == 'ANY'
-        award_requirements_met.include?(true)
+        requirements_met.include?(true)
       end
     end
+  end
+  
+  def radius_not_exceeded?(actions)
+    actions_with_coordinates = actions.select {|x| x.coordinates.present?}
+    geographic_center = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates.reverse})
+    (actions_with_coordinates.geo_near(weighted_center).spherical.max_distance * 3959) <= self.radius
+  end
+  
+  def requirements_met(actions)
+    self.required_actions.collect {|x| (actions.where(action_type: x.name).count >= x.occurrences)}
   end
   
   private
