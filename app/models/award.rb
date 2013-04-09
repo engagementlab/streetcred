@@ -87,9 +87,10 @@ class Award
   
   def radius_not_exceeded?(actions)
     # make sure the actions have coordinates
-    actions_with_coordinates = actions.ne(coordinates: nil)
-    geographic_center = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.reversed_coordinates})
-    max_distance = (actions_with_coordinates.geo_near(geographic_center).spherical.max_distance * 3959)
+    coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
+    geographic_center = Geocoder::Calculations.geographic_center(coordinates.collect {|x| x.reversed_coordinates})
+    logger.info geographic_center
+    max_distance = (coordinates.geo_near(geographic_center).spherical.max_distance * 3959)
     logger.info max_distance
     max_distance <= self.radius
   end
