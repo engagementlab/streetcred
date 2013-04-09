@@ -14,6 +14,7 @@ gem 'oj'
 gem 'twitter-bootstrap-rails'
 gem 'airbrake'
 gem 'devise'
+gem 'geocoder'
 
 # Omniauth
 gem 'omniauth'
