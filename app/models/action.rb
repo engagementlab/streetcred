@@ -28,11 +28,15 @@ class Action
   index({ api_key: 1 })
   index({ coordinates: "2d" })
 
-  before_save :set_coordinates
+  before_create :set_coordinates
   after_create :assign_awards
   
+  def reversed_coordinates
+    coordinates.try(:reverse)
+  end
+  
   def set_coordinates
-    if (self.latitude.present? && self.longitude.present?)
+    if self.latitude.present? && self.longitude.present?
       self.coordinates = [self.longitude.try(:to_f), self.latitude.try(:to_f)]
     end
   end
