@@ -1,6 +1,7 @@
 class Action  
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Geocoder::Model::Mongoid
   
   belongs_to :user, index: true
   belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
