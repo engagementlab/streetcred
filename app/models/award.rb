@@ -57,17 +57,29 @@ class Award
     channels.collect {|x| x.api_key}
   end
   
+  def required_action_types
+    required_actions.collect {|x| x.name}
+  end
+  
   def requirements_met?(user, action)
     # find the actions dynamically, not based on which ones have been associated with the award
     # in other words, including actions from before the award was created, but which meet its criteria
-    matching_user_actions = user.actions.in(api_key: self.channel_keys).gt(created_at: self.start_time).lt(created_at: self.end_time)
+    matching_user_actions = user.actions.in(api_key: self.channel_keys).in(action_type: self.required_action_types).gt(created_at: self.start_time).lt(created_at: self.end_time)
     
-    # return false if the radius has been set on the award but hasn't been met by the incoming action
-    if self.radius.present? && action.coordinates.present? && (matching_user_actions.geo_near(action.coordinates).spherical.max_distance * 3959) < self.radius
-      logger.info "max_radius = #{matching_user_actions.geo_near(action.coordinates).spherical.max_distance * 3959}"
+    if matching_user_actions.blank?
       return false
-    else      
-      award_requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
+    else
+      # if the radius is set on the award, check to see if it has been exceeded
+      if self.radius.present?
+        if action.coordinates.present? && (matching_user_actions.geo_near(action.coordinates).spherical.max_distance * 3959) > self.radius
+          award_requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
+        else
+          award_requirements_met = [false]
+        end
+      # otherwise, just check the number of occurrences
+      else      
+        award_requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
+      end
 
       if self.operator == 'ALL'
         award_requirements_met.all?
