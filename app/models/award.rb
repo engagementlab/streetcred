@@ -25,11 +25,15 @@ class Award
   field :latitude, type: BigDecimal
   field :longitude, type: BigDecimal
   field :radius, type: BigDecimal
+  field :coordinates, type: Array
   
   index({ name: 1 }, { unique: true})
   index({ start_time: 1 })
   index({ end_time: 1 })
+  index({ coordinates: "2d" })
   index "required_actions.name" => 1
+  
+  before_create :set_coordinates
       
   def required_occurrences
     occurrences = 0
@@ -75,7 +79,7 @@ class Award
       if self.radius.present? && self.radius_exceeded?(matching_user_actions) == false
         requirements_met = [false]
       # otherwise, check the number of occurrences
-      else      
+      else
         requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
       end
 
@@ -89,17 +93,24 @@ class Award
   
   def radius_exceeded?(actions)
     # make sure the actions have coordinates
-    coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
+    actions_with_coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
     if self.latitude.present? && self.longitude.present?
       center_point = [self.longitude.to_f, self.latitude.to_f]
     else
-      center_point = Geocoder::Calculations.geographic_center(coordinates.collect {|x| x.coordinates})
+      center_point = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates})
     end
-    max_distance = (coordinates.geo_near(center_point).spherical.max_distance * 3959)
+    max_distance = (actions_with_coordinates.geo_near(center_point).spherical.max_distance * 3959)
+    puts max_distance
     max_distance > self.radius
   end
 
   private
+  
+  def set_coordinates
+    if self.latitude.present? && self.longitude.present?
+      self.coordinates = [self.longitude.try(:to_f), self.latitude.try(:to_f)]
+    end
+  end
   
   def required_actions_unique
     errors[:base] << "Required actions can't contain duplicates" if required_actions.collect {|x| x.name}.uniq.length != required_actions.length

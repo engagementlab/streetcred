@@ -16,11 +16,11 @@ class ActionType
   private
   
   def strip_name
-    name.strip
+    name.strip if name.present?
   end
   
   def strip_provider_uid
-    provider_uid.strip
+    provider_uid.strip if provider_uid.present?
   end
   
 end

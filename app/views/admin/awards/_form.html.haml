@@ -11,19 +11,19 @@
 
 .field
   = f.label :description
-  = f.text_area :description, rows: 6
+  = f.text_area :description, rows: 5
 
 .field
   = f.label :start_message, "Start message"
-  = f.text_area :start_message, rows: 4
+  = f.text_area :start_message, rows: 3
 
 .field
   = f.label :mid_message, "Halfway message"
-  = f.text_area :mid_message, rows: 4
+  = f.text_area :mid_message, rows: 3
   
 .field
   = f.label :success_message, "Success message"
-  = f.text_area :success_message, rows: 4
+  = f.text_area :success_message, rows: 3
       
 .field
   = f.label :badge_url, "Badge URL"
@@ -75,8 +75,8 @@
 
 %h4 Location
 %p
-  %em These fields are optional. They allow you to set a minimum radius for the actions &mdash; either from a fixed coordinate or from the weighted center of the user's actions.
-  
+  %em Set a minimum radius for the user's actions &mdash; either from the weighted center of the actions (if latitude and longitude are left blank) or from a designated coordinate. (Optional)
+    
 .fields_group
   .field
     = f.label :radius, "Radius (in miles - decimal or integer only)"
@@ -90,7 +90,7 @@
   
 %h4 Duration
 %p
-  %em These fields are required. They define the time-frame during which actions count toward the award.
+  %em Define the time-frame during which actions can count toward the award.
 .fields_group
   .field
     = f.label :start_date
