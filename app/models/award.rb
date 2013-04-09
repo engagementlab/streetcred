@@ -70,11 +70,11 @@ class Award
       return false
     else
       # if the radius is set but hasn't been exceeded, return false regardless of occurrences
-      if self.radius.present? && self.radius_not_exceeded?(matching_user_actions)
+      if self.radius.present? && self.radius_exceeded?(matching_user_actions) == false
         requirements_met = [false]
       # otherwise, check the number of occurrences
       else      
-        requirements_met = self.requirements_met(matching_user_actions)
+        requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
       end
 
       if self.operator == 'ALL'
@@ -85,20 +85,14 @@ class Award
     end
   end
   
-  def radius_not_exceeded?(actions)
+  def radius_exceeded?(actions)
     # make sure the actions have coordinates
     coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
-    geographic_center = Geocoder::Calculations.geographic_center(coordinates.collect {|x| x.reversed_coordinates})
-    logger.info geographic_center
+    geographic_center = Geocoder::Calculations.geographic_center(coordinates.collect {|x| x.coordinates})
     max_distance = (coordinates.geo_near(geographic_center).spherical.max_distance * 3959)
-    logger.info max_distance
-    max_distance <= self.radius
+    max_distance > self.radius
   end
-  
-  def requirements_met(actions)
-    self.required_actions.collect {|x| (actions.where(action_type: x.name).count >= x.occurrences)}
-  end
-  
+
   private
   
   def required_actions_unique
