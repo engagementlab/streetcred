@@ -22,6 +22,8 @@ class Award
   field :badge_url, type: String
   field :points, type: Integer, default: 0
   field :operator, type: String
+  field :latitude, type: BigDecimal
+  field :longitude, type: BigDecimal
   field :radius, type: BigDecimal
   
   index({ name: 1 }, { unique: true})
@@ -88,8 +90,12 @@ class Award
   def radius_exceeded?(actions)
     # make sure the actions have coordinates
     coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
-    geographic_center = Geocoder::Calculations.geographic_center(coordinates.collect {|x| x.coordinates})
-    max_distance = (coordinates.geo_near(geographic_center).spherical.max_distance * 3959)
+    if self.latitude.present? && self.longitude.present?
+      center_point = [self.longitude, self.latitude]
+    else
+      center_point = Geocoder::Calculations.geographic_center(coordinates.collect {|x| x.coordinates})
+    end
+    max_distance = (coordinates.geo_near(center_point).spherical.max_distance * 3959)
     max_distance > self.radius
   end
 

@@ -72,7 +72,25 @@
       %em Require all of the above actions, or any one of them?
     = f.select(:operator, [['ALL', 'ALL'], ['ANY', 'ANY']])
   
-%h4 Date Range
+
+%h4 Location
+%p
+  %em These fields are optional. They allow you to set a minimum radius for the actions &mdash; either from a fixed coordinate or from the weighted center of the user's actions.
+  
+.fields_group
+  .field
+    = f.label :radius, "Radius (in miles - decimal or integer only)"
+    = f.text_field :radius, placeholder: '1.3'
+  .field
+    = f.label :latitude
+    = f.text_field :latitude
+  .field
+    = f.label :longitude
+    = f.text_field :longitude
+  
+%h4 Duration
+%p
+  %em These fields are required. They define the time-frame during which actions count toward the award.
 .fields_group
   .field
     = f.label :start_date
@@ -81,11 +99,6 @@
   .field
     = f.label :end_date
     = f.text_field :end_time, :placeholder => '2013-03-31'
-
-%h4 Distance
-.field
-  = f.label :radius, "Radius (in miles - leave blank if not required)"
-  = f.text_field :radius, placeholder: '1.3'
 
 .actions
   = f.submit 'Save', :class => 'btn btn-success'
