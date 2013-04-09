@@ -91,7 +91,7 @@ class Award
     # make sure the actions have coordinates
     coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
     if self.latitude.present? && self.longitude.present?
-      center_point = [self.longitude, self.latitude]
+      center_point = [self.longitude.to_f, self.latitude.to_f]
     else
       center_point = Geocoder::Calculations.geographic_center(coordinates.collect {|x| x.coordinates})
     end
