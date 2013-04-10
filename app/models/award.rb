@@ -33,7 +33,9 @@ class Award
   index({ coordinates: "2d" })
   index "required_actions.name" => 1
   
-  before_create :set_coordinates
+  before_save :set_coordinates
+  
+  # if lat lng exist, validate that radius exists 
       
   def required_occurrences
     occurrences = 0
@@ -77,18 +79,22 @@ class Award
     else
       # if the radius is set but hasn't been exceeded, return false regardless of occurrences
       if self.radius.present? && self.radius_exceeded?(matching_user_actions) == false
-        requirements_met = [false]
-      # otherwise, check the number of occurrences
+        return false
+      elsif self.radius.present? && self.radius_exceeded?(matching_user_actions)
+        # need to make sure the action that meets the occurrences is also the one that exceeds the radius
       else
         requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
-      end
-
-      if self.operator == 'ALL'
-        requirements_met.all?
-      elsif self.operator == 'ANY'
-        requirements_met.include?(true)
+        if self.operator == 'ALL'
+          requirements_met.all?
+        elsif self.operator == 'ANY'
+          requirements_met.include?(true)
+        end
       end
     end
+  end
+  
+  def actions_within_radius(actions, center_point)
+    actions.within_circle(coordinates: [center_point, self.radius])
   end
   
   def radius_exceeded?(actions)
@@ -100,8 +106,8 @@ class Award
       center_point = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates})
     end
     max_distance = (actions_with_coordinates.geo_near(center_point).spherical.max_distance * 3959)
-    puts max_distance
-    max_distance > self.radius
+    # make sure the distance exceeds the radius and that at least one action is within the circle
+    max_distance > self.radius && actions_within_circle(actions_with_coordinates, center_point).present?
   end
 
   private
@@ -109,6 +115,8 @@ class Award
   def set_coordinates
     if self.latitude.present? && self.longitude.present?
       self.coordinates = [self.longitude.try(:to_f), self.latitude.try(:to_f)]
+    else
+      self.coordinates = nil
     end
   end
   
