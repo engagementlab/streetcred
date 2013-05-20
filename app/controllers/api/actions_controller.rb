@@ -56,6 +56,7 @@ class Api::ActionsController < ApplicationController
   
   def citizens_connect
     if Channel.where(api_key: params['api_key']).present?
+      logger.info "********************** #{params['user']}"
       if params['user']['email'].present? || params['user']['contact_id'].present?
         if params['user']['email'].present?
           @user = User.where(email: params['user']['email']).first_or_create.update_attributes(params['user'])
