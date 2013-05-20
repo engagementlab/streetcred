@@ -58,13 +58,12 @@ class Api::ActionsController < ApplicationController
     if Channel.where(api_key: params['api_key']).present?
       if params['user']['email'].present? || params['user']['contact_id'].present?
         if params['user']['email'].present?
-          user = User.where(email: params['user']['email']).first_or_create
+          @user = User.where(email: params['user']['email']).first_or_create.update_attributes(params['user'])
         elsif params['user']['contact_id'].present?
-          user = User.where(contact_id: params['user']['contact_id']).first_or_create
+          @user = User.where(contact_id: params['user']['contact_id']).first_or_create.update_attributes(params['user'])
         end
-        user.update_attributes(params['user'])
         action_type = ActionType.where(name: params['report']['service']).first_or_create
-        action = user.actions.create(
+        action = @user.actions.create(
           api_key: params['api_key'],
           record_id: params['report']['record_id'],
           case_id: params['report']['case_id'],
@@ -78,8 +77,8 @@ class Api::ActionsController < ApplicationController
           image_url: params['report']['image_url'],
           timestamp: params['report']['timestamp']
         )
-        @earned_awards = user.awards_earned_by_action(action)
-        NotificationMailer.status_email(user, action).deliver
+        @earned_awards = @user.awards_earned_by_action(action)
+        NotificationMailer.status_email(@user, action).deliver
         respond_with(@earned_awards)
       else
         return "No user info supplied"
