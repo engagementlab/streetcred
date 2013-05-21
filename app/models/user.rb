@@ -50,7 +50,7 @@ class User
   ## Token authenticatable
   # field :authentication_token, :type => String
   
-  index({ provider_uid: 1 }, { unique: true})
+  # index({ provider_uid: 1 }, { unique: true})
   
 
   def full_name

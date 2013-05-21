@@ -57,34 +57,38 @@ class Api::ActionsController < ApplicationController
   def citizens_connect
     if Channel.where(api_key: params['api_key']).present?
       if params['user']['email'].present? || params['user']['contact_id'].present?
+        logger.info "********** Creating user and action from params **********"
         if params['user']['email'].present?
           @user = User.where(email: params['user']['email']).first_or_create
         elsif params['user']['contact_id'].present?
           @user = User.where(contact_id: params['user']['contact_id']).first_or_create
         end
-        logger.info "********** Creating user and action from params **********"
         params['user']['password'] = Devise.friendly_token.first(8)
         @user.update_attributes(params['user'])
-        action_type = ActionType.where(name: params['report']['service']).first_or_create
-        action = @user.actions.create(
-          api_key: params['api_key'],
-          record_id: params['report']['record_id'],
-          case_id: params['report']['case_id'],
-          event: params['report']['event'],
-          action_type: action_type.name,
-          description: params['report']['description'],
-          shared: params['report']['shared'],
-          latitude: params['report']['latitude'],
-          longitude: params['report']['longitude'],
-          url: params['report']['url'],
-          image_url: params['report']['image_url'],
-          timestamp: params['report']['timestamp']
-        )
-        @earned_awards = @user.awards_earned_by_action(action)
-        NotificationMailer.status_email(@user, action).deliver
-        respond_with(@earned_awards)
+        if params['report'].present?
+          action_type = ActionType.where(name: params['report']['service']).first_or_create
+          action = @user.actions.create(
+            api_key: params['api_key'],
+            record_id: params['report']['record_id'],
+            case_id: params['report']['case_id'],
+            event: params['report']['event'],
+            action_type: action_type.name,
+            description: params['report']['description'],
+            shared: params['report']['shared'],
+            latitude: params['report']['latitude'],
+            longitude: params['report']['longitude'],
+            url: params['report']['url'],
+            image_url: params['report']['image_url'],
+            timestamp: params['report']['timestamp']
+          )
+          @earned_awards = @user.awards_earned_by_action(action)
+          NotificationMailer.status_email(@user, action).deliver
+          respond_with(@earned_awards)
+        else
+          logger.info "********** No report params suplied **********"
+        end
       else
-        logger.info "********** No user info supplied **********"
+        logger.info "********** No user params supplied **********"
         return "No user info supplied"
       end
     else
