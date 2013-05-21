@@ -118,9 +118,9 @@ class Api::ActionsController < ApplicationController
             shared: params['trip']['shared'],
             latitude: params['trip']['latitude'],
             longitude: params['trip']['longitude'],
-            started_at: params['trip']['started_at']
-            duration: params['trip']['duration']
-            bumps: params['trip']['bumps']
+            started_at: params['trip']['started_at'],
+            duration: params['trip']['duration'],
+            bumps: params['trip']['bumps'],
             timestamp: params['trip']['timestamp']
           )
           @earned_awards = @user.awards_earned_by_action(action)
