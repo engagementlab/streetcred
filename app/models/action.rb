@@ -24,9 +24,9 @@ class Action
   field :state, type: String
   field :url, type: String
   field :photo_url, type: String
-  field :timestamp, type: Time
+  field :timestamp, type: String
   # StreetBump
-  field :started_at, type: Time
+  field :started_at, type: String
   field :duration, type: BigDecimal
   field :bumps, type: Integer, :default => 0
   
