@@ -57,11 +57,11 @@ class Api::ActionsController < ApplicationController
   def citizens_connect
     if Channel.where(api_key: params['api_key']).present?
       logger.info "********************** #{params}"
-      if params['user_email'].present? || params['user_contact_id'].present?
-        if params['user_email'].present?
-          @user = User.where(email: params['user_email']).first_or_create.update_attributes(params['user'])
-        elsif params['user_contact_id'].present?
-          @user = User.where(contact_id: params['user_contact_id']).first_or_create.update_attributes(params['user'])
+      if params['user']['email'].present? || params['user']['contact_id'].present?
+        if params['user']['email'].present?
+          @user = User.where(email: params['user']['email']).first_or_create.update_attributes(params['user'])
+        elsif params['user']['contact_id'].present?
+          @user = User.where(contact_id: params['user']['contact_id']).first_or_create.update_attributes(params['user'])
         end
         action_type = ActionType.where(name: params['report_service']).first_or_create
         action = @user.actions.create(
