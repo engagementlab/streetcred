@@ -24,6 +24,11 @@ class Action
   field :state, type: String
   field :url, type: String
   field :photo_url, type: String
+  field :timestamp, type: Time
+  # StreetBump
+  field :started_at, type: Time
+  field :duration, type: BigDecimal
+  field :bumps, type: Integer, :default => 0
   
   index({ api_key: 1 })
   index({ coordinates: "2d" })

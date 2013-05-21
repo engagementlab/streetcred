@@ -97,6 +97,48 @@ class Api::ActionsController < ApplicationController
     end
   end
   
+  def street_bump
+    if Channel.where(api_key: params['api_key']).present?
+      if params['user']['email'].present? || params['user']['contact_id'].present?
+        logger.info "********** Creating user and action from params **********"
+        if params['user']['email'].present?
+          @user = User.where(email: params['user']['email']).first_or_create
+        elsif params['user']['contact_id'].present?
+          @user = User.where(contact_id: params['user']['contact_id']).first_or_create
+        end
+        params['user']['password'] = Devise.friendly_token.first(8)
+        @user.update_attributes(params['user'])
+        if params['trip'].present?
+          action_type = ActionType.where(name: params['trip']['service']).first_or_create
+          action = @user.actions.create(
+            action_type: action_type.name,
+            api_key: params['api_key'],
+            record_id: params['trip']['trip_id'],
+            event: params['trip']['event'],
+            shared: params['trip']['shared'],
+            latitude: params['trip']['latitude'],
+            longitude: params['trip']['longitude'],
+            started_at: params['trip']['started_at']
+            duration: params['trip']['duration']
+            bumps: params['trip']['bumps']
+            timestamp: params['trip']['timestamp']
+          )
+          @earned_awards = @user.awards_earned_by_action(action)
+          NotificationMailer.status_email(@user, action).deliver
+          respond_with(@earned_awards)
+        else
+          logger.info "********** No trip params suplied **********"
+        end
+      else
+        logger.info "********** No user params supplied **********"
+        return "No user info supplied"
+      end
+    else
+      logger.info "********** Invalid API_KEY **********"
+      return "Invalid API_KEY"
+    end
+  end
+  
   private
   def verify_api_token
     # if Channel.where(api_key: params['api_key']).present?

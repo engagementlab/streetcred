@@ -34,6 +34,7 @@ Streetcred::Application.routes.draw do
     resources :actions do
       collection do
         post 'citizens_connect'
+        post 'street_bump'
         post 'foursquare'
       end
     end
