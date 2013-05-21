@@ -57,26 +57,26 @@ class Api::ActionsController < ApplicationController
   def citizens_connect
     if Channel.where(api_key: params['api_key']).present?
       logger.info "********************** #{params}"
-      if params['user']['email'].present? || params['user']['contact_id'].present?
-        if params['user']['email'].present?
-          @user = User.where(email: params['user']['email']).first_or_create.update_attributes(params['user'])
-        elsif params['user']['contact_id'].present?
-          @user = User.where(contact_id: params['user']['contact_id']).first_or_create.update_attributes(params['user'])
+      if params['user_email'].present? || params['user_contact_id'].present?
+        if params['user_email'].present?
+          @user = User.where(email: params['user_email']).first_or_create.update_attributes(params['user'])
+        elsif params['user_contact_id'].present?
+          @user = User.where(contact_id: params['user_contact_id']).first_or_create.update_attributes(params['user'])
         end
-        action_type = ActionType.where(name: params['report']['service']).first_or_create
+        action_type = ActionType.where(name: params['report_service']).first_or_create
         action = @user.actions.create(
           api_key: params['api_key'],
-          record_id: params['report']['record_id'],
-          case_id: params['report']['case_id'],
-          event: params['report']['event'],
+          record_id: params['report_record_id'],
+          case_id: params['report_case_id'],
+          event: params['report_event'],
           action_type: action_type.name,
-          description: params['report']['description'],
-          shared: params['report']['shared'],
-          latitude: params['report']['latitude'],
-          longitude: params['report']['longitude'],
-          url: params['report']['url'],
-          image_url: params['report']['image_url'],
-          timestamp: params['report']['timestamp']
+          description: params['report_description'],
+          shared: params['report_shared'],
+          latitude: params['report_latitude'],
+          longitude: params['report_longitude'],
+          url: params['report_url'],
+          image_url: params['report_image_url'],
+          timestamp: params['report_timestamp']
         )
         @earned_awards = @user.awards_earned_by_action(action)
         NotificationMailer.status_email(@user, action).deliver
