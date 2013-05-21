@@ -1,24 +1,50 @@
 %h1= @action.action_type
 
+- if @action.user.present?
+  %h3 User
+  %table
+    %tr
+      %td First Name:
+      %td= @action.user.first_name
+    %tr
+      %td Last Name:
+      %td= @action.user.last_name
+    %tr
+      %td Email:
+      %td= @action.user.email
+    
+%h3 Action
 %table
   %tr
-    %td Source:
-    %td= @action.source
+    %td Channel:
+    %td= @action.channel.try(:name)
+  %tr
+    %td Provider ID:
+    %td= @action.record_id
   %tr
     %td Case ID:
     %td= @action.case_id
   %tr
+    %td Event:
+    %td= @action.event
+  %tr
     %td Description: 
     %td= @action.description
-  %tr
-    %td Location:
-    %td= @action.location
   %tr
     %td Latitude:
     %td= @action.latitude
   %tr
     %td Longitude:
     %td= @action.longitude
+  %tr
+    %td URL:
+    %td= @action.url
+  %tr
+    %td Image URL:
+    %td= @action.image_url
+  %tr
+    %td Timestamp:
+    %td= @action.timestamp
 
 %br/
 = link_to 'Back', admin_actions_path
