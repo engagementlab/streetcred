@@ -10,7 +10,6 @@ gem 'unicorn'
 gem 'airbrake'
 gem 'bson_ext'
 gem 'devise'
-gem 'geocoder', :github => "alexreisner/geocoder"
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'mongo'
@@ -19,6 +18,9 @@ gem 'oj'
 gem 'rabl'
 gem 'rocket_pants'
 gem 'twitter-bootstrap-rails'
+
+# geocoder needs to load after mongoid to avoid "uninitialized constant Geocoder::Model::Mongoid"
+gem 'geocoder'
 
 # Omniauth
 gem 'omniauth'
