@@ -10,7 +10,7 @@ gem 'unicorn'
 gem 'airbrake'
 gem 'bson_ext'
 gem 'devise'
-gem 'geocoder'
+gem 'geocoder', :github => "alexreisner/geocoder"
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'mongo'
