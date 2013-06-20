@@ -2,19 +2,23 @@ source 'https://rubygems.org'
 
 ruby '1.9.3'
 gem 'rails', '3.2.12'
+gem 'unicorn'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mongoid'
-gem 'jquery-rails'
-gem 'haml-rails'
-gem 'rabl'
-gem 'oj'
-gem 'twitter-bootstrap-rails'
 gem 'airbrake'
+gem 'bson_ext'
 gem 'devise'
 gem 'geocoder'
+gem 'haml-rails'
+gem 'jquery-rails'
+gem 'mongo'
+gem 'mongoid'
+gem 'oj'
+gem 'rabl'
+gem 'rocket_pants'
+gem 'twitter-bootstrap-rails'
 
 # Omniauth
 gem 'omniauth'
@@ -49,6 +53,10 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :development do 
+  gem 'taps'
+  gem 'sqlite3'
+end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
