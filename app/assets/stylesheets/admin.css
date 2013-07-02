@@ -18,6 +18,9 @@ h1{
 .field.required_actions{
   margin-bottom: 20px;
 }
+.required_action{
+  width: 400px;
+}
 .remove_fields{
   margin-top: -10px;
 }

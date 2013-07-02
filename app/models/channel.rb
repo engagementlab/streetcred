@@ -2,8 +2,9 @@ class Channel
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  has_many :actions, :foreign_key => 'api_key', :primary_key => 'api_key'
   has_and_belongs_to_many :campaigns, index: true
+  has_many :action_types, dependent: :delete
+  has_many :actions, :foreign_key => 'api_key', :primary_key => 'api_key'
   
   field :name, type: String
   field :api_key, type: String

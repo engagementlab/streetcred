@@ -20,17 +20,6 @@
 %br/
 
 %h2 Campaign Rules
-      
-%h3 Channels
-.fields_group
-  .field
-    %p
-      %em Which channels can the incoming actions come from?
-    .checkboxes
-      - for channel in Channel.asc(:name)
-        = check_box_tag '[campaign][channel_ids][]', channel.id, @campaign.channels.include?(channel)
-        = channel.name
-        %br/
 
 %h3 Actions
 .fields_group

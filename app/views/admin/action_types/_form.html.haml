@@ -5,6 +5,11 @@
       - @action_type.errors.full_messages.each do |msg|
         %li= msg
 
+
+.field
+  = f.label :channel
+  = f.select(:channel, Channel.asc(:name).collect {|x| [x.name, x.id]})
+
 .field
   = f.label :name
   = f.text_field :name
