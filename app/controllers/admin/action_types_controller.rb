@@ -3,7 +3,7 @@ class Admin::ActionTypesController < ApplicationController
   before_filter :authenticate_admin_user!
   
   def index
-    @action_types = ActionType.asc(:name)
+    @action_types = ActionType.asc(:channel).asc(:name)
 
     respond_to do |format|
       format.html # index.html.erb

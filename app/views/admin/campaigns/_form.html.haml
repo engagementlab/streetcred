@@ -25,7 +25,7 @@
 .fields_group
   .field.required_actions
     %p
-      %em What actions count towards this campaign?
+      %em Which actions count toward this campaign?
       
     - @campaign.required_actions.each do |ra|
       = f.fields_for "required_actions_attributes[]", ra, index: ra.id do |builder|
@@ -35,12 +35,12 @@
 
   .field
     %p
-      %em How many occurrences are required for an individual to complete this campaign?
+      %em How many actions are required for an individual to complete the campaign?
     = f.text_field :required_individual_occurrences
 
   .field
     %p
-      %em How many occurrences are required for the community to complete this campaign?
+      %em How many actions are required for the community to complete the campaign?
     = f.text_field :required_community_occurrences 
   
 

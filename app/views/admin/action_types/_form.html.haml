@@ -7,8 +7,8 @@
 
 
 .field
-  = f.label :channel
-  = f.select(:channel, Channel.asc(:name).collect {|x| [x.name, x.id]})
+  = f.label :channel_id
+  = f.select(:channel_id, Channel.asc(:name).collect {|x| [x.name, x.id]})
 
 .field
   = f.label :name
