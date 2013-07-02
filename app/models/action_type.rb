@@ -1,11 +1,10 @@
 class ActionType
   include Mongoid::Document
   
-  has_and_belongs_to_many :awards, index: true
+  has_and_belongs_to_many :campaigns, index: true
   
   field :name
   field :provider_uid, type: String
-  field :points, type: Integer, default: 0
   
   index({ name: 1 })
   index({ provider_uid: 1 })
