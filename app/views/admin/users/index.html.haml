@@ -5,11 +5,11 @@
   %tr
     %th User Email
     %th Actions
-    %th Awards
+    %th Completed Campaigns
     %th
   - @users.each do |user|
     %tr
       %td= user.email
       %td= user.actions.count
-      %td= user.awards.count
+      %td= user.campaigns.count
       %td{width: 40}= link_to 'Show', admin_user_path(user), :class => 'btn btn-mini'

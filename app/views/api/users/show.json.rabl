@@ -5,6 +5,6 @@ child :actions do
   attributes :_id, :field, :case_id, :action_type, :description, :location, :latitude, :longitude
 end
 
-child :awards do
+child :campaigns do
   attributes :_id, :badge_name, :badge_url
 end

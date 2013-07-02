@@ -2,7 +2,7 @@ class Admin::CampaignsController < ApplicationController
   layout 'admin'
   before_filter :authenticate_admin_user!
   
-  def index
+def index
     @campaigns = Campaign.asc(:name)
 
     respond_to do |format|
@@ -11,17 +11,11 @@ class Admin::CampaignsController < ApplicationController
     end
   end
 
-  def show
-    @campaign = Campaign.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @campaign }
-    end
-  end
 
   def new
     @campaign = Campaign.new
+    # build a required action so the drop-down shows up in the form
+    @campaign.required_actions.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -49,7 +43,9 @@ class Admin::CampaignsController < ApplicationController
 
   def update
     @campaign = Campaign.find(params[:id])
-
+    @campaign.channels.clear if params[:campaign][:channel_ids].blank?
+    @campaign.required_actions.clear
+    
     respond_to do |format|
       if @campaign.update_attributes(params[:campaign])
         format.html { redirect_to admin_campaigns_url, notice: 'Campaign was successfully updated.' }
@@ -68,6 +64,12 @@ class Admin::CampaignsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to admin_campaigns_url }
       format.json { head :no_content }
+    end
+  end
+  
+  def add_required_action
+    respond_to do |format|
+      format.json
     end
   end
 end

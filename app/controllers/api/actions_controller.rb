@@ -9,9 +9,9 @@ class Api::ActionsController < ApplicationController
     if params['email'].present?
       user = User.where(email: params['email']).first_or_create
       action = user.actions.create(params['action'])
-      @earned_awards = user.awards_earned_by_action(action)
+      @completed_campaigns = user.campaigns_completed_by_action(action)
       NotificationMailer.status_email(user, action).deliver
-      respond_with(@earned_awards)
+      respond_with(@completed_campaigns)
     end
   end
   
@@ -81,9 +81,9 @@ class Api::ActionsController < ApplicationController
             image_url: params['report']['image_url'],
             timestamp: params['report']['timestamp']
           )
-          @earned_awards = @user.awards_earned_by_action(action)
+          @completed_campaigns = @user.campaigns_completed_by_action(action)
           NotificationMailer.status_email(@user, action).deliver
-          respond_with(@earned_awards)
+          respond_with(@completed_campaigns)
         else
           logger.info "********** No report params suplied **********"
         end
@@ -123,9 +123,9 @@ class Api::ActionsController < ApplicationController
             bumps: params['trip']['bumps'],
             timestamp: params['trip']['timestamp']
           )
-          @earned_awards = @user.awards_earned_by_action(action)
+          @completed_campaigns = @user.campaigns_completed_by_action(action)
           NotificationMailer.status_email(@user, action).deliver
-          respond_with(@earned_awards)
+          respond_with(@completed_campaigns)
         else
           logger.info "********** No trip params suplied **********"
         end

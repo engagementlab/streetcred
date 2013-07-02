@@ -9,8 +9,8 @@
     %td= @user.last_name
   
 %table
-  - for award in @user.awards
-    %h3= award.name
+  - for campaign in @user.campaigns
+    %h3= campaign.name
 
 %br/    
 = link_to 'Back', admin_users_path

@@ -17,7 +17,7 @@
   = f.label :badge_url, "Badge URL"
   = f.text_field :badge_url
 
-%hr/
+%br/
 
 %h2 Campaign Rules
       
@@ -46,8 +46,13 @@
 
   .field
     %p
-      %em How many occurrences are required?
-    = f.text_field :required_occurrences
+      %em How many occurrences are required for an individual to complete this campaign?
+    = f.text_field :required_individual_occurrences
+
+  .field
+    %p
+      %em How many occurrences are required for the community to complete this campaign?
+    = f.text_field :required_community_occurrences 
   
 
 %h3 Location
@@ -77,6 +82,6 @@
     = f.label :end_date
     = f.text_field :end_time, :placeholder => "#{Date.today.end_of_month}"
 
-.actions.well
+.actions
   = f.submit 'Save', :class => 'btn btn-success'
   = link_to 'Cancel', admin_campaigns_path, :class => 'btn'

@@ -6,12 +6,10 @@
   %tr
     %th Name
     %th Description
-    %th Points
-  - for award in @user.awards
+  - for campaign in @user.campaigns
     %tr
-      %td= award.name
-      %td= award.description
-      %td= award.points
+      %td= campaign.name
+      %td= campaign.description
 
 %hr/
 %h3 Actions

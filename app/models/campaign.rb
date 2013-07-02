@@ -14,7 +14,8 @@ class Campaign
   field :name, type: String
   field :description, type: String
   field :badge_url, type: String
-  field :required_occurrences, type: Integer
+  field :required_individual_occurrences, type: Integer
+  field :required_community_occurrences, type: Integer
   field :start_time, type: DateTime
   field :end_time, type: DateTime
   field :latitude, type: BigDecimal
@@ -41,8 +42,8 @@ class Campaign
   end
   
   def requirements_met?(user)
-    # find the actions dynamically, not based on which ones have been associated with the award
-    # in other words, including actions from before the award was created, but which meet its criteria
+    # find the actions dynamically, not based on which ones have been associated with the campaign
+    # in other words, including actions from before the campaign was created, but which meet its criteria
     matching_user_actions = user.actions.in(api_key: self.channel_keys).in(action_type: self.required_action_types).gt(created_at: self.start_time).lt(created_at: self.end_time)
     
     if matching_user_actions.blank?

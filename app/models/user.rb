@@ -3,7 +3,7 @@ class User
   include Mongoid::Timestamps
   
   has_many :actions, dependent: :delete
-  has_and_belongs_to_many :awards, index: true
+  has_and_belongs_to_many :campaigns, index: true
   
   devise :database_authenticatable, :registerable, :recoverable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:foursquare]
 
@@ -77,10 +77,9 @@ class User
     end
   end
   
-  def campaign_completed_by_action(action)
-    # all user.campaigns have been cmopleted; those associated with the action were completed by the action
-    # however, this is probably not ideal since it's only the campaign.actions.last that actually completed
-     the award
+  def campaigns_completed_by_action(action)
+    # all user.campaigns have been completed; those associated with the action were completed by the action
+    # however, this is probably not ideal since it's only the campaign.actions.last that actually completed the campaign
     if action.user == self
       self.campaigns.collect {|campaign| campaign if campaign.actions.where(user_id: self.id).asc(:created_at).last == action}.compact
     else
