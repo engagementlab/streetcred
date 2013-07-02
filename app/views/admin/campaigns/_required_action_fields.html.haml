@@ -1,0 +1,3 @@
+%fieldset
+  = f.select(:name, ActionType.asc(:name).collect {|x| [x.name, x.name]})
+  = link_to ("<i class='icon icon-remove'></i>").html_safe, '#', class: "remove_fields btn btn-mini btn-danger"

@@ -24,12 +24,10 @@
           </ul>
           <% if current_admin_user %>
             <ul class="nav pull-lef">
-              <li><%= link_to 'Levels', admin_levels_path %></li>
               <li><%= link_to 'Campaigns', admin_campaigns_path %></li>
-              <li><%= link_to 'Awards', admin_awards_path %></li>
               <li><%= link_to 'Channels', admin_channels_path %></li>
-              <li><%= link_to 'Actions', admin_actions_path %></li>
               <li><%= link_to 'Action Types', admin_action_types_path %></li>
+              <li><%= link_to 'Actions', admin_actions_path %></li>
               <li><%= link_to 'Users', admin_users_path %></li>
               <li><%= link_to 'Admin Users', admin_admin_users_path %></li>
             </ul>
@@ -39,16 +37,7 @@
     </div>
 
     <div class="container">
-      <% if flash[:alert] %>
-        <div class='alert alert-error'>
-          <%= flash[:alert] %>
-        </div>
-      <% end %>
-      <% if flash[:notice] %>
-        <div class='alert alert-success'>
-          <%= flash[:notice] %>
-        </div>
-      <% end %>
+      <%= render partial: 'layouts/notices' %>
       <%= yield %>
     </div>
   </body>

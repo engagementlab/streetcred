@@ -1,4 +1,5 @@
 %h1 Action Types
+
 %p.well
   Action types are used to build award requirements. Incoming API calls must include an appropriate action type in order to register in the system.
   
@@ -6,14 +7,12 @@
   %tr
     %th Name
     %th Provider UID
-    %th Points
     %th
     %th
   - @action_types.each do |action_type|
     %tr
       %td= action_type.name
       %td= action_type.provider_uid
-      %td= action_type.points
       %td{width: 35}= link_to 'Edit', edit_admin_action_type_path(action_type), :class => 'btn btn-mini'
       %td{width: 55}= link_to 'Delete', admin_action_type_path(action_type), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
 

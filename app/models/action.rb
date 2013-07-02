@@ -5,7 +5,7 @@ class Action
   
   belongs_to :user, index: true
   belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
-  has_and_belongs_to_many :awards, dependent: :nullify, index: true
+  has_and_belongs_to_many :campaigns, dependent: :nullify, index: true
   
   
   field :api_key, type: String
@@ -34,7 +34,7 @@ class Action
   index({ coordinates: "2d" })
 
   before_create :set_coordinates
-  after_create :assign_awards
+  after_create :assign_campaigns
   
   def reversed_coordinates
     coordinates.try(:reverse)
@@ -46,21 +46,21 @@ class Action
     end
   end
   
-  # this callback assigns incoming actions to relevant awards, and assigns awards to users if the award's 
+  # this callback assigns incoming actions to relevant campaigns, and assigns campaigns to users if the campaign's 
   # requirements have been met
-  def assign_awards
+  def assign_campaigns
     user = self.user
-    # find awards that are in-range and match the action_type and channel of the incoming action
-    matching_awards = Award.elem_match(required_actions: {name: self.action_type}).in(channel_ids: [self.channel.try(:id)]).lt(start_time: self.created_at).gt(end_time: self.created_at)
+    # find campaigns that are in-range and match the action_type and channel of the incoming action
+    matching_campaigns = Campaign.elem_match(required_actions: {name: self.action_type}).in(channel_ids: [self.channel.try(:id)]).lt(start_time: self.created_at).gt(end_time: self.created_at)
     
-    # iterate through the matching awards and determine whether their requirements have been met
-    matching_awards.each do |award|
-      unless user.awards.include?(award)
-        # assign the action to the award in order to track progress
-        award.actions << self
+    # iterate through the matching campaigns and determine whether their requirements have been met
+    matching_campaigns.each do |campaign|
+      unless user.campaigns.include?(campaign)
+        # assign the action to the campaign in order to track progress
+        campaign.actions << self
         
-        if award.requirements_met?(user)
-          user.awards << award
+        if campaign.requirements_met?(user)
+          user.campaigns << campaign
         end
       end
     end
