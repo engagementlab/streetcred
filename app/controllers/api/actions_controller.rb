@@ -17,45 +17,52 @@ class Api::ActionsController < ApplicationController
   
   def foursquare
     if params['secret'] == ENV['FOURSQUARE_PUSH_SECRET'] # 'BOL410IIRYOQ1FEAYT1PZYGYDVN5OYUYI1JO5CI2SW3UNO20'
-      if params['checkin'].blank?
-        render :nothing => true
-      else
-        checkin = Oj.load(params['checkin'])
-        user = User.where(provider_uid: checkin['user']['id']).first
-        if ActionType.where(provider_uid: checkin['venue']['id']).present?
-          action_type = ActionType.where(provider_uid: checkin['venue']['id']).first
-        elsif ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").present?
-          action_type = ActionType.where(name: "Foursquare Checkin: #{checkin['venue']['name']}").first
-        end
-        if user.present? && action_type.present?
-          if action_type.name.blank?
-            action_type.update_attribute(:name, "Foursquare Checkin: #{checkin['venue']['name']}")
+      channel = Channel.where(name: 'Foursquare')
+      if channel.present?
+        if params['checkin'].blank?
+          render nothing: true
+        else
+          checkin = Oj.load(params['checkin'])
+          user = User.where(provider_uid: checkin['user']['id']).first
+          if ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).present?
+            action_type = ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).first
+          elsif ActionType.where(channel_id: channel.id).where(name: checkin['venue']['name']).present?
+            action_type = ActionType.where(channel_id: channel.id).where(name: checkin['venue']['name']).first
           end
-          user.actions.create(
-            api_key: Channel.where(name: 'Foursquare').first.try(:api_key),
-            record_id: checkin['id'],
-            case_id: checkin['id'],
-            action_type: action_type.name,
-            description: checkin['shout'],
-            latitude: checkin['venue']['location']['lat'],
-            longitude: checkin['venue']['location']['lng'],
-            address: checkin['venue']['location']['address'],
-            city: checkin['venue']['location']['city'],
-            zipcode: checkin['venue']['location']['postalCode'],
-            state: checkin['venue']['location']['state'],
-            timestamp: Time.now
-          )
+          if user.present? && action_type.present?
+            if action_type.name.blank?
+              action_type.update_attribute(:name, checkin['venue']['name'])
+            end
+            user.actions.create(
+              api_key: channel.api_key,
+              record_id: checkin['id'],
+              case_id: checkin['id'],
+              action_type: action_type.name,
+              description: checkin['shout'],
+              latitude: checkin['venue']['location']['lat'],
+              longitude: checkin['venue']['location']['lng'],
+              address: checkin['venue']['location']['address'],
+              city: checkin['venue']['location']['city'],
+              zipcode: checkin['venue']['location']['postalCode'],
+              state: checkin['venue']['location']['state'],
+              timestamp: Time.now
+            )
+            render nothing: true
+          end
         end
-        render :nothing => true
+      else
+        logger.info "No Channel found"
+        render nothing: true
       end
     else
       logger.info "Invalid FOURSQUARE_PUSH_SECRET"
-      render :nothing => true
+      render nothing: true
     end
   end
   
   def citizens_connect
-    if Channel.where(api_key: params['api_key']).present?
+    channel = Channel.where(api_key: params['api_key'])
+    if channel.present?
       if params['user']['email'].present? || params['user']['contact_id'].present?
         logger.info "********** Creating user and action from params **********"
         if params['user']['email'].present?
@@ -66,7 +73,7 @@ class Api::ActionsController < ApplicationController
         params['user']['password'] = Devise.friendly_token.first(8)
         @user.update_attributes(params['user'])
         if params['report'].present?
-          action_type = ActionType.where(name: params['report']['service']).first_or_create
+          action_type = ActionType.where(channel_id: channel.id).where(name: params['report']['service']).first_or_create
           action = @user.actions.create(
             api_key: params['api_key'],
             record_id: params['report']['record_id'],
@@ -98,7 +105,8 @@ class Api::ActionsController < ApplicationController
   end
   
   def street_bump
-    if Channel.where(api_key: params['api_key']).present?
+    channel = Channel.where(api_key: params['api_key'])
+    if channel.present?
       if params['user']['email'].present? || params['user']['contact_id'].present?
         logger.info "********** Creating user and action from params **********"
         if params['user']['email'].present?
@@ -109,7 +117,7 @@ class Api::ActionsController < ApplicationController
         params['user']['password'] = Devise.friendly_token.first(8)
         @user.update_attributes(params['user'])
         if params['trip'].present?
-          action_type = ActionType.where(name: params['trip']['service']).first_or_create
+          action_type = ActionType.where(channel_id: channel.id).where(name: params['trip']['service']).first_or_create
           action = @user.actions.create(
             action_type: action_type.name,
             api_key: params['api_key'],
