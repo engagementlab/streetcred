@@ -1,5 +1,6 @@
 class Campaign
   include Mongoid::Document
+  include Mongoid::MultiParameterAttributes
   include Mongoid::Timestamps
 
   has_and_belongs_to_many :actions, index: true
@@ -8,7 +9,7 @@ class Campaign
   embeds_many :required_actions
   accepts_nested_attributes_for :required_actions, allow_destroy: true
     
-  validates_presence_of :name, :required_actions, :start_time, :end_time
+  validates_presence_of :name, :required_actions
   validate :required_actions_unique
   
   field :name, type: String

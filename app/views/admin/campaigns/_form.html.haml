@@ -62,14 +62,15 @@
 %h3 Duration
 %p
   %em Define the time-frame during which actions can count toward the campaign.
+  
 .fields_group
   .field
     = f.label :start_date
-    = f.text_field :start_time, :placeholder => "#{Date.today.beginning_of_month}"
+    = f.date_select(:start_time, order: [:month, :day, :year])
 
   .field
     = f.label :end_date
-    = f.text_field :end_time, :placeholder => "#{Date.today.end_of_month}"
+    = f.date_select(:end_time, order: [:month, :day, :year])
 
 .actions
   = f.submit 'Save', :class => 'btn btn-success'

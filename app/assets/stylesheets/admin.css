@@ -1,6 +1,3 @@
-.checkboxes{
-  margin: 5px 0 20px 0;
-}
 .field label{
   font-weight: bold;
   margin-top: 10px;
@@ -10,10 +7,6 @@
 }
 h1{
   padding-bottom: 15px;
-}
-.required_action_occurrences{
-  width: 28px !important;
-  padding-left: 3px;
 }
 .field.required_actions{
   margin-bottom: 20px;
@@ -30,4 +23,23 @@ h1{
 
 .actions{
   margin-top: 20px;
+}
+
+#campaign_start_time_2i {
+  width: 150px;
+}
+#campaign_start_time_3i {
+  width: 75px;
+}
+#campaign_start_time_1i {
+  width: 100px;
+}
+#campaign_end_time_2i {
+  width: 150px;
+}
+#campaign_end_time_3i {
+  width: 75px;
+}
+#campaign_end_time_1i {
+  width: 100px;
 }
