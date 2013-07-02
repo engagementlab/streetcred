@@ -6,15 +6,15 @@
 
 %table.table.table-hover
   %tr
-    %th Action Type
     %th Channel
+    %th Action Type
     %th User Email
     %th Created At
     %th
   - @actions.each do |action|
     %tr
-      %td= action.action_type
       %td= action.channel.try(:name)
+      %td= action.action_type
       %td= action.user.try(:email)
       %td= action.created_at
       %td{width: 40}= link_to 'Show', admin_action_path(action), :class => 'btn btn-mini'

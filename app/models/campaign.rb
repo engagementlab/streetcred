@@ -15,8 +15,8 @@ class Campaign
   field :name, type: String
   field :description, type: String
   field :badge_url, type: String
-  field :required_individual_occurrences, type: Integer
-  field :required_community_occurrences, type: Integer
+  field :required_individual_occurrences, type: Integer, :default => 1
+  field :required_community_occurrences, type: Integer, :default => 1
   field :start_time, type: DateTime
   field :end_time, type: DateTime
   field :latitude, type: BigDecimal
@@ -41,6 +41,14 @@ class Campaign
   def required_action_types
     required_actions.collect {|x| x.name}
   end
+
+  # def individual_requirements_met(user)
+    
+  # end
+
+  # def community_requirements_mat
+    
+  # end
   
   def requirements_met?(user)
     # find the actions dynamically, not based on which ones have been associated with the campaign
@@ -57,11 +65,7 @@ class Campaign
         # need to make sure the action that meets the occurrences is also the one that exceeds the radius
       else
         requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
-        if self.operator == 'ALL'
-          requirements_met.all?
-        elsif self.operator == 'ANY'
-          requirements_met.include?(true)
-        end
+        requirements_met.include?(true)
       end
     end
   end

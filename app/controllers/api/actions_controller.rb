@@ -17,7 +17,7 @@ class Api::ActionsController < ApplicationController
   
   def foursquare
     if params['secret'] == ENV['FOURSQUARE_PUSH_SECRET'] # 'BOL410IIRYOQ1FEAYT1PZYGYDVN5OYUYI1JO5CI2SW3UNO20'
-      channel = Channel.where(name: 'Foursquare')
+      channel = Channel.where(name: 'Foursquare').first
       if channel.present?
         if params['checkin'].blank?
           render nothing: true
@@ -61,7 +61,7 @@ class Api::ActionsController < ApplicationController
   end
   
   def citizens_connect
-    channel = Channel.where(api_key: params['api_key'])
+    channel = Channel.where(api_key: params['api_key']).first
     if channel.present?
       if params['user']['email'].present? || params['user']['contact_id'].present?
         logger.info "********** Creating user and action from params **********"
@@ -105,7 +105,7 @@ class Api::ActionsController < ApplicationController
   end
   
   def street_bump
-    channel = Channel.where(api_key: params['api_key'])
+    channel = Channel.where(api_key: params['api_key']).first
     if channel.present?
       if params['user']['email'].present? || params['user']['contact_id'].present?
         logger.info "********** Creating user and action from params **********"

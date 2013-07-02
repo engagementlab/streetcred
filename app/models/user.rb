@@ -60,21 +60,17 @@ class User
     end
   end
 
-  def progress_toward_campaign(campaign)
-    if self.matching_actions(campaign).count == 0
-      0
-    else
-      self.matching_actions(campaign).count / campaign.required_occurrences.to_f
+  def matching_actions(campaign)    
+    if campaign.start_time.present? && campaign.end_time.present? && campaign.required_individual_occurrences > 0
+      # find all actions that match at least one of the action_types defined on the campaign
+      self.actions.gt(created_at: campaign.start_time).lt(created_at: campaign.end_time).in(action_type: campaign.required_actions.collect {|x| x.name})
+    elsif campaign.required_individual_occurrences > 0
+      self.actions.in(action_type_id: campaign.action_types.collect {|x| x.id})
     end
   end
 
-  def matching_actions(campaign)    
-    if campaign.start_time.present? && campaign.end_time.present? && campaign.required_occurrences > 0
-      # find all actions that match at least one of the action_types defined in the campaign
-      self.actions.gt(created_at: campaign.start_time).lt(created_at: campaign.end_time).in(action_type: campaign.required_actions.collect {|x| x.name}).in(api_key: campaign.channels.collect {|x| x.api_key})
-    elsif campaign.required_occurrences > 0
-      self.actions.in(action_type: campaign.action_types.collect {|x| x.name}).in(api_key: campaign.channels.collect {|x| x.api_key})
-    end
+  def progress_toward_campaign(campaign)
+    self.matching_actions(campaign).count / campaign.required_individual_occurrences.to_f
   end
   
   def campaigns_completed_by_action(action)
@@ -82,16 +78,12 @@ class User
     # however, this is probably not ideal since it's only the campaign.actions.last that actually completed the campaign
     if action.user == self
       self.campaigns.collect {|campaign| campaign if campaign.actions.where(user_id: self.id).asc(:created_at).last == action}.compact
-    else
-      nil
     end
   end
   
-  def campaign_in_progress_by_action(action)
+  def campaigns_in_progress_by_action(action)
     if action.user == self
-      action.campaign.nin(user_ids: self.id)
-    else
-      nil
+      action.campaigns.nin(user_ids: self.id)
     end
   end
 end
