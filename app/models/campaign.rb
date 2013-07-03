@@ -32,37 +32,54 @@ class Campaign
 
   before_save :set_coordinates
 
-  def matching_actions
+
+  ##### COMMUNITY CALCULATIONS #####
+
+  def contributing_community_actions
     Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lt(created_at: end_time)
   end
 
-  def community_requirements_met?
-    if matching_actions.count >= required_community_occurrences
+  def progress_by_community
+    contributing_community_actions.count / required_community_occurrences.to_f
+  end
+
+  def requirements_met_by_community?
+    if contributing_community_actions.count >= required_community_occurrences
       if radius.blank?
         return true
       elsif radius.present?
-        radius_exceeded?(matching_actions)
+        radius_exceeded?(contributing_community_actions)
       end
-    else # if matching_actions < required_individual_occurrences
+    else # if contributing_community_actions < required_individual_occurrences
       return false
     end
   end
 
-  def matching_user_actions(user)
+
+  ##### INDIVIDUAL CALCULATIONS #####
+
+  def contributing_individual_actions(user)
     Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lt(created_at: end_time).where(user_id: user.id)
   end
 
-  def individual_requirements_met?(user)
-    if matching_user_actions(user).count >= required_individual_occurrences
+  def progress_by_individual(user)
+    contributing_individual_actions(user).count / required_individual_occurrences.to_f
+  end
+
+  def requirements_met_by_individual?(user)
+    if contributing_individual_actions(user).count >= required_individual_occurrences
       if radius.blank?
         return true
       elsif radius.present?
-        radius_exceeded?(matching_actions)
+        radius_exceeded?(contributing_individual_actions)
       end
-    else # if matching_actions < required_individual_occurrences
+    else # if contributing_indivudal_actions < required_individual_occurrences
       return false
     end
   end
+
+
+  ##### REACH CALCULATIONS #####
   
   def actions_within_radius(actions, center_point)
     actions.within_circle(coordinates: [center_point, self.radius])

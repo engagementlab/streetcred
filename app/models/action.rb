@@ -40,6 +40,12 @@ class Action
   def reversed_coordinates
     coordinates.try(:reverse)
   end
+
+  def matching_campaigns
+    Campaign.elem_match(required_actions: {action_type_id: action_type.id}).lt(start_time: created_at).gt(end_time: created_at)
+  end
+
+  private
   
   def set_coordinates
     if self.latitude.present? && self.longitude.present?
@@ -47,21 +53,14 @@ class Action
     end
   end
   
-  # this callback assigns incoming actions to relevant campaigns, and assigns campaigns to users if the campaign's 
+  # this callback assigns the incoming action to relevant campaigns, and assigns campaigns to the user if the campaign's 
   # requirements have been met
-  def assign_campaigns
-    # find campaigns that are in-range and match the action_type and channel of the incoming action
-    matching_campaigns = Campaign.elem_match(required_actions: {action_type_id: action_type.id}).lt(start_time: created_at).gt(end_time: created_at)
-    
+  def assign_campaigns!
     # iterate through the matching campaigns and determine whether their requirements have been met
     matching_campaigns.each do |campaign|
       unless user.campaigns.include?(campaign)
-        # assign the action to the campaign in order to track progress
         campaign.actions << self
-        
-        if campaign.individual_requirements_met?(user)
-          user.campaigns << campaign
-        end
+        user.campaigns << campaign if campaign.requirements_met_by_individual?(user)
       end
     end
   end
