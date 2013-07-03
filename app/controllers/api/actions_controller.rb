@@ -1,6 +1,6 @@
 class Api::ActionsController < ApplicationController
+  require 'mail'
   skip_before_filter :verify_authenticity_token
-  # before_filter :verify_api_token
   
   respond_to :json
   
@@ -12,6 +12,27 @@ class Api::ActionsController < ApplicationController
       @completed_campaigns = user.campaigns_completed_by_action(action)
       NotificationMailer.status_email(user, action).deliver
       respond_with(@completed_campaigns)
+    end
+  end
+
+  def email
+    if params['message'].present
+      channel = Channel.where(name: 'Email').first
+      user = User.where(email: params['message']['from']).first_or_create
+      if ActionType.where(channel_id: channel.id).where(provider_uid: params['message']['subject']).present?
+        action_type = ActionType.where(channel_id: channel.id).where(provider_uid: params['message']['subject']).first
+        user.actions.create(
+          api_key: channel.api_key,
+          action_type_id: action_type.id, 
+          timestamp: Time.now
+        )
+      else
+        logger.info "********** No matching ActionType found **********"
+        return "No matching ActionType found"
+      end
+    else
+      logger.info "********** No from address **********"
+      return "No from address supplied"
     end
   end
   

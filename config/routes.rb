@@ -31,6 +31,7 @@ Streetcred::Application.routes.draw do
   namespace :api do
     resources :actions do
       collection do
+        post 'email'
         post 'citizens_connect'
         post 'street_bump'
         post 'foursquare'
