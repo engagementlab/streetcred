@@ -32,41 +32,35 @@ class Campaign
 
   before_save :set_coordinates
 
-    # if lat lng exist, validate that radius exists 
-
-  def channel_keys
-    channels.collect {|x| x.api_key}
-  end
-  
-  def required_action_types
-    required_actions.collect {|x| x.name}
+  def matching_actions
+    Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lt(created_at: end_time)
   end
 
-  # def individual_requirements_met(user)
-    
-  # end
-
-  # def community_requirements_mat
-    
-  # end
-  
-  def requirements_met?(user)
-    # find the actions dynamically, not based on which ones have been associated with the campaign
-    # in other words, including actions from before the campaign was created, but which meet its criteria
-    matching_user_actions = user.actions.in(api_key: self.channel_keys).in(action_type: self.required_action_types).gt(created_at: self.start_time).lt(created_at: self.end_time)
-    
-    if matching_user_actions.blank?
-      return false
-    else
-      # if the radius is set but hasn't been exceeded, return false regardless of occurrences
-      if self.radius.present? && self.radius_exceeded?(matching_user_actions) == false
-        return false
-      elsif self.radius.present? && self.radius_exceeded?(matching_user_actions)
-        # need to make sure the action that meets the occurrences is also the one that exceeds the radius
-      else
-        requirements_met = self.required_actions.collect {|x| (matching_user_actions.where(action_type: x.name).count >= x.occurrences)}
-        requirements_met.include?(true)
+  def community_requirements_met?
+    if matching_actions.count >= required_community_occurrences
+      if radius.blank?
+        return true
+      elsif radius.present?
+        radius_exceeded?(matching_actions)
       end
+    else # if matching_actions < required_individual_occurrences
+      return false
+    end
+  end
+
+  def matching_user_actions(user)
+    Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lt(created_at: end_time).where(user_id: user.id)
+  end
+
+  def individual_requirements_met?(user)
+    if matching_user_actions(user).count >= required_individual_occurrences
+      if radius.blank?
+        return true
+      elsif radius.present?
+        radius_exceeded?(matching_actions)
+      end
+    else # if matching_actions < required_individual_occurrences
+      return false
     end
   end
   
@@ -75,16 +69,20 @@ class Campaign
   end
   
   def radius_exceeded?(actions)
-    # make sure the actions have coordinates
-    actions_with_coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
-    if self.latitude.present? && self.longitude.present?
-      center_point = [self.longitude.to_f, self.latitude.to_f]
+    if radius.present?
+      # make sure the actions have coordinates
+      actions_with_coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
+      if latitude.present? && longitude.present?
+        center_point = [longitude.to_f, latitude.to_f]
+      else
+        center_point = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates})
+      end
+      max_distance = (actions_with_coordinates.geo_near(center_point).spherical.max_distance * 3959)
+      # make sure the distance exceeds the radius and that at least one action is within the circle
+      max_distance > radius && actions_within_circle(actions_with_coordinates, center_point).present?
     else
-      center_point = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates})
+      return false
     end
-    max_distance = (actions_with_coordinates.geo_near(center_point).spherical.max_distance * 3959)
-    # make sure the distance exceeds the radius and that at least one action is within the circle
-    max_distance > self.radius && actions_within_circle(actions_with_coordinates, center_point).present?
   end
 
   private
@@ -98,7 +96,7 @@ class Campaign
   end
   
   def required_actions_unique
-    errors[:base] << "Required actions can't contain duplicates" if required_actions.collect {|x| x.name}.uniq.length != required_actions.length
+    errors[:base] << "Required actions can't contain duplicates" if required_actions.collect {|x| x.action_type.try(:name)}.uniq.length != required_actions.length
   end
   
 end

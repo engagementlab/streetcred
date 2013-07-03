@@ -3,7 +3,6 @@ class RequiredAction
   include Mongoid::Timestamps
   
   embedded_in :campaign
-  
-  field :name, type: String
-  
+  belongs_to :action_type
+    
 end

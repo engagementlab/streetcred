@@ -14,7 +14,7 @@
   - @actions.each do |action|
     %tr
       %td= action.channel.try(:name)
-      %td= action.action_type
+      %td= action.action_type.try(:name)
       %td= action.user.try(:email)
       %td= action.created_at
       %td{width: 40}= link_to 'Show', admin_action_path(action), :class => 'btn btn-mini'

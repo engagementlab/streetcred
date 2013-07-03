@@ -5,6 +5,7 @@ class Action
   
   belongs_to :user, index: true
   belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
+  belongs_to :action_type
   has_and_belongs_to_many :campaigns, dependent: :nullify, index: true
   
   
@@ -49,9 +50,8 @@ class Action
   # this callback assigns incoming actions to relevant campaigns, and assigns campaigns to users if the campaign's 
   # requirements have been met
   def assign_campaigns
-    user = self.user
     # find campaigns that are in-range and match the action_type and channel of the incoming action
-    matching_campaigns = Campaign.elem_match(required_actions: {name: self.action_type}).in(channel_ids: [self.channel.try(:id)]).lt(start_time: self.created_at).gt(end_time: self.created_at)
+    matching_campaigns = Campaign.elem_match(required_actions: {action_type_id: action_type.id}).lt(start_time: created_at).gt(end_time: created_at)
     
     # iterate through the matching campaigns and determine whether their requirements have been met
     matching_campaigns.each do |campaign|
@@ -59,7 +59,7 @@ class Action
         # assign the action to the campaign in order to track progress
         campaign.actions << self
         
-        if campaign.requirements_met?(user)
+        if campaign.individual_requirements_met?(user)
           user.campaigns << campaign
         end
       end

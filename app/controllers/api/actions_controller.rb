@@ -64,7 +64,6 @@ class Api::ActionsController < ApplicationController
     channel = Channel.where(api_key: params['api_key']).first
     if channel.present?
       if params['user']['email'].present? || params['user']['contact_id'].present?
-        logger.info "********** Creating user and action from params **********"
         if params['user']['email'].present?
           @user = User.where(email: params['user']['email']).first_or_create
         elsif params['user']['contact_id'].present?
@@ -73,20 +72,21 @@ class Api::ActionsController < ApplicationController
         params['user']['password'] = Devise.friendly_token.first(8)
         @user.update_attributes(params['user'])
         if params['report'].present?
+          # Citizens Connect is allowed to create new action types on the fly ('first_or_create')
           action_type = ActionType.where(channel_id: channel.id).where(name: params['report']['service']).first_or_create
           action = @user.actions.create(
-            api_key: params['api_key'],
-            record_id: params['report']['record_id'],
-            case_id: params['report']['case_id'],
-            event: params['report']['event'],
-            action_type: action_type.name,
-            description: params['report']['description'],
-            shared: params['report']['shared'],
-            latitude: params['report']['latitude'],
-            longitude: params['report']['longitude'],
-            url: params['report']['url'],
-            image_url: params['report']['image_url'],
-            timestamp: params['report']['timestamp']
+            api_key:        params['api_key'],
+            record_id:      params['report']['record_id'],
+            case_id:        params['report']['case_id'],
+            event:          params['report']['event'],
+            action_type_id: action_type.id,
+            description:    params['report']['description'],
+            shared:         params['report']['shared'],
+            latitude:       params['report']['latitude'],
+            longitude:      params['report']['longitude'],
+            url:            params['report']['url'],
+            image_url:      params['report']['image_url'],
+            timestamp:      params['report']['timestamp']
           )
           @completed_campaigns = @user.campaigns_completed_by_action(action)
           NotificationMailer.status_email(@user, action).deliver

@@ -63,21 +63,21 @@ class User
   def matching_actions(campaign)    
     if campaign.start_time.present? && campaign.end_time.present? && campaign.required_individual_occurrences > 0
       # find all actions that match at least one of the action_types defined on the campaign
-      self.actions.gt(created_at: campaign.start_time).lt(created_at: campaign.end_time).in(action_type: campaign.required_actions.collect {|x| x.name})
+      self.actions.gt(created_at: campaign.start_time).lt(created_at: campaign.end_time).in(action_type_id: campaign.required_actions.collect(&:action_type_id))
     elsif campaign.required_individual_occurrences > 0
-      self.actions.in(action_type_id: campaign.action_types.collect {|x| x.id})
+      self.actions.in(action_type_id: campaign.required_actions.collect(&:action_type_id))
     end
   end
 
   def progress_toward_campaign(campaign)
-    self.matching_actions(campaign).count / campaign.required_individual_occurrences.to_f
+    matching_actions(campaign).count / campaign.required_individual_occurrences.to_f
   end
   
   def campaigns_completed_by_action(action)
     # all user.campaigns have been completed; those associated with the action were completed by the action
     # however, this is probably not ideal since it's only the campaign.actions.last that actually completed the campaign
     if action.user == self
-      self.campaigns.collect {|campaign| campaign if campaign.actions.where(user_id: self.id).asc(:created_at).last == action}.compact
+      campaigns.collect {|campaign| campaign if campaign.actions.where(user_id: self.id).asc(:created_at).last == action}.compact
     end
   end
   
