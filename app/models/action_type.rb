@@ -2,6 +2,7 @@ class ActionType
   include Mongoid::Document
   
   belongs_to :channel
+  has_many :actions
   has_and_belongs_to_many :campaigns, index: true
   
   field :name

@@ -8,6 +8,7 @@
     %th Channel
     %th Name
     %th Provider UID
+    %th Actions
     %th
     %th
   - @action_types.each do |action_type|
@@ -15,6 +16,7 @@
       %td= action_type.channel.try(:name)
       %td= action_type.name
       %td= action_type.provider_uid
+      %td= action_type.actions.count
       %td{width: 35}= link_to 'Edit', edit_admin_action_type_path(action_type), :class => 'btn btn-mini'
       %td{width: 55}= link_to 'Delete', admin_action_type_path(action_type), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
 
