@@ -19,8 +19,8 @@
   = f.text_field :provider_uid
 
 .actions
-  - if Action.where(action_type: @action_type.name).count > 0
-    = f.submit 'Save', :class => 'btn btn-success', :data => { :confirm => "#{Action.where(action_type: @action_type.name).count} actions are associated with this action type. Changing the action type name will orphan these records. Do you wish to continue?" }
+  - if @action_type.actions.count > 0
+    = f.submit 'Save', :class => 'btn btn-success', :data => { :confirm => "#{@action_type.actions.count} actions are associated with this action type. Changing the action type name will orphan these records. Do you wish to continue?" }
   - else
     = f.submit 'Save', :class => 'btn btn-success'
     
