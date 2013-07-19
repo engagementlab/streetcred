@@ -1,7 +1,6 @@
 class Api::ActionsController < ApplicationController
   require 'mail'
   skip_before_filter :verify_authenticity_token
-  
   respond_to :json
   
   # generic create
@@ -15,12 +14,17 @@ class Api::ActionsController < ApplicationController
     end
   end
 
+  # incoming email sent to 'reports@streetcred.us' and routed through CloudMailIn (Heroku Add-On)
   def email
-    if params['message'].present
+    # verify_signature
+    
+    message = Mail.new(params[:message])
+
+    if message.present?
       channel = Channel.where(name: 'Email').first
-      user = User.where(email: params['message']['from']).first_or_create
-      if ActionType.where(channel_id: channel.id).where(provider_uid: params['message']['subject']).present?
-        action_type = ActionType.where(channel_id: channel.id).where(provider_uid: params['message']['subject']).first
+      user = User.where(email: message.from).first_or_create
+      if ActionType.where(channel_id: channel.id).where(provider_uid: message.subject).present?
+        action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject).first
         user.actions.create(
           api_key: channel.api_key,
           action_type_id: action_type.id, 
@@ -36,6 +40,8 @@ class Api::ActionsController < ApplicationController
     end
   end
   
+  # incoming checkins from the Fourquuare Push API - https://developer.foursquare.com/overview/realtime
+  # note: users must OAuth into their Foursquare account form StreeCred to enable checkin push
   def foursquare
     if params['secret'] == ENV['FOURSQUARE_PUSH_SECRET'] # 'BOL410IIRYOQ1FEAYT1PZYGYDVN5OYUYI1JO5CI2SW3UNO20'
       channel = Channel.where(name: 'Foursquare').first
@@ -168,8 +174,33 @@ class Api::ActionsController < ApplicationController
     end
   end
   
-  private
-  def verify_api_token
-    # if Channel.where(api_key: params['api_key']).present?
+  protected
+
+  def verify_signature
+    provided = request.request_parameters.delete(:signature)
+    signature = Digest::MD5.hexdigest(flatten_params(request.request_parameters).sort.map{|k,v| v}.join + ENV['CLOUDMAILIN_SECRET'])
+    
+    if provided != signature
+      render :text => "Message signature fail #{provided} != #{signature}", :status => 403, :content_type => Mime::TEXT.to_s
+      return false
+    end
   end
+  
+  def flatten_params(params, title = nil, result = {})
+    params.each do |key, value|
+      if value.kind_of?(Hash)
+        key_name = title ? "#{title}[#{key}]" : key
+        flatten_params(value, key_name, result)
+      else
+        key_name = title ? "#{title}[#{key}]" : key
+        result[key_name] = value
+      end
+    end
+  
+    return result
+  end
+
+  # def verify_api_token
+  #   if Channel.where(api_key: params['api_key']).present?
+  # end
 end
