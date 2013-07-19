@@ -55,7 +55,7 @@ class Action
   
   # this callback assigns the incoming action to relevant campaigns, and assigns campaigns to the user if the campaign's 
   # requirements have been met
-  def assign_campaigns!
+  def assign_campaigns
     # iterate through the matching campaigns and determine whether their requirements have been met
     matching_campaigns.each do |campaign|
       unless user.campaigns.include?(campaign)
