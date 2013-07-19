@@ -2,6 +2,8 @@ class Campaign
   include Mongoid::Document
   include Mongoid::MultiParameterAttributes
   include Mongoid::Timestamps
+  include Mongoid::Paperclip
+
 
   has_and_belongs_to_many :actions, index: true
   has_and_belongs_to_many :channels, index: true
@@ -31,6 +33,16 @@ class Campaign
   index "required_actions.name" => 1
 
   before_save :set_coordinates
+
+  if Rails.env == 'production'
+    has_mongoid_attached_file :individual_badge, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', thumb: '60x60>', square: '200x200#', medium: '300x300>' }
+    has_mongoid_attached_file :community_badge, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', thumb: '60x60>', square: '200x200#', medium: '300x300>' }
+  else
+    has_mongoid_attached_file :individual_badge, :url => "individual_badges/:style/:filename", :path => "#{Rails.root}/public/assets/individual_badges/:style/:filename",
+      styles: { icon: '30x30#', thumb: '60x60>', square: '200x200#', medium: '300x300>' }
+    has_mongoid_attached_file :community_badge, :url => "community_badges/:style/:filename", :path => "#{Rails.root}/public/assets/community_badges/:style/:filename",
+      styles: { icon: '30x30#', thumb: '60x60>', square: '200x200#', medium: '300x300>' }
+  end
 
 
   ##### COMMUNITY CALCULATIONS #####

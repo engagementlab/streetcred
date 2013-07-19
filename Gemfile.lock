@@ -36,11 +36,19 @@ GEM
       hashie (>= 1.0, < 3.0)
       httparty
     arel (3.0.2)
+    aws-sdk (1.13.0)
+      json (~> 1.4)
+      nokogiri (< 1.6.0)
+      uuidtools (~> 2.1)
     bcrypt-ruby (3.1.0)
     bson (1.9.0)
     bson_ext (1.9.0)
       bson (~> 1.9.0)
     builder (3.0.4)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.1)
+      climate_control (>= 0.0.3, < 1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -94,10 +102,13 @@ GEM
       moped (~> 1.4)
       origin (~> 1.0)
       tzinfo (~> 0.3.22)
+    mongoid-paperclip (0.0.8)
+      paperclip (>= 2.3.6)
     moped (1.5.0)
     multi_json (1.7.7)
     multi_xml (0.5.4)
     multipart-post (1.2.0)
+    nokogiri (1.5.10)
     oauth2 (0.8.1)
       faraday (~> 0.8)
       httpauth (~> 0.1)
@@ -116,6 +127,11 @@ GEM
       omniauth (~> 1.0)
     origin (1.1.0)
     orm_adapter (0.4.0)
+    paperclip (3.5.0)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.0)
+      mime-types
     polyglot (0.3.3)
     rabl (0.8.6)
       activesupport (>= 2.3.14)
@@ -201,6 +217,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uuidtools (2.1.4)
     warden (1.2.1)
       rack (>= 1.0)
     will_paginate (3.0.4)
@@ -210,6 +227,7 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake
+  aws-sdk
   bson_ext
   coffee-rails (~> 3.2.1)
   devise
@@ -218,6 +236,7 @@ DEPENDENCIES
   jquery-rails
   mongo
   mongoid
+  mongoid-paperclip
   oj
   omniauth
   omniauth-foursquare

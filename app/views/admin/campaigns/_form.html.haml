@@ -61,7 +61,7 @@
   
 %h3 Duration
 %p
-  %em Define the time-frame during which actions can count toward the campaign.
+  %em Set the time-frame during which the campaign will be active.
 
 .fields_group
   .field
@@ -71,6 +71,20 @@
   .field
     = f.label :end_date
     = f.date_select(:end_time, order: [:month, :day, :year], start_year: Date.today.year)
+
+%h3 Badges
+
+.fields_group
+  .field
+    = f.label :individual_badge
+    - if @campaign.individual_badge.present?
+      = image_tag @campaign.individual_badge.url
+    = f.file_field :individual_badge
+  .field
+    = f.label :community_badge
+    - if @campaign.community_badge.present?
+      = image_tag @campaign.community_badge.url
+    = f.file_field :community_badge
 
 .actions
   = f.submit 'Save', :class => 'btn btn-success'
