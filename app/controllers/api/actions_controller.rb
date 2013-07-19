@@ -18,13 +18,12 @@ class Api::ActionsController < ApplicationController
   def email
     # verify_signature
     message = Mail.new(params)
-    logger.info "****************** #{message.inspect} *************************"
 
     if message.present?
+      user = User.where(email: message.from).first_or_create!
       channel = Channel.where(name: 'Email').first
-      user = User.where(email: message.from).first_or_create
-      if ActionType.where(channel_id: channel.id).where(provider_uid: message.subject).present?
-        action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
+      action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
+      if channel.present? && action_type.present?
         user.actions.create(
           api_key: channel.api_key,
           action_type_id: action_type.id, 
