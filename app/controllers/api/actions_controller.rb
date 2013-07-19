@@ -35,15 +35,13 @@ class Api::ActionsController < ApplicationController
           action_type_id: action_type.id, 
           timestamp: Time.now
         )
-        render nothing: true
       else
         logger.info "********** No matching ActionType found **********"
-        render nothing: true
       end
     else
       logger.info "********** No from address **********"
-      render nothing: true
     end
+    render nothing: true
   end
   
   # incoming checkins from the Fourquuare Push API - https://developer.foursquare.com/overview/realtime
