@@ -20,7 +20,13 @@ class Api::ActionsController < ApplicationController
     message = Mail.new(params)
 
     if message.present?
-      user = User.where(email: message.from).first_or_create!
+      user = User.where(email: message.from).first_or_initialize
+      unless user.persisted?
+        password = Devise.friendly_token.first(8)
+        user.password = password
+        user.password_confirmation = password
+        user.save!
+      end
       channel = Channel.where(name: 'Email').first
       action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
       if channel.present? && action_type.present?
