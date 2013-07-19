@@ -20,7 +20,8 @@ class Api::ActionsController < ApplicationController
     message = Mail.new(params[:message])
 
     if message.present?
-      logger.info message.inspect
+      logger.info "******************** From: #{message.from} ***********************"
+      logger.info "******************** Subject: #{message.subject} ************************"
       channel = Channel.where(name: 'Email').first
       user = User.where(email: message.from).first_or_create
       if ActionType.where(channel_id: channel.id).where(provider_uid: message.subject).present?
