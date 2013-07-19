@@ -20,21 +20,24 @@ class Api::ActionsController < ApplicationController
     message = Mail.new(params)
 
     if message.present?
-      user = User.where(email: message.from.first).first_or_initialize
-      unless user.persisted?
+      @user = User.where(email: message.from.first).first_or_initialize
+      unless @user.persisted?
         password = Devise.friendly_token.first(8)
-        user.password = password
-        user.password_confirmation = password
-        user.save!
+        @user.password = password
+        @user.password_confirmation = password
+        @user.save!
       end
       channel = Channel.where(name: 'Email').first
       action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
       if channel.present? && action_type.present?
-        user.actions.create(
+        action = @user.actions.create(
           api_key: channel.api_key,
           action_type_id: action_type.id, 
-          timestamp: Time.now
+          timestamp: message.date
         )
+        @completed_campaigns = @user.campaigns_completed_by_action(action)
+        NotificationMailer.status_email(@user, action).deliver
+        respond_with(@completed_campaigns)
       else
         logger.info "********** No matching ActionType found **********"
       end
@@ -95,12 +98,16 @@ class Api::ActionsController < ApplicationController
     if channel.present?
       if params['user']['email'].present? || params['user']['contact_id'].present?
         if params['user']['email'].present?
-          @user = User.where(email: params['user']['email']).first_or_create
+          @user = User.where(email: params['user']['email']).first_or_initialize
         elsif params['user']['contact_id'].present?
-          @user = User.where(contact_id: params['user']['contact_id']).first_or_create
+          @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
         end
-        params['user']['password'] = Devise.friendly_token.first(8)
-        @user.update_attributes(params['user'])
+        unless @user.persisted?
+          password = Devise.friendly_token.first(8)
+          @user.password = password
+          @user.password_confirmation = password
+          @user.save!
+        end
         if params['report'].present?
           # Citizens Connect is allowed to create new action types on the fly ('first_or_create')
           action_type = ActionType.where(channel_id: channel.id).where(name: params['report']['service']).first_or_create
