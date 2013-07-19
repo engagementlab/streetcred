@@ -17,11 +17,10 @@ class Api::ActionsController < ApplicationController
   # incoming email sent to 'reports@streetcred.us' and routed through CloudMailIn (Heroku Add-On)
   def email
     # verify_signature
-    message = Mail.new(params[:message])
+    message = Mail.new(params)
+    logger.info "****************** #{message.inspect} *************************"
 
     if message.present?
-      logger.info "******************** From: #{message.from} ***********************"
-      logger.info "******************** Subject: #{message.subject} ************************"
       channel = Channel.where(name: 'Email').first
       user = User.where(email: message.from).first_or_create
       if ActionType.where(channel_id: channel.id).where(provider_uid: message.subject).present?
