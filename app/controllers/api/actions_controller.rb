@@ -16,11 +16,11 @@ class Api::ActionsController < ApplicationController
 
   # incoming email sent to 'reports@streetcred.us' and routed through CloudMailIn (Heroku Add-On)
   def email
-    # verify_signature
+    verify_signature
     message = Mail.new(params)
 
     if message.present?
-      user = User.where(email: message.from).first_or_initialize
+      user = User.where(email: message.from.first).first_or_initialize
       unless user.persisted?
         password = Devise.friendly_token.first(8)
         user.password = password
