@@ -20,10 +20,11 @@ class Api::ActionsController < ApplicationController
     message = Mail.new(params[:message])
 
     if message.present?
+      logger.info message.inspect
       channel = Channel.where(name: 'Email').first
       user = User.where(email: message.from).first_or_create
       if ActionType.where(channel_id: channel.id).where(provider_uid: message.subject).present?
-        action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject).first
+        action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
         user.actions.create(
           api_key: channel.api_key,
           action_type_id: action_type.id, 
