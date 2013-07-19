@@ -1,4 +1,4 @@
 %h1 Editing Campaign
 
-= form_for(:campaign, :url => admin_campaign_path(@campaign), :html => {:method => :put}) do |f|
+= form_for(:campaign, :url => admin_campaign_path(@campaign), :html => {:method => :put, :multipart => true}) do |f|
   = render :partial => 'form', :locals => {:f => f}
