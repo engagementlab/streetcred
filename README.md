@@ -4,7 +4,7 @@ StreetCred
 Introduction
 ------------
 
-StreetCred is a civic reputation API.  It accepts incoming POST requests and calculates the user's awards based on the fulfillment of pre-defined campaign criteria.
+StreetCred is a civic reputation API.  It accepts incoming POST requests and calculates the user's awards based on pre-defined campaign criteria.
 
 Installation
 -------------
@@ -47,7 +47,7 @@ Actions consist of the following attributes:
 - :action_type_id, type: Integer
 - :campaign_id, type: Integer
 - :api_key, type: String
-- :record_id, type: String # provider UID
+- :record_id, type: String
 - :case_id, type: String
 - :action_type, type: String
 - :description, type: String
@@ -55,11 +55,10 @@ Actions consist of the following attributes:
 - :location, type: String
 - :latitude, type: BigDecimal
 - :longitude, type: BigDecimal
-- :coordinates, type: Array
 - :address, type: String
 - :city, type: String
 - :zipcode, type: String
 - :state, type: String
 - :url, type: String
 - :photo_url, type: String
-- :timestamp, type: String- 
+- :timestamp, type: String
