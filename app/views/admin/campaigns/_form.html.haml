@@ -35,12 +35,17 @@
 
   .field
     %p
-      %em How many actions are required for an individual to complete the campaign?
+      == #{f.check_box :all_required} All actions required?
+    %br/
+
+  .field
+    %p
+      %em How many actions are required to complete the individual campaign?
     = f.text_field :required_individual_occurrences
 
   .field
     %p
-      %em How many actions are required for the community to complete the campaign?
+      %em How many actions are required to complete the community campaign?
     = f.text_field :required_community_occurrences 
   
 
@@ -61,7 +66,7 @@
   
 %h3 Duration
 %p
-  %em Set the time-frame during which the campaign will be active.
+  %em Define the time-frame during which the campaign will be active.
 
 .fields_group
   .field

@@ -1,4 +1,4 @@
-%h1= @action.action_type
+%h1= @action.action_type.try(:name)
 
 - if @action.user.present?
   %h3 User
@@ -47,4 +47,4 @@
     %td= @action.timestamp
 
 %br/
-= link_to 'Back', admin_actions_path
+= link_to 'Back', admin_actions_path, :class => 'btn'
