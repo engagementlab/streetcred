@@ -42,24 +42,24 @@ Schema
 
 Actions consist of the following attributes:
   
-:user_id, type: Integer
-:channel_id, type: Integer
-:action_type_id, type: Integer
-:campaign_id, type: Integer
-:api_key, type: String
-:record_id, type: String # provider UID
-:case_id, type: String
-:action_type, type: String
-:description, type: String
-:shared, type: Boolean
-:location, type: String
-:latitude, type: BigDecimal
-:longitude, type: BigDecimal
-:coordinates, type: Array
-:address, type: String
-:city, type: String
-:zipcode, type: String
-:state, type: String
-:url, type: String
-:photo_url, type: String
-:timestamp, type: String
+- :user_id, type: Integer
+- :channel_id, type: Integer
+- :action_type_id, type: Integer
+- :campaign_id, type: Integer
+- :api_key, type: String
+- :record_id, type: String # provider UID
+- :case_id, type: String
+- :action_type, type: String
+- :description, type: String
+- :shared, type: Boolean
+- :location, type: String
+- :latitude, type: BigDecimal
+- :longitude, type: BigDecimal
+- :coordinates, type: Array
+- :address, type: String
+- :city, type: String
+- :zipcode, type: String
+- :state, type: String
+- :url, type: String
+- :photo_url, type: String
+- :timestamp, type: String- 
