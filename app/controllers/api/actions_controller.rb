@@ -68,6 +68,7 @@ class Api::ActionsController < ApplicationController
             action_type = ActionType.where(channel_id: channel.id).where(name: checkin['venue']['name']).first
           end
           if user.present? && action_type.present?
+            # update the venue name if we have the venue_id
             if action_type.name.blank?
               action_type.update_attribute(:name, checkin['venue']['name'])
             end
@@ -75,7 +76,7 @@ class Api::ActionsController < ApplicationController
               api_key: channel.api_key,
               record_id: checkin['id'],
               case_id: checkin['id'],
-              action_type: action_type.name,
+              action_type_id: action_type.id,
               description: checkin['shout'],
               latitude: checkin['venue']['location']['lat'],
               longitude: checkin['venue']['location']['lng'],
@@ -165,7 +166,7 @@ class Api::ActionsController < ApplicationController
         if params['trip'].present?
           action_type = ActionType.where(channel_id: channel.id).where(name: params['trip']['service']).first_or_create
           action = @user.actions.create(
-            action_type: action_type.name,
+            action_type_id: action_type.id,
             api_key: params['api_key'],
             record_id: params['trip']['trip_id'],
             event: params['trip']['event'],
