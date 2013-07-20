@@ -1,3 +1,0 @@
-StreetCred is a civic badging API that accepts incoming actions and assigns user awards based on the fulfillment of award criteria.
-
-curl -X POST -d '{"api_key":"9a08a632ca30f5f702612f65299e96b00d21b82f","action_type":"Sidewalk Patch Report","email":"joelmahoney@gmail.com","latitude":"42.359885","longitude":"-71.057983"}' http://streetcred.us/api/actions.json
