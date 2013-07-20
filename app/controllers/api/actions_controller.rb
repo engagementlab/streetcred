@@ -16,7 +16,7 @@ class Api::ActionsController < ApplicationController
 
   # incoming email sent to 'reports@streetcred.us' and routed through CloudMailIn (Heroku Add-On)
   def email
-    verify_signature
+    verify_email_signature
     message = Mail.new(params)
 
     if message.present?
@@ -152,12 +152,16 @@ class Api::ActionsController < ApplicationController
       if params['user']['email'].present? || params['user']['contact_id'].present?
         logger.info "********** Creating user and action from params **********"
         if params['user']['email'].present?
-          @user = User.where(email: params['user']['email']).first_or_create
+          @user = User.where(email: params['user']['email']).first_or_initialize
         elsif params['user']['contact_id'].present?
-          @user = User.where(contact_id: params['user']['contact_id']).first_or_create
+          @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
         end
-        params['user']['password'] = Devise.friendly_token.first(8)
-        @user.update_attributes(params['user'])
+        unless @user.persisted?
+          password = Devise.friendly_token.first(8)
+          @user.password = password
+          @user.password_confirmation = password
+          @user.save!
+        end
         if params['trip'].present?
           action_type = ActionType.where(channel_id: channel.id).where(name: params['trip']['service']).first_or_create
           action = @user.actions.create(
@@ -191,7 +195,7 @@ class Api::ActionsController < ApplicationController
   
   protected
 
-  def verify_signature
+  def verify_email_signature
     provided = request.request_parameters.delete(:signature)
     signature = Digest::MD5.hexdigest(flatten_params(request.request_parameters).sort.map{|k,v| v}.join + ENV['CLOUDMAILIN_SECRET'])
     
