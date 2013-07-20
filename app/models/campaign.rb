@@ -25,6 +25,8 @@ class Campaign
   field :longitude, type: BigDecimal
   field :radius, type: BigDecimal
   field :coordinates, type: Array
+  field :all_required, type: Boolean
+
   
   index({ name: 1 }, { unique: true})
   index({ start_time: 1 })
@@ -44,6 +46,10 @@ class Campaign
       styles: { icon: '30x30#', thumb: '60x60>', square: '200x200#', medium: '300x300>' }
   end
 
+  def required_action_types
+    required_actions.collect {|x| x.action_type}
+  end
+
 
   ##### COMMUNITY CALCULATIONS #####
 
@@ -57,10 +63,16 @@ class Campaign
 
   def requirements_met_by_community?
     if contributing_community_actions.count >= required_community_occurrences
-      if radius.blank?
-        return true
-      elsif radius.present?
-        radius_exceeded?(contributing_community_actions)
+      if all_required?
+        if required_action_types == (required_action_types & contributing_community_actions.collect {|x| x.action_type})
+          if radius.blank?
+            return true
+          elsif radius.present?
+            radius_exceeded?(contributing_community_actions)
+          end
+        else
+          return false
+        end
       end
     else # if contributing_community_actions < required_individual_occurrences
       return false
@@ -80,10 +92,16 @@ class Campaign
 
   def requirements_met_by_individual?(user)
     if contributing_individual_actions(user).count >= required_individual_occurrences
-      if radius.blank?
-        return true
-      elsif radius.present?
-        radius_exceeded?(contributing_individual_actions)
+      if all_required?
+        if required_action_types == (required_action_types & contributing_individual_actions(User.first).collect {|x| x.action_type})
+          if radius.blank?
+            return true
+          elsif radius.present?
+            radius_exceeded?(contributing_individual_actions(user))
+          end
+        else
+          return false
+        end
       end
     else # if contributing_indivudal_actions < required_individual_occurrences
       return false
