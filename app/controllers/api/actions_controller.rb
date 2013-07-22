@@ -16,7 +16,6 @@ class Api::ActionsController < ApplicationController
 
   # incoming email sent to 'reports@streetcred.us' and routed through CloudMailIn (Heroku Add-On)
   def email
-    # verify_email_signature
     message = Mail.new(params)
 
     if message.present?
@@ -195,30 +194,6 @@ class Api::ActionsController < ApplicationController
   end
   
   protected
-
-  # def verify_email_signature
-  #   provided = request.request_parameters.delete(:signature)
-  #   signature = Digest::MD5.hexdigest(flatten_params(request.request_parameters).sort.map{|k,v| v}.join + ENV['CLOUDMAILIN_SECRET'])
-    
-  #   if provided != signature
-  #     render :text => "Message signature fail #{provided} != #{signature}", :status => 403, :content_type => Mime::TEXT.to_s
-  #     return false
-  #   end
-  # end
-  
-  # def flatten_params(params, title = nil, result = {})
-  #   params.each do |key, value|
-  #     if value.kind_of?(Hash)
-  #       key_name = title ? "#{title}[#{key}]" : key
-  #       flatten_params(value, key_name, result)
-  #     else
-  #       key_name = title ? "#{title}[#{key}]" : key
-  #       result[key_name] = value
-  #     end
-  #   end
-  
-  #   return result
-  # end
 
   # def verify_api_token
   #   if Channel.where(api_key: params['api_key']).present?
