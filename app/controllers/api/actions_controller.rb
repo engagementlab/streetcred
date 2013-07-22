@@ -1,7 +1,7 @@
 class Api::ActionsController < ApplicationController
   require 'mail'
   skip_before_filter :verify_authenticity_token
-  respond_to :json, :html
+  # respond_to :json, :html
   
   # generic create
   def create
@@ -44,6 +44,7 @@ class Api::ActionsController < ApplicationController
     else
       logger.info "********** No from address **********"
     end
+    render nothing: true
   end
   
   # incoming checkins from the Fourquuare Push API - https://developer.foursquare.com/overview/realtime
