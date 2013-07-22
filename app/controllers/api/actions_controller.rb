@@ -40,11 +40,14 @@ class Api::ActionsController < ApplicationController
         if @in_progress_campaigns.present? || @completed_campaigns.present?
           NotificationMailer.status_email(@user, action).deliver
         end
+        render nothing: true, status: 200
       else
         logger.info "********** No matching ActionType found **********"
+        render nothing: true, status: 200
       end
     else
       logger.info "********** No from address **********"
+      render nothing: true, status: 500
     end
   end
   
@@ -193,29 +196,29 @@ class Api::ActionsController < ApplicationController
   
   protected
 
-  def verify_email_signature
-    provided = request.request_parameters.delete(:signature)
-    signature = Digest::MD5.hexdigest(flatten_params(request.request_parameters).sort.map{|k,v| v}.join + ENV['CLOUDMAILIN_SECRET'])
+  # def verify_email_signature
+  #   provided = request.request_parameters.delete(:signature)
+  #   signature = Digest::MD5.hexdigest(flatten_params(request.request_parameters).sort.map{|k,v| v}.join + ENV['CLOUDMAILIN_SECRET'])
     
-    if provided != signature
-      render :text => "Message signature fail #{provided} != #{signature}", :status => 403, :content_type => Mime::TEXT.to_s
-      return false
-    end
-  end
+  #   if provided != signature
+  #     render :text => "Message signature fail #{provided} != #{signature}", :status => 403, :content_type => Mime::TEXT.to_s
+  #     return false
+  #   end
+  # end
   
-  def flatten_params(params, title = nil, result = {})
-    params.each do |key, value|
-      if value.kind_of?(Hash)
-        key_name = title ? "#{title}[#{key}]" : key
-        flatten_params(value, key_name, result)
-      else
-        key_name = title ? "#{title}[#{key}]" : key
-        result[key_name] = value
-      end
-    end
+  # def flatten_params(params, title = nil, result = {})
+  #   params.each do |key, value|
+  #     if value.kind_of?(Hash)
+  #       key_name = title ? "#{title}[#{key}]" : key
+  #       flatten_params(value, key_name, result)
+  #     else
+  #       key_name = title ? "#{title}[#{key}]" : key
+  #       result[key_name] = value
+  #     end
+  #   end
   
-    return result
-  end
+  #   return result
+  # end
 
   # def verify_api_token
   #   if Channel.where(api_key: params['api_key']).present?
