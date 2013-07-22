@@ -1,7 +1,7 @@
 class Api::ActionsController < ApplicationController
   require 'mail'
   skip_before_filter :verify_authenticity_token
-  respond_to :json
+  respond_to :json, :html
   
   # generic create
   def create
