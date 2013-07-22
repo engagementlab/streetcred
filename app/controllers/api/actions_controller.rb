@@ -43,11 +43,11 @@ class Api::ActionsController < ApplicationController
         respond_with(@completed_campaigns)
       else
         logger.info "********** No matching ActionType found **********"
-        render nothing: true
+        return false
       end
     else
       logger.info "********** No from address **********"
-      render nothing: true
+      return false
     end
   end
   
