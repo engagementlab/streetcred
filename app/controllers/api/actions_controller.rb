@@ -16,7 +16,7 @@ class Api::ActionsController < ApplicationController
 
   # incoming email sent to 'reports@streetcred.us' and routed through CloudMailIn (Heroku Add-On)
   def email
-    verify_email_signature
+    # verify_email_signature
     message = Mail.new(params)
 
     if message.present?
@@ -40,14 +40,11 @@ class Api::ActionsController < ApplicationController
         if @in_progress_campaigns.present? || @completed_campaigns.present?
           NotificationMailer.status_email(@user, action).deliver
         end
-        return 
       else
         logger.info "********** No matching ActionType found **********"
-        return 
       end
     else
       logger.info "********** No from address **********"
-      return
     end
   end
   
