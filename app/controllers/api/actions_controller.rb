@@ -38,14 +38,11 @@ class Api::ActionsController < ApplicationController
         if @in_progress_campaigns.present? || @completed_campaigns.present?
           NotificationMailer.status_email(@user, action).deliver
         end
-        render nothing: true
       else
         logger.info "********** No matching ActionType found **********"
-        render nothing: true
       end
     else
       logger.info "********** No from address **********"
-      render nothing: true
     end
   end
   
