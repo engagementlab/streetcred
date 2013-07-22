@@ -16,6 +16,8 @@ class Campaign
   
   field :name, type: String
   field :description, type: String
+  field :start_message, type: String
+  field :end_message, type: String
   field :badge_url, type: String
   field :required_individual_occurrences, type: Integer, :default => 1
   field :required_community_occurrences, type: Integer, :default => 1
