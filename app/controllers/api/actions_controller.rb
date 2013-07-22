@@ -35,12 +35,10 @@ class Api::ActionsController < ApplicationController
           action_type_id: action_type.id, 
           timestamp: message.date
         )
-        @completed_campaigns = @user.campaigns_completed_by_action(action)
-        @in_progress_campaigns = @user.campaigns_in_progress_by_action(action)
         if @in_progress_campaigns.present? || @completed_campaigns.present?
           NotificationMailer.status_email(@user, action).deliver
         end
-        respond_with(@completed_campaigns)
+        return false
       else
         logger.info "********** No matching ActionType found **********"
         return false
