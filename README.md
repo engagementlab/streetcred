@@ -34,8 +34,10 @@ https://streetcred.herokuapp.com/api/actions/street_bump
 
 New adapters can be written in api/actions_controller.rb.  A matching route must also be added to config/routes.rb
 
+Test the API using curl:
 
-curl -X POST -d '{"api_key":"apikeyhere","action_type":"Sidewalk Patch Report","email":"joelmahoney@gmail.com","latitude":"42.359885","longitude":"-71.057983"}' http://streetcred.us/api/actions.json
+curl -X POST -H "Content-Type: application/json" -d '{"api_key":"apikeyhere", "action_type":"Patch Report","email":"youremail@gmail.com","latitude":"42.359885","longitude":"-71.057983"}' http://streetcred.us/api/actions.json
+
 
 Schema
 -------------
