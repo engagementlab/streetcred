@@ -1,5 +1,6 @@
 class ActionType
   include Mongoid::Document
+  include Mongoid::Timestamps
   
   belongs_to :channel
   has_many :actions
