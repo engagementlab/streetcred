@@ -13,14 +13,6 @@
   = f.label :description
   = f.text_area :description, rows: 5
 
-.field
-  = f.label :start_message
-  = f.text_area :start_message, rows: 5
-
-.field
-  = f.label :end_message
-  = f.text_area :end_message, rows: 5
-
 %br/
 
 %h2 Campaign Rules
@@ -39,7 +31,7 @@
 
   .field
     %p
-      == #{f.check_box :all_required} All actions required?
+      == #{f.check_box :all_actions_required} All actions required?
     %br/
 
   .field

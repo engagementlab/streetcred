@@ -16,9 +16,6 @@ class Campaign
   
   field :name, type: String
   field :description, type: String
-  field :start_message, type: String
-  field :end_message, type: String
-  field :badge_url, type: String
   field :required_individual_occurrences, type: Integer, :default => 1
   field :required_community_occurrences, type: Integer, :default => 1
   field :start_time, type: DateTime
@@ -27,7 +24,7 @@ class Campaign
   field :longitude, type: BigDecimal
   field :radius, type: BigDecimal
   field :coordinates, type: Array
-  field :all_required, type: Boolean
+  field :all_actions_required, type: Boolean
 
   
   index({ name: 1 }, { unique: true})
@@ -65,7 +62,7 @@ class Campaign
 
   def requirements_met_by_community?
     if contributing_community_actions.count >= required_community_occurrences
-      if all_required?
+      if all_actions_required?
         if required_action_types == (required_action_types & contributing_community_actions.collect {|x| x.action_type})
           if radius.blank?
             return true
@@ -94,7 +91,7 @@ class Campaign
 
   def requirements_met_by_individual?(user)
     if contributing_individual_actions(user).count >= required_individual_occurrences
-      if all_required?
+      if all_actions_required?
         if required_action_types == (required_action_types & contributing_individual_actions(User.first).collect {|x| x.action_type})
           if radius.blank?
             return true
