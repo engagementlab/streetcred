@@ -13,3 +13,7 @@ end
 child :action_type do
 	attributes :_id, :name, :provider_uid, :created_at, :updated_at
 end
+
+child :campaigns do
+	attributes :_id, :name, :description, :required_individual_occurrences, :required_community_occurrences, :all_actions_required, :start_time, :end_time, :latitude, :longitude, :radius, :created_at, :updated_at
+end
