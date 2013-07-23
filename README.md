@@ -24,19 +24,15 @@ It also expects an associated AWS S3 account (for badge image uploads), which is
 Technical
 -------------
 
-Currently, there are five API callback URLs:
+Currently, there are five API URLs:
 
-https://streetcred.herokuapp.com/api/actions/ (generic)
-https://streetcred.herokuapp.com/api/actions/citizens_connect
-https://streetcred.herokuapp.com/api/actions/email
-https://streetcred.herokuapp.com/api/actions/foursquare
-https://streetcred.herokuapp.com/api/actions/street_bump
+https://streetcred.herokuapp.com/api/actions.json (generic create)
+https://streetcred.herokuapp.com/api/actions/citizens_connect.json
+https://streetcred.herokuapp.com/api/actions/email.json
+https://streetcred.herokuapp.com/api/actions/foursquare.json
+https://streetcred.herokuapp.com/api/actions/street_bump.json
 
 New adapters can be written in api/actions_controller.rb.  A matching route must also be added to config/routes.rb
-
-Test the API using curl:
-
-curl -X POST -H "Content-Type: application/json" -d '{"api_key":"apikeyhere", "action_type":"Patch Report","email":"youremail@gmail.com","latitude":"42.359885","longitude":"-71.057983"}' http://streetcred.us/api/actions.json
 
 
 Schema
@@ -64,3 +60,10 @@ Actions consist of the following attributes:
 - :url, type: String
 - :photo_url, type: String
 - :timestamp, type: String
+
+CURL
+-------------
+
+Test the API using curl:
+
+curl -X POST -H "Content-Type: application/json" -d '{"api_key":"apikeyhere", "action_type":"Patch Report","email":"youremail@gmail.com","latitude":"42.359885","longitude":"-71.057983"}' http://streetcred.us/api/actions.json
