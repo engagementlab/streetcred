@@ -4,7 +4,7 @@ StreetCred
 Introduction
 ------------
 
-StreetCred is a civic reputation API.  It accepts incoming POST requests and calculates the user's awards based on pre-defined campaign criteria.
+StreetCred is a civic reputation API.  It accepts incoming POST requests and calculates the user's awards based on pre-defined campaign criteria. Based on what criteria have been fulfilled, messages will be returned (as json) so that status updates can be displayed in the originating app.
 
 Installation
 -------------
