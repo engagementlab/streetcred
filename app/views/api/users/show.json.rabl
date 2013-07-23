@@ -1,10 +1,3 @@
 object @user
-attributes :first_name, :last_name, :email
 
-child :actions do
-  attributes :_id, :field, :case_id, :action_type, :description, :location, :latitude, :longitude
-end
-
-child :campaigns do
-  attributes :_id, :badge_name, :badge_url
-end
+attributes :_id, :first_name, :last_name, :email, :phone, :shared, :provider, :provider_uid, :sign_in_count, :current_sign_in_at, :last_sign_in_at, :current_sign_in_ip, :last_sign_in_ip, :created_at, :updated_at, :actions

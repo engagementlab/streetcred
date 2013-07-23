@@ -37,6 +37,7 @@ Streetcred::Application.routes.draw do
         post 'foursquare'
       end
     end
+    resources :action_types
     resources :campaigns
     resources :users
   end

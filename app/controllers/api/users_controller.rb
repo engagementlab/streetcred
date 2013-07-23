@@ -3,7 +3,7 @@ class API::UsersController < ApplicationController
   respond_to :json
   
   def index
-    @users = User.all
+    @users = User.asc(:first_name)
   end
   
   def show

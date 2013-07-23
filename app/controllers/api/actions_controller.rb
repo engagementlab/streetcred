@@ -2,6 +2,10 @@ class API::ActionsController < ApplicationController
   require 'mail'
   skip_before_filter :verify_authenticity_token
   respond_to :json, :html
+
+  def index
+    @actions = Action.desc(:created_at)
+  end
   
   # generic create
   def create
@@ -30,8 +34,8 @@ class API::ActionsController < ApplicationController
       action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
       if channel.present? && action_type.present?
         action = @user.actions.create(
-          api_key: channel.api_key,
           action_type_id: action_type.id, 
+          api_key: channel.api_key,
           timestamp: message.date
         )
         @completed_campaigns = @user.campaigns_completed_by_action(action)
@@ -72,10 +76,10 @@ class API::ActionsController < ApplicationController
               action_type.update_attribute(:name, checkin['venue']['name'])
             end
             user.actions.create(
+              action_type_id: action_type.id,
               api_key: channel.api_key,
               record_id: checkin['id'],
               case_id: checkin['id'],
-              action_type_id: action_type.id,
               description: checkin['shout'],
               latitude: checkin['venue']['location']['lat'],
               longitude: checkin['venue']['location']['lng'],
@@ -117,11 +121,11 @@ class API::ActionsController < ApplicationController
           # Citizens Connect is allowed to create new action types on the fly ('first_or_create')
           action_type = ActionType.where(channel_id: channel.id).where(name: params['report']['service']).first_or_create
           action = @user.actions.create(
+            action_type_id: action_type.id,
             api_key:        params['api_key'],
             record_id:      params['report']['record_id'],
             case_id:        params['report']['case_id'],
             event:          params['report']['event'],
-            action_type_id: action_type.id,
             description:    params['report']['description'],
             shared:         params['report']['shared'],
             latitude:       params['report']['latitude'],
