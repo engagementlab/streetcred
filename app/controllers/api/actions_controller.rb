@@ -1,4 +1,4 @@
-class Api::ActionsController < ApplicationController
+class API::ActionsController < ApplicationController
   require 'mail'
   skip_before_filter :verify_authenticity_token
   respond_to :json, :html
