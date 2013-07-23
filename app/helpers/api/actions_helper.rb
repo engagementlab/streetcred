@@ -1,2 +1,2 @@
-module Api::ActionsHelper
+module API::ActionsHelper
 end
