@@ -28,7 +28,7 @@ Streetcred::Application.routes.draw do
     resources :users, :only => [:index, :show]
   end
   
-  namespace :api do
+  namespace :api, :defaults => {:format => :json} do
     resources :actions do
       collection do
         post 'email'
