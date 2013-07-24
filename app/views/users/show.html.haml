@@ -6,10 +6,12 @@
   %tr
     %th Name
     %th Description
+    %th Badge
   - for campaign in @user.campaigns
     %tr
       %td= campaign.name
       %td= campaign.description
+      %td= image_tag campaign.individual_badge.url
 
 %hr/
 %h3 Actions
@@ -21,7 +23,7 @@
     %th
   - for action in @user.actions.desc(:created_at)
     %tr
-      %td= action.action_type
+      %td= action.action_type.try(:name)
       %td= action.channel.try(:name)
       %td= action.created_at
       

@@ -10,10 +10,23 @@ class API::ActionsController < ApplicationController
   # generic create
   def create
     if params['email'].present?
-      user = User.where(email: params['email']).first_or_create
-      action = user.actions.create(params['action'])
-      @completed_campaigns = user.campaigns_completed_by_action(action)
-      NotificationMailer.status_email(user, action).deliver
+      @user = User.where(email: params['email']).first_or_initialize
+      unless @user.persisted?
+        password = Devise.friendly_token.first(8)
+        @user.password = password
+        @user.password_confirmation = password
+        @user.save!
+      end
+      channel = Channel.where(api_key: params['api_key']).first
+      action_type = ActionType.where(channel_id: channel.id).where(name: params['action_type']).first
+      if channel.present? && action_type.present?
+        action = @user.actions.create(
+          action_type_id: action_type.id,
+          api_key: channel.api_key
+        )
+      end
+      @completed_campaigns = @user.campaigns_completed_by_action(action)
+      NotificationMailer.status_email(@user, action).deliver
       respond_with(@completed_campaigns)
     end
   end
