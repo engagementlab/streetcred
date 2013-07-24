@@ -21,7 +21,7 @@
     %th
   - for action in @user.actions.desc(:created_at)
     %tr
-      %td= action.action_type
+      %td= action.action_type.try(:name)
       %td= action.channel.try(:name)
       %td= action.created_at
       
