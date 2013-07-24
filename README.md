@@ -59,7 +59,8 @@ Actions consist of the following attributes:
 - :state, type: String
 - :url, type: String
 - :photo_url, type: String
-- :timestamp, type: String
+- :created_at, type: String
+- :updated_at, type: String
 
 CURL
 -------------
