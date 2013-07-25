@@ -7,4 +7,8 @@ class API::CampaignsController < ApplicationController
   def show
   	@campaign = Campaign.find(params[:id])
   end
+
+  def badge
+    @campaign = Campaign.find(params[:id])
+  end
 end
