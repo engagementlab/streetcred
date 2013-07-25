@@ -30,3 +30,5 @@
 - if @user.provider_uid.blank?
   %br/
   = link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
+
+%script{:src => 'http://beta.openbadges.org/issuer.js'}
