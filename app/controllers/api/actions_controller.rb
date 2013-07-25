@@ -7,23 +7,23 @@ class API::ActionsController < ApplicationController
     @actions = Action.desc(:created_at)
   end
   
-  # generic create
+  # Generic create method.  Automatically creates User; ActionType and Channel must already exist (no auto-create)
   def create
     if params['email'].present?
+
       @user = User.where(email: params['email']).first_or_initialize
-      unless @user.persisted?
-        password = Devise.friendly_token.first(8)
-        @user.password = password
-        @user.password_confirmation = password
-        @user.save!
-      end
+      # Create a User with a random password if @user doesn't yet exist
+      create_devise_user(@user) unless @user.persisted?
+
+      # Find Channel and ActionType
       channel = Channel.where(api_key: params['api_key']).first
       action_type = ActionType.where(channel_id: channel.id).where(name: params['action_type']).first
+
       if channel.present? && action_type.present?
-        action = @user.actions.create(
-          action_type_id: action_type.id,
-          api_key: channel.api_key
-        )
+        action = Action.new(params[:action])
+        action.user_id = @user.id
+        action.action_type_id = action_type.id
+        action.save
       end
       @completed_campaigns = @user.campaigns_completed_by_action(action)
       NotificationMailer.status_email(@user, action).deliver
@@ -31,20 +31,20 @@ class API::ActionsController < ApplicationController
     end
   end
 
-  # incoming email sent to 'reports@streetcred.us' and routed through CloudMailIn (Heroku Add-On)
+  # Incoming email sent to 'reports@streetcred.us' and routed through CloudMailIn (Heroku Add-On)
+  # Automatically creates User; Channel and ActionType must already exist (no auto-create)
   def email
     message = Mail.new(params)
 
     if message.present?
       @user = User.where(email: message.from.first).first_or_initialize
-      unless @user.persisted?
-        password = Devise.friendly_token.first(8)
-        @user.password = password
-        @user.password_confirmation = password
-        @user.save!
-      end
+      # Create a User with a random password if @user doesn't yet exist
+      create_devise_user(@user) unless @user.persisted?
+
+      # Find Channel and ActionType
       channel = Channel.where(name: 'Email').first
       action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
+
       if channel.present? && action_type.present?
         action = @user.actions.create(
           action_type_id: action_type.id, 
@@ -124,12 +124,10 @@ class API::ActionsController < ApplicationController
         elsif params['user']['contact_id'].present?
           @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
         end
-        unless @user.persisted?
-          password = Devise.friendly_token.first(8)
-          @user.password = password
-          @user.password_confirmation = password
-          @user.save!
-        end
+
+        # Create a User with a random password if @user doesn't yet exist
+        create_devise_user(@user) unless @user.persisted?
+
         if params['report'].present?
           # Citizens Connect is allowed to create new action types on the fly ('first_or_create')
           action_type = ActionType.where(channel_id: channel.id).where(name: params['report']['service']).first_or_create
@@ -173,12 +171,10 @@ class API::ActionsController < ApplicationController
         elsif params['user']['contact_id'].present?
           @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
         end
-        unless @user.persisted?
-          password = Devise.friendly_token.first(8)
-          @user.password = password
-          @user.password_confirmation = password
-          @user.save!
-        end
+
+        # Create a User with a random password if @user doesn't yet exist
+        create_devise_user(@user) unless @user.persisted?
+
         if params['trip'].present?
           action_type = ActionType.where(channel_id: channel.id).where(name: params['trip']['service']).first_or_create
           action = @user.actions.create(
@@ -211,6 +207,13 @@ class API::ActionsController < ApplicationController
   end
   
   protected
+
+  def create_devise_user(user)
+    password = Devise.friendly_token.first(8)
+    user.password = password
+    user.password_confirmation = password
+    user.save!
+  end
 
   # def verify_api_token
   #   if Channel.where(api_key: params['api_key']).present?
