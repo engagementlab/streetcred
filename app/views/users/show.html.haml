@@ -11,7 +11,9 @@
     %tr
       %td= campaign.name
       %td= campaign.description
-      %td= image_tag campaign.individual_badge.url
+      %td 
+        =image_tag campaign.individual_badge.url
+        =link_to "Send to backpack", '#', :class => "openbadge-link"
 
 %hr/
 %h3 Actions
@@ -32,3 +34,9 @@
   = link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
 
 %script{:src => 'http://beta.openbadges.org/issuer.js'}
+:javascript
+  $(document).ready(function() {
+    $('.openbadge-link').on('click', function(e) {
+      OpenBadges.issue('http://streetcred.dev/api/users/51ef490ee9aba4f8a0000003/campaigns/51ef440ce9aba4015d000005/badge.json');
+    });
+  });
