@@ -37,6 +37,8 @@
 :javascript
   $(document).ready(function() {
     $('.openbadge-link').on('click', function(e) {
-      OpenBadges.issue('http://streetcred.dev/api/users/51ef490ee9aba4f8a0000003/campaigns/51ef440ce9aba4015d000005/badge.json');
+      OpenBadges.issue('http://streetcred.dev/api/users/51ef490ee9aba4f8a0000003/campaigns/51ef440ce9aba4015d000005/badge.json', function(errors, successes) {
+        console.log(errors,successes);
+      });
     });
   });
