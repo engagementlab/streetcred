@@ -7,27 +7,36 @@ class API::ActionsController < ApplicationController
     @actions = Action.desc(:created_at)
   end
   
-  # Generic create method.  Automatically creates User; ActionType and Channel must already exist (no auto-create)
+  # Generic create method. Api_key required. Automatically creates User; ActionType and Channel must already exist (no auto-create)
   def create
-    if params['email'].present?
-
-      @user = User.where(email: params['email']).first_or_initialize
-      # Create a User with a random password if @user doesn't yet exist
-      create_devise_user(@user) unless @user.persisted?
-
-      # Find Channel and ActionType
-      channel = Channel.where(api_key: params['api_key']).first
+    channel = Channel.where(api_key: params['api_key']).first
+    if channel.present?
       action_type = ActionType.where(channel_id: channel.id).where(name: params['action_type']).first
+      if action_type.present?
+        if params['email'].present?
 
-      if channel.present? && action_type.present?
-        action = Action.new(params[:action])
-        action.user_id = @user.id
-        action.action_type_id = action_type.id
-        action.save
+          @user = User.where(email: params['email']).first_or_initialize
+          # Create a User with a random password if @user doesn't yet exist
+          create_devise_user(@user) unless @user.persisted?
+
+          @action = Action.new(params)
+          @action.user_id = @user.id
+          @action.action_type_id = action_type.id
+          @action.save!
+          @completed_campaigns = @user.campaigns_completed_by_action(@action)
+          NotificationMailer.status_email(@user, @action).deliver
+          respond_with(@completed_campaigns)
+        else
+          @error_message = "Actions must include a valid email address"
+          render 'errors'
+        end
+      else
+        @error_message = "Actions must include a valid action_type"
+        render 'errors'
       end
-      @completed_campaigns = @user.campaigns_completed_by_action(action)
-      NotificationMailer.status_email(@user, action).deliver
-      respond_with(@completed_campaigns)
+    else
+      @error_message = "Actions must include a valid api_key"
+      render 'errors'
     end
   end
 
@@ -43,27 +52,30 @@ class API::ActionsController < ApplicationController
 
       # Find Channel and ActionType
       channel = Channel.where(name: 'Email').first
-      action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
-
-      if channel.present? && action_type.present?
-        action = @user.actions.create(
-          action_type_id: action_type.id, 
-          api_key: channel.api_key,
-          timestamp: message.date
-        )
-        @completed_campaigns = @user.campaigns_completed_by_action(action)
-        @in_progress_campaigns = @user.campaigns_in_progress_by_action(action)
-        if @in_progress_campaigns.present? || @completed_campaigns.present?
-          NotificationMailer.status_email(@user, action).deliver
+      if channel.present?
+        action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
+        if action_type.present?
+          action = @user.actions.create(
+            action_type_id: action_type.id, 
+            api_key: channel.api_key,
+            timestamp: message.date
+          )
+          @completed_campaigns = @user.campaigns_completed_by_action(action)
+          @in_progress_campaigns = @user.campaigns_in_progress_by_action(action)
+          if @in_progress_campaigns.present? || @completed_campaigns.present?
+            NotificationMailer.status_email(@user, action).deliver
+          end
+        else
+          @error_message = "Subject line must match an existing ActionType"
+          render 'errors'
         end
-        render nothing: true, status: 200
       else
-        logger.info "********** No matching ActionType found **********"
-        render nothing: true, status: 200
+        @error_message = "'Email' channel does not exist"
+        render 'errors'
       end
     else
-      logger.info "********** No from address **********"
-      render nothing: true, status: 500
+      @error_message = "Email must include a from address"
+      render 'errors'
     end
   end
   
@@ -106,25 +118,24 @@ class API::ActionsController < ApplicationController
           end
         end
       else
-        logger.info "No Channel found"
-        render nothing: true
+        @error_message = "Checkins must include a valid api_key"
+        render 'errors'
       end
     else
-      logger.info "Invalid FOURSQUARE_PUSH_SECRET"
-      render nothing: true
+      @error_message = "Checkins must include a valid FOURSQUARE_PUSH_SECRET"
+      render 'errors'
     end
   end
   
   def citizens_connect
     channel = Channel.where(api_key: params['api_key']).first
     if channel.present?
-      if params['user']['email'].present? || params['user']['contact_id'].present?
-        if params['user']['email'].present?
-          @user = User.where(email: params['user']['email']).first_or_initialize
-        elsif params['user']['contact_id'].present?
-          @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
-        end
-
+      if params['user']['email'].present?
+        @user = User.where(email: params['user']['email']).first_or_initialize
+      elsif params['user']['contact_id'].present?
+        @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
+      end
+      if @user.present?
         # Create a User with a random password if @user doesn't yet exist
         create_devise_user(@user) unless @user.persisted?
 
@@ -149,29 +160,28 @@ class API::ActionsController < ApplicationController
           NotificationMailer.status_email(@user, action).deliver
           respond_with(@completed_campaigns)
         else
-          logger.info "********** No report params suplied **********"
+          @error_message = "Reports must include report parameters"
+          render 'errors'
         end
       else
-        logger.info "********** No user params supplied **********"
-        return "No user info supplied"
+        @error_message = "Reports must include user[email] or user[contact_id]"
+        render 'errors'
       end
     else
-      logger.info "********** Invalid API_KEY **********"
-      return "Invalid API_KEY"
+      @error_message = "Reports must include a valid api_key"
+      render 'errors'
     end
   end
   
   def street_bump
     channel = Channel.where(api_key: params['api_key']).first
     if channel.present?
-      if params['user']['email'].present? || params['user']['contact_id'].present?
-        logger.info "********** Creating user and action from params **********"
-        if params['user']['email'].present?
-          @user = User.where(email: params['user']['email']).first_or_initialize
-        elsif params['user']['contact_id'].present?
-          @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
-        end
-
+      if params['user']['email'].present?
+        @user = User.where(email: params['user']['email']).first_or_initialize
+      elsif params['user']['contact_id'].present?
+        @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
+      end
+      if @user.present?
         # Create a User with a random password if @user doesn't yet exist
         create_devise_user(@user) unless @user.persisted?
 
@@ -194,15 +204,16 @@ class API::ActionsController < ApplicationController
           NotificationMailer.status_email(@user, action).deliver
           respond_with(@completed_campaigns)
         else
-          logger.info "********** No trip params suplied **********"
+          @error_message = "Actions must include trip parameters"
+          render 'errors'
         end
       else
-        logger.info "********** No user params supplied **********"
-        return "No user info supplied"
+        @error_message = "Actions must include user[email] or user[contact_id]"
+        render 'errors'
       end
     else
-      logger.info "********** Invalid API_KEY **********"
-      return "Invalid API_KEY"
+      @error_message = "Actions must include a valid api_key"
+      render 'errors'
     end
   end
   
