@@ -37,9 +37,9 @@ New adapters can be written in api/actions_controller.rb.  A matching route must
 The generic create method accepts the following parameters:
   
 Required parameters:
-- :api_key
-- :action_type
-- :email
+- :api_key (must match the key on an existing Channel)
+- :action_type (must match the name of an existing ActionType)
+- :email (must be a valid email address - new users can be dynamically created)
 
 Optional parameters:
 - :description
@@ -52,11 +52,12 @@ Optional parameters:
 - :state
 - :url
 
-CURL
+Testing
 -------------
 
 Test the API using curl:
 
 curl -X POST -H "Content-Type: application/json" -d '{"api_key":"apikeyhere", "action_type":"Patch Report","email":"youremail@gmail.com","latitude":"42.359885","longitude":"-71.057983"}' http://streetcred.us/api/actions.json
 
-Or download the Postman REST Client Chrome extension: https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en
+Or download the Postman REST Client Chrome extension: 
+https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en
