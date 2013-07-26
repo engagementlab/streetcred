@@ -27,15 +27,15 @@ class API::ActionsController < ApplicationController
           NotificationMailer.status_email(@user, @action).deliver
           respond_with(@completed_campaigns)
         else
-          @error_message = "Actions must include a valid email address"
+          @error_message = "email parameter is missing"
           render 'errors'
         end
       else
-        @error_message = "Actions must include a valid action_type"
+        @error_message = "action_type is invalid"
         render 'errors'
       end
     else
-      @error_message = "Actions must include a valid api_key"
+      @error_message = "api_key is invalid"
       render 'errors'
     end
   end
@@ -70,11 +70,11 @@ class API::ActionsController < ApplicationController
           render 'errors'
         end
       else
-        @error_message = "'Email' channel does not exist"
+        @error_message = "'Email' channel has not been defined"
         render 'errors'
       end
     else
-      @error_message = "Email must include a from address"
+      @error_message = "from address is missing"
       render 'errors'
     end
   end
@@ -118,11 +118,11 @@ class API::ActionsController < ApplicationController
           end
         end
       else
-        @error_message = "Checkins must include a valid api_key"
+        @error_message = "api_key is invalid"
         render 'errors'
       end
     else
-      @error_message = "Checkins must include a valid FOURSQUARE_PUSH_SECRET"
+      @error_message = "FOURSQUARE_PUSH_SECRET is missing or invalid"
       render 'errors'
     end
   end
@@ -160,15 +160,15 @@ class API::ActionsController < ApplicationController
           NotificationMailer.status_email(@user, action).deliver
           respond_with(@completed_campaigns)
         else
-          @error_message = "Reports must include report parameters"
+          @error_message = "'report' parameters are missing (e.g. {'report':{params}})"
           render 'errors'
         end
       else
-        @error_message = "Reports must include user[email] or user[contact_id]"
+        @error_message = "user[email] and/or user[contact_id] are missing"
         render 'errors'
       end
     else
-      @error_message = "Reports must include a valid api_key"
+      @error_message = "api_key is invalid"
       render 'errors'
     end
   end
@@ -204,15 +204,15 @@ class API::ActionsController < ApplicationController
           NotificationMailer.status_email(@user, action).deliver
           respond_with(@completed_campaigns)
         else
-          @error_message = "Actions must include trip parameters"
+          @error_message = "'trip' parameters are missing (e.g. {'trip':{params}})"
           render 'errors'
         end
       else
-        @error_message = "Actions must include user[email] or user[contact_id]"
+        @error_message = "user[email] and/or user[contact_id] is invliad"
         render 'errors'
       end
     else
-      @error_message = "Actions must include a valid api_key"
+      @error_message = "api_key is invalid"
       render 'errors'
     end
   end
