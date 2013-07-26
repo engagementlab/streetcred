@@ -62,16 +62,10 @@ class Campaign
 
   def requirements_met_by_community?
     if contributing_community_actions.count >= required_community_occurrences
-      if all_actions_required?
-        if required_action_types == (required_action_types & contributing_community_actions.collect {|x| x.action_type})
-          if radius.blank?
-            return true
-          elsif radius.present?
-            radius_exceeded?(contributing_community_actions)
-          end
-        else
-          return false
-        end
+      if radius.blank?
+        return true
+      elsif radius.present?
+        radius_exceeded?(contributing_community_actions)
       end
     else # if contributing_community_actions < required_individual_occurrences
       return false
@@ -100,6 +94,12 @@ class Campaign
           end
         else
           return false
+        end
+      else
+        if radius.blank?
+          return true
+        elsif radius.present?
+          radius_exceeded?(contributing_individual_actions(user))
         end
       end
     else # if contributing_indivudal_actions < required_individual_occurrences
