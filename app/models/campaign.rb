@@ -11,6 +11,9 @@ class Campaign
   embeds_many :required_actions
   accepts_nested_attributes_for :required_actions, allow_destroy: true
     
+  scope :active, -> { lt(start_time: Time.now).gt(end_time: Time.now) }
+  scope :completed, -> { lt(end_time: Time.now) }
+
   validates_presence_of :name, :required_actions
   validate :required_actions_unique
   

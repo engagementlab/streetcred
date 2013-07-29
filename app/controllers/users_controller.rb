@@ -11,6 +11,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @active_campaigns = Campaign.active
+    @completed_campaigns = Campaign.completed
 
     respond_to do |format|
       format.html # show.html.erb

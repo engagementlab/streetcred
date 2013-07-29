@@ -1,32 +1,43 @@
-%h2= @user.full_name
+- for campaign in @active_campaigns
+  .row.campaign-row
+    .span7
+      %table
+        %tr
+          %td{:width=>'100px'}
+            = image_tag campaign.individual_badge.url
+          %td
+            .title= campaign.name
+            %p= campaign.description
+    
+      .progress
+        .bar.bar-info{:style=>"width: #{progress_helper(campaign, @user)};"}
+    
+    .span1
+      &nbsp;
+    .span4
+      .stat.green
+        %h3= campaign.users.count
+        participants
+      .stat.blue
+        %h3= campaign.users.count
+        badges
+      .stat.red
+        %h3= campaign.actions.count
+        actions
+      .stat.yellow
+        - if campaign.radius.blank?
+          %h3 N/A
+        - else
+          %h3= campaign.radius
+          reach (mi)
 
-%hr/
-%h3 Awards
-%table.table
-  %tr
-    %th Name
-    %th Description
-    %th Badge
-  - for campaign in @user.campaigns
-    %tr
-      %td= campaign.name
-      %td= campaign.description
-      %td= image_tag campaign.individual_badge.url
-
-%hr/
-%h3 Actions
-%table.table
-  %tr
-    %th Action Type
-    %th Channel
-    %th Created At
-    %th
-  - for action in @user.actions.desc(:created_at)
-    %tr
-      %td= action.action_type.try(:name)
-      %td= action.channel.try(:name)
-      %td= action.created_at
+%h3 Completed Campaigns
+- for campaign in @completed_campaigns
+  .row
+    .span8
+      .title= campaign.name
       
-- if @user.provider_uid.blank?
-  %br/
-  = link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
+.row
+  - if @user.provider_uid.blank?
+    %br/
+    = link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
