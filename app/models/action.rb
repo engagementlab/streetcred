@@ -60,7 +60,7 @@ class Action
     matching_campaigns.each do |campaign|
       unless user.campaigns.include?(campaign)
         campaign.actions << self
-        user.campaigns << campaign if campaign.requirements_met_by_individual?(user)
+        user.campaigns << campaign
       end
     end
   end
