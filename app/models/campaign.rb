@@ -53,7 +53,11 @@ class Campaign
   end
 
   def active?
-    start_time < Time.now && end_time > Time.now
+    if start_time.present? && end_time.present?
+      start_time < Time.now && end_time > Time.now
+    else
+      false
+    end
   end
 
 
