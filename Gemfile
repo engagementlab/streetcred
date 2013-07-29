@@ -18,7 +18,6 @@ gem 'mongoid'
 gem 'oj'
 gem 'mongoid-paperclip', :require => 'mongoid_paperclip'
 gem 'rabl'
-gem 'rocket_pants'
 gem 'twitter-bootstrap-rails'
 
 # geocoder needs to load after mongoid to avoid "uninitialized constant Geocoder::Model::Mongoid"
