@@ -1,0 +1,39 @@
+- for campaign in @active_campaigns
+  .row.campaign-row
+    .span7
+      %table
+        %tr
+          %td{:width=>'100px'}
+            = image_tag campaign.individual_badge.url
+          %td
+            .title= campaign.name
+            %p= campaign.description
+    
+      .progress
+        .bar.bar-info{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+    
+    .span1
+      &nbsp;
+    .span4
+      .stat.green
+        %h3= campaign.users.count
+        participants
+      .stat.blue
+        %h3= campaign.users.count
+        badges
+      .stat.red
+        %h3= campaign.actions.count
+        actions
+      .stat.yellow
+        - if campaign.radius.blank?
+          %h3 N/A
+        - else
+          %h3= campaign.radius
+          reach (mi)
+
+%br/
+%h3 Completed Campaigns
+- for campaign in @completed_campaigns
+  .row
+    .span8
+      .title= campaign.name
