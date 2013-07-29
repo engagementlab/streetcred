@@ -5,13 +5,23 @@
 %table.table.table-hover
   %tr
     %th Name
+    %th Dates
     %th
     %th
 
   - @campaigns.each do |campaign|
-    %tr
-      %td= campaign.name
-      %td{width: 35}= link_to 'Edit', edit_admin_campaign_path(campaign), :class => 'btn btn-mini'
-      %td{width: 55}= link_to 'Delete', admin_campaign_path(campaign), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
+    - if campaign.active?
+      %tr.warning
+        %td= campaign.name
+        %td== #{campaign.start_time.to_date} &mdash; #{campaign.end_time.to_date}
+        %td{width: 35}= link_to 'Edit', edit_admin_campaign_path(campaign), :class => 'btn btn-mini'
+        %td{width: 55}= link_to 'Delete', admin_campaign_path(campaign), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
+    - else
+      %tr
+        %td= campaign.name
+        %td== #{campaign.start_time.to_date} &mdash; #{campaign.end_time.to_date}
+        %td{width: 35}= link_to 'Edit', edit_admin_campaign_path(campaign), :class => 'btn btn-mini'
+        %td{width: 55}= link_to 'Delete', admin_campaign_path(campaign), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
+
 
 = link_to 'New Campaign', new_admin_campaign_path, :class => 'btn btn-success'

@@ -52,6 +52,10 @@ class Campaign
     required_actions.collect {|x| x.action_type}
   end
 
+  def active?
+    start_time < Time.now && end_time > Time.now
+  end
+
 
   ##### COMMUNITY CALCULATIONS #####
 
