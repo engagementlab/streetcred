@@ -1,6 +1,6 @@
 - for campaign in @active_campaigns
   .row.campaign-row
-    .span7
+    .span8
       %table
         %tr
           %td{:width=>'100px'}
@@ -9,11 +9,13 @@
             .title= campaign.name
             %p= campaign.description
     
-      .progress
-        .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
+      .progress-row
+        .progress
+          .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
+        .pull-right
+          = campaign.required_individual_occurrences
+        0
     
-    .span1
-      &nbsp;
     .span4
       .stat.green
         %h3= campaign.users.count
