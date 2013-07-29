@@ -10,7 +10,7 @@
             %p= campaign.description
     
       .progress
-        .bar.bar-info{:style=>"width: #{progress_helper(campaign, @user)};"}
+        .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
     
     .span1
       &nbsp;
