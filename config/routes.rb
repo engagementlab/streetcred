@@ -30,6 +30,7 @@ Streetcred::Application.routes.draw do
   end
   
   namespace :api, :defaults => {:format => :json} do
+    get '/organization', to: 'application#organization'
     resources :actions do
       collection do
         post 'email'
@@ -39,7 +40,13 @@ Streetcred::Application.routes.draw do
       end
     end
     resources :action_types
-    resources :campaigns
-    resources :users
+    resources :campaigns do
+      get 'badge', on: :member
+    end
+    resources :users do
+      resources :campaigns do
+        get 'badge', to: 'users#badge'
+      end
+    end
   end
 end

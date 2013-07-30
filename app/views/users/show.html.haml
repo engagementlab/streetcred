@@ -4,7 +4,8 @@
       %table
         %tr
           %td{:width=>'100px'}
-            = image_tag campaign.individual_badge.url
+            =image_tag campaign.individual_badge.url
+            =link_to "Send to backpack", '#', :class => "openbadge-link", :data => { :api => "#{badge_api_path(@user, campaign)}" }
           %td
             .title= campaign.name
             %p= campaign.description
@@ -39,7 +40,19 @@
     .span8
       .title= campaign.name
 
+
 - if @user == current_user
   .row
     %p= link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
     %p= link_to "Enable Instagram Photos", user_omniauth_authorize_path('instagram')
+
+%script{:src => 'http://beta.openbadges.org/issuer.js'}
+:javascript
+  $(document).ready(function() {
+    $('.openbadge-link').on('click', function(e) {
+      var campaign = $(e.target).data('api');
+      OpenBadges.issue(campaign, function(errors, successes) {
+        console.log(errors,successes);
+      });
+    });
+  });
