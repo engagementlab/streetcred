@@ -1,7 +1,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def foursquare
-    @user = Oauth.find_or_create_from_foursquare_oauth(env['omniauth.auth'], current_user)
+    @user = Oauth.find_or_create_from_oauth(env['omniauth.auth'], 'foursquare', current_user)
 
     if @user.persisted?
       sign_in @user, :event => :authentication
@@ -14,7 +14,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def instagram
-    @user = Oauth.find_or_create_from_instagram_oauth(env['omniauth.auth'], current_user)
+    @user = Oauth.find_or_create_from_oauth(env['omniauth.auth'], 'instagram', current_user)
 
     if @user.persisted?
       sign_in @user, :event => :authentication
@@ -28,13 +28,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   private
 
-  def redirect_logic
-    if @user.first_name.blank? || @user.last_name.blank? || @user.email.blank? || @user.date_of_birth.blank? || @user.gender.blank? || @user.notification_frequency.blank?
-      flash[:notice] = "Welcome! Please complete your profile information"
-      redirect_to edit_user_registration_path(@user)
-    else
-      flash[:notice] = "Welcome back, #{@user.first_name_or_screen_name}"
-      redirect_to page_path('home')
-    end
-  end
+  # def redirect_logic
+  #   if @user.first_name.blank? || @user.last_name.blank? || @user.email.blank? || @user.date_of_birth.blank? || @user.gender.blank? || @user.notification_frequency.blank?
+  #     flash[:notice] = "Welcome! Please complete your profile information"
+  #     redirect_to edit_user_registration_path(@user)
+  #   else
+  #     flash[:notice] = "Welcome back, #{@user.first_name_or_screen_name}"
+  #     redirect_to page_path('home')
+  #   end
+  # end
 end
