@@ -16,19 +16,6 @@ module Oauth
       )
       return provider.user
 
-    elsif provider.blank? && user.present?
-      puts "*********** user present and provider blank ***********"
-      user.update_attributes( first_name: data['info']['first_name'], 
-            last_name: data['info']['last_name'],
-            email: data['info']['email']
-      )
-      user.providers.create( info: data['info'], 
-            credentials:  data['credentials'], 
-            extra:        data['extra'],
-            provider_uid: data['uid'],
-            provider:     provider_name
-      )
-      return user
 
     elsif provider.blank? && signed_in_resource.present?
       puts "*********** current_user present and provider blank ***********"
@@ -44,6 +31,20 @@ module Oauth
             provider:         provider_name
       )
       return signed_in_resource
+
+    elsif provider.blank? && user.present?
+      puts "*********** user present and provider blank ***********"
+      user.update_attributes( first_name: data['info']['first_name'], 
+            last_name: data['info']['last_name'],
+            email: data['info']['email']
+      )
+      user.providers.create( info: data['info'], 
+            credentials:  data['credentials'], 
+            extra:        data['extra'],
+            provider_uid: data['uid'],
+            provider:     provider_name
+      )
+      return user
 
     else provider.blank? && user.blank? && signed_in_resource.blank?
       puts "*********** provider blank and user blank and signed_in_resource blank ***********"
