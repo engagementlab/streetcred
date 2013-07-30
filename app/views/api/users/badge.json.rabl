@@ -7,7 +7,7 @@ child :recipient do
   node(:hashed) {'false'}
   node(:identity) {@user.email}
 end
-node(:image) {@campaign.individual_badge}
+node(:image) {asset_url(@campaign.individual_badge.url)}
 node(:evidence) {@campaign.id}
 node(:issuedOn) {@campaign.created_at}
 node(:badge) {'/badge.json'}
