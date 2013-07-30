@@ -1,14 +1,15 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+
   def foursquare
     @user = Oauth.find_or_create_from_foursquare_oauth(env['omniauth.auth'], current_user)
 
     if @user.persisted?
       sign_in @user, :event => :authentication
-      redirect_to users_url
+      redirect_to user_url(current_user)
       # redirect_logic
     else
       session["devise.foursquare_data"] = env["omniauth.auth"]
-      redirect_to users_url
+      redirect_to user_url(current_user)
     end
   end
 
@@ -17,11 +18,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user, :event => :authentication
-      redirect_to users_url
+      redirect_to user_url(current_user)
       # redirect_logic
     else
       session["devise.instagram_data"] = env["omniauth.auth"]
-      redirect_to users_url
+      redirect_to user_url(current_user)
     end
   end
   
