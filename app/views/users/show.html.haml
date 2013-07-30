@@ -38,7 +38,8 @@
   .row
     .span8
       .title= campaign.name
-      
-.row
-  %p= link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
-  %p= link_to "Enable Instagram Photos", user_omniauth_authorize_path('instagram')
+
+- if @user == current_user
+  .row
+    %p= link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
+    %p= link_to "Enable Instagram Photos", user_omniauth_authorize_path('instagram')
