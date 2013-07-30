@@ -2,6 +2,6 @@ object @campaign
 
 attributes :name, :description
 attribute :individual_badge => :image
-node(:criteria) { 'http://streetcred.dev/api/campaigns/51ef440ce9aba4015d000005' }
+node(:criteria) {"#{request.protocol}#{request.host_with_port}/api/campaigns/#{@campaign.id}.json"}
 node(:tags) {'["civic", "volunteer"]'}
-node(:issuer) {'http://streetcred.dev/api/organization'}
+node(:issuer) {"#{request.protocol}#{request.host_with_port}/api/organization.json"}
