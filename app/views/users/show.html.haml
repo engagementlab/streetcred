@@ -4,7 +4,8 @@
       %table
         %tr
           %td{:width=>'100px'}
-            = image_tag campaign.individual_badge.url
+            =image_tag campaign.individual_badge.url
+            =link_to "Send to backpack", '#', :class => "openbadge-link", :data => { :api => "#{badge_api_path(@user, campaign)}" }
           %td
             .title= campaign.name
             %p= campaign.description
@@ -37,8 +38,6 @@
 - for campaign in @completed_campaigns
   .row
     .span8
-      =image_tag campaign.individual_badge.url
-      =link_to "Send to backpack", '#', :class => "openbadge-link"
       .title= campaign.name
 
 
@@ -51,7 +50,8 @@
 :javascript
   $(document).ready(function() {
     $('.openbadge-link').on('click', function(e) {
-      OpenBadges.issue('http://streetcred.dev/api/users/51ef490ee9aba4f8a0000003/campaigns/51ef440ce9aba4015d000005/badge.json', function(errors, successes) {
+      var campaign = $(e.target).data('api');
+      OpenBadges.issue(campaign, function(errors, successes) {
         console.log(errors,successes);
       });
     });
