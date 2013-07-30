@@ -60,6 +60,12 @@ class Campaign
     end
   end
 
+  def days_left
+    if end_time.present?
+      (end_time.to_i - Time.now.to_i) / (60 * 60 * 24)
+    end
+  end
+
 
   ##### COMMUNITY CALCULATIONS #####
 
@@ -129,14 +135,18 @@ class Campaign
     if radius.present?
       # make sure the actions have coordinates
       actions_with_coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
-      if latitude.present? && longitude.present?
-        center_point = [longitude.to_f, latitude.to_f]
+      if actions_with_coordinates.present?
+        if latitude.present? && longitude.present?
+          center_point = [longitude.to_f, latitude.to_f]
+        else
+          center_point = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates})
+        end
+        max_distance = actions_with_coordinates.geo_near(center_point).spherical.distance_multiplier(3959).max_distance
+        # make sure the distance exceeds the radius and that at least one action is within the circle
+        max_distance > radius && actions_within_circle(actions_with_coordinates, center_point).present?
       else
-        center_point = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates})
+        return false
       end
-      max_distance = (actions_with_coordinates.geo_near(center_point).spherical.max_distance * 3959)
-      # make sure the distance exceeds the radius and that at least one action is within the circle
-      max_distance > radius && actions_within_circle(actions_with_coordinates, center_point).present?
     else
       return false
     end
