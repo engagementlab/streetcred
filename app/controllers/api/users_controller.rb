@@ -9,4 +9,9 @@ class API::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
   end
+
+  def badge
+    @user = User.find(params[:user_id])
+    @campaign = Campaign.find(params[:campaign_id])
+  end
 end
