@@ -28,6 +28,19 @@ module Oauth
       )
       return user
 
+    elsif provider.blank? && signed_in_resource.present?
+      signed_in_resource.update_attributes( first_name: data['info']['first_name'], 
+            last_name: data['info']['last_name'],
+            email: data['info']['email']
+      )
+      signed_in_resource.providers.create( info: data['info'], 
+            credentials: data['credentials'], 
+            extra: data['extra'],
+            provider_uid: data['uid'],
+            provider: provider_name
+      )
+      return signed_in_resource
+
     else
       if data['info'] && data['info']['location']
         city = data['info']['location'].split(',').first.try(:strip)
