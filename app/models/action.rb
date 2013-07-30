@@ -58,8 +58,8 @@ class Action
   def assign_campaigns
     # iterate through the matching campaigns and determine whether their requirements have been met
     matching_campaigns.each do |campaign|
+      campaign.actions << self
       unless user.campaigns.include?(campaign)
-        campaign.actions << self
         user.campaigns << campaign
       end
     end
