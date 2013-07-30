@@ -4,17 +4,34 @@
 	margin-bottom: 120px;
 }
 .campaign-row{
-	margin-bottom: 30px;
+	margin-bottom: 40px;
+	padding-bottom: 40px;
+	border-bottom: solid 1px #cccccc;
 	.title{
-		font-size: 1.8em;
+		font-size: 2em;
 		font-weight: bold;
-		margin-bottom: .7em;
+		margin-bottom: .8em;
 	}
+}
+.progress-row{
+	margin-top: 15px;
+	.progress{
+		height: 26px;
+		margin-bottom: 5px;
+	}
+}
+.individual{
+	padding-top: 20px;
+	text-align: left;
+}
+.community{
+	padding-top: 45px;
+	text-align: left;
 }
 .no-margin{margin-left: 0;}
 .stat{
 	float: left;
-	margin-top: 20px;
+	margin-top: 15px;
 	padding: 10px 0 10px 0;
 	height: 90px;
 	width: 90px;
@@ -25,7 +42,7 @@
 
 }
 .green{
-	background-color: #97d43b;
+	background-color: #61c161;
 }
 .blue{
 	background-color: #00aecf;
@@ -35,8 +52,4 @@
 }
 .yellow{
 	background-color: #e7ad00;
-}
-.progress{
-	margin-top: 20px;
-	height: 26px;
 }

@@ -1,43 +1,66 @@
-- for campaign in @active_campaigns
-  .row.campaign-row
-    .span8
-      %table
-        %tr
-          %td{:width=>'100px'}
-            = image_tag campaign.individual_badge.url
-          %td
-            .title= campaign.name
-            %p= campaign.description
-    
-      .progress-row
-        .progress
-          .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
-        .pull-right
-          = campaign.required_individual_occurrences
-        0
-    
-    .span4
-      .stat.green
-        %h3= campaign.users.count
-        participants
-      .stat.blue
-        %h3= campaign.users.count
-        badges
-      .stat.red
-        %h3= campaign.actions.count
-        actions
-      .stat.yellow
-        - if campaign.radius.blank?
-          %h3 N/A
-        - else
-          %h3= campaign.radius
-          reach (mi)
+.row
+  .span1
+  .span8
+    %h1= @user.full_name
+.row
+  .span4
+    .stat.green
+      %h3= @user.campaigns.count
+      participants
+    .stat.blue
+      %h3= @user.campaigns.count
+      badges
+    .stat.red
+      %h3= @user.actions.count
+      actions
+    .stat.yellow
+      - if @user.reach.blank?
+        %h3 N/A
+      - else
+        %h3= @user.reach
+        reach (mi)
 
-%h3 Completed Campaigns
-- for campaign in @completed_campaigns
-  .row
-    .span8
-      .title= campaign.name
+- for campaign in @active_campaigns
+  .span9.campaign-row
+    .row
+      .span1.text-right
+        = image_tag campaign.individual_badge.url
+      .span6
+        .title= campaign.name
+        %p= campaign.description
+    .row
+      .span1
+      .span6
+        .progress-row
+          .progress
+            .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
+          .pull-right
+            = campaign.required_individual_occurrences
+          0
+
+        .progress-row
+          .progress
+            .bar.bar-success{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+          .pull-right
+            = campaign.required_community_occurrences
+          0
+
+      .span2
+        .individual
+          %em
+            Individual Goal
+        .community
+          %em
+            Community Goal
+
+
+.row
+  .span8
+    %h3 Completed Campaigns
+    - for campaign in @completed_campaigns
+      .row
+        .span8
+          .title= campaign.name
 
 - if @user == current_user
   .row
