@@ -74,6 +74,16 @@ class User
       action.campaigns.nin(user_ids: self.id)
     end
   end
+
+  def reach
+    actions_with_coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
+    if actions_with_coordinates.present?
+      center_point = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates})
+      actions_with_coordinates.geo_near(center_point).spherical.distance_multiplier(3959).average_distance
+    else
+      nil
+    end
+  end
 end
 
 
