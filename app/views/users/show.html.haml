@@ -40,6 +40,5 @@
       .title= campaign.name
       
 .row
-  - if @user.provider_uid.blank?
-    %br/
-    = link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
+  %p= link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
+  %p= link_to "Enable Instagram Photos", user_omniauth_authorize_path('instagram')
