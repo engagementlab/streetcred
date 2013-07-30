@@ -8,10 +8,10 @@ child :recipient do
   node(:identity) {@user.email}
 end
 node(:image) {asset_url(@campaign.individual_badge.url)}
-node(:evidence) {@campaign.id}
+node(:evidence) {"#{request.protocol}#{request.host_with_port}/users/#{@user.id}"}
 node(:issuedOn) {@campaign.created_at}
-node(:badge) {'/badge.json'}
+node(:badge) {"#{request.protocol}#{request.host_with_port}/api/campaigns/#{@campaign.id}/badge.json"}
 child :verify do
   node(:type) {'hosted'}
-  node(:url) {'/badge.json'}
+  node(:url) {"#{request.protocol}#{request.host_with_port}#{request.fullpath}"}
 end
