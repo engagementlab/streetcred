@@ -11,7 +11,7 @@
     
       .progress-row
         .progress
-          .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
+          .bar.bar-success{:style=>"width: #{community_progress_bar_helper(campaign)};"}
         .pull-right
           = campaign.required_individual_occurrences
         0
@@ -33,26 +33,9 @@
           %h3= campaign.radius
           reach (mi)
 
+%br/
 %h3 Completed Campaigns
 - for campaign in @completed_campaigns
   .row
     .span8
-      =image_tag campaign.individual_badge.url
-      =link_to "Send to backpack", '#', :class => "openbadge-link"
       .title= campaign.name
-
-
-- if @user == current_user
-  .row
-    %p= link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
-    %p= link_to "Enable Instagram Photos", user_omniauth_authorize_path('instagram')
-
-%script{:src => 'http://beta.openbadges.org/issuer.js'}
-:javascript
-  $(document).ready(function() {
-    $('.openbadge-link').on('click', function(e) {
-      OpenBadges.issue('http://streetcred.dev/api/users/51ef490ee9aba4f8a0000003/campaigns/51ef440ce9aba4015d000005/badge.json', function(errors, successes) {
-        console.log(errors,successes);
-      });
-    });
-  });

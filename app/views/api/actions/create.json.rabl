@@ -1,2 +1,3 @@
-collection @completed_campaigns
-attributes :name, :message, :badge_url
+collection @action
+
+extends "api/actions/show"

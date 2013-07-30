@@ -3,9 +3,10 @@ class User
   include Mongoid::Timestamps
   
   has_many :actions, dependent: :delete
+  has_many :providers, dependent: :delete
   has_and_belongs_to_many :campaigns, index: true
   
-  devise :database_authenticatable, :registerable, :recoverable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:foursquare]
+  devise :database_authenticatable, :registerable, :recoverable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:foursquare, :instagram]
 
   field :contact_id, type: String, default: ""
   field :first_name, type: String, default: ""
@@ -14,12 +15,12 @@ class User
   field :phone, type: String, default: ""
   field :shared, type: Boolean, default: true
 
-  # Omniauth
-  field :provider, type: String
-  field :provider_uid, type: String
-  field :info, type: String
-  field :credentials, type: String
-  field :extra, type: String
+  # # Omniauth
+  # field :provider, type: String
+  # field :provider_uid, type: String
+  # field :info, type: String
+  # field :credentials, type: String
+  # field :extra, type: String
   
   ## Database authenticatable
   field :encrypted_password, :type => String, default: ""

@@ -1,6 +1,7 @@
 Streetcred::Application.routes.draw do
   root :to => 'users#index' 
   
+  resources :campaigns, :only => [:index, :show]
   resources :users, :only => [:index, :show]
   
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks", :sessions => 'sessions', :registrations => 'registrations'}
