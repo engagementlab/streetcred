@@ -7,63 +7,75 @@ class API::ActionsController < ApplicationController
     @actions = Action.desc(:created_at)
   end
   
-  # generic create
+  # Generic create method. Api_key required. Automatically creates User; ActionType and Channel must already exist (no auto-create)
   def create
-    if params['email'].present?
-      @user = User.where(email: params['email']).first_or_initialize
-      unless @user.persisted?
-        password = Devise.friendly_token.first(8)
-        @user.password = password
-        @user.password_confirmation = password
-        @user.save!
-      end
-      channel = Channel.where(api_key: params['api_key']).first
+    channel = Channel.where(api_key: params['api_key']).first
+    if channel.present?
       action_type = ActionType.where(channel_id: channel.id).where(name: params['action_type']).first
-      if channel.present? && action_type.present?
-        action = @user.actions.create(
-          action_type_id: action_type.id,
-          api_key: channel.api_key
-        )
+      if action_type.present?
+        if params['email'].present?
+
+          @user = User.where(email: params['email']).first_or_initialize
+          # Create a User with a random password if @user doesn't yet exist
+          create_devise_user(@user) unless @user.persisted?
+
+          @action = Action.new(params)
+          @action.user_id = @user.id
+          @action.action_type_id = action_type.id
+          @action.save!
+          @completed_campaigns = @user.campaigns_completed_by_action(@action)
+          NotificationMailer.status_email(@user, @action).deliver
+          respond_with(@completed_campaigns)
+        else
+          @error_message = "email parameter is missing"
+          render 'errors'
+        end
+      else
+        @error_message = "action_type is invalid"
+        render 'errors'
       end
-      @completed_campaigns = @user.campaigns_completed_by_action(action)
-      NotificationMailer.status_email(@user, action).deliver
-      respond_with(@completed_campaigns)
+    else
+      @error_message = "api_key is invalid"
+      render 'errors'
     end
   end
 
-  # incoming email sent to 'reports@streetcred.us' and routed through CloudMailIn (Heroku Add-On)
+  # Incoming email sent to 'reports@streetcred.us' and routed through CloudMailIn (Heroku Add-On)
+  # Automatically creates User; Channel and ActionType must already exist (no auto-create)
   def email
     message = Mail.new(params)
 
     if message.present?
       @user = User.where(email: message.from.first).first_or_initialize
-      unless @user.persisted?
-        password = Devise.friendly_token.first(8)
-        @user.password = password
-        @user.password_confirmation = password
-        @user.save!
-      end
+      # Create a User with a random password if @user doesn't yet exist
+      create_devise_user(@user) unless @user.persisted?
+
+      # Find Channel and ActionType
       channel = Channel.where(name: 'Email').first
-      action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
-      if channel.present? && action_type.present?
-        action = @user.actions.create(
-          action_type_id: action_type.id, 
-          api_key: channel.api_key,
-          timestamp: message.date
-        )
-        @completed_campaigns = @user.campaigns_completed_by_action(action)
-        @in_progress_campaigns = @user.campaigns_in_progress_by_action(action)
-        if @in_progress_campaigns.present? || @completed_campaigns.present?
-          NotificationMailer.status_email(@user, action).deliver
+      if channel.present?
+        action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
+        if action_type.present?
+          action = @user.actions.create(
+            action_type_id: action_type.id, 
+            api_key: channel.api_key,
+            timestamp: message.date
+          )
+          @completed_campaigns = @user.campaigns_completed_by_action(action)
+          @in_progress_campaigns = @user.campaigns_in_progress_by_action(action)
+          if @in_progress_campaigns.present? || @completed_campaigns.present?
+            NotificationMailer.status_email(@user, action).deliver
+          end
+        else
+          @error_message = "Subject line must match an existing ActionType"
+          render 'errors'
         end
-        render nothing: true, status: 200
       else
-        logger.info "********** No matching ActionType found **********"
-        render nothing: true, status: 200
+        @error_message = "'Email' channel has not been defined"
+        render 'errors'
       end
     else
-      logger.info "********** No from address **********"
-      render nothing: true, status: 500
+      @error_message = "from address is missing"
+      render 'errors'
     end
   end
   
@@ -106,30 +118,27 @@ class API::ActionsController < ApplicationController
           end
         end
       else
-        logger.info "No Channel found"
-        render nothing: true
+        @error_message = "api_key is invalid"
+        render 'errors'
       end
     else
-      logger.info "Invalid FOURSQUARE_PUSH_SECRET"
-      render nothing: true
+      @error_message = "FOURSQUARE_PUSH_SECRET is missing or invalid"
+      render 'errors'
     end
   end
   
   def citizens_connect
     channel = Channel.where(api_key: params['api_key']).first
     if channel.present?
-      if params['user']['email'].present? || params['user']['contact_id'].present?
-        if params['user']['email'].present?
-          @user = User.where(email: params['user']['email']).first_or_initialize
-        elsif params['user']['contact_id'].present?
-          @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
-        end
-        unless @user.persisted?
-          password = Devise.friendly_token.first(8)
-          @user.password = password
-          @user.password_confirmation = password
-          @user.save!
-        end
+      if params['user']['email'].present?
+        @user = User.where(email: params['user']['email']).first_or_initialize
+      elsif params['user']['contact_id'].present?
+        @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
+      end
+      if @user.present?
+        # Create a User with a random password if @user doesn't yet exist
+        create_devise_user(@user) unless @user.persisted?
+
         if params['report'].present?
           # Citizens Connect is allowed to create new action types on the fly ('first_or_create')
           action_type = ActionType.where(channel_id: channel.id).where(name: params['report']['service']).first_or_create
@@ -151,34 +160,31 @@ class API::ActionsController < ApplicationController
           NotificationMailer.status_email(@user, action).deliver
           respond_with(@completed_campaigns)
         else
-          logger.info "********** No report params suplied **********"
+          @error_message = "'report' parameters are missing (e.g. {'report':{params}})"
+          render 'errors'
         end
       else
-        logger.info "********** No user params supplied **********"
-        return "No user info supplied"
+        @error_message = "user[email] and/or user[contact_id] are missing"
+        render 'errors'
       end
     else
-      logger.info "********** Invalid API_KEY **********"
-      return "Invalid API_KEY"
+      @error_message = "api_key is invalid"
+      render 'errors'
     end
   end
   
   def street_bump
     channel = Channel.where(api_key: params['api_key']).first
     if channel.present?
-      if params['user']['email'].present? || params['user']['contact_id'].present?
-        logger.info "********** Creating user and action from params **********"
-        if params['user']['email'].present?
-          @user = User.where(email: params['user']['email']).first_or_initialize
-        elsif params['user']['contact_id'].present?
-          @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
-        end
-        unless @user.persisted?
-          password = Devise.friendly_token.first(8)
-          @user.password = password
-          @user.password_confirmation = password
-          @user.save!
-        end
+      if params['user']['email'].present?
+        @user = User.where(email: params['user']['email']).first_or_initialize
+      elsif params['user']['contact_id'].present?
+        @user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
+      end
+      if @user.present?
+        # Create a User with a random password if @user doesn't yet exist
+        create_devise_user(@user) unless @user.persisted?
+
         if params['trip'].present?
           action_type = ActionType.where(channel_id: channel.id).where(name: params['trip']['service']).first_or_create
           action = @user.actions.create(
@@ -198,19 +204,27 @@ class API::ActionsController < ApplicationController
           NotificationMailer.status_email(@user, action).deliver
           respond_with(@completed_campaigns)
         else
-          logger.info "********** No trip params suplied **********"
+          @error_message = "'trip' parameters are missing (e.g. {'trip':{params}})"
+          render 'errors'
         end
       else
-        logger.info "********** No user params supplied **********"
-        return "No user info supplied"
+        @error_message = "user[email] and/or user[contact_id] is invliad"
+        render 'errors'
       end
     else
-      logger.info "********** Invalid API_KEY **********"
-      return "Invalid API_KEY"
+      @error_message = "api_key is invalid"
+      render 'errors'
     end
   end
   
   protected
+
+  def create_devise_user(user)
+    password = Devise.friendly_token.first(8)
+    user.password = password
+    user.password_confirmation = password
+    user.save!
+  end
 
   # def verify_api_token
   #   if Channel.where(api_key: params['api_key']).present?

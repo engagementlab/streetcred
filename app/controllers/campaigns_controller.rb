@@ -1,7 +1,7 @@
-class UsersController < ApplicationController
-
+class CampaignsController < ApplicationController
   def index
-    @users = User.all
+    @active_campaigns = Campaign.active
+    @completed_campaigns = Campaign.completed
 
     respond_to do |format|
       format.html # index.html.erb

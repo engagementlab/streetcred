@@ -11,6 +11,9 @@ class Campaign
   embeds_many :required_actions
   accepts_nested_attributes_for :required_actions, allow_destroy: true
     
+  scope :active, -> { lt(start_time: Time.now).gt(end_time: Time.now) }
+  scope :completed, -> { lt(end_time: Time.now) }
+
   validates_presence_of :name, :required_actions
   validate :required_actions_unique
   
@@ -49,6 +52,14 @@ class Campaign
     required_actions.collect {|x| x.action_type}
   end
 
+  def active?
+    if start_time.present? && end_time.present?
+      start_time < Time.now && end_time > Time.now
+    else
+      false
+    end
+  end
+
 
   ##### COMMUNITY CALCULATIONS #####
 
@@ -62,16 +73,10 @@ class Campaign
 
   def requirements_met_by_community?
     if contributing_community_actions.count >= required_community_occurrences
-      if all_actions_required?
-        if required_action_types == (required_action_types & contributing_community_actions.collect {|x| x.action_type})
-          if radius.blank?
-            return true
-          elsif radius.present?
-            radius_exceeded?(contributing_community_actions)
-          end
-        else
-          return false
-        end
+      if radius.blank?
+        return true
+      elsif radius.present?
+        radius_exceeded?(contributing_community_actions)
       end
     else # if contributing_community_actions < required_individual_occurrences
       return false
@@ -100,6 +105,12 @@ class Campaign
           end
         else
           return false
+        end
+      else
+        if radius.blank?
+          return true
+        elsif radius.present?
+          radius_exceeded?(contributing_individual_actions(user))
         end
       end
     else # if contributing_indivudal_actions < required_individual_occurrences

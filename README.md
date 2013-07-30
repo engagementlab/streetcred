@@ -26,44 +26,38 @@ Technical
 
 Currently, there are five API URLs:
 
-https://streetcred.herokuapp.com/api/actions.json (generic create)
-https://streetcred.herokuapp.com/api/actions/citizens_connect.json
-https://streetcred.herokuapp.com/api/actions/email.json
-https://streetcred.herokuapp.com/api/actions/foursquare.json
-https://streetcred.herokuapp.com/api/actions/street_bump.json
+https://streetcred.herokuapp.com/api/actions (generic create)
+https://streetcred.herokuapp.com/api/actions/citizens_connect
+https://streetcred.herokuapp.com/api/actions/email
+https://streetcred.herokuapp.com/api/actions/foursquare
+https://streetcred.herokuapp.com/api/actions/street_bump
 
 New adapters can be written in api/actions_controller.rb.  A matching route must also be added to config/routes.rb
 
-
-Schema
--------------
-
-Actions consist of the following attributes:
+The generic create method accepts the following parameters:
   
-- :user_id, type: Integer
-- :channel_id, type: Integer
-- :action_type_id, type: Integer
-- :campaign_id, type: Integer
-- :api_key, type: String
-- :record_id, type: String
-- :case_id, type: String
-- :action_type, type: String
-- :description, type: String
-- :shared, type: Boolean
-- :location, type: String
+Required parameters:
+- :api_key (must match the key on an existing Channel)
+- :action_type (must match the name of an existing ActionType)
+- :email (must be a valid email address - new users can be dynamically created)
+
+Optional parameters:
+- :description
+- :shared (Boolean)
 - :latitude, type: BigDecimal
 - :longitude, type: BigDecimal
-- :address, type: String
-- :city, type: String
-- :zipcode, type: String
-- :state, type: String
-- :url, type: String
-- :photo_url, type: String
-- :timestamp, type: String
+- :address
+- :city
+- :zipcode
+- :state
+- :url
 
-CURL
+Testing
 -------------
 
 Test the API using curl:
 
 curl -X POST -H "Content-Type: application/json" -d '{"api_key":"apikeyhere", "action_type":"Patch Report","email":"youremail@gmail.com","latitude":"42.359885","longitude":"-71.057983"}' http://streetcred.us/api/actions.json
+
+Or download the Postman REST Client Chrome extension: 
+https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en
