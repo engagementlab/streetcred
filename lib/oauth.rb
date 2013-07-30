@@ -5,7 +5,7 @@ module Oauth
     user = User.where(email: data['info']['email']).first
 
     if provider.present? && provider.user.present?
-      logger.info "*********** provider and provider.user present ***********"
+      puts "*********** provider and provider.user present ***********"
       provider.update_attributes( info: data['info'], 
             credentials: data['credentials'], 
             extra: data['extra']
@@ -17,7 +17,7 @@ module Oauth
       return provider.user
 
     elsif provider.blank? && user.present?
-      logger.info "*********** user present and provider blank ***********"
+      puts "*********** user present and provider blank ***********"
       user.update_attributes( first_name: data['info']['first_name'], 
             last_name: data['info']['last_name'],
             email: data['info']['email']
@@ -31,7 +31,7 @@ module Oauth
       return user
 
     elsif provider.blank? && signed_in_resource.present?
-      logger.info "*********** current_user present and provider blank ***********"
+      puts "*********** current_user present and provider blank ***********"
       signed_in_resource.update_attributes( first_name: data['info']['first_name'], 
             last_name:  data['info']['last_name'],
             email:      data['info']['email'],
@@ -46,7 +46,7 @@ module Oauth
       return signed_in_resource
 
     else provider.blank? && user.blank? && signed_in_resource.blank?
-      logger.info "*********** provider blank and user blank and signed_in_resource blank ***********"
+      puts "*********** provider blank and user blank and signed_in_resource blank ***********"
       if data['info'] && data['info']['location']
         city = data['info']['location'].split(',').first.try(:strip)
         state = data['info']['location'].split(',').last.try(:strip)
