@@ -21,10 +21,10 @@ It also expects an associated AWS S3 account (for badge image uploads), which is
 - AWS_BUCKET: 'your bucket'
 - AWS_SECRET_ACCESS_KEY: 'your secret'
 
-Technical
+API
 -------------
 
-Currently, there are five API URLs:
+Currently, there are five URLs that allow for actions to be created:
 
 https://streetcred.herokuapp.com/api/actions (generic create)
 https://streetcred.herokuapp.com/api/actions/citizens_connect
@@ -32,9 +32,9 @@ https://streetcred.herokuapp.com/api/actions/email
 https://streetcred.herokuapp.com/api/actions/foursquare
 https://streetcred.herokuapp.com/api/actions/street_bump
 
-New adapters can be written in api/actions_controller.rb.  A matching route must also be added to config/routes.rb
+New adapters can be written in controllers/api/actions_controller.rb.  A matching route must be added to config/routes.rb
 
-The generic create method accepts the following parameters:
+The generic create method expects the following parameters:
   
 Required parameters:
 - :api_key (must match the key on an existing Channel)
@@ -43,9 +43,9 @@ Required parameters:
 
 Optional parameters:
 - :description
-- :shared (Boolean)
-- :latitude, type: BigDecimal
-- :longitude, type: BigDecimal
+- :shared (true or false)
+- :latitude
+- :longitude
 - :address
 - :city
 - :zipcode
