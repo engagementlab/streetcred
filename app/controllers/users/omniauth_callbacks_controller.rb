@@ -11,6 +11,19 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to users_url
     end
   end
+
+  def instagram
+    @user = Oauth.find_or_create_from_instagram_oauth(env['omniauth.auth'], current_user)
+
+    if @user.persisted?
+      sign_in @user, :event => :authentication
+      redirect_to users_url
+      # redirect_logic
+    else
+      session["devise.instagram_data"] = env["omniauth.auth"]
+      redirect_to users_url
+    end
+  end
   
   private
 

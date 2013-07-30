@@ -114,6 +114,9 @@ GEM
     omniauth-foursquare (0.0.8)
       omniauth (~> 1.0)
       omniauth-oauth2 (~> 1.0)
+    omniauth-instagram (1.0.1)
+      omniauth (~> 1.0)
+      omniauth-oauth2 (~> 1.0)
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
@@ -224,6 +227,7 @@ DEPENDENCIES
   oj
   omniauth
   omniauth-foursquare
+  omniauth-instagram
   rabl
   rails (= 3.2.13)
   rspec-rails
