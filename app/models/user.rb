@@ -62,6 +62,10 @@ class User
       "#{self.first_name} #{self.last_name}"
     end
   end
+
+  def completed_campaigns
+    Campaign.all.select {|x| x.requirements_met_by_individual?(self)}
+  end
   
   def campaigns_completed_by_action(action)
     # all user.campaigns have been completed; those associated with the action were completed by the action
