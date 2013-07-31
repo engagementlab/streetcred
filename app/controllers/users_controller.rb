@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   def index
-    @users = User.all
+    @users = User.all.sort_by {|x| x.actions.try(:count)}.reverse
 
     respond_to do |format|
       format.html # index.html.erb
