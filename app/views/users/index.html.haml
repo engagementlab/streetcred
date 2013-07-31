@@ -5,7 +5,7 @@
 				= image_tag user.gravatar_url
 			.span4
 				%h3= user.full_name
-				== Member since #{formatted_date(user.created_at)}
+				== Member since #{formatted_month_year(user.created_at)}
 
 			.span1.text-center
 				%h1
