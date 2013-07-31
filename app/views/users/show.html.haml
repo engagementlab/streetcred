@@ -41,14 +41,15 @@
       .span1.text-center
 
       .span3
-        - unless @user.providers.where(provider: 'foursquare').present?
-          %div{style: 'margin-bottom: 10px'}
-            = link_to image_tag('foursquare.jpg'), user_omniauth_authorize_path('foursquare')
-            = link_to 'Connect Foursquare account', user_omniauth_authorize_path('foursquare')
-        - unless @user.providers.where(provider: 'instagram').present?
-          %div
-            = link_to image_tag('instagram.png'), user_omniauth_authorize_path('instagram')
-            = link_to 'Connect Instagram account', user_omniauth_authorize_path('instagram')
+        - if @user == current_user
+          - unless @user.providers.where(provider: 'foursquare').present?
+            %div{style: 'margin-bottom: 10px'}
+              = link_to image_tag('foursquare.jpg'), user_omniauth_authorize_path('foursquare')
+              = link_to 'Connect Foursquare account', user_omniauth_authorize_path('foursquare')
+          - unless @user.providers.where(provider: 'instagram').present?
+            %div
+              = link_to image_tag('instagram.png'), user_omniauth_authorize_path('instagram')
+              = link_to 'Connect Instagram account', user_omniauth_authorize_path('instagram')
 
 .page.container
   %h2
