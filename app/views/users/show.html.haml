@@ -6,8 +6,9 @@
       .span3
         %h3= @user.full_name
         == Member since #{formatted_month_year(@user.created_at)}
-        %br/
-        = link_to 'Edit profile', user_path(@user)
+        - if @user == current_user
+          %br/
+          = link_to 'Edit profile', user_path(@user)
 
       .span1.text-center
         %h1
