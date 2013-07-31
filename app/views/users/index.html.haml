@@ -1,11 +1,41 @@
-.container
-	%table.table
-		%tr
-			%th 
-			%th Awards
-		- @users.each do |user|
-			%tr
-				%td
-					%h3= link_to user.full_name, user_path(user)
-				%td
-					%h3= user.campaigns.count
+.page.container
+	- @users.each do |user|
+		.row.user.well
+			.span1
+				= image_tag user.gravatar_url
+			.span3
+				%h3= user.full_name
+				== Member since #{formatted_date(user.created_at)}
+
+			.span1.text-center
+				%h1
+					= user.actions.count
+				- if user.actions.count == 1
+					Report
+				- else
+					Reports
+
+			.span1.text-center
+				%h1
+					= user.channels.count
+				- if user.channels.count == 1
+					Channel
+				- else
+					Channels
+
+			.span1.text-center
+				%h1
+					= user.completed_campaigns.count
+				- if user.completed_campaigns.count == 1
+					Badge
+				- else
+					Badges
+
+			.span1.text-center
+				%h1
+					1
+				Reach (mi)
+
+			.span2.pull-right
+				%br/
+				= link_to 'Show', user_path(user), :class => 'btn btn-large btn-info'

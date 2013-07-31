@@ -2,11 +2,28 @@
 	background: #d3d8db url('/assets/header.jpg') no-repeat center;
 	height: 120px;
 }
-.gray-row{
-	background-color: #f0f2f3;
+.sub-header{
 	padding-top: 50px;
 	padding-bottom: 50px;
-	margin-bottom: 30px;
+	h1{
+		margin: 0 0 0 0;
+	}
+	h3{
+		margin: -10px 0 4px 0;
+	}
+}
+.sub-header.gray{
+	background-color: #f0f2f3;
+}
+.sub-header.blue{
+	background-color: #02b4d7;
+}
+.page{
+	margin-top: 50px;
+	margin-bottom: 100px;
+}
+.row.user{
+	margin: 10px 0 10px 0;
 	h1{
 		margin: 0 0 0 0;
 	}
@@ -15,8 +32,8 @@
 	}
 }
 .campaign-row{
-	margin-bottom: 40px;
-	padding-bottom: 40px;
+	margin-bottom: 30px;
+	padding-bottom: 30px;
 	border-bottom: solid 1px #f0f2f3;
 	.title{
 		font-size: 1.5em;
