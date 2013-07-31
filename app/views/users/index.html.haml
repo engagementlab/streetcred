@@ -10,26 +10,17 @@
 			.span1.text-center
 				%h1
 					= user.actions.count
-				- if user.actions.count == 1
-					Report
-				- else
-					Reports
+				= pluralizer_helper('Report', user.actions.count)
 
 			.span1.text-center
 				%h1
 					= user.channels.count
-				- if user.channels.count == 1
-					Channel
-				- else
-					Channels
+				= pluralizer_helper('Channel', user.channels.count)
 
 			.span1.text-center
 				%h1
 					= user.completed_campaigns.count
-				- if user.completed_campaigns.count == 1
-					Badge
-				- else
-					Badges
+				= pluralizer_helper('Badge', user.completed_campaigns.count)
 
 			.span1.text-center
 				%h1

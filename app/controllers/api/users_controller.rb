@@ -3,7 +3,7 @@ class API::UsersController < ApplicationController
   respond_to :json
   
   def index
-    @users = User.asc(:first_name)
+    @users = User.all.sort_by {|x| x.completed_campaigns.try(:count)}.reverse
   end
   
   def show
