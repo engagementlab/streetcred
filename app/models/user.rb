@@ -63,6 +63,10 @@ class User
     end
   end
 
+  def channels
+    actions.collect {|x| x.action_type.try(:channel)}.uniq
+  end
+
   def completed_campaigns
     Campaign.all.select {|x| x.requirements_met_by_individual?(self)}
   end

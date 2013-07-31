@@ -3,7 +3,7 @@
     .row 
       .span1
         = image_tag @user.gravatar_url
-      .span4
+      .span3
         %h3= @user.full_name
         == Member since #{formatted_date(@user.created_at)}
         %br/
@@ -11,8 +11,13 @@
 
       .span1.text-center
         %h1
-          = @user.completed_campaigns.count
+          = @user.actions.count
         Reports
+
+      .span1.text-center
+        %h1
+          = @user.channels.count
+        Channels
 
       .span1.text-center
         %h1
