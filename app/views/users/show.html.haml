@@ -12,17 +12,26 @@
       .span1.text-center
         %h1
           = @user.actions.count
-        Reports
+        - if @user.actions.count == 1
+          Report
+        - else
+          Reports
 
       .span1.text-center
         %h1
           = @user.channels.count
-        Channels
+        - if @user.channels.count == 1
+          Channel
+        - else
+          Channels
 
       .span1.text-center
         %h1
           = @user.completed_campaigns.count
-        Badges
+        - if @user.completed_campaigns.count == 1
+          Badge
+        - else
+          Badges
 
       .span1.text-center
         %h1
