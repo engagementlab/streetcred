@@ -13,12 +13,6 @@
     .stat.red
       %h3= @user.actions.count
       actions
-    .stat.yellow
-      - if @user.reach.blank?
-        %h3 N/A
-      - else
-        %h3= @user.reach
-        reach (mi)
 
 - for campaign in @active_campaigns
   .span9.campaign-row
