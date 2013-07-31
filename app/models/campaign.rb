@@ -60,9 +60,9 @@ class Campaign
     end
   end
 
-  def days_left
+  def time_left
     if end_time.present?
-      (end_time.to_i - Time.now.to_i) / (60 * 60 * 24)
+      end_time.to_i - Time.now.to_i
     end
   end
 

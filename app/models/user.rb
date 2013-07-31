@@ -1,6 +1,8 @@
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Gravtastic
+  gravtastic
   
   has_many :actions, dependent: :delete
   has_many :providers, dependent: :delete

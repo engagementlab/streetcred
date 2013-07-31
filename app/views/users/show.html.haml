@@ -1,74 +1,79 @@
-.row
-  .span1
-  .span8
-    %h1= @user.full_name
-.row
-  .span4
-    .stat.green
-      %h3= @user.campaigns.count
-      participants
-    .stat.blue
-      %h3= @user.campaigns.count
-      badges
-    .stat.red
-      %h3= @user.actions.count
-      actions
-
-- for campaign in @active_campaigns
-  .span9.campaign-row
-    .row
-      .span1.text-right
-        = image_tag campaign.individual_badge.url
-      .span6
-        .title= campaign.name
-        %p= campaign.description
-    .row
+.gray-row
+  .container
+    .row 
       .span1
-      .span6
-        .progress-row
-          .progress
-            .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
-          .pull-right
-            = campaign.required_individual_occurrences
-          0
+        = image_tag @user.gravatar_url
+      .span4
+        %h3= @user.full_name
+        == Member since #{formatted_date(@user.created_at)}
+      - if @user == current_user
+        .span5
+          - unless @user.providers.where(provider: 'foursquare').present?
+            %div{style: 'margin-bottom: 10px'}
+              = link_to image_tag('foursquare.jpg'), user_omniauth_authorize_path('foursquare')
+              = link_to 'Connect your Foursquare account', user_omniauth_authorize_path('foursquare')
+          - unless @user.providers.where(provider: 'instagram').present?
+            %div
+              = link_to image_tag('instagram.png'), user_omniauth_authorize_path('instagram')
+              = link_to 'Connect your Instagram account', user_omniauth_authorize_path('instagram')
 
-        .progress-row
-          .progress
-            .bar.bar-success{:style=>"width: #{community_progress_bar_helper(campaign)};"}
-          .pull-right
-            = campaign.required_community_occurrences
-          0
-
-      .span2
-        .individual
-          %em
-            Individual Goal
-        .community
-          %em
-            Community Goal
-
-
-.row
-  .span8
-    %h3 Completed Campaigns
-    - for campaign in @completed_campaigns
+.container
+  %h2 Current Campaigns
+  %br/
+  - for campaign in @active_campaigns
+    .campaign-row
       .row
-        .span8
-          .title= campaign.name
+        .span1.text-right
+          = image_tag campaign.individual_badge.url
+        .span6
+          .title
+            %strong
+              = campaign.name
+            %small
+              %small
+                == #{distance_of_time_in_words(campaign.time_left)} left
+          %p= campaign.description
+      .row
+        .span1
+        .span6
+          .progress-row
+            .progress
+              .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
+            .pull-right
+              = campaign.required_individual_occurrences
+            0
+
+          .progress-row
+            .progress
+              .bar.bar-success{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+            .pull-right
+              = campaign.required_community_occurrences
+            0
+
+        .span2
+          .individual
+            %em
+              Individual Goal
+          .community
+            %em
+              Community Goal
 
 
-- if @user == current_user
   .row
-    %p= link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
-    %p= link_to "Enable Instagram Photos", user_omniauth_authorize_path('instagram')
+    .span8
+      %h3 Completed Campaigns
+      - for campaign in @completed_campaigns
+        .row
+          .span8
+            .title= campaign.name
 
-%script{:src => 'http://beta.openbadges.org/issuer.js'}
-:javascript
-  $(document).ready(function() {
-    $('.openbadge-link').on('click', function(e) {
-      var campaign = $(e.target).data('api');
-      OpenBadges.issue(campaign, function(errors, successes) {
-        console.log(errors,successes);
+  %script{:src => 'http://beta.openbadges.org/issuer.js'}
+  :javascript
+    $(document).ready(function() {
+      $('.openbadge-link').on('click', function(e) {
+        var campaign = $(e.target).data('api');
+        OpenBadges.issue(campaign, function(errors, successes) {
+          console.log(errors,successes);
+        });
       });
     });
-  });

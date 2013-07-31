@@ -1,15 +1,22 @@
 .header{
 	background: #d3d8db url('/assets/header.jpg') no-repeat center;
 	height: 120px;
-	margin-bottom: 120px;
+}
+.gray-row{
+	background-color: #f0f2f3;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	margin-bottom: 40px;
+	h3{
+		margin-top: -10px;
+	}
 }
 .campaign-row{
 	margin-bottom: 40px;
 	padding-bottom: 40px;
-	border-bottom: solid 1px #cccccc;
+	border-bottom: solid 1px #f0f2f3;
 	.title{
-		font-size: 2em;
-		font-weight: bold;
+		font-size: 1.5em;
 		margin-bottom: .8em;
 	}
 }

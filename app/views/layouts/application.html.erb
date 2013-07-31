@@ -14,19 +14,16 @@
 </head>
   <body>
     <div class="header">&nbsp;</div>
-
-    <div class="container">
-      <% if flash[:alert] %>
-        <div class='alert alert-error'>
-          <%= flash[:alert] %>
-        </div>
-      <% end %>
-      <% if flash[:notice] %>
-        <div class='alert alert-success'>
-          <%= flash[:notice] %>
-        </div>
-      <% end %>
-      <%= yield %>
-    </div>
+    <% if flash[:alert] %>
+      <div class='alert alert-error'>
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+    <% if flash[:notice] %>
+      <div class='alert alert-success'>
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    <%= yield %>
   </body>
 </html>
