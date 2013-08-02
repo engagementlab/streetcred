@@ -3,69 +3,35 @@
 .page.container
   .row
     .span10
-      %h2
+      %h1
         Active Campaigns
     .span2
-      %h2 
+      %h1 
         Awards
 
   - for campaign in @active_campaigns
-    .row.campaign-row
-      .span12
-        .row
-          .span7
-            .title
-              %strong
-                = campaign.name
-              %small
-                %small
-                  == &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
-            %p= campaign.description
-        .row
-          .span8
-            .progress-row
-              .progress
-                .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
-              .pull-right
-                = campaign.required_individual_occurrences
-              0
-            .progress-row
-              .progress
-                .bar.bar-info{:style=>"width: #{community_progress_bar_helper(campaign)};"}
-              .pull-right
-                = campaign.required_community_occurrences
-              0
-
-          .span2
-            .individual
-              %em
-                Individual
-            .community
-              %em
-                Community
-          .span2.badges
-            - if campaign.progress_by_community >= 1.0
-              = image_tag campaign.community_badge.url(:badge)
-            - elsif campaign.progress_by_individual(@user) >= 1.0
-              = image_tag campaign.individual_badge.url(:badge)
-            - else
-              = image_tag '/assets/badge-blank.png'
+    = render partial: 'active_campaign', locals: {campaign: campaign}
       
+  %hr
   .row
-    .span8
+    .span12
       %h2 Completed Campaigns
-      - for campaign in @completed_campaigns
-        .row
-          .span8
-            .title= campaign.name
+  
+  - for campaign in @completed_campaigns
+    = render partial: 'completed_campaign', locals: {campaign: campaign}
 
-  %script{:src => 'http://beta.openbadges.org/issuer.js'}
-  :javascript
-    $(document).ready(function() {
-      $('.openbadge-link').on('click', function(e) {
-        var campaign = $(e.target).data('api');
-        OpenBadges.issue(campaign, function(errors, successes) {
-          console.log(errors,successes);
-        });
+  %hr
+  .row
+    .span12
+      = gmaps4rails(@json)
+
+%script{:src => 'http://beta.openbadges.org/issuer.js'}
+:javascript
+  $(document).ready(function() {
+    $('.openbadge-link').on('click', function(e) {
+      var campaign = $(e.target).data('api');
+      OpenBadges.issue(campaign, function(errors, successes) {
+        console.log(errors,successes);
       });
     });
+  });

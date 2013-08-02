@@ -1,0 +1,8 @@
+.row
+	.span1
+		= badge_helper(campaign, @user)
+
+	.span10
+		%h4
+			= campaign.name
+		= formatted_date(campaign.end_time)

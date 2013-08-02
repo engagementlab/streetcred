@@ -16,6 +16,7 @@ class User
   field :email, type: String, default: ""
   field :phone, type: String, default: ""
   field :shared, type: Boolean, default: true
+  field :slug, type: String
 
   # # Omniauth
   # field :provider, type: String
@@ -53,7 +54,8 @@ class User
   # field :authentication_token, :type => String
   
   # index({ provider_uid: 1 }, { unique: true})
-  
+  index({ slug: 1 }, { unique: true})
+
 
   def full_name
     if self.first_name.blank? && self.last_name.blank?

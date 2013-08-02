@@ -1,13 +1,16 @@
-class Action  
+class Action
   include Mongoid::Document
   include Mongoid::Timestamps
   include Geocoder::Model::Mongoid
+  include Gmaps4rails::ActsAsGmappable
+  include Geocoder::Model::Mongoid
+
+  acts_as_gmappable :lat_lng_array => :coordinates
   
   belongs_to :user, index: true
   belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
   belongs_to :action_type
   has_and_belongs_to_many :campaigns, dependent: :nullify, index: true
-  
   
   field :api_key, type: String
   field :record_id, type: String # provider UID
@@ -15,7 +18,7 @@ class Action
   field :action_type, type: String
   field :description, type: String
   field :shared, type: Boolean
-  field :location, type: String
+  # field :location, type: String
   field :latitude, type: BigDecimal
   field :longitude, type: BigDecimal
   field :coordinates, type: Array
@@ -39,6 +42,10 @@ class Action
   
   def reversed_coordinates
     coordinates.try(:reverse)
+  end
+
+  def gmaps4rails_address
+    "#{self.address}, #{self.city}" 
   end
 
   def matching_campaigns

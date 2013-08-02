@@ -13,6 +13,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @active_campaigns = Campaign.active
     @completed_campaigns = Campaign.completed
+    @json = @user.actions.to_gmaps4rails
 
     respond_to do |format|
       format.html # show.html.erb
