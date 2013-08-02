@@ -48,7 +48,7 @@
   .row
     .span10
       %h2
-        Current Campaigns
+        Active Campaigns
     .span2
       %h2 
         Awards
@@ -93,7 +93,7 @@
             - elsif campaign.progress_by_individual(@user) >= 1.0
               = image_tag campaign.individual_badge.url(:badge)
             - else
-              = image_tag 'badge-blank.png'
+              = image_tag '/assets/badge-blank.png'
       
   .row
     .span8
