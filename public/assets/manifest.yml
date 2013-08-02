@@ -1,4 +1,6 @@
 ---
+badge-blank.png: badge-blank-3074992d182b0772bb58fba7aef57d05.png
+badge-blank/index.png: badge-blank-3074992d182b0772bb58fba7aef57d05.png
 delete.png: delete-a77f3c3c125b0817085648f284c98938.png
 delete/index.png: delete-a77f3c3c125b0817085648f284c98938.png
 foursquare.jpg: foursquare-e2d215ac231cb5061796baa003dd497f.jpg
@@ -17,8 +19,8 @@ missing.png: missing-e9f52703748e7b48f05f6613ce094405.png
 missing/index.png: missing-e9f52703748e7b48f05f6613ce094405.png
 application.js: application-a75c39305309cd5e34572b3761c62047.js
 application/index.js: application-a75c39305309cd5e34572b3761c62047.js
-application.css: application-844b2b70c4ef8e531cf238dc89d44837.css
-application/index.css: application-844b2b70c4ef8e531cf238dc89d44837.css
+application.css: application-eb40cdc263f7b9ca6bf8d63c2c813aba.css
+application/index.css: application-eb40cdc263f7b9ca6bf8d63c2c813aba.css
 fontawesome-webfont.eot: fontawesome-webfont-b49e662c23140944a17d6301d2259446.eot
 fontawesome-webfont/index.eot: fontawesome-webfont-b49e662c23140944a17d6301d2259446.eot
 fontawesome-webfont.svg: fontawesome-webfont-863eb1732db4aa1a1b4ee4db0ec0dfe4.svg

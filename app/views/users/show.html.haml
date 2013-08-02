@@ -45,57 +45,59 @@
               = link_to 'Connect Instagram account', user_omniauth_authorize_path('instagram')
 
 .page.container
-  %h2
-    Current Campaigns
-  %br/
+  .row
+    .span10
+      %h2
+        Current Campaigns
+    .span2
+      %h2 
+        Awards
+
   - for campaign in @active_campaigns
-    .campaign-row
-      .row
-        .span1.text-right
-          = image_tag campaign.badge_icon.url(:badge)
-        .span6
-          .title
-            %strong
-              = campaign.name
-            %small
+    .row.campaign-row
+      .span12
+        .row
+          .span7
+            .title
+              %strong
+                = campaign.name
               %small
-                == &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
-          %p= campaign.description
-      .row
-        .span1
-        .span6
-          .progress-row
-            .progress
-              - if campaign.progress_by_individual(@user) >= 1.0
-                .bar.bar-warning{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
-              - else
+                %small
+                  == &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
+            %p= campaign.description
+        .row
+          .span8
+            .progress-row
+              .progress
                 .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
-            .pull-right
-              = campaign.required_individual_occurrences
-            0
+              .pull-right
+                = campaign.required_individual_occurrences
+              0
+            .progress-row
+              .progress
+                .bar.bar-info{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+              .pull-right
+                = campaign.required_community_occurrences
+              0
 
-          .progress-row
-            .progress
-              - if campaign.progress_by_community >= 1.0
-                .bar.bar-warning{:style=>"width: #{community_progress_bar_helper(campaign)};"}
-              - else
-                .bar.bar-success{:style=>"width: #{community_progress_bar_helper(campaign)};"}
-            .pull-right
-              = campaign.required_community_occurrences
-            0
-
-        .span2
-          .individual
-            %em
-              Individual Goal
-          .community
-            %em
-              Community Goal
-
-
+          .span2
+            .individual
+              %em
+                Individual
+            .community
+              %em
+                Community
+          .span2.badges
+            - if campaign.progress_by_community >= 1.0
+              = image_tag campaign.community_badge.url(:badge)
+            - elsif campaign.progress_by_individual(@user) >= 1.0
+              = image_tag campaign.individual_badge.url(:badge)
+            - else
+              = image_tag 'badge-blank.png'
+      
   .row
     .span8
-      %h3 Completed Campaigns
+      %h2 Completed Campaigns
       - for campaign in @completed_campaigns
         .row
           .span8

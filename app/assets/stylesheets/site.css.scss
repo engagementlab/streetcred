@@ -1,10 +1,13 @@
+h2{
+	margin-bottom: 1em;
+}
 .header{
 	background: #d6d9dc url('/assets/header.jpg') no-repeat center;
 	height: 111px;
 }
 .sub-header{
 	padding-top: 50px;
-	padding-bottom: 50px;
+	padding-bottom: 40px;
 	h1{
 		margin: 0 0 0 0;
 	}
@@ -13,7 +16,7 @@
 	}
 }
 .sub-header.gray{
-	background-color: #f0f2f3;
+	background-color: #f0f0f0;
 }
 .sub-header.blue{
 	background-color: #02b4d7;
@@ -32,11 +35,10 @@
 	}
 }
 .campaign-row{
-	margin-bottom: 30px;
+	margin-top: 30px;
 	padding-bottom: 30px;
-	border-bottom: solid 1px #f0f2f3;
 	.title{
-		font-size: 1.5em;
+		font-size: 1.8em;
 		margin-bottom: .8em;
 	}
 }
@@ -45,7 +47,14 @@
 	.progress{
 		height: 26px;
 		margin-bottom: 5px;
+		.bar-gray{
+			background-color: #999999;
+			background-image: none;
+		}
 	}
+}
+.badges{
+	padding-top: 17px;
 }
 .individual{
 	padding-top: 20px;
