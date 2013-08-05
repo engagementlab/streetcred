@@ -5,7 +5,7 @@ class Action
   include Gmaps4rails::ActsAsGmappable
   include Geocoder::Model::Mongoid
 
-  acts_as_gmappable :lat_lng_array => :coordinates
+  acts_as_gmappable :lat_lng_array => :gmaps4rails_coordinates, :process_geocoding => false
   
   belongs_to :user, index: true
   belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
@@ -46,6 +46,10 @@ class Action
 
   def gmaps4rails_address
     "#{self.address}, #{self.city}" 
+  end
+
+  def gmaps4rails_coordinates
+    [latitude, longitude]
   end
 
   def matching_campaigns

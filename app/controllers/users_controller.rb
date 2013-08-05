@@ -13,6 +13,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @active_campaigns = Campaign.active
     @completed_campaigns = Campaign.completed
+    @completed_earned_campaigns = @completed_campaigns.select {|x| x.requirements_met_by_individual?(@user)}
     @json = @user.actions.to_gmaps4rails
 
     respond_to do |format|

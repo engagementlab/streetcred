@@ -12,18 +12,16 @@
   - for campaign in @active_campaigns
     = render partial: 'active_campaign', locals: {campaign: campaign}
       
-  %hr
-  .row
-    .span12
-      %h2 Completed Campaigns
-  
-  - for campaign in @completed_campaigns
-    = render partial: 'completed_campaign', locals: {campaign: campaign}
+  - if @completed_earned_campaigns.present?
+    %hr
+    .row
+      .span12
+        %h2 Completed Campaigns
+    
+    .row
+      - for campaign in @completed_earned_campaigns
+        = render partial: 'completed_campaign', locals: {campaign: campaign}
 
-  %hr
-  .row
-    .span12
-      = gmaps4rails(@json)
 
 %script{:src => 'http://beta.openbadges.org/issuer.js'}
 :javascript
