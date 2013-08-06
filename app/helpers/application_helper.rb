@@ -22,9 +22,9 @@ module ApplicationHelper
   def badge_helper(campaign, user=nil)
   	if user.present?
 			if campaign.progress_by_community >= 1.0
-				image_tag campaign.community_badge.url(:badge)
+				image_tag campaign.community_badge.url(:badge), class: 'openbadge-link'
 			elsif campaign.progress_by_individual(user) >= 1.0
-				image_tag campaign.individual_badge.url(:badge)
+				image_tag campaign.individual_badge.url(:badge), class: 'openbadge-link'
 			else
 				image_tag '/assets/badge-blank.png'
 			end
