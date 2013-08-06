@@ -1,8 +1,8 @@
 .row.campaign.active-campaign
 	.span12
 		.row
-			.span1
-			.span7
+			.span2.no-left-margin
+			.span7.no-left-margin
 				.title
 					%strong
 						= campaign.name
@@ -11,9 +11,9 @@
 							== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
 				%p= campaign.description
 		.row
-			.span1.badges
+			.span2.badges.text-center.no-left-margin
 				= badge_helper(campaign, @user)
-			.span8
+			.span8.no-left-margin
 				.progress-row
 					.progress
 						- if campaign.progress_by_individual(@user) >= 1.0
