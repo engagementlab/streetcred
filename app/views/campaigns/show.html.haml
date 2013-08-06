@@ -1,8 +1,8 @@
 .sub-header.gray
 	.container
-		.span2.text-center
+		.span2
 			= badge_helper(@campaign)
-		.span5
+		.span5.no-left-margin
 			%h1= @campaign.name
 			%h4
 				== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)} 
