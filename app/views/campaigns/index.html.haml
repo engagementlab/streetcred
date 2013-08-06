@@ -1,6 +1,6 @@
 .page.container
 
-  %h1 Active Campaigns
+  %h2 Active Campaigns
   .active-campaigns
     - for campaign in @active_campaigns
       = render partial: 'campaign', locals: {campaign: campaign}
