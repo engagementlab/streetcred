@@ -19,7 +19,7 @@
 	background-color: #f0f0f0;
 }
 .sub-header.blue{
-	background-color: #02b4d7;
+	background-color: #20bedd;
 }
 
 .page{
@@ -58,7 +58,11 @@
 		height: 26px;
 		margin-bottom: 5px;
 		.bar-gray{
-			background-color: #999999;
+			background-color: #adadad;
+			background-image: none;
+		}
+		.bar-blue{
+			background-color: #20bedd;
 			background-image: none;
 		}
 	}
