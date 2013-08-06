@@ -3,9 +3,8 @@
 		.span2
 			= badge_helper(@campaign)
 		.span5.no-left-margin
-			%h1= @campaign.name
-			%h4
-				== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)} 
+			%h2= @campaign.name
+			== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)} 
 		.span1.stat.text-center
 			%h1
 				= @campaign.actions.count
@@ -30,11 +29,11 @@
 
 .page.container
 	- if @campaign.description.present?
-		%h2 Description
+		%h3 Description
 		%p= @campaign.description
 
 	%br/
-	%h2 Required Actions
+	%h3 Required Actions
 	%ul
 	- for action in @campaign.required_actions
 		%li= action.action_type.name
@@ -49,7 +48,7 @@
 
 	- if @campaign.radius.present?
 		%br/
-		%h2 Location
+		%h3 Location
 		%p== Radius: #{@campaign.radius} miles
 		- if @campaign.latitude.present?
 			%p== Center Latitude: #{@campaign.latitude} 
@@ -57,7 +56,7 @@
 			%p== Center Longitude: #{@campaign.longitude} 
 
 	%br/
-	%h2 Duration
+	%h3 Duration
 	%p
 		== Start date: #{formatted_date(@campaign.start_time)}
 	%p
