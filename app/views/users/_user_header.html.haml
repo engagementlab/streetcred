@@ -10,28 +10,28 @@
           %br/
           = link_to 'Edit profile', user_path(@user)
 
-      .span1.text-center
+      .span1.stat.text-center
         %h1
           = @user.actions.count
         = pluralizer_helper('Report', @user.actions.count)
 
 
-      .span1.text-center
+      .span1.stat.text-center
         %h1
           = @user.channels.count
         = pluralizer_helper('Channel', @user.channels.count)
 
-      .span1.text-center
+      .span1.stat.text-center
         %h1
           = @user.completed_campaigns.count
         = pluralizer_helper('Badge', @user.completed_campaigns.count)
 
-      .span1.text-center
+      .span1.stat.text-center
         %h1
           1
         Reach (mi)
 
-      .span1.text-center
+      .span1.stat.text-center
 
       .span3
         - if @user == current_user

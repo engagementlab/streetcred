@@ -1,18 +1,19 @@
 = render partial: 'user_header'
 
 .page.container
-  .row
-    .span10
-      %h1
-        Active Campaigns
-    .span2
-      %h1 
-        Awards
+  - if @active_campaigns.present?
+    .row
+      .span10
+        %h1.page-title
+          Active Campaigns
+      .span2
+        %h1 
+          Awards
 
-  - for campaign in @active_campaigns
-    = render partial: 'active_campaign', locals: {campaign: campaign}
-      
-  - if @completed_earned_campaigns.present?
+    - for campaign in @active_campaigns
+      = render partial: 'active_campaign', locals: {campaign: campaign}
+        
+  - if @earned_campaigns.present?
     %hr
     .row
       .span12
@@ -21,6 +22,8 @@
     .row
       - for campaign in @completed_earned_campaigns
         = render partial: 'completed_campaign', locals: {campaign: campaign}
+
+  = link_to 'View Past Campaigns', campaigns_path
 
 
 %script{:src => 'http://beta.openbadges.org/issuer.js'}

@@ -1,3 +1,9 @@
+.sub-header.gray
+	.container
+		.row
+			.span12
+				Something to say about participants...
+
 .page.container
 	- @users.each do |user|
 		.row.user.well
@@ -7,25 +13,25 @@
 				%h3= user.full_name
 				== Member since #{formatted_month_year(user.created_at)}
 
-			.span1.text-center
-				%h1
+			.span1.stat.text-center
+				%h2
 					= user.actions.count
 				= pluralizer_helper('Report', user.actions.count)
 
-			.span1.text-center
-				%h1
+			.span1.stat.text-center
+				%h2
 					= user.channels.count
 				= pluralizer_helper('Channel', user.channels.count)
 
-			.span1.text-center
-				%h1
+			.span1.stat.text-center
+				%h2
 					= user.completed_campaigns.count
 				= pluralizer_helper('Badge', user.completed_campaigns.count)
 
-			.span1.text-center
-				%h1
+			.span1.stat.text-center
+				%h2
 					1
 				Reach (mi)
 
-			.span1.pull-right.user-details-button.text-right
+			.span1.pull-right.details-button.text-right
 				= link_to 'Details', user_path(user), :class => 'btn btn-info'

@@ -1,41 +1,17 @@
-- for campaign in @active_campaigns
-  .row.campaign-row
-    .span8
-      %table
-        %tr
-          %td{:width=>'100px'}
-            = image_tag campaign.individual_badge.url
-          %td
-            .title= campaign.name
-            %p= campaign.description
-    
-      .progress-row
-        .progress
-          .bar.bar-success{:style=>"width: #{community_progress_bar_helper(campaign)};"}
-        .pull-right
-          = campaign.required_community_occurrences
-        0
-    
-    .span4
-      .stat.green
-        %h3= campaign.users.count
-        participants
-      .stat.blue
-        %h3= campaign.users.count
-        badges
-      .stat.red
-        %h3= campaign.actions.count
-        actions
-      .stat.yellow
-        - if campaign.radius.blank?
-          %h3 N/A
-        - else
-          %h3= campaign.radius
-          reach (mi)
+.sub-header.gray
+  .container
+    .row
+      .span12
+        Campaigns are ...
 
-%br/
-%h3 Completed Campaigns
-- for campaign in @completed_campaigns
-  .row
-    .span8
-      .title= campaign.name
+.page.container
+
+  %h1 Active Campaigns
+  .active-campaigns
+    - for campaign in @active_campaigns
+      = render partial: 'campaign', locals: {campaign: campaign}
+
+  %h2 Completed Campaigns
+  .completed-campaigns
+    - for campaign in @completed_campaigns
+      = render partial: 'campaign', locals: {campaign: campaign}

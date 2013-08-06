@@ -41,10 +41,13 @@ class Campaign
   if Rails.env == 'production'
     has_mongoid_attached_file :individual_badge, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', badge: '100x150', large: '150x150>' }
     has_mongoid_attached_file :community_badge, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', badge: '100x150', large: '150x150>' }
+    has_mongoid_attached_file :badge_icon, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', badge: '100x150', large: '150x150>' }
   else
     has_mongoid_attached_file :individual_badge, :url => "individual_badges/:style/:filename", :path => "#{Rails.root}/public/assets/individual_badges/:style/:filename",
       styles: { icon: '30x30#', badge: '100x150', large: '150x150>' }
     has_mongoid_attached_file :community_badge, :url => "community_badges/:style/:filename", :path => "#{Rails.root}/public/assets/community_badges/:style/:filename",
+      styles: { icon: '30x30#', badge: '100x150', large: '150x150>' }
+    has_mongoid_attached_file :badge_icon, :url => "badge_icon/:style/:filename", :path => "#{Rails.root}/public/assets/badge_icon/:style/:filename",
       styles: { icon: '30x30#', badge: '100x150', large: '150x150>' }
   end
 

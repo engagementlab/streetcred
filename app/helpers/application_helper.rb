@@ -19,13 +19,17 @@ module ApplicationHelper
   	end
   end
 
-  def badge_helper(campaign, user)
-		if campaign.progress_by_community >= 1.0
-			image_tag campaign.community_badge.url(:badge)
-		elsif campaign.progress_by_individual(user) >= 1.0
-			image_tag campaign.individual_badge.url(:badge)
+  def badge_helper(campaign, user=nil)
+  	if user.present?
+			if campaign.progress_by_community >= 1.0
+				image_tag campaign.community_badge.url(:badge)
+			elsif campaign.progress_by_individual(user) >= 1.0
+				image_tag campaign.individual_badge.url(:badge)
+			else
+				image_tag campaign.badge_icon.url(:badge)
+			end
 		else
-			image_tag '/assets/badge-blank.png'
+			image_tag campaign.individual_badge.url(:badge)
 		end
   end
 end
