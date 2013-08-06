@@ -1,34 +1,25 @@
 .row.campaign.active-campaign
 	.span12
 		.row
-			.span2.no-left-margin
-			.span7.no-left-margin
+			.span7
 				.title
 					%strong
 						= campaign.name
 					%small
 						%small
 							== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
-				%p= campaign.description
+				%p= campaign.short_description
 		.row
-			.span2.badges.text-center.no-left-margin
-				= badge_helper(campaign, @user)
-			.span8.no-left-margin
+			.span8
 				.progress-row
 					.progress
-						- if campaign.progress_by_individual(@user) >= 1.0
-							.bar.bar-warning{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
-						- else
-							.bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
+						.bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
 					.pull-right
 						= campaign.required_individual_occurrences
 					0
 				.progress-row
 					.progress
-						- if campaign.progress_by_community >= 1.0
-							.bar.bar-warning{:style=>"width: #{community_progress_bar_helper(campaign)};"}
-						- else
-							.bar.bar-info{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+						.bar.bar-info{:style=>"width: #{community_progress_bar_helper(campaign)};"}
 					.pull-right
 						= campaign.required_community_occurrences
 					0
@@ -40,3 +31,6 @@
 				.community
 					%em
 						Community
+
+			.span2.badges
+				= badge_helper(campaign, @user)

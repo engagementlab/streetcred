@@ -25,8 +25,6 @@ module ApplicationHelper
 				image_tag campaign.community_badge.url(:badge)
 			elsif campaign.progress_by_individual(user) >= 1.0
 				image_tag campaign.individual_badge.url(:badge)
-			else
-				image_tag campaign.badge_icon.url(:badge)
 			end
 		else
 			image_tag campaign.badge_icon.url(:badge)

@@ -3,7 +3,7 @@
     .row 
       .span1
         = image_tag @user.gravatar_url
-      .span3
+      .span4
         %h3= @user.full_name
         == Member since #{formatted_month_year(@user.created_at)}
         - if @user == current_user
