@@ -1,6 +1,7 @@
 .row.campaign.active-campaign
 	.span12
 		.row
+			.span1
 			.span7
 				.title
 					%strong
@@ -10,6 +11,8 @@
 							== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
 				%p= campaign.description
 		.row
+			.span1.badges
+				= badge_helper(campaign, @user)
 			.span8
 				.progress-row
 					.progress
@@ -37,6 +40,3 @@
 				.community
 					%em
 						Community
-			
-			.span2.badges
-				= badge_helper(campaign, @user)

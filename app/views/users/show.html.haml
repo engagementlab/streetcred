@@ -6,9 +6,6 @@
       .span10
         %h1.page-title
           Active Campaigns
-      .span2
-        %h1 
-          Awards
 
     - for campaign in @active_campaigns
       = render partial: 'active_campaign', locals: {campaign: campaign}
