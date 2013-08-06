@@ -70,7 +70,8 @@ class Action
     # iterate through the matching campaigns and determine whether their requirements have been met
     matching_campaigns.each do |campaign|
       campaign.actions << self
-      unless user.campaigns.include?(campaign)
+      # associate the campaign with the user if all of the campaign requirements have been met
+      if campaign.requirements_met_by_individual?(user) && !user.campaigns.include?(campaign)
         user.campaigns << campaign
       end
     end
