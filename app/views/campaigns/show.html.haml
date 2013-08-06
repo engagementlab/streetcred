@@ -1,0 +1,64 @@
+.sub-header.gray
+	.container
+		.span2.text-center
+			= badge_helper(@campaign)
+		.span5
+			%h1= @campaign.name
+			%h4
+				== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)} 
+		.span1.stat.text-center
+			%h1
+				= @campaign.actions.count
+			= pluralizer_helper('Report', @campaign.actions.count)
+
+
+		.span1.stat.text-center
+			%h1
+				= @campaign.channels.count
+			= pluralizer_helper('Channel', @campaign.channels.count)
+
+		.span1.stat.text-center
+			%h1
+				= @badges_earned.count
+			= pluralizer_helper('Badge', @badges_earned.count)
+
+		.span1.stat.text-center
+			%h1
+				1.0
+			Reach (mi)
+
+
+.page.container
+	- if @campaign.description.present?
+		%h2 Description
+		%p= @campaign.description
+
+	%br/
+	%h2 Required Actions
+	%ul
+	- for action in @campaign.required_actions
+		%li= action.action_type.name
+
+	%br/
+	%p 
+		Required Individual Actions:
+		= @campaign.required_individual_occurrences
+	%p
+		Required Community Actions:
+		= @campaign.required_community_occurrences
+
+	- if @campaign.radius.present?
+		%br/
+		%h2 Location
+		%p== Radius: #{@campaign.radius} miles
+		- if @campaign.latitude.present?
+			%p== Center Latitude: #{@campaign.latitude} 
+		- if @campaign.longitude.present?
+			%p== Center Longitude: #{@campaign.longitude} 
+
+	%br/
+	%h2 Duration
+	%p
+		== Start date: #{formatted_date(@campaign.start_time)}
+	%p
+		== End date: #{formatted_date(@campaign.end_time)}

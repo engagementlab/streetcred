@@ -26,6 +26,7 @@
 				= pluralizer_helper('Channel', campaign.channels.count)
 
 			.span1.stat.text-center
+				/ THIS NEEDS TO COUNT THE NUMBER OF USERS WHO HAVE COMPLETED CAMPAIGNS
 				%h2
 					= @completed_campaigns.count
 				= pluralizer_helper('Badge', @completed_campaigns.count)
