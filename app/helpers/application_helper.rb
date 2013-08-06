@@ -29,7 +29,7 @@ module ApplicationHelper
 				image_tag campaign.badge_icon.url(:badge)
 			end
 		else
-			image_tag campaign.individual_badge.url(:badge)
+			image_tag campaign.badge_icon.url(:badge)
 		end
   end
 end
