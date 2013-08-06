@@ -18,6 +18,7 @@ class Campaign
   validate :required_actions_unique
   
   field :name, type: String
+  field :short_description, type: String
   field :description, type: String
   field :required_individual_occurrences, type: Integer, :default => 1
   field :required_community_occurrences, type: Integer, :default => 1

@@ -13,7 +13,7 @@
 								== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
 							- else
 								== &nbsp;#{formatted_date(campaign.end_time)}
-				%p= campaign.description
+				%p= campaign.short_description
 			.span1.stat.text-center
 				%h2
 					= campaign.actions.count

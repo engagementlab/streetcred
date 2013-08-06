@@ -4,7 +4,8 @@
 			= badge_helper(@campaign)
 		.span5.no-left-margin
 			%h2= @campaign.name
-			== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)} 
+			%br/
+			= @campaign.short_description
 		.span1.stat.text-center
 			%h1
 				= @campaign.actions.count
