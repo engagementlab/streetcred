@@ -6,12 +6,12 @@ body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -140px;
+  margin: 0 auto -130px;
 }
 
 #push,
 #footer {
-  height: 140px;
+  height: 130px;
 }
 #footer {
 	padding-top: 50px;
@@ -46,11 +46,11 @@ body {
 	margin-bottom: 100px;
 }
 
-h1 { font-family: "adelle", serif; }
-h2 { font-family: "adelle", serif; }
-h3 { font-family: "adelle", serif; }
-h4 { font-family: "adelle", serif; }
-h5 { font-family: "adelle", serif; }
+h1 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; }
+h2 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; }
+h3 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; }
+h4 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; }
+h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; }
 
 .user {
 	margin: 15px 0 15px 0;
@@ -65,7 +65,7 @@ h5 { font-family: "adelle", serif; }
 }
 .campaign {
 	.title{
-		font-family: "adelle", serif; 
+		font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;; 
 		font-size: 1.7em;
 		margin-bottom: .7em;
 	}
@@ -115,10 +115,16 @@ h5 { font-family: "adelle", serif; }
 	padding-top: 17px;
 }
 .individual {
+	font-family: "adelle", serif;
+	font-weight: 300;
+	font-style: italic;
 	padding-top: 20px;
 	text-align: left;
 }
 .community {
+	font-family: "adelle", serif;
+	font-weight: 300;
+	font-style: italic;
 	padding-top: 45px;
 	text-align: left;
 }
