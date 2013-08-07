@@ -9,10 +9,11 @@
 						= campaign.name
 					%small
 						%small
-							- if campaign.end_time > Time.now
-								== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
-							- else
-								== &nbsp;#{formatted_date(campaign.end_time)}
+							%em
+								- if campaign.end_time > Time.now
+									== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
+								- else
+									== &nbsp;#{formatted_date(campaign.end_time)}
 				%p= campaign.short_description
 			.span1.stat.text-center
 				%h2

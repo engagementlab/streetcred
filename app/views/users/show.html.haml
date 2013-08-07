@@ -2,14 +2,6 @@
 
 .page.container
   - if @active_campaigns.present?
-    .row
-      .span10
-        %h2.page-title
-          Active Campaigns
-      .span2
-        %h2.page-title
-          Awards
-
     - for campaign in @active_campaigns
       = render partial: 'active_campaign', locals: {campaign: campaign}
         

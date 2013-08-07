@@ -7,7 +7,8 @@
 						= campaign.name
 					%small
 						%small
-							== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
+							%em
+								== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
 				%p= campaign.short_description
 		.row
 			.span8
