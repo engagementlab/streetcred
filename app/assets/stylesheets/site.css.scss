@@ -6,17 +6,20 @@ body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -130px;
+  margin: 0 auto -140px;
 }
 
 #push,
 #footer {
-  height: 100px;
+  height: 140px;
 }
 #footer {
-	padding-top: 30px;
+	padding-top: 50px;
+	font-family: "adelle", serif;
+	font-weight: 300;
+	font-style: italic;
 	font-size: 1.1em;
-	line-height: 1.4em;
+	line-height: 1.5em;
 	color: white;
   background-color: #9ca09f;
 }
@@ -43,6 +46,12 @@ body {
 	margin-bottom: 100px;
 }
 
+h1 { font-family: "adelle", serif; }
+h2 { font-family: "adelle", serif; }
+h3 { font-family: "adelle", serif; }
+h4 { font-family: "adelle", serif; }
+h5 { font-family: "adelle", serif; }
+
 .user {
 	margin: 15px 0 15px 0;
 	h1 { margin: 0 0 0 0;}
@@ -56,7 +65,8 @@ body {
 }
 .campaign {
 	.title{
-		font-size: 1.8em;
+		font-family: "adelle", serif; 
+		font-size: 1.7em;
 		margin-bottom: .7em;
 	}
 }
@@ -132,6 +142,8 @@ body {
 .red { background-color: #d54326; }
 .yellow { background-color: #e7ad00; }
 .white{ color: white; }
+a.white { color: white; text-decoration: underline; }
+a.white:hover { color: #f3e486; text-decoration: underline; }
 
 .details-button {
 	padding-top: 16px;
