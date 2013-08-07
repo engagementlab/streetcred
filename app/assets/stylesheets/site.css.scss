@@ -1,54 +1,66 @@
-.header{
+html,
+body {
+  height: 100%;
+}
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -130px;
+}
+
+#push,
+#footer {
+  height: 100px;
+}
+#footer {
+	padding-top: 30px;
+	font-size: 1.1em;
+	line-height: 1.4em;
+	color: white;
+  background-color: #9ca09f;
+}
+.header {
 	background: #d6d9dc url('/assets/header.jpg') no-repeat center;
 	height: 111px;
 }
-.sub-header{
+.sub-header {
 	padding-top: 50px;
 	padding-bottom: 40px;
-	h1{
-		margin: 0 0 0 0;
-	}
-	h2{
-		margin: 0;
-	}
-	h3{
-		margin: -10px 0 4px 0;
-	}
+	h1 { margin: 0 0 0 0; }
+	h2 { margin: 0; }
+	h3{ margin: -10px 0 4px 0; }
 }
-.sub-header.gray{
+.sub-header.gray {
 	background-color: #f0f0f0;
 }
-.sub-header.blue{
+.sub-header.blue {
 	background-color: #20bedd;
 }
 
-.page{
+.page {
 	margin-top: 50px;
 	margin-bottom: 100px;
 }
 
-.user{
+.user {
 	margin: 15px 0 15px 0;
-	h1{
-		margin: 0 0 0 0;
-	}
-	h3{
-		margin: -10px 0 4px 0;
-	}
+	h1 { margin: 0 0 0 0;}
+	h3{ margin: -10px 0 4px 0; }
 }
-.active-campaigns{
+.active-campaigns {
 	margin: 40px 0 40px 0;
 }
-.completed-campaigns{
+.completed-campaigns {
 	margin: 40px 0 40px 0;
 }
-.campaign{
+.campaign {
 	.title{
 		font-size: 1.8em;
 		margin-bottom: .7em;
 	}
 }
-.active-campaign{
+.active-campaign {
 	margin-top: 30px;
 	padding-bottom: 30px;
 }
@@ -89,48 +101,39 @@
 		}
 	}
 }
-.badges{
+.badges {
 	padding-top: 17px;
 }
-.individual{
+.individual {
 	padding-top: 20px;
 	text-align: left;
 }
-.community{
+.community {
 	padding-top: 45px;
 	text-align: left;
 }
-.home-navigation{
+.home-navigation {
 	margin-top: 120px;	
 	font-size: 2em;
 	line-height: 1.5em;
 }
-.home-description{
+.home-description {
 	margin-top: 120px;
 	font-size: 1.3em;
 	line-height: 1.7em;
 }
-.no-left-margin{margin-left: 0;}
+.no-left-margin { margin-left: 0; }
 .stat{
-	h1{ margin-bottom: 0px;}
-	h2{ margin-top: 0px; margin-bottom: 0px;}
+	h1{ margin-bottom: 0px; }
+	h2{ margin-top: 0px; margin-bottom: 0px; }
 }
-.green{
-	background-color: #61c161;
-}
-.blue{
-	background-color: #00aecf;
-}
-.red{
-	background-color: #d54326;
-}
-.yellow{
-	background-color: #e7ad00;
-}
-.white{
-	color: white;
-}
-.details-button{
+.green { background-color: #61c161; }
+.blue { background-color: #00aecf; }
+.red { background-color: #d54326; }
+.yellow { background-color: #e7ad00; }
+.white{ color: white; }
+
+.details-button {
 	padding-top: 16px;
 	padding-right: 30px;
 }
