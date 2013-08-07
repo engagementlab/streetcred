@@ -3,33 +3,33 @@
     .row 
       .span1
         = image_tag @user.gravatar_url
-      .span4
+      .span3
         %h3= @user.full_name
         == Member since #{formatted_month_year(@user.created_at)}
         - if @user == current_user
           %br/
           = link_to 'Edit profile', user_path(@user)
 
-      .span1.stat.text-center
+      .span1.stat.blue-background.text-center
         %h1
           = @user.actions.count
         = pluralizer_helper('Report', @user.actions.count)
 
 
-      .span1.stat.text-center
+      .span1.stat.green-background.text-center.no-left-margin
         %h1
           = @user.channels.count
         = pluralizer_helper('Channel', @user.channels.count)
 
-      .span1.stat.text-center
+      .span1.stat.red-background.text-center.no-left-margin
         %h1
           = @user.completed_campaigns.count
         = pluralizer_helper('Badge', @user.completed_campaigns.count)
 
-      .span1.stat.text-center
+      .span1.stat.yellow-background.text-center.no-left-margin
         %h1
           1.0
-        Reach (mi)
+        Reach&nbsp;(mi)
 
       .span1.stat.text-center
 

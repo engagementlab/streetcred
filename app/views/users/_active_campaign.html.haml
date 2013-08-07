@@ -3,12 +3,10 @@
 		.row
 			.span7
 				.title
-					%strong
+					%span.main-title
 						= campaign.name
-					%small
-						%small
-							%em
-								== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
+					%span.sub-title
+						== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
 				%p= campaign.short_description
 		.row
 			.span8
