@@ -6,23 +6,23 @@
 			%h2= @campaign.name
 			%br/
 			= @campaign.short_description
-		.span1.stat.text-center
+		.span1.stat.text-center.blue-background
 			%h1
 				= @campaign.actions.count
 			= pluralizer_helper('Report', @campaign.actions.count)
 
 
-		.span1.stat.text-center
+		.span1.stat.text-center.green-background.no-left-margin
 			%h1
 				= @campaign.channels.count
 			= pluralizer_helper('Channel', @campaign.channels.count)
 
-		.span1.stat.text-center
+		.span1.stat.text-center.red-background.no-left-margin
 			%h1
 				= @badges_earned.count
 			= pluralizer_helper('Badge', @badges_earned.count)
 
-		.span1.stat.text-center
+		.span1.stat.text-center.yellow-background.no-left-margin
 			%h1
 				1.0
 			Reach (mi)
