@@ -30,7 +30,7 @@
 :javascript
   $(document).ready(function() {
     $('.openbadge-link').on('click', function(e) {
-      var campaign = $(e.target).data('api');
+      var campaign = $(e.target.parentElement).data('api');
       OpenBadges.issue(campaign, function(errors, successes) {
         console.log(errors,successes);
       });
