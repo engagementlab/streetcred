@@ -4,7 +4,7 @@ object @campaign
 
 attributes :name, :description
 attribute :individual_badge => :image
-node(:criteria) {"#{request.protocol}#{request.host_with_port}/api/campaigns/#{@campaign.id}.json"}
+node(:criteria) {"#{request.protocol}#{request.host_with_port}/campaigns/#{@campaign.id}"}
 node :tags do
     @tags.map { |lang| lang }
 end

@@ -1,5 +1,5 @@
 Streetcred::Application.routes.draw do
-  root :to => 'users#index' 
+  root :to => 'pages#index' 
   
   resources :campaigns, :only => [:index, :show]
   resources :users, :only => [:index, :show]

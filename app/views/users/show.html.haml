@@ -1,56 +1,28 @@
-- for campaign in @active_campaigns
-  .row.campaign-row
-    .span8
-      %table
-        %tr
-          %td{:width=>'100px'}
-            =image_tag campaign.individual_badge.url
-            =link_to "Send to backpack", '#', :class => "openbadge-link", :data => { :api => "#{badge_api_path(@user, campaign)}" }
-          %td
-            .title= campaign.name
-            %p= campaign.description
+= render partial: 'user_header'
+
+.page.container
+  - if @active_campaigns.present?
+    - for campaign in @active_campaigns
+      = render partial: 'active_campaign', locals: {campaign: campaign}
+        
+  - if @earned_campaigns.present?
+    %hr
+    .row
+      .span12
+        %h2 Completed Campaigns
     
-      .progress-row
-        .progress
-          .bar.bar-info{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
-        .pull-right
-          = campaign.required_individual_occurrences
-        0
-    
-    .span4
-      .stat.green
-        %h3= campaign.users.count
-        participants
-      .stat.blue
-        %h3= campaign.users.count
-        badges
-      .stat.red
-        %h3= campaign.actions.count
-        actions
-      .stat.yellow
-        - if campaign.radius.blank?
-          %h3 N/A
-        - else
-          %h3= campaign.radius
-          reach (mi)
+    .row
+      - for campaign in @completed_earned_campaigns
+        = render partial: 'completed_campaign', locals: {campaign: campaign}
 
-%h3 Completed Campaigns
-- for campaign in @completed_campaigns
-  .row
-    .span8
-      .title= campaign.name
+  = link_to 'View Past Campaigns', campaigns_path
 
-
-- if @user == current_user
-  .row
-    %p= link_to "Enable Foursquare Checkins", user_omniauth_authorize_path('foursquare')
-    %p= link_to "Enable Instagram Photos", user_omniauth_authorize_path('instagram')
 
 %script{:src => 'http://beta.openbadges.org/issuer.js'}
 :javascript
   $(document).ready(function() {
     $('.openbadge-link').on('click', function(e) {
-      var campaign = $(e.target).data('api');
+      var campaign = $(e.target.parentElement).data('api');
       OpenBadges.issue(campaign, function(errors, successes) {
         console.log(errors,successes);
       });

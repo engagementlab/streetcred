@@ -11,13 +11,14 @@ class Campaign
   embeds_many :required_actions
   accepts_nested_attributes_for :required_actions, allow_destroy: true
     
-  scope :active, -> { lt(start_time: Time.now).gt(end_time: Time.now) }
-  scope :completed, -> { lt(end_time: Time.now) }
+  scope :active, -> { lt(start_time: Time.now).gt(end_time: Time.now).asc(:end_time) }
+  scope :completed, -> { lt(end_time: Time.now).desc(:end_time) }
 
   validates_presence_of :name, :required_actions
   validate :required_actions_unique
   
   field :name, type: String
+  field :short_description, type: String
   field :description, type: String
   field :required_individual_occurrences, type: Integer, :default => 1
   field :required_community_occurrences, type: Integer, :default => 1
@@ -39,13 +40,16 @@ class Campaign
   before_save :set_coordinates
 
   if Rails.env == 'production'
-    has_mongoid_attached_file :individual_badge, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', thumb: '60x60>', square: '200x200#', medium: '300x300>' }
-    has_mongoid_attached_file :community_badge, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', thumb: '60x60>', square: '200x200#', medium: '300x300>' }
+    has_mongoid_attached_file :individual_badge, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', badge: '100x150', large: '150x200>' }
+    has_mongoid_attached_file :community_badge, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', badge: '100x150', large: '150x200>' }
+    has_mongoid_attached_file :badge_icon, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', badge: '100x150', large: '150x200>' }
   else
     has_mongoid_attached_file :individual_badge, :url => "individual_badges/:style/:filename", :path => "#{Rails.root}/public/assets/individual_badges/:style/:filename",
-      styles: { icon: '30x30#', thumb: '60x60>', square: '200x200#', medium: '300x300>' }
+      styles: { icon: '30x30#', badge: '100x150', large: '150x200>' }
     has_mongoid_attached_file :community_badge, :url => "community_badges/:style/:filename", :path => "#{Rails.root}/public/assets/community_badges/:style/:filename",
-      styles: { icon: '30x30#', thumb: '60x60>', square: '200x200#', medium: '300x300>' }
+      styles: { icon: '30x30#', badge: '100x150', large: '150x200>' }
+    has_mongoid_attached_file :badge_icon, :url => "badge_icon/:style/:filename", :path => "#{Rails.root}/public/assets/badge_icon/:style/:filename",
+      styles: { icon: '30x30#', badge: '100x150', large: '150x200>' }
   end
 
   def required_action_types
@@ -57,6 +61,12 @@ class Campaign
       start_time < Time.now && end_time > Time.now
     else
       false
+    end
+  end
+
+  def time_left
+    if end_time.present?
+      end_time.to_i - Time.now.to_i
     end
   end
 
@@ -129,14 +139,18 @@ class Campaign
     if radius.present?
       # make sure the actions have coordinates
       actions_with_coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
-      if latitude.present? && longitude.present?
-        center_point = [longitude.to_f, latitude.to_f]
+      if actions_with_coordinates.present?
+        if latitude.present? && longitude.present?
+          center_point = [longitude.to_f, latitude.to_f]
+        else
+          center_point = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates})
+        end
+        max_distance = actions_with_coordinates.geo_near(center_point).spherical.distance_multiplier(3959).max_distance
+        # make sure the distance exceeds the radius and that at least one action is within the circle
+        max_distance > radius && actions_within_circle(actions_with_coordinates, center_point).present?
       else
-        center_point = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates})
+        return false
       end
-      max_distance = (actions_with_coordinates.geo_near(center_point).spherical.max_distance * 3959)
-      # make sure the distance exceeds the radius and that at least one action is within the circle
-      max_distance > radius && actions_within_circle(actions_with_coordinates, center_point).present?
     else
       return false
     end

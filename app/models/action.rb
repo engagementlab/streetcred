@@ -1,13 +1,16 @@
-class Action  
+class Action
   include Mongoid::Document
   include Mongoid::Timestamps
   include Geocoder::Model::Mongoid
+  include Gmaps4rails::ActsAsGmappable
+  include Geocoder::Model::Mongoid
+
+  acts_as_gmappable :lat_lng_array => :gmaps4rails_coordinates, :process_geocoding => false
   
   belongs_to :user, index: true
   belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
   belongs_to :action_type
   has_and_belongs_to_many :campaigns, dependent: :nullify, index: true
-  
   
   field :api_key, type: String
   field :record_id, type: String # provider UID
@@ -15,7 +18,7 @@ class Action
   field :action_type, type: String
   field :description, type: String
   field :shared, type: Boolean
-  field :location, type: String
+  # field :location, type: String
   field :latitude, type: BigDecimal
   field :longitude, type: BigDecimal
   field :coordinates, type: Array
@@ -41,6 +44,14 @@ class Action
     coordinates.try(:reverse)
   end
 
+  def gmaps4rails_address
+    "#{self.address}, #{self.city}" 
+  end
+
+  def gmaps4rails_coordinates
+    [latitude, longitude]
+  end
+
   def matching_campaigns
     Campaign.elem_match(required_actions: {action_type_id: action_type.id}).lt(start_time: created_at).gt(end_time: created_at)
   end
@@ -58,8 +69,9 @@ class Action
   def assign_campaigns
     # iterate through the matching campaigns and determine whether their requirements have been met
     matching_campaigns.each do |campaign|
-      unless user.campaigns.include?(campaign)
-        campaign.actions << self
+      campaign.actions << self
+      # associate the campaign with the user if all of the campaign requirements have been met
+      if campaign.requirements_met_by_individual?(user) && !user.campaigns.include?(campaign)
         user.campaigns << campaign
       end
     end

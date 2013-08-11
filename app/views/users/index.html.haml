@@ -1,11 +1,37 @@
-%table.table
-  %tr
-    %th 
-    %th Awards
+.sub-header.gray
+	.container
+		.row
+			.span12
+				Something to say about participants...
 
-  - @users.each do |user|
-    %tr
-      %td
-        %h3= link_to user.full_name, user_path(user)
-      %td
-        %h3= user.campaigns.count
+.page.container
+	- @users.each do |user|
+		.row.user.well
+			.span1
+				= image_tag user.gravatar_url
+			.span4
+				%h3= user.full_name
+				== Member since #{formatted_month_year(user.created_at)}
+
+			.span1.stat.text-center
+				%h2
+					= user.actions.count
+				= pluralizer_helper('Report', user.actions.count)
+
+			.span1.stat.text-center
+				%h2
+					= user.channels.count
+				= pluralizer_helper('Channel', user.channels.count)
+
+			.span1.stat.text-center
+				%h2
+					= user.completed_campaigns.count
+				= pluralizer_helper('Badge', user.completed_campaigns.count)
+
+			.span1.stat.text-center
+				%h2
+					1
+				Reach (mi)
+
+			.span1.pull-right.details-button.text-right
+				= link_to 'Details', user_path(user), :class => 'btn btn-info'

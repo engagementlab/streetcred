@@ -1,6 +1,8 @@
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Gravtastic
+  gravtastic
   
   has_many :actions, dependent: :delete
   has_many :providers, dependent: :delete
@@ -14,6 +16,7 @@ class User
   field :email, type: String, default: ""
   field :phone, type: String, default: ""
   field :shared, type: Boolean, default: true
+  field :slug, type: String
 
   # # Omniauth
   # field :provider, type: String
@@ -51,7 +54,8 @@ class User
   # field :authentication_token, :type => String
   
   # index({ provider_uid: 1 }, { unique: true})
-  
+  index({ slug: 1 }, { unique: true})
+
 
   def full_name
     if self.first_name.blank? && self.last_name.blank?
@@ -59,6 +63,14 @@ class User
     else
       "#{self.first_name} #{self.last_name}"
     end
+  end
+
+  def channels
+    actions.collect {|x| x.action_type.try(:channel)}.uniq
+  end
+
+  def completed_campaigns
+    Campaign.all.select {|x| x.requirements_met_by_individual?(self)}
   end
   
   def campaigns_completed_by_action(action)
@@ -72,6 +84,16 @@ class User
   def campaigns_in_progress_by_action(action)
     if action.user == self
       action.campaigns.nin(user_ids: self.id)
+    end
+  end
+
+  def reach
+    actions_with_coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
+    if actions_with_coordinates.present?
+      center_point = Geocoder::Calculations.geographic_center(actions_with_coordinates.collect {|x| x.coordinates})
+      actions_with_coordinates.geo_near(center_point).spherical.distance_multiplier(3959).average_distance
+    else
+      nil
     end
   end
 end

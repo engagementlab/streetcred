@@ -1,0 +1,45 @@
+.sub-header.gray
+  .container
+    .row 
+      .span1
+        = image_tag @user.gravatar_url
+      .span3
+        %h3= @user.full_name
+        == Member since #{formatted_month_year(@user.created_at)}
+        - if @user == current_user
+          %br/
+          = link_to 'Edit profile', user_path(@user)
+
+      .span1.stat.blue-background.text-center
+        %h1
+          = @user.actions.count
+        = pluralizer_helper('Report', @user.actions.count)
+
+
+      .span1.stat.green-background.text-center.no-left-margin
+        %h1
+          = @user.channels.count
+        = pluralizer_helper('Channel', @user.channels.count)
+
+      .span1.stat.red-background.text-center.no-left-margin
+        %h1
+          = @user.completed_campaigns.count
+        = pluralizer_helper('Badge', @user.completed_campaigns.count)
+
+      .span1.stat.yellow-background.text-center.no-left-margin
+        %h1
+          1.0
+        Reach&nbsp;(mi)
+
+      .span1.stat.text-center
+
+      .span3
+        - if @user == current_user
+          - unless @user.providers.where(provider: 'foursquare').present?
+            %div{style: 'margin-bottom: 10px'}
+              = link_to image_tag('foursquare.jpg'), user_omniauth_authorize_path('foursquare')
+              = link_to 'Connect Foursquare account', user_omniauth_authorize_path('foursquare')
+          - unless @user.providers.where(provider: 'instagram').present?
+            %div
+              = link_to image_tag('instagram.png'), user_omniauth_authorize_path('instagram')
+              = link_to 'Connect Instagram account', user_omniauth_authorize_path('instagram')

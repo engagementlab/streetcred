@@ -11,8 +11,12 @@ gem 'airbrake'
 gem 'aws-sdk'
 gem 'bson_ext'
 gem 'devise'
+gem 'gravtastic'
+gem 'gmaps4rails'
+gem 'coffee-rails', '~> 3.2.1'
 gem 'haml-rails'
 gem 'jquery-rails'
+gem 'sass-rails',   '~> 3.2.3'
 gem 'mongo'
 gem 'mongoid'
 gem 'oj'
@@ -47,8 +51,7 @@ gem 'omniauth-instagram'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-	gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+	gem 'therubyracer'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby

@@ -1,0 +1,39 @@
+.row.campaign
+	.span12.well
+		.row
+			.span1
+				= badge_helper(campaign)
+			.span5
+				.title
+					%span.main-title
+						= campaign.name
+					%span.sub-title
+						- if campaign.end_time > Time.now
+							== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
+						- else
+							== &nbsp;#{formatted_date(campaign.end_time)}
+				%p= campaign.short_description
+			.span1.stat.text-center.blue-background.no-left-margin
+				%h2
+					= campaign.actions.count
+				= pluralizer_helper('Report', campaign.actions.count)
+
+
+			.span1.stat.text-center.green-background.no-left-margin
+				%h2
+					= campaign.channels.count
+				= pluralizer_helper('Channel', campaign.channels.count)
+
+			.span1.stat.text-center.red-background.no-left-margin
+				/ THIS NEEDS TO COUNT THE NUMBER OF USERS WHO HAVE COMPLETED CAMPAIGNS
+				%h2
+					= @completed_campaigns.count
+				= pluralizer_helper('Badge', @completed_campaigns.count)
+
+			.span1.stat.text-center.yellow-background.no-left-margin
+				%h2
+					1
+				Reach (mi)
+
+			.span1.pull-right.details-button.text-right
+				= link_to 'Details', campaign_path(campaign), :class => 'btn btn-info'
