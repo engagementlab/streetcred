@@ -17,6 +17,12 @@
 
   = link_to 'View Past Campaigns', campaigns_path
 
+.sub-header.darkgray
+  .container
+    %h3.white
+      Your Reports
+    = gmaps('markers' => {"data" => @json}, 'map_options' => { 'raw' => '{ scrollwheel: false }' })
+
 
 %script{:src => 'http://beta.openbadges.org/issuer.js'}
 :javascript

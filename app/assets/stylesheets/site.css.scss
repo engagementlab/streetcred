@@ -4,6 +4,7 @@ $red: #d54326;
 $yellow: #e7ad00;
 $light-yellow: #f3e486;
 $light-gray: #f0f0f0;
+$dark-gray: #686f73;
 
 
 
@@ -46,8 +47,24 @@ body {
 .sub-header.gray {
 	background-color: $light-gray;
 }
+.sub-header.darkgray {
+	background-color: $dark-gray;
+}
 .sub-header.blue {
 	background-color: $blue;
+}
+
+.map_container {
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+}
+
+.gmaps4rails_map {
+	width: 100%;
+	height: 500px;
 }
 
 .page {
