@@ -179,6 +179,8 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 .white{ color: white; }
 a.white { color: white; text-decoration: underline; }
 a.white:hover { color: $yellow; text-decoration: underline; }
+a.black { color: #222; text-decoration: none; }
+a.black:hover { color: #222; text-decoration: underline; }
 
 .details-button {
 	padding-top: 16px;

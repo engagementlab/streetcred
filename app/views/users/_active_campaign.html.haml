@@ -4,7 +4,7 @@
 			.span7
 				.title
 					%span.main-title
-						= campaign.name
+						= link_to campaign.name, campaign_path(campaign), class: 'black'
 					%span.sub-title
 						== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
 				%p= campaign.short_description
