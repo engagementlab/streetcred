@@ -78,7 +78,41 @@ class API::ActionsController < ApplicationController
       render 'errors'
     end
   end
-  
+
+  # incoming images from Instagram real-time api with the specified tag - http://instagram.com/developer/realtime/
+  # note: users must OAuth into their Instagram account from StreetCred in order to match photos to SC users
+  def instagram
+    channel = Channel.where(name: 'Instagram').first
+    # when you add a new subscriptiong the Instagram api sends a challenge as a get
+    if channel.present?
+      if request.get?
+        render text: params['hub.challenge']
+      elsif request.post?
+        photo = params
+        # look up new tagged photos
+        # https://api.instagram.com/v1/tags/snow/media/recent?access_token=
+        #action_type = ActionType.where(channel_id: channel.id).where(provider_uid: photo['object_id']).first
+        action_type = ActionType.where(channel_id: channel.id).where(provider_uid: "sweeping").first
+        token = User.all.pluck(:instagram_token).first
+        recent = HTTParty.get("https://api.instagram.com/v1/tags/#{action_type.provider_uid}/media/recent?access_token=#{token}")
+        instagram_user = recent['data'].first['user']['id']
+        user = User.where(provider_uid: instagram_user).first
+        if user.present? && action_type.present?
+          user.actions.create(
+            action_type_id: action_type.id,
+            api_key: channel.api_key,
+            record_id: recent['data'].first['id'],
+            timestamp: Time.now
+          )
+          render nothing: true
+        end
+      end
+    else
+      @error_message = "api_key is invalid"
+      render 'errors'
+    end
+  end
+ 
   # incoming checkins from the Fourquuare Push API - https://developer.foursquare.com/overview/realtime
   # note: users must OAuth into their Foursquare account form StreeCred to enable checkin push
   def foursquare
