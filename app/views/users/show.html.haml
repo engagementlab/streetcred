@@ -21,7 +21,7 @@
   .container
     %h3.white
       Your Reports
-    = gmaps('markers' => {"data" => @json}, 'map_options' => { "provider" => "openlayers" })
+    = gmaps('markers' => {"data" => @json}, 'map_options' => { "auto_adjust" => true, "provider" => "openlayers" })
 
 
 %script{:src => 'http://beta.openbadges.org/issuer.js'}
