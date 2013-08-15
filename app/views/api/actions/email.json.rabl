@@ -1,2 +1,2 @@
 collection @completed_campaigns
-attributes :name, :message, :badge_url
+attributes :name, :badge_url
