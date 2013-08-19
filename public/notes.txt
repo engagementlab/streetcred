@@ -1,0 +1,24 @@
+curl -X POST -d '{"api_key":"c3ea2803092fd878c0783d6dd67f42bb32d485d8","report":{record_id":"12345","case_id":"12345","action_type":"Pothole Report","description":"","location":"","latitude":"","longitude":""},"user":{"email":"joelmahoney@gmail.com"}' http://localhost:3000/api/actions/citizens_connect.json
+
+curl -X POST -d "api_key=c3ea2803092fd878c0783d6dd67f42bb32d485d8&report[service]=Graffiti%20Report&user[email]=joelmahoney@gmail.com" http://localhost:3000/api/actions/citizens_connect.json
+
+fix award earning
+remove id from relations on delete
+
+https://mayors24.cityofboston.gov/open311/v2/requests.json
+http://chicago.spotreporters.com/open311/v2/requests.json?extensions=v1
+
+Citizens Connect schema
+
+api_key: params['api_key'],
+record_id: params['report']['record_id'],
+case_id: params['report']['case_id'],
+event: params['report']['event'],
+action_type: action_type.name,
+description: params['report']['description'],
+shared: params['report']['shared'],
+latitude: params['report']['latitude'],
+longitude: params['report']['longitude'],
+url: params['report']['url'],
+image_url: params['report']['image_url'],
+timestamp: params['report']['timestamp']
