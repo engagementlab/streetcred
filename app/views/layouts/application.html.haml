@@ -14,10 +14,14 @@
     #wrap
       .header.row
         .container
-          .span4
-            = image_tag('/assets/logo.png', class: 'logo')
-          .span8.tagline.no-left-margin
-            Reports issues, earn street cred, improve your city
+          .span4.no-left-margin
+            = link_to image_tag('/assets/logo.png', class: 'logo'), root_url
+          .span5.main-nav.pull-right
+            %ul.nav.nav-pills
+              %li= link_to 'Home', root_url
+              %li= link_to 'Campaigns', campaigns_url
+              %li= link_to 'Participants', users_url
+              %li= link_to 'Sign In', sign_in_url
       = yield
       #push
 

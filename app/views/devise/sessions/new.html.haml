@@ -1,15 +1,20 @@
-%h1 Sign In
+.container.page
+	%h1 Sign In
 
-= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  .field
-    = f.label :email
-    = f.email_field :email, :autofocus => true
+	= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+		.field
+			= f.label :email
+			= f.email_field :email, :autofocus => true
 
-  .field
-    = f.label :password
-    = f.password_field :password
+		.field
+			= f.label :password
+			= f.password_field :password
 
-  .actions
-    = f.submit "Sign in", :class => "btn btn-success"
+		.actions
+			= f.submit "Sign in", :class => "btn btn-info"
 
-= render "devise/shared/links"
+		%div
+			%br/
+			= link_to 'Sign up', sign_up_url
+			%br/
+			= link_to 'Forgot password?', new_user_password_url
