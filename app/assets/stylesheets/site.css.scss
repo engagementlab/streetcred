@@ -37,14 +37,14 @@ body {
 }
 .header {
 	background: #d6d9dc url('/assets/header.jpg') no-repeat center;
-	height: 110px;
-}
-.tagline{
-	padding-top: 80px;
-	font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-size: 18px;
-	font-style: italic;
-	color: $sign-gray;
+	height: 100px;
+	.tagline{
+		padding-top: 68px;
+		font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
+		font-size: 18px;
+		font-style: italic;
+		color: $sign-gray;
+	}
 }
 .sub-header {
 	padding-top: 50px;
@@ -182,7 +182,7 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 	}
 }
 .home-description {
-	margin-top: 120px;
+	margin-top: 115px;
 	font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 1.3em;
 	font-weight: 100;
