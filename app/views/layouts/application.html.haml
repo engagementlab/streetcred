@@ -21,15 +21,15 @@
       = yield
       #push
 
-    #footer.row.mid-gray-background
+    #footer.row.charcoal-background
       .container
-        .span6
+        .span6.mid-gray
           == StreetCred is a collaboration between the #{link_to 'Engagement Game Lab', 'http://engagementgamelab.org/', class: 'white'} at Emerson College and the #{link_to "Mayor's Office of New Urban Mechanics", 'http://www.newurbanmechanics.org/', class: 'white'} in Boston. The project was made possible through a generous grant from the McArthur Foundation.
 
         .span2
           = link_to image_tag('/assets/monum.png'), 'http://www.newurbanmechanics.org/'
         .span3
-          = link_to image_tag('/assets/engagement-game-lab.gif'), 'http://engagementgamelab.org/'
+          = link_to image_tag('/assets/engagement-game-lab.png'), 'http://engagementgamelab.org/'
 
 
     %script{ :src => "/assets/application.js", :type=>"text/javascript" }

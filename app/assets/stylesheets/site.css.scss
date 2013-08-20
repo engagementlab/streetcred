@@ -1,25 +1,35 @@
 $blue: #00aecf;
+$light-blue: #26bad6;
 $green: #61c161;
 $bright-green: #a6ce39;
 $red: #d54326;
 $yellow: #e7ad00;
 $light-yellow: #f3e486;
+$pale-yellow: #fffef2;
 $light-gray: #f0f0f0;
 $mid-gray: #9e9fa1;
 $sign-gray: #767e84;
 $dark-gray: #686f73;
+$charcoal: #474b4e;
 
 .gray-background { background-color: $light-gray; }
 .mid-gray-background { background-color: $mid-gray; }
 .dark-gray-background {	background-color: $dark-gray; }
+.charcoal-background { background-color: $charcoal; }
 .blue-background { background-color: $blue; }
+.light-blue-background { background-color: $light-blue; }
 .green-background { background-color: $green; }
 .bright-green-background { background-color: $bright-green; }
 .red-background { background-color: $red; }
 .yellow-background { background-color: $yellow; }
 
-.blue { color: $blue; }
+#map-background-gray{ background: $light-gray url('/assets/boston-map.png') repeat; }
+#map-background-blue{ background: $blue url('/assets/boston-map.png') repeat; }
+
 .white { color: white; }
+.pale-yellow { color: $pale-yellow; }
+.blue { color: $blue; }
+.mid-gray { color: $mid-gray; }
 
 a.white { color: white; text-decoration: underline; }
 a.white:hover { color: $yellow; text-decoration: underline; }
@@ -29,6 +39,8 @@ a.black:hover { color: #222; text-decoration: underline; }
 .tall-padding { padding-top: 50px; padding-bottom: 50px; }
 .mid-padding { padding-top: 30px; padding-bottom: 30px; }
 .short-padding { padding-top: 10px; padding-bottom: 10px; }
+
+span.large { font-size: 1.2em; font-weight: 100; }
 
 html,
 body {
