@@ -14,9 +14,9 @@
     #wrap
       .header.row
         .container
-          .span4.no-left-margin
+          .pull-left
             = link_to image_tag('/assets/logo.png', class: 'logo'), root_url
-          .span5.main-nav.pull-right
+          .main-nav.pull-right
             %ul.nav.nav-pills
               %li= link_to 'Home', root_url
               %li= link_to 'Campaigns', campaigns_url
