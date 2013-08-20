@@ -29,7 +29,10 @@
 				.span4
 					= image_tag('/assets/iphone-1.png')
 				.span3.text-left.white.home-description
-					To get started, download an app to your phone. StreetCred supports Citizens Connect, SeeClickFix and Foursquare.
+					%p
+						To get started, download an app to your phone. StreetCred supports Citizens Connect, SeeClickFix and Foursquare.
+
+					= image_tag '/assets/app-stores.png'
 
 			%div
 				.span4
@@ -66,11 +69,11 @@
 			.span1.text-right
 				%h3
 					%small.white
-						= link_to 'details', campaign_path(@current_campaign)
+						= link_to 'details', campaign_path(@current_campaign), class: 'btn btn-info'
 
 .row.tall-padding.dark-gray-background
 	.container
-		.span12
+		.span12.no-left-margin
 			%p.white
 				%span.large
 					The reports map shows the actions that are being taken throughout the city. A map of your personal actions is available on your user page.
