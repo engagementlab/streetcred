@@ -1,5 +1,6 @@
 $blue: #00aecf;
 $green: #61c161;
+$bright-green: #a6ce39;
 $red: #d54326;
 $yellow: #e7ad00;
 $light-yellow: #f3e486;
@@ -8,11 +9,31 @@ $mid-gray: #9e9fa1;
 $sign-gray: #767e84;
 $dark-gray: #686f73;
 
+.gray-background { background-color: $light-gray; }
+.mid-gray-background { background-color: $mid-gray; }
+.dark-gray-background {	background-color: $dark-gray; }
+.blue-background { background-color: $blue; }
+.green-background { background-color: $green; }
+.bright-green-background { background-color: $bright-green; }
+.red-background { background-color: $red; }
+.yellow-background { background-color: $yellow; }
 
+.blue { color: $blue; }
+.white { color: white; }
+
+a.white { color: white; text-decoration: underline; }
+a.white:hover { color: $yellow; text-decoration: underline; }
+a.black { color: #222; text-decoration: none; }
+a.black:hover { color: #222; text-decoration: underline; }
+
+.tall-padding { padding-top: 50px; padding-bottom: 50px; }
+.mid-padding { padding-top: 30px; padding-bottom: 30px; }
+.short-padding { padding-top: 10px; padding-bottom: 10px; }
 
 html,
 body {
   height: 100%;
+	font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 #wrap {
   min-height: 100%;
@@ -27,20 +48,20 @@ body {
 }
 #footer {
 	padding-top: 50px;
-	font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: 100;
 	font-size: 1.1em;
 	font-style: italic;
 	line-height: 1.5em;
 	color: white;
-  background-color: $mid-gray;
 }
 .header {
 	background: #d6d9dc url('/assets/header.jpg') no-repeat center;
-	height: 100px;
+	height: 110px;
+	.logo {
+		margin-top: 10px;
+	}
 	.tagline{
-		padding-top: 68px;
-		font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
+		padding-top: 75px;
 		font-size: 18px;
 		font-style: italic;
 		color: $sign-gray;
@@ -53,15 +74,7 @@ body {
 	h2 { margin: 0; }
 	h3{ margin: -10px 0 4px 0; }
 }
-.sub-header.gray {
-	background-color: $light-gray;
-}
-.sub-header.darkgray {
-	background-color: $dark-gray;
-}
-.sub-header.blue {
-	background-color: $blue;
-}
+
 
 .map_container {
 	width: 100%;
@@ -151,7 +164,6 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 	padding-top: 17px;
 }
 .individual {
-	font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight: 300;
 	font-style: italic;
 	padding-top: 20px;
@@ -165,9 +177,8 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 	text-align: left;
 }
 .home-navigation {
-	margin-top: 120px;	
+	margin-top: 110px;	
 	line-height: 1.5em;
-	font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 2.1em;
 	font-weight: 100;
 	a { color: white; text-decoration: none; }
@@ -182,8 +193,7 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 	}
 }
 .home-description {
-	margin-top: 115px;
-	font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
+	margin-top: 103px;
 	font-size: 1.3em;
 	font-weight: 100;
 	line-height: 1.7em;
@@ -194,16 +204,6 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 	color: white;
 	padding: 10px;
 }
-.green-background { background-color: $green; }
-.blue-background { background-color: $blue; }
-.red-background { background-color: $red; }
-.yellow-background { background-color: $yellow; }
-.blue { color: $blue; }
-.white{ color: white; }
-a.white { color: white; text-decoration: underline; }
-a.white:hover { color: $yellow; text-decoration: underline; }
-a.black { color: #222; text-decoration: none; }
-a.black:hover { color: #222; text-decoration: underline; }
 
 .details-button {
 	padding-top: 16px;

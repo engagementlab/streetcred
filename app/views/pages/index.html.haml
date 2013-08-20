@@ -1,20 +1,20 @@
-.sub-header.blue
+.row.tall-padding.blue-background
 	.container.text-center
 		.span4.text-right.white.home-navigation
 			%ul.slidesjs-pagination
-				%li#nav1
+				%li#nav-item-1.nav-item{:style=>'color: white;'}
 					street cred
 					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-1', style: 'visibility: visible'
-				%li#nav2
+				%li#nav-item-2.nav-item{:style=>'color: #43c3dc;'}
 					get an app
 					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-2', style: 'visibility: hidden'
-				%li#nav3
+				%li#nav-item-3.nav-item{:style=>'color: #43c3dc;'}
 					take action
 					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-3', style: 'visibility: hidden'
-				%li#nav4
+				%li#nav-item-4.nav-item{:style=>'color: #43c3dc;'}
 					earn cred
 					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-4', style: 'visibility: hidden'
-				%li#nav5
+				%li#nav-item-5.nav-item{:style=>'color: #43c3dc;'}
 					see change
 					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-5', style: 'visibility: hidden'
 		
@@ -48,6 +48,12 @@
 					= image_tag('/assets/iphone-2.png')
 				.span3.text-left.white.home-description
 					You're taking action, working on campaigns, and seeing the change. Isn't it great to improve your city?
+	
+.row.short-padding.bright-green-background.white
+	.container
+		.span12
+			%h3
+				= Campaign.last.name
 
 
 - content_for :scripts do
@@ -55,7 +61,7 @@
 		$(function() {
 		$('#slides').slidesjs({
 		width: 200,
-		height: 190,
+		height: 185,
 
 		navigation: {
 		active: false,
@@ -83,6 +89,8 @@
 
 		callback: {
 		complete: function(number) {
+		$('.nav-item').css('color', '#43c3dc')
+		$('#nav' + '-item-' + number).css('color', '#ffffff')
 		$('.nav-arrow').css('visibility', 'hidden')
 		$('#nav' + '-arrow-' + number).css('visibility', 'visible')
 		}

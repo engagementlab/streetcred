@@ -17,7 +17,7 @@
 
   = link_to 'View Past Campaigns', campaigns_path
 
-.sub-header.darkgray
+.sub-header.darkgray-background
   .container
     %h3.white
       Your Reports
@@ -26,7 +26,7 @@
 
 - content_for :scripts do
   = javascript_include_tag 'http://beta.openbadges.org/issuer.js'
-  
+
   :javascript
     $(document).ready(function() {
     $('.openbadge-link').on('click', function(e) {

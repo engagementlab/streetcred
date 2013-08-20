@@ -45,8 +45,8 @@ open_badges.png: open_badges-3ac5121ce9206c4de8d2e4dab81169dd.png
 open_badges/index.png: open_badges-3ac5121ce9206c4de8d2e4dab81169dd.png
 application.js: application-f2d08eedcc57013732c2e75249f34acd.js
 application/index.js: application-f2d08eedcc57013732c2e75249f34acd.js
-application.css: application-d47e9ac4621efb591f00ea5894b116df.css
-application/index.css: application-d47e9ac4621efb591f00ea5894b116df.css
+application.css: application-d1803e34b046b75802c6480ea024b616.css
+application/index.css: application-d1803e34b046b75802c6480ea024b616.css
 fontawesome-webfont.eot: fontawesome-webfont-b49e662c23140944a17d6301d2259446.eot
 fontawesome-webfont/index.eot: fontawesome-webfont-b49e662c23140944a17d6301d2259446.eot
 fontawesome-webfont.svg: fontawesome-webfont-863eb1732db4aa1a1b4ee4db0ec0dfe4.svg
