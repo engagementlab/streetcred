@@ -1,12 +1,91 @@
 .sub-header.blue
-	#MyCarousel.container.text-center.carousel.slide
+	.container.text-center
 		.span4.text-right.white.home-navigation
-			%p street cred
-			%p get an app
-			%p take action
-			%p earn cred
-			%p see change
-		#slides.span4
-			= image_tag('/assets/iphone-2.png')
-		.span3.text-left.white.home-description
-			StreeCred is where actions affect change. Join a campaign and earn cred. Every month, you have the opportunity to complete a new campaign, working with your neighbors to build a better city.
+			%ul.slidesjs-pagination
+				%li#nav1
+					street cred
+					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-1', style: 'visibility: visible'
+				%li#nav2
+					get an app
+					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-2', style: 'visibility: hidden'
+				%li#nav3
+					take action
+					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-3', style: 'visibility: hidden'
+				%li#nav4
+					earn cred
+					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-4', style: 'visibility: hidden'
+				%li#nav5
+					see change
+					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-5', style: 'visibility: hidden'
+		
+		#slides
+			%div
+				.span4
+					= image_tag('/assets/iphone-1.png')
+				.span3.text-left.white.home-description
+					StreeCred is where actions affect change. Join a campaign and earn cred. Every month, you have the opportunity to complete a new campaign, working with your neighbors to build a better city.
+
+			%div
+				.span4
+					= image_tag('/assets/iphone-1.png')
+				.span3.text-left.white.home-description
+					StreeCred is where actions affect change. Join a campaign and earn cred. Every month, you have the opportunity to complete a new campaign, working with your neighbors to build a better city.
+
+			%div
+				.span4
+					= image_tag('/assets/iphone-4.png')
+				.span3.text-left.white.home-description
+					Now the fun begins. Use the app to report issues in your neighborhood. The app will automatically configure your StreetCred account, which you can claim by loggin in here. Get started on the current campaigns.
+
+			%div
+				.span4
+					= image_tag('/assets/iphone-3.png')
+				.span3.text-left.white.home-description
+					With each action you take, you'll earn cred. And when you complete campaigns, you'll earn a digital badge to celebrate your work. You can export your badges to Mozilla Backpack to share your work.
+
+			%div
+				.span4
+					= image_tag('/assets/iphone-2.png')
+				.span3.text-left.white.home-description
+					You're taking action, working on campaigns, and seeing the change. Isn't it great to improve your city?
+
+
+- content_for :scripts do
+	:javascript
+		$(function() {
+		$('#slides').slidesjs({
+		width: 238,
+		height: 180,
+
+		navigation: {
+		active: false,
+		effect: "fade"
+		},
+		
+		pagination: {
+		active: false
+		},
+
+		effect: {
+		fade: {
+		speed: 800
+		}
+		},
+		
+		play: {
+		active: false,
+		effect: "fade",
+		interval: 5000,
+		auto: true,
+		pauseOnHover: false,
+		swap: false
+		},
+
+		callback: {
+		complete: function(number) {
+		$('.nav-arrow').css('visibility', 'hidden')
+		$('#nav' + '-arrow-' + number).css('visibility', 'visible')
+		}
+		}
+		});
+		});

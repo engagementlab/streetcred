@@ -5,6 +5,7 @@ $yellow: #e7ad00;
 $light-yellow: #f3e486;
 $light-gray: #f0f0f0;
 $mid-gray: #9e9fa1;
+$sign-gray: #767e84;
 $dark-gray: #686f73;
 
 
@@ -43,7 +44,7 @@ body {
 	font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 18px;
 	font-style: italic;
-	color: $mid-gray;
+	color: $sign-gray;
 }
 .sub-header {
 	padding-top: 50px;
@@ -169,7 +170,16 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 	font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size: 2.1em;
 	font-weight: 100;
-	a { color: white; }
+	a { color: white; text-decoration: none; }
+	a:hover { color: white; }
+	ul.slidesjs-pagination {
+		list-style-type: none;
+		li { 
+			list-style-type: none; 
+			margin-bottom: 30px;
+			.nav-arrow{ margin-top: -5px; padding-left: 3px; }
+		}
+	}
 }
 .home-description {
 	margin-top: 120px;
