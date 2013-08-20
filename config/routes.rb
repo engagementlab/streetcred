@@ -9,7 +9,7 @@ Streetcred::Application.routes.draw do
   devise_scope :user do
     get "sign_in", :to => "sessions#new"
     get "sign_up", :to => "registrations#new"
-    get "sign_out", :to => "sessions#destroy"
+    delete "sign_out", :to => "sessions#destroy"
     get "edit_registration", :to => "registrations#edit"
   end
   
