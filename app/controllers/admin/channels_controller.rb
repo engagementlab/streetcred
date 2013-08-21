@@ -4,7 +4,6 @@ class Admin::ChannelsController < ApplicationController
   
   def index
     @channels = Channel.asc(:name)
-    print_channels(@channels)
 
     respond_to do |format|
       format.html # index.html.erb
