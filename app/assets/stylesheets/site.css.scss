@@ -211,6 +211,9 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 		}
 	}
 }
+.nav-pills li {
+	margin-left: 5px;
+}
 .nav-pills.yellow a {
 	background-color: $light-gray;
 }

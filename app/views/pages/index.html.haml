@@ -3,13 +3,13 @@
 		.pull-right
 			%ul.nav.nav-pills.yellow
 				- if current_user
-					%li= link_to 'Dashboard', user_path(current_user)
-				%li= link_to 'Campaigns', campaigns_url
-				%li= link_to 'Leaderboard', users_url
+					%li= link_to 'dashboard', user_path(current_user)
+				%li= link_to 'campaigns', campaigns_url
+				%li= link_to 'leaderboard', users_url
 				- if current_user
-					%li= link_to 'Sign Out', destroy_user_session_url, method: :delete
+					%li= link_to 'sign out', destroy_user_session_url, method: :delete
 				- else
-					%li= link_to 'Sign In', sign_in_path
+					%li= link_to 'sign in', sign_in_path
 	.container.text-center
 
 		%h1.white
@@ -40,7 +40,7 @@
 				.span3.text-left.white.home-description
 					%p
 						To get started, download an app to your phone. StreetCred supports Citizens Connect, SeeClickFix and Foursquare.
-
+					%br/
 					= image_tag '/assets/app-stores.png'
 
 			%div
@@ -108,6 +108,14 @@
 			- else
 				%small.white
 					== &nbsp; &nbsp; If you're new to StreetCred, #{link_to 'sign in', sign_in_path} or #{link_to 'sign up', sign_up_path} to claim your account.
+					
+.row.tall-padding.dark-gray-background
+	.container
+		.span12.no-left-margin
+			%p.white
+				%span.large
+					The reports map shows the actions that are being taken throughout the city. A map of your personal actions is available on your user page.
+			= gmaps('markers' => {"data" => @json}, 'map_options' => { "auto_adjust" => true, "provider" => "google", "raw" => "{ scrollwheel: false }" })
 
 - content_for :scripts do
 	:javascript
