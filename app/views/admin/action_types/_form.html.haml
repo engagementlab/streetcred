@@ -13,6 +13,10 @@
 .field
   = f.label :name
   = f.text_field :name
+
+.field
+  = f.label :description
+  = f.text_area :description, rows: 5
   
 .field
   = f.label :provider_uid, "Provider UID (venue id, event id, etc.)"

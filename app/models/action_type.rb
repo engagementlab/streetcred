@@ -6,7 +6,8 @@ class ActionType
   has_many :actions
   has_and_belongs_to_many :campaigns, index: true
   
-  field :name
+  field :name, type: String
+  field :description, type: String
   field :provider_uid, type: String
   
   index({ name: 1 })
