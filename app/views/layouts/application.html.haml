@@ -18,9 +18,10 @@
             = link_to image_tag('/assets/logo.png', class: 'logo'), root_url
           .main-nav.pull-right
             %ul.nav.nav-pills
-              %li= link_to 'Home', root_url
+              - if current_user
+                %li= link_to 'Dashboard', user_path(current_user)
               %li= link_to 'Campaigns', campaigns_url
-              %li= link_to 'Participants', users_url
+              %li= link_to 'Civic Leaderboard', users_url
               - if current_user
                 %li= link_to 'Sign Out', destroy_user_session_url, method: :delete
               - else
