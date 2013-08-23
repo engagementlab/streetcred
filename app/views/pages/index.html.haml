@@ -89,7 +89,7 @@
 			%p.white
 				%span.large
 					The reports map shows the actions that are being taken throughout the city. A map of your personal actions is available on your user page.
-			= gmaps('markers' => {"data" => @json}, 'map_options' => { "auto_adjust" => true, "provider" => "google" })
+			= gmaps('markers' => {"data" => @json}, 'map_options' => { "auto_adjust" => true, "provider" => "google", "raw" => "{ scrollwheel: false }" })
 
 .row.mid-padding.bright-green-background.white
 	.container.text-center
