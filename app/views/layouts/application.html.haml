@@ -22,9 +22,9 @@
               %li= link_to 'Campaigns', campaigns_url
               %li= link_to 'Participants', users_url
               - if current_user
-                %li= link_to 'Sign In', sign_in_url
+                %li= link_to 'Sign Out', destroy_user_session_url. method: :delete
               - else
-                %li= link_to 'Sign Out', destroy_user_session_url, method: :delete
+                %li= link_to 'Sign In', sign_in_path
       = yield
       #push
 
