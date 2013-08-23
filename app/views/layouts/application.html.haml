@@ -21,7 +21,7 @@
               - if current_user
                 %li= link_to 'Dashboard', user_path(current_user)
               %li= link_to 'Campaigns', campaigns_url
-              %li= link_to 'Civic Leaderboard', users_url
+              %li= link_to 'Leaderboard', users_url
               - if current_user
                 %li= link_to 'Sign Out', destroy_user_session_url, method: :delete
               - else
