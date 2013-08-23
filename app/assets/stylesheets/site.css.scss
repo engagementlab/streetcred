@@ -211,6 +211,12 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 		}
 	}
 }
+.nav-pills.yellow a {
+	background-color: $light-gray;
+}
+.nav-pills.yellow a:hover {
+	background-color: $light-yellow;
+}
 .home-description {
 	margin-top: 103px;
 	font-size: 1.3em;

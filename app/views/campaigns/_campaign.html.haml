@@ -13,22 +13,16 @@
 						- else
 							== &nbsp;#{formatted_date(campaign.end_time)}
 				%p= campaign.short_description
-			.span1.stat.text-center.blue-background.no-left-margin
-				%h2
-					= campaign.actions.count
-				= pluralizer_helper('Actions', campaign.actions.count)
-
-
-			.span1.stat.text-center.red-background.no-left-margin
-				/ THIS NEEDS TO COUNT THE NUMBER OF USERS WHO HAVE COMPLETED CAMPAIGNS
-				%h2
-					= @completed_campaigns.count
-				= pluralizer_helper('Awards', @completed_campaigns.count)
-
-			.span1.stat.text-center.yellow-background.no-left-margin
-				%h2
-					1
-				Reach (mi)
+			.span4
+				.progress-row
+					.progress
+						- if campaign.progress_by_community >= 1.0
+							.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+						- else
+							.bar.gray{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+					.pull-right
+						= campaign.required_community_occurrences
+					0
 
 			.span1.pull-right.details-button.text-right
 				= link_to 'Details', campaign_path(campaign), :class => 'btn btn-info'

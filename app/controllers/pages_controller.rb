@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+	layout 'home'
 
 	def index
 		@current_campaign = Campaign.active.last
