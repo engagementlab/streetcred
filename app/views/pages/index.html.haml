@@ -97,7 +97,7 @@
 			Get Started!
 			- if current_user
 				%small.white
-					== &nbsp; &nbsp; Check your progress on the #{link_to 'user dashboard', user_page(current_user)}, and keep up the good work.
+					== &nbsp; &nbsp; Check your progress on the #{link_to 'user dashboard', user_path(current_user)}, and keep up the good work.
 			- else
 				%small.white
 					== &nbsp; &nbsp; If you're new to StreetCred, #{link_to 'sign in', sign_in_path} or #{link_to 'sign up', sign_up_path} to claim your account.
