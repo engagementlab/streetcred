@@ -31,10 +31,6 @@
           1.0
         Reach&nbsp;(mi)
 
-      .span1
-        - if @user == current_user
-          = link_to 'Foursquare', user_omniauth_authorize_path(provider: 'foursquare')
-
       .span3
         - if @user == current_user
           - unless @user.providers.where(provider: 'foursquare').present?
