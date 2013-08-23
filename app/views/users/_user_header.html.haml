@@ -31,7 +31,9 @@
           1.0
         Reach&nbsp;(mi)
 
-      .span1.stat.text-center
+      .span1
+        - if @user == current_user
+          = link_to 'Foursquare', user_omniauth_authorize_path(provider: 'foursquare')
 
       .span3
         - if @user == current_user
