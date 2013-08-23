@@ -17,14 +17,22 @@
 
   = link_to 'View Past Campaigns', campaigns_path
 
+.row.tall-padding.dark-gray-background
+  .container
+    %h3.white
+      Your Reports
+    = gmaps('markers' => {"data" => @json}, 'map_options' => { "auto_adjust" => true, "provider" => "google" })
 
-%script{:src => 'http://beta.openbadges.org/issuer.js'}
-:javascript
-  $(document).ready(function() {
+
+- content_for :scripts do
+  = javascript_include_tag 'http://beta.openbadges.org/issuer.js'
+
+  :javascript
+    $(document).ready(function() {
     $('.openbadge-link').on('click', function(e) {
-      var campaign = $(e.target.parentElement).data('api');
-      OpenBadges.issue(campaign, function(errors, successes) {
-        console.log(errors,successes);
-      });
+    var campaign = $(e.target.parentElement).data('api');
+    OpenBadges.issue(campaign, function(errors, successes) {
+    console.log(errors,successes);
     });
-  });
+    });
+    });

@@ -56,6 +56,18 @@ class Action
     Campaign.elem_match(required_actions: {action_type_id: action_type.id}).lt(start_time: created_at).gt(end_time: created_at)
   end
 
+  # def gmaps4rails_marker_picture
+  #   {
+  #     "picture" => '/assets/marker.png',
+  #     "width" =>  28,
+  #     "height" => 25
+  #   }
+  # end
+
+  def gmaps4rails_infowindow
+    "<strong>#{action_type.try(:name)}</strong><br />#{created_at}"
+  end
+
   private
   
   def set_coordinates

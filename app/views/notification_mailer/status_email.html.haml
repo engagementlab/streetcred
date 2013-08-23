@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+%html
+	%head
+		%meta{'content' => "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
+	%body
+		- if @completed_campaigns.present?
+			%p Congratulations! You just completed the following campaigns:
+			- for campaign in @completed_campaigns
+				%h3= campaign.name
+		- else
+			%p You're on your way to completing the following campaign:
+			- for campaign in @in_progress_campaigns
+				%h3
+					== #{campaign.name} &mdash; #{progress_toward_campaign_helper(@user, campaign, @action)}
+		%p 
+			== Monitor your progress by visiting #{link_to 'www.streetcred.us', 'www.streetcred.us'}

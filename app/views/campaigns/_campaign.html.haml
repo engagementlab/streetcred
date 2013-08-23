@@ -16,19 +16,14 @@
 			.span1.stat.text-center.blue-background.no-left-margin
 				%h2
 					= campaign.actions.count
-				= pluralizer_helper('Report', campaign.actions.count)
+				= pluralizer_helper('Actions', campaign.actions.count)
 
-
-			.span1.stat.text-center.green-background.no-left-margin
-				%h2
-					= campaign.channels.count
-				= pluralizer_helper('Channel', campaign.channels.count)
 
 			.span1.stat.text-center.red-background.no-left-margin
 				/ THIS NEEDS TO COUNT THE NUMBER OF USERS WHO HAVE COMPLETED CAMPAIGNS
 				%h2
 					= @completed_campaigns.count
-				= pluralizer_helper('Badge', @completed_campaigns.count)
+				= pluralizer_helper('Awards', @completed_campaigns.count)
 
 			.span1.stat.text-center.yellow-background.no-left-margin
 				%h2

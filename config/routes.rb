@@ -2,13 +2,15 @@ Streetcred::Application.routes.draw do
   root :to => 'pages#index' 
   
   resources :campaigns, :only => [:index, :show]
+  resources :pages, :only => [:index, :show]
   resources :users, :only => [:index, :show]
   
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks", :sessions => 'sessions', :registrations => 'registrations'}
   devise_scope :user do
-    get "sign_in", :to => "admin/sessions#new"
-    get "sign_out", :to => "admin/sessions#destroy"
-    get "edit_registration", :to => "admin/registrations#edit"
+    get "sign_in", :to => "sessions#new"
+    get "sign_up", :to => "registrations#new"
+    delete "sign_out", :to => "sessions#destroy"
+    get "edit_registration", :to => "registrations#edit"
   end
   
   devise_for :admin_users, :controllers => {:sessions => 'admin/sessions', :registrations => 'admin/registrations'}

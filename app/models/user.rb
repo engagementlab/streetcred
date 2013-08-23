@@ -57,9 +57,9 @@ class User
   index({ slug: 1 }, { unique: true})
 
 
-  def full_name
+  def display_name
     if self.first_name.blank? && self.last_name.blank?
-      self.id
+      'anonymous'
     else
       "#{self.first_name} #{self.last_name}"
     end
