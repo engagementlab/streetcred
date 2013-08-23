@@ -12,17 +12,12 @@
 			.span1.stat.blue-background.text-center
 				%h1
 					= user.actions.count
-				= pluralizer_helper('Report', user.actions.count)
-
-			.span1.stat.green-background.text-center.no-left-margin
-				%h1
-					= user.channels.count
-				= pluralizer_helper('Channel', user.channels.count)
+				= pluralizer_helper('Actions', user.actions.count)
 
 			.span1.stat.red-background.text-center.no-left-margin
 				%h1
 					= user.completed_campaigns.count
-				= pluralizer_helper('Badge', user.completed_campaigns.count)
+				= pluralizer_helper('Awards', user.completed_campaigns.count)
 
 			.span1.stat.yellow-background.text-center.no-left-margin
 				%h1
