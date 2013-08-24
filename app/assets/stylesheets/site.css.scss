@@ -239,6 +239,9 @@ ul.nav {
 .nav-pills.yellow a {
 	background-color: $light-gray;
 }
+.nav-pills.yellow a.active {
+	background-color: $light-yellow;
+}
 .nav-pills.yellow a:hover {
 	background-color: $light-yellow;
 }
