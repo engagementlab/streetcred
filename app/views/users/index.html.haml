@@ -3,9 +3,9 @@
 
 	- @users.each do |user|
 		.row.user.well
-			.span1
+			.span1.gravatar
 				= image_tag user.gravatar_url
-			.span4
+			.span4.user-name
 				%h3= user.display_name
 				== Member since #{formatted_month_year(user.created_at)}
 
