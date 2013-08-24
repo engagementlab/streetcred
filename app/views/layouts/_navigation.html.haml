@@ -19,9 +19,9 @@
 					%li= link_to 'Campaigns', campaigns_url
 				
 				- if params[:controller] == 'users'
-					%li= link_to 'Leaderboard', users_url, class: 'active'
+					%li= link_to 'Participants', users_url, class: 'active'
 				- else
-					%li= link_to 'Leaderboard', users_url
+					%li= link_to 'Participants', users_url
 
 				- if current_user
 					%li= link_to 'Sign out', destroy_user_session_url, method: :delete

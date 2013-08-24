@@ -64,7 +64,7 @@
 				%h1
 					How it works
 				%br/
-			.span4.no-left-margin
+			.span4
 				%div.text-center
 					= image_tag('sample-badge-icon.png')
 					%h3.blue
@@ -95,17 +95,8 @@
 					- else
 						== #{link_to 'Log in', sign_in_path} or #{link_to 'create an account', sign_up_path} to get started.
 
-.full-width-large.charcoal-background
-	.container
-		.row
-			.span12
-				%h3.white
-					Recent Actions
 
-				<div id='map'></div>
-
-
-.full-width-medium.light-yellow-background
+.full-width-medium.light-yellow-background.text-center
 	.container
 		.row
 			.span12
@@ -117,6 +108,14 @@
 						- else
 							== &nbsp; &nbsp; If you're new to StreetCred, #{link_to 'sign in', sign_in_path} or #{link_to 'sign up', sign_up_path} to claim your account.
 
+.full-width-large.dark-gray-background
+	.container
+		.row
+			.span12
+				%h3.white
+					Recent actions
+
+				<div id='map'></div>
 
 - content_for :scripts do
 	:javascript

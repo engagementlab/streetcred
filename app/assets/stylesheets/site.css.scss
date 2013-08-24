@@ -24,7 +24,6 @@ $charcoal: #5a5e61;
 .light-yellow-background { background-color: $light-yellow; }
 .yellow-background { background-color: $yellow; }
 
-#map-background-gray{ background: $light-gray url('/assets/boston-map.png') repeat; }
 #map-background-blue{ background: $blue url('/assets/boston-map.png') repeat; }
 
 .white { color: white; }
@@ -253,8 +252,10 @@ ul.nav {
 }
 .stat{
 	h1{ margin-top: 0px; margin-bottom: 0px; font-weight: 400; }
-	color: white;
 	padding: 10px;
+}
+.gravatar {
+	margin-top: 18px;
 }
 
 .details-button {

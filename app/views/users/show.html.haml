@@ -17,14 +17,19 @@
 
   = link_to 'View Past Campaigns', campaigns_path
 
-.row.tall-padding.dark-gray-background
+.full-width-large.dark-gray-background
   .container
     %h3.white
       Your Reports
-    = gmaps('markers' => {"data" => @json}, 'map_options' => { "auto_adjust" => true, "provider" => "google" })
 
+    <div id='map'></div>
 
 - content_for :scripts do
+  :javascript
+    var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
+
+    L.mapbox.markerLayer(gon.markers).addTo(map);
+
   = javascript_include_tag 'http://beta.openbadges.org/issuer.js'
 
   :javascript

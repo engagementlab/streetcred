@@ -1,5 +1,5 @@
 .page.container
-	%h1 Leaderboard
+	%h1 Participants
 
 	- @users.each do |user|
 		.row.user.well
@@ -9,17 +9,17 @@
 				%h3= user.display_name
 				== Member since #{formatted_month_year(user.created_at)}
 
-			.span1.stat.blue-background.text-center
+			.span1.stat.text-center
 				%h1
 					= user.actions.count
 				= pluralizer_helper('Actions', user.actions.count)
 
-			.span1.stat.red-background.text-center.no-left-margin
+			.span1.stat.text-center
 				%h1
 					= user.completed_campaigns.count
 				= pluralizer_helper('Awards', user.completed_campaigns.count)
 
-			.span1.stat.yellow-background.text-center.no-left-margin
+			.span1.stat.text-center
 				%h1
 					1.0
 				Reach (mi)
