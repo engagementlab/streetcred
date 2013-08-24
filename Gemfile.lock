@@ -65,7 +65,9 @@ GEM
     faraday (0.8.7)
       multipart-post (~> 1.1)
     geocoder (1.1.8)
-    gmaps4rails (1.5.6)
+    gon (4.1.1)
+      actionpack (>= 2.3.0)
+      json
     gravtastic (3.2.6)
     haml (4.0.3)
       tilt
@@ -227,7 +229,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   geocoder
-  gmaps4rails
+  gon
   gravtastic
   haml-rails
   jquery-rails

@@ -6,8 +6,10 @@
 		%meta{ :name => "description", :content => ""}
 		%meta{ :name => "author", :content => ""}
 		%meta{ 'http-equiv' => "X-UA-Compatible", :content => "IE=Edge"}
+		= include_gon
+
 		= yield :head
-		
+
 		%link{ :href => "/assets/application.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
 		= csrf_meta_tags
 	%body

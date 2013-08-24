@@ -2,10 +2,7 @@ class Action
   include Mongoid::Document
   include Mongoid::Timestamps
   include Geocoder::Model::Mongoid
-  include Gmaps4rails::ActsAsGmappable
   include Geocoder::Model::Mongoid
-
-  acts_as_gmappable :lat_lng_array => :gmaps4rails_coordinates, :process_geocoding => false
   
   belongs_to :user, index: true
   belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
@@ -54,18 +51,6 @@ class Action
 
   def matching_campaigns
     Campaign.elem_match(required_actions: {action_type_id: action_type.id}).lt(start_time: created_at).gt(end_time: created_at)
-  end
-
-  # def gmaps4rails_marker_picture
-  #   {
-  #     "picture" => '/assets/marker.png',
-  #     "width" =>  28,
-  #     "height" => 25
-  #   }
-  # end
-
-  def gmaps4rails_infowindow
-    "<strong>#{action_type.try(:name)}</strong><br />#{created_at}"
   end
 
   private

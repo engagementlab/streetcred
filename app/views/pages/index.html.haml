@@ -122,6 +122,8 @@
 	:javascript
 		var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
 
+		L.mapbox.markerLayer(gon.markers).addTo(map);
+
 	:javascript
 		$(function() {
 		$('#slides').slidesjs({
