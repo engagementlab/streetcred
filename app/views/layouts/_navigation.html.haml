@@ -1,0 +1,12 @@
+.row
+	.span12
+		.pull-right
+			%ul.nav.nav-pills.yellow
+				- if current_user
+					%li= link_to 'Dashboard', user_path(current_user)
+				%li= link_to 'Campaigns', campaigns_url
+				%li= link_to 'Leaderboard', users_url
+				- if current_user
+					%li= link_to 'Sign out', destroy_user_session_url, method: :delete
+				- else
+					%li= link_to 'Sign in', sign_in_path

@@ -1,123 +1,127 @@
-.row.mid-padding.blue-background#map-background-blue
+.full-width-medium#map-background-blue
 	.container
-		.pull-right
-			%ul.nav.nav-pills.yellow
-				- if current_user
-					%li= link_to 'dashboard', user_path(current_user)
-				%li= link_to 'campaigns', campaigns_url
-				%li= link_to 'leaderboard', users_url
-				- if current_user
-					%li= link_to 'sign out', destroy_user_session_url, method: :delete
-				- else
-					%li= link_to 'sign in', sign_in_path
-	.container.text-center
 
-		%h1.white
-			Take action, earn street cred, improve your city.
-		.large.white
-			%p StreetCred connects your civic actions to ongoing campaigns so that the community can achieve big goals together.
+		/ navigation row
+		= render partial: 'layouts/navigation'
+			
+		/ tagline row
+		.row.tagline
+			.span12.text-center
+				%h1.white
+					Take action, earn street cred, improve your city.
+				.slogan.large.white
+					StreetCred connects your civic actions to ongoing campaigns so the community can achieve big goals together.
 
-
-		.span4.text-right.white.home-navigation
-			%ul.slidesjs-pagination
-				%li#nav-item-1.nav-item{:style=>'color: white;'}
-					get an app
-					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-1', style: 'visibility: visible'
-				%li#nav-item-2.nav-item{:style=>'color: #95ddeb;'}
-					take action
-					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-2', style: 'visibility: hidden'
-				%li#nav-item-3.nav-item{:style=>'color: #95ddeb;'}
-					earn cred
-					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-3', style: 'visibility: hidden'
-				%li#nav-item-4.nav-item{:style=>'color: #95ddeb;'}
-					see change
-					= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-4', style: 'visibility: hidden'
+		/ fader row
+		.row
+			.span3.offset1.text-right.home-navigation.white
+				%ul.slidesjs-pagination
+					%li#nav-item-1.nav-item{:style=>'color: white;'}
+						get an app
+						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-1', style: 'visibility: visible'
+					%li#nav-item-2.nav-item{:style=>'color: #95ddeb;'}
+						take action
+						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-2', style: 'visibility: hidden'
+					%li#nav-item-3.nav-item{:style=>'color: #95ddeb;'}
+						earn cred
+						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-3', style: 'visibility: hidden'
+					%li#nav-item-4.nav-item{:style=>'color: #95ddeb;'}
+						see change
+						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-4', style: 'visibility: hidden'
 		
-		#slides
-			%div
-				.span4
-					= image_tag('/assets/iphone-1.png')
-				.span3.text-left.white.home-description
-					%p
-						To get started, download an app to your phone. StreetCred supports Citizens Connect, SeeClickFix and Foursquare.
-					%br/
-					= image_tag '/assets/app-stores.png'
+			#slides
+				%div
+					.span4.text-center
+						= image_tag('/assets/iphone-1.png')
+					.span3.text-left.home-description.white
+						%p
+							To get started, download an app to your phone. StreetCred supports Citizens Connect, SeeClickFix and Foursquare.
+						%br/
+						= image_tag '/assets/app-stores.png'
 
-			%div
-				.span4
-					= image_tag('/assets/iphone-4.png')
-				.span3.text-left.white.home-description
-					Now the fun begins. Use the app to report issues in your neighborhood. The app will automatically configure your StreetCred account, which you can claim by loggin in here. Get started on the current campaigns.
+				%div
+					.span4.text-center
+						= image_tag('/assets/iphone-4.png')
+					.span3.text-left.home-description.white
+						Now the fun begins. Use the app to report issues in your neighborhood. The app will automatically configure your StreetCred account, which you can claim by loggin in here. Get started on the current campaigns.
 
-			%div
-				.span4
-					= image_tag('/assets/iphone-3.png')
-				.span3.text-left.white.home-description
-					With each action you take, you'll earn cred. And when you complete campaigns, you'll earn a digital badge to celebrate your work. You can export your badges to Mozilla Backpack to share your work.
+				%div
+					.span4.text-center
+						= image_tag('/assets/iphone-3.png')
+					.span3.text-left.home-description.white
+						With each action you take, you'll earn cred. And when you complete campaigns, you'll earn a digital badge to celebrate your work. You can export your badges to Mozilla Backpack to share your work.
 
-			%div
-				.span4
-					= image_tag('/assets/iphone-2.png')
-				.span3.text-left.white.home-description
-					You're taking action, working on campaigns, and seeing the change. Isn't it great to improve your city?
+				%div
+					.span4.text-center
+						= image_tag('/assets/iphone-2.png')
+					.span3.text-left.home-description.white
+						You're taking action, working on campaigns, and seeing the change. Isn't it great to improve your city?
 
-.row.tall-padding
+.full-width-large
 	.container
-		.text-center
-			%h1
-				How it works
-			%br/
-		.span4.no-left-margin
-			%div.text-center
-				= image_tag('sample-badge-icon.png')
-				%h3.blue
-					Campaigns
-			%p
-				== Campaigns are city-wide projects that are defined by City Hall. Campaigns are active for a limited time-frame. You contribute to campaigns by taking qualified actions. #{link_to 'Click here', campaigns_path} to see a list of current campaigns.
-		.span4
-			%div.text-center
-				= image_tag('sample-badge-individual-award.png')
-				%h3.blue
-					Individual Awards
-			%p
-				Individual awards are earned by completing all of the required actions on a campaign. Actions include things like Citizen Connect reports, Foursquare checkins, and Instagram photos. 
-				- if current_user
-					== You can check your progress toward individual awards by visiting your #{link_to 'user page', user_path(current_user)}
-				- else
-					== #{link_to 'Log in', sign_in_path} or #{link_to 'create an account', sign_up_path} to get started.
+		.row
+			.span12.text-center
+				%h1
+					How it works
+				%br/
+			.span4.no-left-margin
+				%div.text-center
+					= image_tag('sample-badge-icon.png')
+					%h3.blue
+						Campaigns
+				%p
+					== Campaigns are city-wide projects that are defined by City Hall. Campaigns are active for a limited time-frame. You contribute to campaigns by taking qualified actions. #{link_to 'Click here', campaigns_path} to see a list of current campaigns.
+			.span4
+				%div.text-center
+					= image_tag('sample-badge-individual-award.png')
+					%h3.blue
+						Individual Awards
+				%p
+					Individual awards are earned by completing all of the required actions on a campaign. Actions include things like Citizen Connect reports, Foursquare checkins, and Instagram photos. 
+					- if current_user
+						== You can check your progress toward individual awards by visiting your #{link_to 'user page', user_path(current_user)}
+					- else
+						== #{link_to 'Log in', sign_in_path} or #{link_to 'create an account', sign_up_path} to get started.
 
-		.span4
-			%div.text-center
-				= image_tag('sample-badge-community-award.png')
-				%h3.blue
-					Community Awards
-			%p
-				Once you earn your individual award, you can continue to contribute to the bigger, community goal. Once the community goal has been met, everyone will earn the community award.
-				- if current_user
-					== You can check your progress toward community awards by visiting your #{link_to 'user page', user_path(current_user)}
-				- else
-					== #{link_to 'Log in', sign_in_path} or #{link_to 'create an account', sign_up_path} to get started.
+			.span4
+				%div.text-center
+					= image_tag('sample-badge-community-award.png')
+					%h3.blue
+						Community Awards
+				%p
+					Once you earn your individual award, you can continue to contribute to the bigger, community goal. Once the community goal has been met, everyone will earn the community award.
+					- if current_user
+						== You can check your progress toward community awards by visiting your #{link_to 'user page', user_path(current_user)}
+					- else
+						== #{link_to 'Log in', sign_in_path} or #{link_to 'create an account', sign_up_path} to get started.
 
-.row.mid-padding.bright-green-background.white
-	.container.text-center
-		%h2
-			Get Started!
-			- if current_user
-				%small.white
-					== &nbsp; &nbsp; Check your progress on the #{link_to 'user dashboard', user_path(current_user)}, and keep up the good work.
-			- else
-				%small.white
-					== &nbsp; &nbsp; If you're new to StreetCred, #{link_to 'sign in', sign_in_path} or #{link_to 'sign up', sign_up_path} to claim your account.
-					
-.row.tall-padding.dark-gray-background
+.full-width-large.charcoal-background
 	.container
-		.span12.no-left-margin
-			%p.white
-				%span.large
-					The reports map shows the actions that are being taken throughout the city. A map of your personal actions is available on your user page.
-			= gmaps('markers' => {"data" => @json}, 'map_options' => { "auto_adjust" => true, "provider" => "google", "raw" => "{ scrollwheel: false }" })
+		.row
+			.span12
+				%h3.white
+					Recent Actions
+
+				<div id='map'></div>
+
+
+.full-width-medium.light-yellow-background
+	.container
+		.row
+			.span12
+				%h2
+					Get Started!
+					%small.black
+						- if current_user
+							== &nbsp; &nbsp; Check your progress on the #{link_to 'user dashboard', user_path(current_user)}, and keep up the good work.
+						- else
+							== &nbsp; &nbsp; If you're new to StreetCred, #{link_to 'sign in', sign_in_path} or #{link_to 'sign up', sign_up_path} to claim your account.
+
 
 - content_for :scripts do
+	:javascript
+		var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
+
 	:javascript
 		$(function() {
 		$('#slides').slidesjs({

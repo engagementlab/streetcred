@@ -6,11 +6,11 @@ $red: #d54326;
 $yellow: #e7ad00;
 $light-yellow: #f3e486;
 $pale-yellow: #fffef2;
-$light-gray: #f0f0f0;
+$light-gray: #f5f5f5;
 $mid-gray: #9e9fa1;
 $sign-gray: #767e84;
-$dark-gray: #686f73;
-$charcoal: #474b4e;
+$dark-gray: #767b80;
+$charcoal: #5a5e61;
 
 .gray-background { background-color: $light-gray; }
 .mid-gray-background { background-color: $mid-gray; }
@@ -21,26 +21,41 @@ $charcoal: #474b4e;
 .green-background { background-color: $green; }
 .bright-green-background { background-color: $bright-green; }
 .red-background { background-color: $red; }
+.light-yellow-background { background-color: $light-yellow; }
 .yellow-background { background-color: $yellow; }
 
 #map-background-gray{ background: $light-gray url('/assets/boston-map.png') repeat; }
 #map-background-blue{ background: $blue url('/assets/boston-map.png') repeat; }
 
 .white { color: white; }
+.yellow { color: $yellow; }
 .pale-yellow { color: $pale-yellow; }
 .blue { color: $blue; }
 .mid-gray { color: $mid-gray; }
+.black { color: #222222; }
 
 a.white { color: white; text-decoration: underline; }
 a.white:hover { color: $yellow; text-decoration: underline; }
+a.pale-yellow { color: $pale-yellow; text-decoration: none; }
+a.pale-yellow:hover { color: $yellow; text-decoration: underline; }
+a.light-yellow { color: $light-yellow; text-decoration: none; }
+a.light-yellow:hover { color: $light-yellow; text-decoration: underline; }
+a.yellow { color: $yellow; text-decoration: none; }
+a.yellow:hover { color: $yellow; text-decoration: underline; }
 a.black { color: #222; text-decoration: none; }
 a.black:hover { color: #222; text-decoration: underline; }
 
-.tall-padding { padding-top: 50px; padding-bottom: 50px; }
-.mid-padding { padding-top: 30px; padding-bottom: 30px; }
-.short-padding { padding-top: 10px; padding-bottom: 10px; }
+.full-width-large { padding-top: 50px; padding-bottom: 50px; }
+.full-width-medium { padding-top: 30px; padding-bottom: 30px; }
+.full-width-small { padding-top: 10px; padding-bottom: 10px; }
 
-span.large { font-size: 1.2em; font-weight: 100; }
+span.large { font-size: 1.2em; font-weight: 300; }
+
+h1 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
+h2 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
+h3 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
+h4 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
+h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
 
 html,
 body {
@@ -60,7 +75,7 @@ body {
 }
 #footer {
 	padding-top: 50px;
-	font-weight: 100;
+	font-weight: 300;
 	font-size: 1.1em;
 	font-style: italic;
 	line-height: 1.5em;
@@ -91,8 +106,17 @@ body {
 	h2 { margin: 0; }
 	h3{ margin: -10px 0 4px 0; }
 }
-
-
+.tagline {
+	margin-top: 30px;
+}
+.slogan {
+	padding-bottom: 1.5em;
+}
+#map {
+	width: 100%;
+	height: 600px;
+	position: relative;
+}
 .map_container {
 	width: 100%;
 	border: none;
@@ -111,13 +135,7 @@ body {
 	margin-bottom: 100px;
 }
 
-h1 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
-h2 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
-h3 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
-h4 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
-h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
-
-.large { font-size: 1.4em; font-weight: 100; }
+.large { font-size: 1.4em; font-weight: 300; }
 
 .user {
 	margin: 15px 0 15px 0;
@@ -199,7 +217,7 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 	margin-top: 110px;	
 	line-height: 1.5em;
 	font-size: 2.1em;
-	font-weight: 100;
+	font-weight: 300;
 	a { color: white; text-decoration: none; }
 	a:hover { color: white; }
 	ul.slidesjs-pagination {
@@ -210,6 +228,10 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 			.nav-arrow{ margin-top: -5px; padding-left: 3px; }
 		}
 	}
+}
+
+ul.nav {
+	margin-bottom: 0px;
 }
 .nav-pills li {
 	margin-left: 5px;
@@ -223,10 +245,9 @@ h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-wei
 .home-description {
 	margin-top: 103px;
 	font-size: 1.3em;
-	font-weight: 100;
+	font-weight: 300;
 	line-height: 1.7em;
 }
-.no-left-margin { margin-left: 0; }
 .stat{
 	h1{ margin-top: 0px; margin-bottom: 0px; font-weight: 400; }
 	color: white;

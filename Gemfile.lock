@@ -90,6 +90,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mapbox-rails (1.0.3.1)
     mime-types (1.23)
     mongo (1.9.0)
       bson (~> 1.9.0)
@@ -230,6 +231,7 @@ DEPENDENCIES
   gravtastic
   haml-rails
   jquery-rails
+  mapbox-rails
   mongo
   mongoid
   mongoid-paperclip
