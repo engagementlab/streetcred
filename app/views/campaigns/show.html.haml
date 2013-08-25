@@ -29,12 +29,24 @@
 				%li= action.action_type.name
 
 			%br/
-			%p 
-				Required Individual Actions:
-				= @campaign.required_individual_occurrences
 			%p
-				Required Community Actions:
-				= @campaign.required_community_occurrences
+				%em
+					- if @campaign.all_actions_required?
+						Individuals must complete 
+						%strong
+							all actions 
+						to earn this award.
+					- else
+						Individuals must complete 
+						%strong
+							== #{@campaign.required_individual_occurrences} actions 
+						to earn this award.
+			%p
+				%em
+					The community must complete
+					%strong
+						== #{@campaign.required_community_occurrences} actions
+					to earch this award.
 
 			- if @campaign.radius.present?
 				%br/
@@ -48,9 +60,7 @@
 			%br/
 			%h4 Duration
 			%p
-				== Start date: #{formatted_date(@campaign.start_time)}
-			%p
-				== End date: #{formatted_date(@campaign.end_time)}
+				== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
 
 			%p
 				%br/
