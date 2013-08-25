@@ -8,7 +8,7 @@
 				== Member since #{formatted_month_year(@user.created_at)}
 				- if @user == current_user
 					%br/
-					= link_to 'Edit profile', user_path(@user)
+					= link_to 'Edit profile', edit_user_registration_path(@user)
 
 			.span1.stat.text-center
 				%h1

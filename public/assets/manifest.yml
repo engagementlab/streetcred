@@ -9,8 +9,8 @@ boston-map.png: boston-map-597f649017632dbdb547d811dfb71ee2.png
 boston-map/index.png: boston-map-597f649017632dbdb547d811dfb71ee2.png
 delete.png: delete-a77f3c3c125b0817085648f284c98938.png
 delete/index.png: delete-a77f3c3c125b0817085648f284c98938.png
-engagement-game-lab.png: engagement-game-lab-9e69c855d09738015dd196c8b7bbb410.png
-engagement-game-lab/index.png: engagement-game-lab-9e69c855d09738015dd196c8b7bbb410.png
+engagement-game-lab.png: engagement-game-lab-2dd1f126d43ebf156e32d584716dfce4.png
+engagement-game-lab/index.png: engagement-game-lab-2dd1f126d43ebf156e32d584716dfce4.png
 foursquare.jpg: foursquare-e2d215ac231cb5061796baa003dd497f.jpg
 foursquare/index.jpg: foursquare-e2d215ac231cb5061796baa003dd497f.jpg
 glyphicons-halflings-white.png: glyphicons-halflings-white-6cccd17a7aed91dbc0157d343c68c0d9.png
@@ -39,8 +39,8 @@ marker.png: marker-7c318b2c2ea4cca9d43f26f86b2b1731.png
 marker/index.png: marker-7c318b2c2ea4cca9d43f26f86b2b1731.png
 missing.png: missing-e9f52703748e7b48f05f6613ce094405.png
 missing/index.png: missing-e9f52703748e7b48f05f6613ce094405.png
-monum.png: monum-e0ba5a6a513ec8fae1b0370c2b3a44f7.png
-monum/index.png: monum-e0ba5a6a513ec8fae1b0370c2b3a44f7.png
+monum.png: monum-d88eea2a3123cf44dc5a074821e1e358.png
+monum/index.png: monum-d88eea2a3123cf44dc5a074821e1e358.png
 open_badges.png: open_badges-3ac5121ce9206c4de8d2e4dab81169dd.png
 open_badges/index.png: open_badges-3ac5121ce9206c4de8d2e4dab81169dd.png
 sample-badge-community-award.png: sample-badge-community-award-5785526352803234b5036121d27e86dc.png
@@ -51,8 +51,8 @@ sample-badge-individual-award.png: sample-badge-individual-award-73f721d108e9762
 sample-badge-individual-award/index.png: sample-badge-individual-award-73f721d108e97628eca10ffc8f11c2c6.png
 application.js: application-8870d4e6b913aa109ea463b82c7399f5.js
 application/index.js: application-8870d4e6b913aa109ea463b82c7399f5.js
-application.css: application-61dd1f78a8b18f7e3b09225acb87a972.css
-application/index.css: application-61dd1f78a8b18f7e3b09225acb87a972.css
+application.css: application-9fa58926ab43837df64dce80f55467e4.css
+application/index.css: application-9fa58926ab43837df64dce80f55467e4.css
 fontawesome-webfont.eot: fontawesome-webfont-b49e662c23140944a17d6301d2259446.eot
 fontawesome-webfont/index.eot: fontawesome-webfont-b49e662c23140944a17d6301d2259446.eot
 fontawesome-webfont.svg: fontawesome-webfont-863eb1732db4aa1a1b4ee4db0ec0dfe4.svg

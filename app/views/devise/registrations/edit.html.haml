@@ -1,4 +1,10 @@
 .container.page
+	- if flash[:notice]
+		.alert.alert-success
+			= flash[:notice]
+	- if flash[:alert]
+		.alert.alert-error
+			=raw flash[:alert]
 
 	%h2
 		== Edit Admin User

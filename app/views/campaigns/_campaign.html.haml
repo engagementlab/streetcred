@@ -1,28 +1,19 @@
-.row.campaign
-	.span12.well
-		.row
-			.span1
-				= badge_helper(campaign)
-			.span5
-				.title
-					%span.main-title
-						= campaign.name
-					%span.sub-title
-						- if campaign.end_time > Time.now
-							== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
-						- else
-							== &nbsp;#{formatted_date(campaign.end_time)}
-				%p= campaign.short_description
-			.span4
-				.progress-row
-					.progress
-						- if campaign.progress_by_community >= 1.0
-							.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
-						- else
-							.bar.gray{:style=>"width: #{community_progress_bar_helper(campaign)};"}
-					.pull-right
-						= campaign.required_community_occurrences
-					0
-
-			.span1.pull-right.details-button.text-right
-				= link_to 'Details', campaign_path(campaign), :class => 'btn btn-info'
+.list-row-badge
+	= image_tag(campaign.badge_icon.url(:badge))
+.list-row-description
+	%h3
+		== #{campaign.name}&nbsp;
+		- if campaign.end_time > Time.now
+			%small.black.active
+				== #{distance_of_time_in_words(campaign.time_left)} left
+	= campaign.short_description
+.list-row-progress
+	.progress-row
+		.progress
+			.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+		.pull-right
+			= campaign.required_community_occurrences
+		0
+.list-row-link
+	= link_to 'Details', campaign_path(campaign), class: 'btn btn-info'
+.clear

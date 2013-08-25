@@ -57,6 +57,7 @@
 					.span3.text-left.home-description.white
 						You're taking action, working on campaigns, and seeing the change. Isn't it great to improve your city?
 
+
 .full-width-large
 	.container
 		.row
@@ -95,27 +96,24 @@
 					- else
 						== #{link_to 'Log in', sign_in_path} or #{link_to 'create an account', sign_up_path} to get started.
 
-
-.full-width-medium.light-yellow-background.text-center
+.full-width-medium.light-yellow-background
 	.container
-		.row
-			.span12
-				%h2
-					Get Started!
-					%small.black
-						- if current_user
-							== &nbsp; &nbsp; Check your progress on the #{link_to 'user dashboard', user_path(current_user)}, and keep up the good work.
-						- else
-							== &nbsp; &nbsp; If you're new to StreetCred, #{link_to 'sign in', sign_in_path} or #{link_to 'sign up', sign_up_path} to claim your account.
+		.text-center
+			%h2 Current Campaign
+		.well
+			= render partial: 'campaigns/campaign', locals: {campaign: @current_campaign}
+
+
 
 .full-width-large.dark-gray-background
 	.container
 		.row
 			.span12
 				%h3.white
-					Recent actions
+					Community Actions
 
 				<div id='map'></div>
+
 
 - content_for :scripts do
 	:javascript

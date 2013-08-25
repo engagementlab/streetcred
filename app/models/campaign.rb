@@ -61,6 +61,10 @@ class Campaign
     end
   end
 
+  def self.current
+    self.active.desc(:time_left).first
+  end
+
   def time_left
     if end_time.present?
       end_time.to_i - Time.now.to_i
