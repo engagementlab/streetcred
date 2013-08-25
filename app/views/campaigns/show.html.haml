@@ -21,34 +21,39 @@
 							0
 					.clear
 
-		.row
-			.span12
-				%br/
-				%h4 Required Actions
-				%ul
-				- for action in @campaign.required_actions
-					%li= action.action_type.name
+		.span12
+			%br/
+			%h4 Required Actions
+			%ul
+			- for action in @campaign.required_actions
+				%li= action.action_type.name
 
-				%br/
-				%p 
-					Required Individual Actions:
-					= @campaign.required_individual_occurrences
-				%p
-					Required Community Actions:
-					= @campaign.required_community_occurrences
+			%br/
+			%p 
+				Required Individual Actions:
+				= @campaign.required_individual_occurrences
+			%p
+				Required Community Actions:
+				= @campaign.required_community_occurrences
 
-				- if @campaign.radius.present?
-					%br/
-					%h4 Location
-					%p== Radius: #{@campaign.radius} miles
-					- if @campaign.latitude.present?
-						%p== Center Latitude: #{@campaign.latitude} 
-					- if @campaign.longitude.present?
-						%p== Center Longitude: #{@campaign.longitude} 
-
+			- if @campaign.radius.present?
 				%br/
-				%h4 Duration
-				%p
-					== Start date: #{formatted_date(@campaign.start_time)}
-				%p
-					== End date: #{formatted_date(@campaign.end_time)}
+				%h4 Location
+				%p== Radius: #{@campaign.radius} miles
+				- if @campaign.latitude.present?
+					%p== Center Latitude: #{@campaign.latitude} 
+				- if @campaign.longitude.present?
+					%p== Center Longitude: #{@campaign.longitude} 
+
+			%br/
+			%h4 Duration
+			%p
+				== Start date: #{formatted_date(@campaign.start_time)}
+			%p
+				== End date: #{formatted_date(@campaign.end_time)}
+
+			%p
+				%br/
+				%br/
+				%h4
+					= link_to raw('&larr; Campaigns'), campaigns_path

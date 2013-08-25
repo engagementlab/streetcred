@@ -12,19 +12,13 @@
 			.span8
 				.progress-row
 					.progress
-						- if campaign.progress_by_individual(@user) >= 1.0
-							.bar.blue{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
-						- else
-							.bar.gray{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
+						.bar.blue{:style=>"width: #{individual_progress_bar_helper(campaign, @user)};"}
 					.pull-right
 						= campaign.required_individual_occurrences
 					0
 				.progress-row
 					.progress
-						- if campaign.progress_by_community >= 1.0
-							.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
-						- else
-							.bar.gray{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+						.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
 					.pull-right
 						= campaign.required_community_occurrences
 					0

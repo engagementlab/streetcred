@@ -15,7 +15,9 @@
       - for campaign in @completed_earned_campaigns
         = render partial: 'completed_campaign', locals: {campaign: campaign}
 
-  = link_to 'View Past Campaigns', campaigns_path
+  %br/
+  %h4= link_to raw('&larr; Participants'), users_path
+  %h4= link_to raw('&larr; All Campaigns'), campaigns_path
 
 .full-width-large.dark-gray-background
   .container
