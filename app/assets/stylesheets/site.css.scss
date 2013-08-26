@@ -261,7 +261,14 @@ ul.inline li {
 	padding-right: 20px;
 	h3 { margin-top: 0px; }
 }
-
+.row-bordered {
+	margin-top: 20px;
+	padding: 20px;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+	background-color: $light-yellow;
+}
 .list-row-badge { width: 100px; float: left; margin: 0 20px 0 5px; }
 .list-row-description { 
 	float: left; width: 40%; margin-right: 20px; 

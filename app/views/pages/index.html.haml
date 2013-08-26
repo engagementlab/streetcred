@@ -96,11 +96,11 @@
 					- else
 						== #{link_to 'Log in', sign_in_path} or #{link_to 'create an account', sign_up_path} to get started.
 
-.full-width-medium.light-yellow-background
+.full-width-medium
 	.container
 		.text-center
 			%h2 Current Campaign
-		.well
+		.row-bordered
 			= render partial: 'campaigns/campaign', locals: {campaign: @current_campaign}
 
 

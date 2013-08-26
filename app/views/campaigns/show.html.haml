@@ -23,7 +23,7 @@
 
 		.span12
 			%br/
-			%h4 Required Actions
+			%h4 Requirements
 			%ul
 			- for action in @campaign.required_actions
 				%li= action.action_type.name
@@ -58,7 +58,7 @@
 					%p== Center Longitude: #{@campaign.longitude} 
 
 			%br/
-			%h4 Duration
+			%h4 Time-frame
 			%p
 				== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
 
