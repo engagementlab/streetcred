@@ -24,7 +24,7 @@ $charcoal: #5a5e61;
 .light-yellow-background { background-color: $light-yellow; }
 .yellow-background { background-color: $yellow; }
 
-#map-background-blue{ background: $blue url('/assets/boston-map.png') repeat; }
+#map-background-blue{ background: $blue url('/assets/boston-map.png') repeat center top; }
 
 .white { color: white; }
 .yellow { color: $yellow; }
