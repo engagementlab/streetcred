@@ -18,14 +18,14 @@ class API::ActionsController < ApplicationController
 					@user = User.where(email: params['email']).first_or_initialize
 					new_user = true unless @user.presisted?
 					# Create a User with a random password if @user doesn't yet exist
-					create_devise_user(@user) if new_user?
+					create_devise_user(@user) if new_user == true
 
 					@action = Action.new(params)
 					@action.user_id = @user.id
 					@action.action_type_id = action_type.id
 					@action.save!
 					@completed_campaigns = @user.campaigns_completed_by_action(@action)
-					if new_user?
+					if new_user == true
 						NotificationMailer.status_email(@user, @action, true).deliver
 					else
 						NotificationMailer.status_email(@user, @action, false).deliver
@@ -53,7 +53,7 @@ class API::ActionsController < ApplicationController
 		if message.present?
 			@user = User.where(email: message.from.first).first_or_initialize
 			# Create a User with a random password if @user doesn't yet exist
-			create_devise_user(@user) if new_user?
+			create_devise_user(@user) if new_user == true
 
 			# Find Channel and ActionType
 			channel = Channel.where(name: 'Email').first
@@ -68,7 +68,7 @@ class API::ActionsController < ApplicationController
 					@completed_campaigns = @user.campaigns_completed_by_action(action)
 					@in_progress_campaigns = @user.campaigns_in_progress_by_action(action)
 					if @in_progress_campaigns.present? || @completed_campaigns.present?
-						if new_user?
+						if new_user == true
 							NotificationMailer.status_email(@user, @action, true).deliver
 						else
 							NotificationMailer.status_email(@user, @action, false).deliver
