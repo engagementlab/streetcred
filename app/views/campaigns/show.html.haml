@@ -10,8 +10,9 @@
 						- if @campaign.end_time > Time.now
 							%small.black.active
 								== #{distance_of_time_in_words(@campaign.time_left)} left
-					= @campaign.description
+					= @campaign.short_description
 				.list-row-progress
+					%h4 Community Progress
 					.progress-row
 						.progress
 							.bar.blue{:style=>"width: #{community_progress_bar_helper(@campaign)};"}
@@ -23,6 +24,11 @@
 	.container
 		.row
 			.span12
+				%br/
+				%h4 Description
+				= @campaign.description
+				%br/
+
 				%br/
 				%h4 Requirements
 				%ul
@@ -67,4 +73,4 @@
 					%br/
 					%br/
 					%h4
-						= link_to raw('Campaigns'), campaigns_path
+						= link_to raw('&larr; Campaigns'), campaigns_path

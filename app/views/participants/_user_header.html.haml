@@ -30,8 +30,8 @@
 					- unless @participant.providers.where(provider: 'foursquare').present?
 						%div{style: 'margin-bottom: 10px'}
 							= link_to image_tag('foursquare.jpg'), user_omniauth_authorize_path('foursquare')
-							= link_to 'Connect Foursquare account', user_omniauth_authorize_path('foursquare')
+							= link_to 'Connect Account', user_omniauth_authorize_path('foursquare')
 					- unless @participant.providers.where(provider: 'instagram').present?
 						%div
 							= link_to image_tag('instagram.png'), user_omniauth_authorize_path('instagram')
-							= link_to 'Connect Instagram account', user_omniauth_authorize_path('instagram')
+							= link_to 'Connect Account', user_omniauth_authorize_path('instagram')
