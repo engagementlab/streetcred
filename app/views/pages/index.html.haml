@@ -91,23 +91,24 @@
 					- if current_user
 						== You can check your progress toward community awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
 
-.full-width-medium.light-yellow-background#get-started
-	.container
-		.row
-			.span3
-				%h2 Get Started!
-			.span9
-				%ul.inline
-					%li
-						%h3 Search for your email address
-					%li
-						= form_tag('/participants/search', method: :get)
-						= email_field_tag :email
-					%li
-						= submit_tag 'Search', class: 'btn btn-info'
-					%li.more -or -
-					%li.more
-						= link_to 'Sign In', class: 'btn btn-info'
+- unless current_user
+	.full-width-medium.light-yellow-background#get-started
+		.container
+			.row
+				.span3
+					%h2 Get Started!
+				.span9
+					%ul.inline
+						%li
+							%h3 Search for your account
+						%li
+							= form_tag('/participants/search', method: :get)
+							= email_field_tag :email, nil, placeholder: 'Your email address'
+						%li
+							= submit_tag 'Search', class: 'btn btn-info'
+						%li.more -or -
+						%li.more
+							= link_to 'Sign In', class: 'btn btn-info'
 
 .full-width-large.dark-gray-background
 	.container
