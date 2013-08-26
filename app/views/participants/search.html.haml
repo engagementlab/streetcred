@@ -1,0 +1,35 @@
+.page.container
+	- if @participant.blank?
+		%h3 We're sorry, but no profiles matched that email address
+		%p
+			== Please #{link_to 'create an account', new_user_registration_path}.
+
+	- else
+		%h3 We found one matching profile:
+		
+		.row.user.well
+			.span1.gravatar
+				= image_tag @participant.gravatar_url
+			.span4.user-name
+				%h3= @participant.display_name
+				== Member since #{formatted_month_year(@participant.created_at)}
+
+			.span1.stat.text-center
+				%h1
+					= @participant.actions.count
+				= pluralizer_helper('Actions', @participant.actions.count)
+
+			.span1.stat.text-center
+				%h1
+					= @participant.completed_campaigns.count
+				= pluralizer_helper('Awards', @participant.completed_campaigns.count)
+
+			.span1.stat.text-center
+				%h1
+					1.0
+				Reach (mi)
+
+			.span2.pull-right.details-button.text-right
+				= form_for(@participant, :as => :user, :url => password_path(:user), :html => { :method => :post }) do |f|
+					= f.hidden_field :email, value: @participant.email
+					= f.submit 'Claim Profile', class: 'btn btn-info'

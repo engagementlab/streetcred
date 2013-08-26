@@ -57,7 +57,6 @@
 					.span3.text-left.home-description.white
 						You're taking action, working on campaigns, and seeing the change. Isn't it great to improve your city?
 
-
 .full-width-large
 	.container
 		.row
@@ -96,14 +95,23 @@
 					- else
 						== #{link_to 'Log in', sign_in_path} or #{link_to 'create an account', sign_up_path} to get started.
 
-.full-width-medium
+.full-width-medium.light-yellow-background#get-started
 	.container
-		.text-center
-			%h2 Current Campaign
-		.row-highlight
-			= render partial: 'campaigns/campaign', locals: {campaign: @current_campaign}
-	
-
+		.row
+			.span3
+				%h2 Get Started!
+			.span9
+				%ul.inline
+					%li
+						%h3 Search for your email address
+					%li
+						= form_tag('/participants/search', method: :get)
+						= email_field_tag :email
+					%li
+						= submit_tag 'Search', class: 'btn btn-info'
+					%li.more -or -
+					%li.more
+						= link_to 'Sign In', class: 'btn btn-info'
 
 .full-width-large.dark-gray-background
 	.container

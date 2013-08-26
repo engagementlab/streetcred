@@ -22,4 +22,12 @@ class ParticipantsController < ApplicationController
       format.json { render json: @participant }
     end
   end
+
+  def search
+    @participant = User.where(email: params[:email]).first
+    if @participant.blank?
+      flash[:alert] = "We're sorry, but no profiles matched that email address. Please create a new account."
+      redirect_to new_user_registration_path
+    end
+  end
 end
