@@ -1,14 +1,9 @@
 .row
 	.span12
 		#logo.pull-left
-			= image_tag('/assets/logo.png')
+			= link_to image_tag('/assets/logo.png'), root_url
 		#navigation.pull-right
 			%ul.nav.nav-pills.yellow
-				- if params[:controller] == 'pages' && params[:action] == 'index'
-					%li= link_to 'Home', root_url, class: 'active'
-				- else
-					%li= link_to 'Home', root_url
-
 				- if current_user
 					- if params[:controller] == 'participants' && params[:show] && params[:id] == current_user.id
 						%li= link_to 'Dashboard', participant_path(current_user), class: 'active'
