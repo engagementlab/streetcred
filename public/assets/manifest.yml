@@ -33,8 +33,8 @@ iphone-4.png: iphone-4-4efde12967d16792e47401f7ef9b7575.png
 iphone-4/index.png: iphone-4-4efde12967d16792e47401f7ef9b7575.png
 iphone.png: iphone-3dde05e5cf259e5c6d34f8466924114c.png
 iphone/index.png: iphone-3dde05e5cf259e5c6d34f8466924114c.png
-logo.png: logo-3d08ebc1b0a1ebf6f697c54d1d50ea29.png
-logo/index.png: logo-3d08ebc1b0a1ebf6f697c54d1d50ea29.png
+logo.png: logo-fac923ce8f1680cc628a1b1294866ed9.png
+logo/index.png: logo-fac923ce8f1680cc628a1b1294866ed9.png
 marker.png: marker-7c318b2c2ea4cca9d43f26f86b2b1731.png
 marker/index.png: marker-7c318b2c2ea4cca9d43f26f86b2b1731.png
 missing.png: missing-e9f52703748e7b48f05f6613ce094405.png
@@ -51,8 +51,8 @@ sample-badge-individual-award.png: sample-badge-individual-award-73f721d108e9762
 sample-badge-individual-award/index.png: sample-badge-individual-award-73f721d108e97628eca10ffc8f11c2c6.png
 application.js: application-8870d4e6b913aa109ea463b82c7399f5.js
 application/index.js: application-8870d4e6b913aa109ea463b82c7399f5.js
-application.css: application-16709d77478200f74b31be8b4b6d003f.css
-application/index.css: application-16709d77478200f74b31be8b4b6d003f.css
+application.css: application-81ad933b71b333ac280ae499703465c2.css
+application/index.css: application-81ad933b71b333ac280ae499703465c2.css
 fontawesome-webfont.eot: fontawesome-webfont-b49e662c23140944a17d6301d2259446.eot
 fontawesome-webfont/index.eot: fontawesome-webfont-b49e662c23140944a17d6301d2259446.eot
 fontawesome-webfont.svg: fontawesome-webfont-863eb1732db4aa1a1b4ee4db0ec0dfe4.svg

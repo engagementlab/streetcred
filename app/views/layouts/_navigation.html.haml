@@ -1,6 +1,8 @@
 .row
 	.span12
-		.pull-right
+		#logo.pull-left
+			= image_tag('/assets/logo.png')
+		#navigation.pull-right
 			%ul.nav.nav-pills.yellow
 				- if params[:controller] == 'pages' && params[:action] == 'index'
 					%li= link_to 'Home', root_url, class: 'active'

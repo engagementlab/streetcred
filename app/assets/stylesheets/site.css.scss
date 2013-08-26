@@ -78,24 +78,11 @@ body {
 	line-height: 1.5em;
 	color: $light-gray;
 }
-.header {
-	background: #d6d9dc url('/assets/header.jpg') no-repeat center;
-	height: 110px;
-	.logo {
-		margin-top: 10px;
-	}
-	.main-nav{
-		padding-top: 68px;
-		margin-right: -30px;
-		font-size: 18px;
-	}
+#logo {
+	margin-top: 10px;
 }
-.sub-header {
-	padding-top: 50px;
-	padding-bottom: 50px;
-	h1 { margin: 0 0 0 0; }
-	h2 { margin: 0; }
-	h3{ margin: -10px 0 4px 0; }
+#navigation {
+	margin-top: 20px;
 }
 .tagline {
 	margin-top: 30px;
