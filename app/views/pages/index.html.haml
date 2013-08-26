@@ -79,9 +79,7 @@
 				%p
 					Individual awards are earned by completing all of the required actions on a campaign. Actions include things like Citizen Connect reports, Foursquare checkins, and Instagram photos. 
 					- if current_user
-						== You can check your progress toward individual awards by visiting your #{link_to 'user page', participant_path(current_user)}
-					- else
-						== #{link_to 'Log in', sign_in_path} or #{link_to 'create an account', sign_up_path} to get started.
+						== You can check your progress toward individual awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
 
 			.span4
 				%div.text-center
@@ -91,9 +89,7 @@
 				%p
 					Once you earn your individual award, you can continue to contribute to the bigger, community goal. Once the community goal has been met, everyone will earn the community award.
 					- if current_user
-						== You can check your progress toward community awards by visiting your #{link_to 'user page', participant_path(current_user)}
-					- else
-						== #{link_to 'Log in', sign_in_path} or #{link_to 'create an account', sign_up_path} to get started.
+						== You can check your progress toward community awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
 
 .full-width-medium.light-yellow-background#get-started
 	.container
