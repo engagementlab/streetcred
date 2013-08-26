@@ -1,69 +1,70 @@
+.full-width-medium.gray-background
+	.container
+		.row
+			.span12
+				.list-row-badge
+					= image_tag(@campaign.badge_icon.url(:badge))
+				.list-row-description
+					%h3
+						== #{@campaign.name}&nbsp;
+						- if @campaign.end_time > Time.now
+							%small.black.active
+								== #{distance_of_time_in_words(@campaign.time_left)} left
+					= @campaign.description
+				.list-row-progress
+					.progress-row
+						.progress
+							.bar.blue{:style=>"width: #{community_progress_bar_helper(@campaign)};"}
+						.pull-right
+							= @campaign.required_community_occurrences
+						0
+				.clear
 .page
 	.container
 		.row
 			.span12
-				.well
-					.list-row-badge
-						= image_tag(@campaign.badge_icon.url(:badge))
-					.list-row-description
-						%h3
-							== #{@campaign.name}&nbsp;
-							- if @campaign.end_time > Time.now
-								%small.black.active
-									== #{distance_of_time_in_words(@campaign.time_left)} left
-						= @campaign.description
-					.list-row-progress
-						.progress-row
-							.progress
-								.bar.blue{:style=>"width: #{community_progress_bar_helper(@campaign)};"}
-							.pull-right
-								= @campaign.required_community_occurrences
-							0
-					.clear
+				%br/
+				%h4 Requirements
+				%ul
+				- for action in @campaign.required_actions
+					%li= action.action_type.name
 
-		.span12
-			%br/
-			%h4 Requirements
-			%ul
-			- for action in @campaign.required_actions
-				%li= action.action_type.name
-
-			%br/
-			%p
-				%em
-					- if @campaign.all_actions_required?
-						Individuals must complete 
+				%br/
+				%p
+					%em
+						- if @campaign.all_actions_required?
+							Individuals must complete 
+							%strong
+								all actions 
+							to earn this award.
+						- else
+							Individuals must complete 
+							%strong
+								== #{@campaign.required_individual_occurrences} actions 
+							to earn this award.
+				%p
+					%em
+						The community must complete
 						%strong
-							all actions 
-						to earn this award.
-					- else
-						Individuals must complete 
-						%strong
-							== #{@campaign.required_individual_occurrences} actions 
-						to earn this award.
-			%p
-				%em
-					The community must complete
-					%strong
-						== #{@campaign.required_community_occurrences} actions
-					to earch this award.
+							== #{@campaign.required_community_occurrences} actions
+						to earch this award.
 
-			- if @campaign.radius.present?
-				%br/
-				%h4 Location
-				%p== Radius: #{@campaign.radius} miles
-				- if @campaign.latitude.present?
-					%p== Center Latitude: #{@campaign.latitude} 
-				- if @campaign.longitude.present?
-					%p== Center Longitude: #{@campaign.longitude} 
+				- if @campaign.radius.present?
+					%br/
+					%h4 Location
+					%p== Radius: #{@campaign.radius} miles
+					- if @campaign.latitude.present?
+						%p== Center Latitude: #{@campaign.latitude} 
+					- if @campaign.longitude.present?
+						%p== Center Longitude: #{@campaign.longitude} 
 
-			%br/
-			%h4 Time-frame
-			%p
-				== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
+				%br/
+				%h4 Time-frame
+				%p
+					== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
 
-			%p
-				%br/
-				%br/
-				%h4
-					= link_to raw('Campaigns'), campaigns_path
+				%p
+					%br/
+					%br/
+					%h4
+						= link_to raw('Campaigns'), campaigns_path
