@@ -65,20 +65,18 @@ body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -130px;
+  margin: 0 auto -100px;
 }
 
 #push,
 #footer {
-  height: 130px;
+  height: 100px;
 }
 #footer {
 	padding-top: 50px;
 	font-weight: 300;
-	font-size: 1.1em;
-	font-style: italic;
 	line-height: 1.5em;
-	color: white;
+	color: $light-gray;
 }
 .header {
 	background: #d6d9dc url('/assets/header.jpg') no-repeat center;
