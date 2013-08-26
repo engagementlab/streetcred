@@ -13,4 +13,4 @@
 				%h3
 					== #{campaign.name} &mdash; #{progress_toward_campaign_helper(@user, campaign, @action)}
 		%p 
-			== Monitor your progress by visiting #{link_to 'www.streetcred.us', user_url(@user)}
+			== Monitor your progress by visiting #{link_to 'www.streetcred.us', user_url(@user, new_user: @new_user)}

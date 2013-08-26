@@ -16,15 +16,24 @@ class API::ActionsController < ApplicationController
         if params['email'].present?
 
           @user = User.where(email: params['email']).first_or_initialize
-          # Create a User with a random password if @user doesn't yet exist
-          create_devise_user(@user) unless @user.persisted?
+
+          new_user = true unless @user.presisted?
+
+          if new_user?
+            # Create a User with a random password if @user doesn't yet exist
+            create_devise_user(@user)
+          end
 
           @action = Action.new(params)
           @action.user_id = @user.id
           @action.action_type_id = action_type.id
           @action.save!
           @completed_campaigns = @user.campaigns_completed_by_action(@action)
-          NotificationMailer.status_email(@user, @action).deliver
+          if new_user?
+            NotificationMailer.status_email(@user, @action, true).deliver
+          else
+            NotificationMailer.status_email(@user, @action, false).deliver
+          end
           respond_with(@completed_campaigns)
         else
           @error_message = "email parameter is missing"
