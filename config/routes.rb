@@ -3,7 +3,7 @@ Streetcred::Application.routes.draw do
   
   resources :campaigns, :only => [:index, :show]
   resources :pages, :only => [:index, :show]
-  resources :users, :only => [:index, :show]
+  resources :participants, :only => [:index, :show]
   
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks", :sessions => 'sessions', :registrations => 'registrations'}
   devise_scope :user do

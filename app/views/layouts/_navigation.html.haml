@@ -8,20 +8,20 @@
 					%li= link_to 'Home', root_url
 
 				- if current_user
-					- if params[:controller] == 'users' && params[:show] && params[:id] == current_user.id
-						%li= link_to 'Dashboard', user_path(current_user), class: 'active'
+					- if params[:controller] == 'participants' && params[:show] && params[:id] == current_user.id
+						%li= link_to 'Dashboard', participant_path(current_user), class: 'active'
 					- else
-						%li= link_to 'Dashboard', user_path(current_user)
+						%li= link_to 'Dashboard', participant_path(current_user)
 
 				- if params[:controller] == 'campaigns'
 					%li= link_to 'Campaigns', campaigns_url, class: 'active'
 				- else
 					%li= link_to 'Campaigns', campaigns_url
 				
-				- if params[:controller] == 'users'
-					%li= link_to 'Participants', users_url, class: 'active'
+				- if params[:controller] == 'participants'
+					%li= link_to 'Participants', participants_url, class: 'active'
 				- else
-					%li= link_to 'Participants', users_url
+					%li= link_to 'Participants', participants_url
 
 				- if current_user
 					%li= link_to 'Sign out', destroy_user_session_url, method: :delete
