@@ -24,5 +24,10 @@
 					1.0
 				Reach (mi)
 
+			.span1.stat.text-center
+				%h1
+					= (participant.completed_campaigns.count * participant.actions.count)
+				Score
+
 			.span1.pull-right.details-button.text-right
 				= link_to 'Details', participant_path(participant), :class => 'btn btn-info'
