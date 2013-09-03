@@ -1,0 +1,26 @@
+.row
+	.span12
+		#logo.pull-left
+			= link_to image_tag('/assets/logo.png'), root_url
+		#navigation.pull-right
+			%ul.nav.nav-pills.yellow
+				- if current_user
+					- if params[:controller] == 'participants' && params[:show] && params[:id] == current_user.id
+						%li= link_to 'Dashboard', participant_path(current_user), class: 'active'
+					- else
+						%li= link_to 'Dashboard', participant_path(current_user)
+
+				- if params[:controller] == 'campaigns'
+					%li= link_to 'Campaigns', campaigns_url, class: 'active'
+				- else
+					%li= link_to 'Campaigns', campaigns_url
+				
+				- if params[:controller] == 'participants'
+					%li= link_to 'Participants', participants_url, class: 'active'
+				- else
+					%li= link_to 'Participants', participants_url
+
+				- if current_user
+					%li= link_to 'Sign out', destroy_user_session_url, method: :delete
+				- else
+					%li= link_to 'Sign in', sign_in_path

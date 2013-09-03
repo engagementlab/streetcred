@@ -8,7 +8,7 @@ class User
   has_many :providers, dependent: :delete
   has_and_belongs_to_many :campaigns, index: true
   
-  devise :database_authenticatable, :registerable, :recoverable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:foursquare, :instagram]
+  devise :database_authenticatable, :registerable, :recoverable, :trackable, :omniauthable, :omniauth_providers => [:foursquare, :instagram]
 
   field :contact_id, type: String, default: ""
   field :first_name, type: String, default: ""

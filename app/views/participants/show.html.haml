@@ -1,0 +1,44 @@
+= render partial: 'user_header'
+
+.page.container
+  - if @active_campaigns.present?
+    - for campaign in @active_campaigns
+      = render partial: 'active_campaign', locals: {campaign: campaign}
+        
+  - if @earned_campaigns.present?
+    %hr
+    .row
+      .span12
+        %h2 Completed Campaigns
+    
+    .row
+      - for campaign in @completed_earned_campaigns
+        = render partial: 'completed_campaign', locals: {campaign: campaign}
+
+  %br/
+  %h4= link_to raw('&larr; Participants'), participants_path
+
+.full-width-large.dark-gray-background
+  .container
+    %h3.white
+      Your Actions
+
+    <div id='map'></div>
+
+- content_for :scripts do
+  :javascript
+    var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
+
+    L.mapbox.markerLayer(gon.markers).addTo(map);
+
+  = javascript_include_tag 'http://beta.openbadges.org/issuer.js'
+
+  :javascript
+    $(document).ready(function() {
+    $('.openbadge-link').on('click', function(e) {
+    var campaign = $(e.target.parentElement).data('api');
+    OpenBadges.issue(campaign, function(errors, successes) {
+    console.log(errors,successes);
+    });
+    });
+    });

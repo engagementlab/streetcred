@@ -1,63 +1,76 @@
-.row.tall-padding#map-background-gray
+.full-width-medium.gray-background
 	.container
-		.span2.no-left-margin
-			= badge_helper(@campaign)
-		.span5.no-left-margin
-			%h2= @campaign.name
-			= @campaign.short_description
-		.span1.stat.text-center.blue-background
-			%h1
-				= @campaign.actions.count
-			= pluralizer_helper('Report', @campaign.actions.count)
+		.row
+			.span12
+				.list-row-badge
+					= image_tag(@campaign.badge_icon.url(:badge))
+				.list-row-description
+					%h3
+						== #{@campaign.name}&nbsp;
+						- if @campaign.end_time > Time.now
+							%small.black.active
+								== #{distance_of_time_in_words(@campaign.time_left)} left
+					= @campaign.short_description
+				.list-row-progress
+					%h4 Community Progress
+					.progress-row
+						.progress
+							.bar.blue{:style=>"width: #{community_progress_bar_helper(@campaign)};"}
+						.pull-right
+							= @campaign.required_community_occurrences
+						0
+				.clear
+.page
+	.container
+		.row
+			.span12
+				%br/
+				%h4 Description
+				= @campaign.description
+				%br/
 
+				%br/
+				%h4 Requirements
+				%ul
+				- for action in @campaign.required_actions
+					%li= action.action_type.name
 
-		.span1.stat.text-center.green-background.no-left-margin
-			%h1
-				= @campaign.channels.count
-			= pluralizer_helper('Channel', @campaign.channels.count)
+				%br/
+				%p
+					%em
+						- if @campaign.all_actions_required?
+							Individuals must complete 
+							%strong
+								all actions 
+							to earn this award.
+						- else
+							Individuals must complete 
+							%strong
+								== #{@campaign.required_individual_occurrences} actions 
+							to earn this award.
+				%p
+					%em
+						The community must complete
+						%strong
+							== #{@campaign.required_community_occurrences} actions
+						to earch this award.
 
-		.span1.stat.text-center.red-background.no-left-margin
-			%h1
-				= @badges_earned.count
-			= pluralizer_helper('Badge', @badges_earned.count)
+				- if @campaign.radius.present?
+					%br/
+					%h4 Location
+					%p== Radius: #{@campaign.radius} miles
+					- if @campaign.latitude.present?
+						%p== Center Latitude: #{@campaign.latitude} 
+					- if @campaign.longitude.present?
+						%p== Center Longitude: #{@campaign.longitude} 
 
-		.span1.stat.text-center.yellow-background.no-left-margin
-			%h1
-				1.0
-			Reach (mi)
+				%br/
+				%h4 Time-frame
+				%p
+					== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
 
-
-.page.container
-	- if @campaign.description.present?
-		%h3 Description
-		%p= @campaign.description
-
-	%br/
-	%h3 Required Actions
-	%ul
-	- for action in @campaign.required_actions
-		%li= action.action_type.name
-
-	%br/
-	%p 
-		Required Individual Actions:
-		= @campaign.required_individual_occurrences
-	%p
-		Required Community Actions:
-		= @campaign.required_community_occurrences
-
-	- if @campaign.radius.present?
-		%br/
-		%h3 Location
-		%p== Radius: #{@campaign.radius} miles
-		- if @campaign.latitude.present?
-			%p== Center Latitude: #{@campaign.latitude} 
-		- if @campaign.longitude.present?
-			%p== Center Longitude: #{@campaign.longitude} 
-
-	%br/
-	%h3 Duration
-	%p
-		== Start date: #{formatted_date(@campaign.start_time)}
-	%p
-		== End date: #{formatted_date(@campaign.end_time)}
+				%p
+					%br/
+					%br/
+					%h4
+						= link_to raw('&larr; Campaigns'), campaigns_path

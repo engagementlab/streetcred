@@ -1,0 +1,33 @@
+.row.campaign.active-campaign
+	.span12
+		.row
+			.span7
+				.title
+					%span.main-title
+						= link_to campaign.name, campaign_path(campaign), class: 'black'
+					%span.sub-title
+						== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
+				%p= campaign.short_description
+		.row
+			.span8
+				.progress-row
+					.progress
+						.bar.blue{:style=>"width: #{individual_progress_bar_helper(campaign, @participant)};"}
+					.pull-right
+						= campaign.required_individual_occurrences
+					0
+				.progress-row
+					.progress
+						.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+					.pull-right
+						= campaign.required_community_occurrences
+					0
+
+			.span2
+				.individual
+					Individual
+				.community
+					Community
+
+			.span2.badges
+				= badge_helper(campaign, @user)

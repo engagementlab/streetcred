@@ -1,34 +1,19 @@
-.row.campaign
-	.span12.well
-		.row
-			.span1
-				= badge_helper(campaign)
-			.span5
-				.title
-					%span.main-title
-						= campaign.name
-					%span.sub-title
-						- if campaign.end_time > Time.now
-							== &nbsp;#{distance_of_time_in_words(campaign.time_left)} left
-						- else
-							== &nbsp;#{formatted_date(campaign.end_time)}
-				%p= campaign.short_description
-			.span1.stat.text-center.blue-background.no-left-margin
-				%h2
-					= campaign.actions.count
-				= pluralizer_helper('Actions', campaign.actions.count)
-
-
-			.span1.stat.text-center.red-background.no-left-margin
-				/ THIS NEEDS TO COUNT THE NUMBER OF USERS WHO HAVE COMPLETED CAMPAIGNS
-				%h2
-					= @completed_campaigns.count
-				= pluralizer_helper('Awards', @completed_campaigns.count)
-
-			.span1.stat.text-center.yellow-background.no-left-margin
-				%h2
-					1
-				Reach (mi)
-
-			.span1.pull-right.details-button.text-right
-				= link_to 'Details', campaign_path(campaign), :class => 'btn btn-info'
+.list-row-badge
+	= image_tag(campaign.badge_icon.url(:badge))
+.list-row-description
+	%h3
+		== #{campaign.name}&nbsp;
+		- if campaign.end_time > Time.now
+			%small.black.active
+				== #{distance_of_time_in_words(campaign.time_left)} left
+	= campaign.short_description
+.list-row-progress
+	.progress-row
+		.progress
+			.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+		.pull-right
+			= campaign.required_community_occurrences
+		0
+.list-row-link
+	= link_to 'Details', campaign_path(campaign), class: 'btn btn-info'
+.clear

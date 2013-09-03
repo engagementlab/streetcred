@@ -1,11 +1,11 @@
 .page.container
 
-  %h2 Current Campaigns
-  .active-campaigns
-    - for campaign in @active_campaigns
+  %h1 Campaigns
+
+  - for campaign in @active_campaigns
+    .well
       = render partial: 'campaign', locals: {campaign: campaign}
 
-  %h2 Completed Campaigns
-  .completed-campaigns
-    - for campaign in @completed_campaigns
+  - for campaign in @completed_campaigns
+    .well
       = render partial: 'campaign', locals: {campaign: campaign}
