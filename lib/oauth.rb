@@ -8,7 +8,8 @@ module Oauth
       puts "*********** provider and provider.user present ***********"
       provider.update_attributes( info: data['info'], 
             credentials: data['credentials'], 
-            extra: data['extra']
+            extra: data['extra'],
+            token: data['credentials']['token']
       )
       provider.user.update_attributes( first_name: data['info']['first_name'], 
             last_name: data['info']['last_name'],
@@ -28,7 +29,8 @@ module Oauth
             credentials:      data['credentials'], 
             extra:            data['extra'],
             provider_uid:     data['uid'],
-            provider:         provider_name
+            provider:         provider_name,
+            token: data['credentials']['token']
       )
       return signed_in_resource
 
@@ -42,7 +44,8 @@ module Oauth
             credentials:  data['credentials'], 
             extra:        data['extra'],
             provider_uid: data['uid'],
-            provider:     provider_name
+            provider:     provider_name,
+            token: data['credentials']['token']
       )
       return user
 
@@ -67,7 +70,8 @@ module Oauth
                       provider_uid: data['uid'],
                       info: data['info'], 
                       credentials: data['credentials'], 
-                      extra: data['extra']
+                      extra: data['extra'],
+                      token: data['credentials']['token']
       )
       return new_user
     end
