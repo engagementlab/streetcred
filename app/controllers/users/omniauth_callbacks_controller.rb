@@ -18,7 +18,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user, :event => :authentication
-#      @user.update_attribute(:instagram_token, omniauth.auth.credentials.token)
       redirect_to participant_url(current_user)
       # redirect_logic
     else
