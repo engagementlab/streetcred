@@ -41,6 +41,8 @@ Streetcred::Application.routes.draw do
         post 'citizens_connect'
         post 'street_bump'
         post 'foursquare'
+        get 'instagram'
+        post 'instagram'
       end
     end
     resources :action_types
