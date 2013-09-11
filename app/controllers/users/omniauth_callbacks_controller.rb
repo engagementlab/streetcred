@@ -24,6 +24,22 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       session["devise.instagram_data"] = env["omniauth.auth"]
       redirect_to participant_url(current_user)
     end
+
+    id = ENV['INSTAGRAM_ID']
+    secret = ENV['INSTAGRAM_SECRET']
+    domain = ENV['DOMAIN']
+    subscriptions = HTTParty.get("https://api.instagram.com/v1/subscriptions?client_id=#{id}&client_secret=#{secret}")
+    if subscriptions['data'].empty?
+      query = {
+        :client_id => id,
+        :client_secret => secret,
+        :object => 'user',
+        :aspect => 'media',
+        :callback_url => "http://#{domain}/api/actions/instagram"
+      }
+
+      realtime = HTTParty.post('https://api.instagram.com/v1/subscriptions/', :body => query )
+    end
   end
   
   private
