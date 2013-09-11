@@ -145,23 +145,28 @@ class API::ActionsController < ApplicationController
       if request.get?
         render text: params['hub.challenge']
       elsif request.post?
-        photo = params
-        # look up new tagged photos
-        # https://api.instagram.com/v1/tags/snow/media/recent?access_token=
-        #action_type = ActionType.where(channel_id: channel.id).where(provider_uid: photo['object_id']).first
-        action_type = ActionType.where(channel_id: channel.id).where(provider_uid: "sweeping").first
-        token = User.all.pluck(:instagram_token).first
-        recent = HTTParty.get("https://api.instagram.com/v1/tags/#{action_type.provider_uid}/media/recent?access_token=#{token}")
-        instagram_user = recent['data'].first['user']['id']
-        user = User.where(provider_uid: instagram_user).first
+        instagram_uid = params[:_json].first['object_id']
+        provider = Provider.where(provider_uid: instagram_uid).first
+        user = User.where(_id: provider.user_id).first
+        token = provider.token
+
+        recent_photo = HTTParty.get("https://api.instagram.com/v1/users/self/feed?access_token=#{token}&count=1")
+
+        tags = recent_photo['data'].first['tags']
+
+        action_type = ActionType.where(channel_id: channel.id).in(provider_uid: tags).first
+
         if user.present? && action_type.present?
           user.actions.create(
             action_type_id: action_type.id,
             api_key: channel.api_key,
-            record_id: recent['data'].first['id'],
+            record_id: recent_photo['data'].first['id'],
             timestamp: Time.now
           )
           render nothing: true
+        else
+          @error_message = "no matching action"
+          render 'errors'
         end
       end
     else
