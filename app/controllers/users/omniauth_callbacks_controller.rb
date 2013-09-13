@@ -5,11 +5,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user, :event => :authentication
-      redirect_to user_url(current_user)
+      redirect_to participant_url(current_user)
       # redirect_logic
     else
       session["devise.foursquare_data"] = env["omniauth.auth"]
-      redirect_to user_url(current_user)
+      redirect_to participant_url(current_user)
     end
   end
 
@@ -18,11 +18,27 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user, :event => :authentication
-      redirect_to user_url(current_user)
+      redirect_to participant_url(current_user)
       # redirect_logic
     else
       session["devise.instagram_data"] = env["omniauth.auth"]
-      redirect_to user_url(current_user)
+      redirect_to participant_url(current_user)
+    end
+
+    id = ENV['INSTAGRAM_ID']
+    secret = ENV['INSTAGRAM_SECRET']
+    domain = ENV['DOMAIN']
+    subscriptions = HTTParty.get("https://api.instagram.com/v1/subscriptions?client_id=#{id}&client_secret=#{secret}")
+    if subscriptions['data'].empty?
+      query = {
+        :client_id => id,
+        :client_secret => secret,
+        :object => 'user',
+        :aspect => 'media',
+        :callback_url => "http://#{domain}/api/actions/instagram"
+      }
+
+      realtime = HTTParty.post('https://api.instagram.com/v1/subscriptions/', :body => query )
     end
   end
   
