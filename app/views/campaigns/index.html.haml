@@ -2,6 +2,10 @@
 
   %h1 Campaigns
 
+  %p.medium
+    You earn Street Cred by achieving the goals laid out in campaigns.  Each campaign is a time-limited initiative focused on a specific effort to make the city better.  Campaigns have both individual and community goals.  If you achieve the individual goal, you earn a Street Cred award; if, together, the community achieves the community goal, then that award gets even better.  When you claim your profile, you are automatically a participant in every campaign.
+  %br/
+
   - for campaign in @active_campaigns
     .well
       = render partial: 'campaign', locals: {campaign: campaign}

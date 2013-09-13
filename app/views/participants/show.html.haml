@@ -1,6 +1,10 @@
 = render partial: 'user_header'
 
 .page.container
+  %p.medium
+    The Dashboard shows the progress you've made toward each campaign goal. When you meet an individual goal, you'll earn the award. After you've earned the award, you can continue to contribute to the community goal. Your badge will be displayed with a ribbon once the community goal hass been achieved.
+  %br/
+
   - if @active_campaigns.present?
     - for campaign in @active_campaigns
       = render partial: 'active_campaign', locals: {campaign: campaign}

@@ -114,7 +114,9 @@ body {
 	margin-bottom: 100px;
 }
 
-.large { font-size: 1.4em; font-weight: 300; }
+.medium { font-size: 1.2em; line-height: 1.4em; font-weight: 300; }
+.large { font-size: 1.4em; line-height: 1.4em; font-weight: 300; }
+.larger { font-size: 1.6em; line-height: 1.4em; font-weight: 300; }
 
 .user {
 	margin: 15px 0 15px 0;
