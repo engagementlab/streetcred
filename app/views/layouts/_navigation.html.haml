@@ -5,7 +5,7 @@
 		#navigation.pull-right
 			%ul.nav.nav-pills.yellow
 				- if current_user
-					- if params[:controller] == 'participants' && params[:show] && params[:id] == current_user.id
+					- if params[:controller] == 'participants' && params[:action] == 'show' && params[:id] == current_user.id.to_s
 						%li= link_to 'Dashboard', participant_path(current_user), class: 'active'
 					- else
 						%li= link_to 'Dashboard', participant_path(current_user)
@@ -15,7 +15,7 @@
 				- else
 					%li= link_to 'Campaigns', campaigns_url
 				
-				- if params[:controller] == 'participants'
+				- if params[:controller] == 'participants' && params[:action] == 'index'
 					%li= link_to 'Participants', participants_url, class: 'active'
 				- else
 					%li= link_to 'Participants', participants_url
