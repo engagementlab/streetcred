@@ -16,16 +16,16 @@
 		.row
 			.span3.offset1.text-right.home-navigation.white
 				%ul.slidesjs-pagination
-					%li#nav-item-1.nav-item{:style=>'color: white;'}
+					%li#nav-item-1.nav-item{:style=>'color: white; cursor: pointer; cursor: hand;'}
 						get&nbsp;an&nbsp;app
 						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-1', style: 'visibility: visible'
-					%li#nav-item-2.nav-item{:style=>'color: #95ddeb;'}
+					%li#nav-item-2.nav-item{:style=>'color: #95ddeb; cursor: pointer; cursor: hand;'}
 						take&nbsp;action
 						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-2', style: 'visibility: hidden'
-					%li#nav-item-3.nav-item{:style=>'color: #95ddeb;'}
+					%li#nav-item-3.nav-item{:style=>'color: #95ddeb; cursor: pointer; cursor: hand;'}
 						earn&nbsp;cred
 						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-3', style: 'visibility: hidden'
-					%li#nav-item-4.nav-item{:style=>'color: #95ddeb;'}
+					%li#nav-item-4.nav-item{:style=>'color: #95ddeb; cursor: pointer; cursor: hand;'}
 						see&nbsp;change
 						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-4', style: 'visibility: hidden'
 		
@@ -35,7 +35,7 @@
 						= image_tag('/assets/iphone-1.png')
 					.span3.text-left.home-description.white
 						%p
-							To get started, download an app to your phone. StreetCred supports Citizens Connect, SeeClickFix and Foursquare.
+							To get started, download an app to your phone. StreetCred supports Instagram, Foursquare and Citizens Connect.
 						%br/
 						= image_tag '/assets/app-stores.png'
 
@@ -139,7 +139,8 @@
 		},
 		
 		pagination: {
-		active: false
+		active: true,
+		effect: "fade"
 		},
 
 		effect: {

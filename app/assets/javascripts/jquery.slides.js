@@ -165,24 +165,25 @@
         }
       }
       if (this.options.pagination.active) {
-        pagination = $("<ul>", {
-          "class": "slidesjs-pagination"
-        }).appendTo($element);
-        $.each(new Array(this.data.total), function(i) {
-          var paginationItem, paginationLink;
-          paginationItem = $("<li>", {
-            "class": "slidesjs-pagination-item"
-          }).appendTo(pagination);
-          paginationLink = $("<a>", {
-            href: "#",
-            "data-slidesjs-item": i,
-            html: i + 1
-          }).appendTo(paginationItem);
-          return paginationLink.click(function(e) {
-            e.preventDefault();
-            _this.stop(true);
-            return _this.goto(($(e.currentTarget).attr("data-slidesjs-item") * 1) + 1);
-          });
+        $('#nav-item-1').click(function(e) {
+          e.preventDefault();
+          _this.stop(true);
+          return _this.goto(1);
+        });
+        $('#nav-item-2').click(function(e) {
+          e.preventDefault();
+          _this.stop(true);
+          return _this.goto(2);
+        });
+        $('#nav-item-3').click(function(e) {
+          e.preventDefault();
+          _this.stop(true);
+          return _this.goto(3);
+        });
+        $('#nav-item-4').click(function(e) {
+          e.preventDefault();
+          _this.stop(true);
+          return _this.goto(4);
         });
       }
       $(window).bind("resize", function() {
