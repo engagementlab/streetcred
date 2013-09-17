@@ -8,6 +8,9 @@ class User
   has_many :providers, dependent: :delete
   has_and_belongs_to_many :campaigns, index: true
   
+  scope :active, where(:last_sign_in_at.exists => true)
+  scope :visible, where(:profile_visible => true)
+
   devise :database_authenticatable, :registerable, :recoverable, :trackable, :omniauthable, :omniauth_providers => [:foursquare, :instagram]
 
   field :contact_id, type: String, default: ""

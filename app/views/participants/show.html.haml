@@ -1,49 +1,54 @@
-= render partial: 'user_header'
+- if @participant.last_sign_in_at.blank?
+  %h1 Sorry, this user is not visible
+  %p 
+    == If you think this might be your own profile, please claim your profile #{link_to 'here', edit_user_password_path(@participant)}
+- else
+  = render partial: 'user_header'
 
-.page.container
-  %p.medium
-    The Dashboard shows the progress you've made toward each campaign goal. When you meet an individual goal, you'll earn the award. After you've earned the award, you can continue to contribute to the community goal. Your badge will be displayed with a ribbon once the community goal hass been achieved.
-  %br/
+  .page.container
+    %p.medium
+      The Dashboard shows the progress you've made toward each campaign goal. When you meet an individual goal, you'll earn the award. After you've earned the award, you can continue to contribute to the community goal. Your badge will be displayed with a ribbon once the community goal hass been achieved.
+    %br/
 
-  - if @active_campaigns.present?
-    - for campaign in @active_campaigns
-      = render partial: 'active_campaign', locals: {campaign: campaign}
-        
-  - if @earned_campaigns.present?
-    %hr
-    .row
-      .span12
-        %h2 Completed Campaigns
-    
-    .row
-      - for campaign in @completed_earned_campaigns
-        = render partial: 'completed_campaign', locals: {campaign: campaign}
+    - if @active_campaigns.present?
+      - for campaign in @active_campaigns
+        = render partial: 'active_campaign', locals: {campaign: campaign}
+          
+    - if @earned_campaigns.present?
+      %hr
+      .row
+        .span12
+          %h2 Completed Campaigns
+      
+      .row
+        - for campaign in @completed_earned_campaigns
+          = render partial: 'completed_campaign', locals: {campaign: campaign}
 
-  %br/
-  %h4= link_to raw('&larr; Participants'), participants_path
+    %br/
+    %h4= link_to raw('&larr; Participants'), participants_path
 
-- if @participant.map_visible?
-  .full-width-large.dark-gray-background
-    .container
-      %h3.white
-        Your Actions
+  - if @participant.map_visible?
+    .full-width-large.dark-gray-background
+      .container
+        %h3.white
+          Your Actions
 
-      <div id='map'></div>
+        <div id='map'></div>
 
-- content_for :scripts do
-  :javascript
-    var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
-    map.scrollWheelZoom.disable();
-    L.mapbox.markerLayer(gon.markers).addTo(map);
+  - content_for :scripts do
+    :javascript
+      var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
+      map.scrollWheelZoom.disable();
+      L.mapbox.markerLayer(gon.markers).addTo(map);
 
-  = javascript_include_tag 'http://beta.openbadges.org/issuer.js'
+    = javascript_include_tag 'http://beta.openbadges.org/issuer.js'
 
-  :javascript
-    $(document).ready(function() {
-    $('.openbadge-link').on('click', function(e) {
-    var campaign = $(e.target.parentElement).data('api');
-    OpenBadges.issue(campaign, function(errors, successes) {
-    console.log(errors,successes);
-    });
-    });
-    });
+    :javascript
+      $(document).ready(function() {
+      $('.openbadge-link').on('click', function(e) {
+      var campaign = $(e.target.parentElement).data('api');
+      OpenBadges.issue(campaign, function(errors, successes) {
+      console.log(errors,successes);
+      });
+      });
+      });
