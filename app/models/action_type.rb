@@ -4,7 +4,6 @@ class ActionType
   
   belongs_to :channel
   has_many :actions
-  has_and_belongs_to_many :campaigns, index: true
   
   field :name, type: String
   field :description, type: String
