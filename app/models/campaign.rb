@@ -4,9 +4,7 @@ class Campaign
   include Mongoid::Timestamps
   include Mongoid::Paperclip
 
-
   has_and_belongs_to_many :actions, index: true
-  has_and_belongs_to_many :channels, index: true
   has_and_belongs_to_many :users, index: true
   embeds_many :required_actions
   accepts_nested_attributes_for :required_actions, allow_destroy: true
@@ -51,6 +49,10 @@ class Campaign
 
   def self.completed_community_campaigns
     self.all.select {|x| x.requirements_met_by_community?}
+  end
+
+  def channels
+    self.required_actions.collect {|x| x.action_type.try(:channel)}.uniq.compact
   end
 
   def required_action_types
