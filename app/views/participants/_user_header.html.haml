@@ -6,9 +6,6 @@
 			.span4
 				%h3= @participant.display_name
 				== Member since #{formatted_month_year(@participant.created_at)}
-				- if @participant == current_user
-					%br/
-					= link_to 'Edit profile', edit_user_registration_path(@participant)
 
 			.span1.stat.text-center
 				%h1
@@ -20,18 +17,13 @@
 					= @participant.completed_campaigns.count
 				= pluralizer_helper('Awards', @participant.completed_campaigns.count)
 
-			.span1.stat.text-center
+			.span2.stat.text-center
 				%h1
 					1.0
 				Reach&nbsp;(mi)
 
-			.span3
+			.span2
 				- if @participant == current_user
-					- unless @participant.providers.where(provider: 'foursquare').present?
-						%div{style: 'margin-bottom: 10px'}
-							= link_to image_tag('foursquare.jpg'), user_omniauth_authorize_path('foursquare')
-							= link_to 'Connect Account', user_omniauth_authorize_path('foursquare')
-					- unless @participant.providers.where(provider: 'instagram').present?
-						%div
-							= link_to image_tag('instagram.png'), user_omniauth_authorize_path('instagram')
-							= link_to 'Connect Account', user_omniauth_authorize_path('instagram')
+					%br/
+					%br/
+					= link_to 'edit profile', edit_user_registration_path(@participant), class: 'btn'

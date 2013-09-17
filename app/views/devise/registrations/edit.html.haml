@@ -6,45 +6,90 @@
 		.alert.alert-error
 			=raw flash[:alert]
 
-	%h2
-		== Edit Admin User
+	%h1 Profile
 
-	= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
-		= devise_error_messages!
+	.row
+		.span12
+			- unless devise_error_messages!.blank?
+				.alert.alert-error
+					= devise_error_messages!
+		.span6
+			%h3 Your Information
+			= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
 
-		.field
-			= f.label :email
-		= f.email_field :email, :autofocus => true
+				.field
+					= f.label :first_name
+					= f.text_field :first_name, :autofocus => true
 
-		- if devise_mapping.confirmable? && resource.pending_reconfirmation?
-			.field
-				== Currently waiting confirmation for: #{resource.unconfirmed_email}
+				.field
+					= f.label :last_name
+					= f.text_field :last_name
 
-		.field
-			= f.label "Password" 
-			%i
-				(leave blank if you don't want to change it)
+				.field
+					= f.label :email
+				= f.email_field :email
+
+				.field
+					= f.label :phone, "Mobile phone"
+					= f.telephone_field :phone
+
+				.field
+					%br/
+					= f.check_box :profile_visible
+					Display your profile?
+
+				.field
+					%br/
+					= f.check_box :map_visible
+					Display your actions on the map?
+
+				%br/
+
+				- if devise_mapping.confirmable? && resource.pending_reconfirmation?
+					.field
+						== Currently waiting confirmation for: #{resource.unconfirmed_email}
+
+				.field
+					= f.label "Password" 
+					%i
+						(leave blank if you don't want to change it)
+					%br/
+					= f.password_field :password, :autocomplete => "off"
+
+				.field
+					= f.label :password_confirmation
+					= f.password_field :password_confirmation
+
+				.actions
+					= f.submit "Update", :class => 'btn btn-info'
+
+			%p
+				Unhappy? 
+				= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger'
+
+			= link_to raw("&larr; Back"), participant_path(resource)
+
+		.span4
+			%h3 Connect Your Accounts
+			%p
+				StreetCred allows you to use apps like Foursquare and Instagram to earn points &mdash; but you must connect your accounts. (You can disconnect your accounts at any time.)
 			%br/
-			= f.password_field :password, :autocomplete => "off"
 
-		.field
-			= f.label :password_confirmation
-			= f.password_field :password_confirmation
+			- if resource == current_user
+				- if resource.providers.where(provider: 'foursquare').present?
+					%div{style: 'margin-bottom: 10px'}
+						= image_tag('foursquare.jpg')
+						Connected
+				- else
+					%div{style: 'margin-bottom: 10px'}
+						= link_to image_tag('foursquare.jpg'), user_omniauth_authorize_path('foursquare')
+						= link_to 'Connect Foursquare Account', user_omniauth_authorize_path('foursquare')
 
-		.field
-			= f.label :current_password 
-			%i
-				(we need your current password to confirm your changes)
-			%br/
-			= f.password_field :current_password
-
-		.field= f.submit "Update", :class => 'btn btn-info'
-
-	%h3
-		Cancel my account
-
-	%p
-		Unhappy? 
-		= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn'
-
-	= link_to "Back", :back
+				- if resource.providers.where(provider: 'instagram').present?
+					%div{style: 'margin-bottom: 10px'}
+						= image_tag('instagram.jpg')
+						Connected
+				- else
+					%div
+						= link_to image_tag('instagram.png'), user_omniauth_authorize_path('instagram')
+						= link_to 'Connect Instagram Account', user_omniauth_authorize_path('instagram')

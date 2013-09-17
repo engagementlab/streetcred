@@ -3,12 +3,14 @@ class Action
   include Mongoid::Timestamps
   include Geocoder::Model::Mongoid
   include Geocoder::Model::Mongoid
-  
+
   belongs_to :user, index: true
   belongs_to :channel, :foreign_key => 'api_key', :primary_key => 'api_key'
   belongs_to :action_type
   has_and_belongs_to_many :campaigns, dependent: :nullify, index: true
   
+  scope :mappable, where('latitude IS NOT NULL AND longitude IS NOT NULL').includes(:user).where('user.profile_visible = true').where('user.map_visible = true')
+
   field :api_key, type: String
   field :record_id, type: String # provider UID
   field :case_id, type: String

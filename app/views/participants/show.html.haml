@@ -22,12 +22,13 @@
   %br/
   %h4= link_to raw('&larr; Participants'), participants_path
 
-.full-width-large.dark-gray-background
-  .container
-    %h3.white
-      Your Actions
+- if @participant.map_visible?
+  .full-width-large.dark-gray-background
+    .container
+      %h3.white
+        Your Actions
 
-    <div id='map'></div>
+      <div id='map'></div>
 
 - content_for :scripts do
   :javascript

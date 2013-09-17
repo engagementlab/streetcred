@@ -1,6 +1,9 @@
 .page.container
 	%h1 Participants
 
+	%p.medium
+		== As of today, #{formatted_date(Date.today)}, participants have taken #{Action.count} actions. Through those actions, they've completed ** individual campaigns, and *** community campaigns.
+
 	- @participants.each do |participant|
 		.row.user.well
 			.span1.gravatar

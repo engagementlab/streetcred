@@ -17,6 +17,8 @@ class User
   field :phone, type: String, default: ""
   field :shared, type: Boolean, default: true
   field :slug, type: String
+  field :profile_visible, type: Boolean, default: true
+  field :map_visible, type: Boolean, default: true
 
   # # Omniauth
   # field :provider, type: String
