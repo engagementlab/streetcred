@@ -72,6 +72,10 @@ class User
     end
   end
 
+  def self.completed_campaigns
+    self.all.collect {|x| x.completed_campaigns}
+  end
+
   def channels
     actions.collect {|x| x.action_type.try(:channel)}.uniq
   end

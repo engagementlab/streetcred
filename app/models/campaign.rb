@@ -49,6 +49,10 @@ class Campaign
     has_mongoid_attached_file :badge_icon, :url => "badge_icon/:style/:filename", :path => "#{Rails.root}/public/assets/badge_icon/:style/:filename", styles: { icon: '30x30#', badge: '100x150', large: '150x200>' }
   end
 
+  def self.completed_community_campaigns
+    self.all.select {|x| x.requirements_met_by_community?}
+  end
+
   def required_action_types
     required_actions.collect {|x| x.action_type}
   end
