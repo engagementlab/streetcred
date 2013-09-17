@@ -3,7 +3,8 @@
 
 	%p.medium
 		== Users take part in StreetCred by performing qualifying actions through approved channels. As of today, #{Date.today.strftime('%B %d')}, participants have taken #{Action.count} actions. Through those actions, they've earned #{User.completed_campaigns.count} awards, and completed #{Campaign.completed_community_campaigns.count} community campaigns.
-
+	%br/
+	
 	- @participants.each do |participant|
 		.row.user.well
 			.span1.gravatar
