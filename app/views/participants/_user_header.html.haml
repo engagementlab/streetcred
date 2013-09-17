@@ -17,12 +17,12 @@
 					= @participant.completed_campaigns.count
 				= pluralizer_helper('Awards', @participant.completed_campaigns.count)
 
-			.span2.stat.text-center
+			.span1.stat.text-center
 				%h1
-					1.0
-				Reach&nbsp;(mi)
+					= (@participant.completed_campaigns.count * @participant.actions.count)
+				Score
 
-			.span2
+			.span2.stat.text-center
 				- if @participant == current_user
 					%br/
 					%br/
