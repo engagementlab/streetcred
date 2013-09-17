@@ -25,17 +25,21 @@
 		.row
 			.span12
 				%br/
-				%h4 Description
+				%h3 Description
 				= @campaign.description
 				%br/
 
 				%br/
-				%h4 Requirements
+				%h3 Requirements
 				%ul
-				- for action in @campaign.required_actions
-					%li= action.action_type.name
-
-				%br/
+					- for channel in @campaign.channels
+						%li
+							= channel.try(:name)
+							%ul
+								- for required_action in @campaign.required_actions
+									- if required_action.action_type.try(:channel) == channel
+										%li= required_action.action_type.try(:name)
+						%br/
 				%p
 					%em
 						- if @campaign.all_actions_required?
@@ -65,7 +69,7 @@
 						%p== Center Longitude: #{@campaign.longitude} 
 
 				%br/
-				%h4 Time-frame
+				%h3 Duration
 				%p
 					== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
 
