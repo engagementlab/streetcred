@@ -43,7 +43,6 @@ def index
 
   def update
     @campaign = Campaign.find(params[:id])
-    @campaign.channels.clear if params[:campaign][:channel_ids].blank?
     @campaign.required_actions.clear
     
     respond_to do |format|
