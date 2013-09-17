@@ -3,6 +3,6 @@ class PagesController < ApplicationController
 
 	def index
 		@current_campaign = Campaign.current
-		gon.markers = Action.mappable.collect {|x| {type: 'Feature', geometry: {type: 'Point', coordinates: [x.longitude, x.latitude]}, properties: { title: x.action_type.try(:channel).try(:name), description: "#{x.action_type.try(:name)}<br />#{x.created_at.strftime('%m/%d/%Y')}", 'marker-size' => 'small', 'marker-color' => '#ff502d'}}}
+		gon.markers = Action.mappable.reject{|x| !x.user.try(:shared?) || !x.user.try(:map_visible?) }.collect {|x| {type: 'Feature', geometry: {type: 'Point', coordinates: [x.longitude, x.latitude]}, properties: { title: x.action_type.try(:channel).try(:name), description: "#{x.action_type.try(:name)}<br />#{x.created_at.strftime('%m/%d/%Y')}", 'marker-size' => 'small', 'marker-color' => '#ff502d'}}}
 	end
 end

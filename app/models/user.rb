@@ -8,8 +8,8 @@ class User
   has_many :providers, dependent: :delete
   has_and_belongs_to_many :campaigns, index: true
   
-  scope :active, where(:last_sign_in_at.exists => true)
-  scope :visible, where(:profile_visible => true)
+  scope :active, where(:sign_in_count.exists => true).where(:sign_in_count.gt => 0 )
+  scope :visible, where(:shared => true)
 
   devise :database_authenticatable, :registerable, :recoverable, :trackable, :omniauthable, :omniauth_providers => [:foursquare, :instagram]
 
@@ -18,9 +18,8 @@ class User
   field :last_name, type: String, default: ""
   field :email, type: String, default: ""
   field :phone, type: String, default: ""
-  field :shared, type: Boolean, default: true
   field :slug, type: String
-  field :profile_visible, type: Boolean, default: true
+  field :shared, type: Boolean, default: true
   field :map_visible, type: Boolean, default: true
 
   # # Omniauth
@@ -61,6 +60,9 @@ class User
   # index({ provider_uid: 1 }, { unique: true})
   index({ slug: 1 }, { unique: true})
 
+  def claimed?
+    sign_in_count.present? && sign_in_count > 0
+  end
 
   def display_name
     if self.first_name.blank? && self.last_name.blank?
