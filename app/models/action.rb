@@ -9,7 +9,7 @@ class Action
   belongs_to :action_type
   has_and_belongs_to_many :campaigns, dependent: :nullify, index: true
   
-  scope :mappable, where(:latitude.exists => true).where(:longitude.exists => true)
+  scope :mappable, exists(latitude: true).exists(longitude: true)
 
   field :api_key, type: String
   field :record_id, type: String # provider UID
@@ -41,14 +41,6 @@ class Action
   
   def reversed_coordinates
     coordinates.try(:reverse)
-  end
-
-  def gmaps4rails_address
-    "#{self.address}, #{self.city}" 
-  end
-
-  def gmaps4rails_coordinates
-    [latitude, longitude]
   end
 
   def matching_campaigns
