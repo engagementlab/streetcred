@@ -9,7 +9,7 @@ class Action
   belongs_to :action_type
   has_and_belongs_to_many :campaigns, dependent: :nullify, index: true
   
-  scope :mappable, where(:latitude.exists => true, :longitude.exists => true).includes(:user).where('user.profile_visible = true').where('user.map_visible = true')
+  scope :mappable, where(:latitude.exists => true).where(:longitude.exists => true)
 
   field :api_key, type: String
   field :record_id, type: String # provider UID

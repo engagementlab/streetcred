@@ -1,7 +1,7 @@
 class ParticipantsController < ApplicationController
 
   def index
-    @participants = User.all.sort_by {|x| x.actions.try(:count)}.reverse
+    @participants = User.active.visible.sort_by {|x| x.actions.try(:count)}.reverse
 
     respond_to do |format|
       format.html # index.html.erb
