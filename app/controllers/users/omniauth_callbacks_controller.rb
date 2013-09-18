@@ -5,7 +5,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user, :event => :authentication
-      flash[:notice] = "Your Foursquare account has been successfully connected! Now check the campaigns page to learn where you can use."
+      flash[:notice] = "Congratulations, your Foursquare account has been connected. Now check the campaigns page to learn where you can use."
       redirect_to edit_user_registration_path(current_user)
     else
       session["devise.foursquare_data"] = env["omniauth.auth"]
@@ -18,7 +18,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       sign_in @user, :event => :authentication
-      flash[:notice] = "Your Instagram account has been successfully connected! Now check the campaigns page to learn where you can use."
+      flash[:notice] = "Congratulations, your Instagram account has been connected. Now check the campaigns page to learn where you can use."
       redirect_to participant_url(current_user)
     else
       session["devise.instagram_data"] = env["omniauth.auth"]
