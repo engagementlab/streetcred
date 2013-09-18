@@ -168,21 +168,37 @@
         $('#nav-item-1').click(function(e) {
           e.preventDefault();
           _this.stop(true);
+          $('.nav-item').css('color', '#95ddeb')
+          $('#nav-item-1').css('color', '#ffffff')
+          $('.nav-arrow').css('visibility', 'hidden')
+          $('#nav-arrow-1').css('visibility', 'visible')
           return _this.goto(1);
         });
         $('#nav-item-2').click(function(e) {
           e.preventDefault();
           _this.stop(true);
+          $('.nav-item').css('color', '#95ddeb')
+          $('#nav-item-2').css('color', '#ffffff')
+          $('.nav-arrow').css('visibility', 'hidden')
+          $('#nav-arrow-2').css('visibility', 'visible')
           return _this.goto(2);
         });
         $('#nav-item-3').click(function(e) {
           e.preventDefault();
           _this.stop(true);
+          $('.nav-item').css('color', '#95ddeb')
+          $('#nav-item-3').css('color', '#ffffff')
+          $('.nav-arrow').css('visibility', 'hidden')
+          $('#nav-arrow-3').css('visibility', 'visible')
           return _this.goto(3);
         });
         $('#nav-item-4').click(function(e) {
           e.preventDefault();
           _this.stop(true);
+          $('.nav-item').css('color', '#95ddeb')
+          $('#nav-item-4').css('color', '#ffffff')
+          $('.nav-arrow').css('visibility', 'hidden')
+          $('#nav-arrow-4').css('visibility', 'visible')
           return _this.goto(4);
         });
       }
