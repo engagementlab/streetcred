@@ -5,7 +5,6 @@ module Oauth
     user = User.where(email: data['info']['email']).first
 
     if provider.present? && provider.user.present?
-      puts "*********** provider and provider.user present ***********"
       provider.update_attributes( info: data['info'], 
             credentials: data['credentials'], 
             extra: data['extra'],
@@ -17,14 +16,11 @@ module Oauth
       )
       return provider.user
 
-
-    elsif provider.blank? && signed_in_resource.present?
-      puts "*********** current_user present and provider blank ***********"
-      signed_in_resource.update_attributes( first_name: data['info']['first_name'], 
-            last_name:  data['info']['last_name'],
-            email:      data['info']['email'],
-            nickname:   data['info']['nickname'],
-      )
+    elsif signed_in_resource.present? && provider.blank?
+      signed_in_resource.update_attributes( first_name: data['info']['first_name']) if signed_in_resource.first_name.blank? 
+      signed_in_resource.update_attributes( last_name: data['info']['last_name']) if signed_in_resource.last_name.blank? 
+      signed_in_resource.update_attributes( email: data['info']['email']) if signed_in_resource.email.blank? 
+      signed_in_resource.update_attributes( nickname: data['info']['nickname']) if signed_in_resource.nickname.blank?
       signed_in_resource.providers.create( info: data['info'], 
             credentials:      data['credentials'], 
             extra:            data['extra'],
@@ -34,11 +30,9 @@ module Oauth
       )
       return signed_in_resource
 
-    elsif provider.blank? && user.present?
-      puts "*********** user present and provider blank ***********"
+    elsif user.present? && provider.blank?
       user.update_attributes( first_name: data['info']['first_name'], 
-            last_name: data['info']['last_name'],
-            email: data['info']['email']
+            last_name: data['info']['last_name']
       )
       user.providers.create( info: data['info'], 
             credentials:  data['credentials'], 
@@ -49,8 +43,7 @@ module Oauth
       )
       return user
 
-    else provider.blank? && user.blank? && signed_in_resource.blank?
-      puts "*********** provider blank and user blank and signed_in_resource blank ***********"
+    else # provider.blank? && user.blank? && signed_in_resource.blank?
       if data['info'] && data['info']['location']
         city = data['info']['location'].split(',').first.try(:strip)
         state = data['info']['location'].split(',').last.try(:strip)
