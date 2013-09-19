@@ -64,6 +64,14 @@ class User
     sign_in_count.present? && sign_in_count > 0
   end
 
+  def score
+    score = 0
+    score += (self.actions.count * 5)
+    score += (self.completed_campaigns.count * 25)
+    score += (Campaign.completed_community_campaigns.count * 50)
+    score
+  end
+
   def display_name
     if self.first_name.blank? && self.last_name.blank?
       'anonymous'
