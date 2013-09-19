@@ -8,6 +8,7 @@ class Message
   field :body, type: String
   field :first_action, type: Boolean, default: false
   field :last_action, type: Boolean, default: false
+  field :action, type: String
   field :action_number, type: Integer
   field :api_key, type: String
   

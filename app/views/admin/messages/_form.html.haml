@@ -6,12 +6,6 @@
         %li= msg
 
 .field
-  = f.label :campaigns
-  - for campaign in Campaign.asc(:name)
-    %div
-      = check_box_tag 'message[campaign_ids][]', campaign.id, @message.campaigns.include?(campaign)
-      = campaign.name
-.field
   = f.label :subject
   = f.text_field :subject
 
@@ -19,9 +13,26 @@
   = f.label :body
   = f.text_area :body, rows: 10, cols: 20
 
+%h3 Campaigns 
+
 .field
-  = f.label :action_number, "Action (numbers only)"
-  = f.text_field :action_number
+  - for campaign in Campaign.asc(:name)
+    %div
+      = check_box_tag 'message[campaign_ids][]', campaign.id, @message.campaigns.include?(campaign)
+      = campaign.name
+%br/
+
+%h3 Trigger
+
+.field
+  = f.label :action, "Predefined action"
+  = f.select :action, ['Welcome', 'Campaign Completion']
+
+== - or - 
+
+.field
+  = f.label :action_number, "Action #"
+  = f.select :action_number, (1..500).to_a
 
   
 .actions
