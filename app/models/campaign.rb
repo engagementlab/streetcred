@@ -5,6 +5,7 @@ class Campaign
   include Mongoid::Paperclip
 
   has_and_belongs_to_many :actions, index: true
+  has_and_belongs_to_many :messages, index: true
   has_and_belongs_to_many :users, index: true
   embeds_many :required_actions
   accepts_nested_attributes_for :required_actions, allow_destroy: true

@@ -1,0 +1,4 @@
+%h1 Editing Message
+
+= form_for(:message, :url => admin_message_path(@message), :html => {:method => :put}) do |f|
+  = render :partial => 'form', :locals => {:f => f}

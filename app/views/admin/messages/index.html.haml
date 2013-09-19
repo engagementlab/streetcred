@@ -1,0 +1,25 @@
+%h1 Messages
+
+.well
+  Messages are attached to campaigns and are deliverd to users at the appropriate actions. Messages can be applied to a single campaign, or across multiple campaigns.
+
+%table.table.table-hover
+  %tr
+    %th Subject
+    %th Body
+    %th Campaigns
+    %th Action #
+    %th
+    %th
+
+  - @messages.each do |message|
+    %tr
+      %td= message.subject
+      %td= message.body
+      %td= message.campaigns.collect {|x| x.name}
+      %td= message.action_number
+      %td{width: 35}= link_to 'Edit', edit_admin_message_path(message), :class => 'btn btn-mini'
+      %td{width: 55}= link_to 'Delete', admin_message_path(message), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
+
+
+= link_to 'New Message', new_admin_message_path, :class => 'btn btn-success'

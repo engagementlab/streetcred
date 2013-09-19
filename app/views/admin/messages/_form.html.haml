@@ -1,0 +1,29 @@
+- if @message.errors.any?
+  .alert.alert-error
+    %h3= "#{pluralize(@message.errors.count, "error")} prohibited this message from being saved:"
+    %ul
+      - @message.errors.full_messages.each do |msg|
+        %li= msg
+
+.field
+  = f.label :campaigns
+  - for campaign in Campaign.asc(:name)
+    %div
+      = check_box_tag 'message[campaign_ids][]', campaign.id, @message.campaigns.include?(campaign)
+      = campaign.name
+.field
+  = f.label :subject
+  = f.text_field :subject
+
+.field
+  = f.label :body
+  = f.text_area :body, rows: 5
+
+.field
+  = f.label :action_number, "Action (numbers only)"
+  = f.text_field :action_number
+
+  
+.actions
+  = f.submit 'Save', :class => 'btn btn-success'
+  = link_to 'Cancel', admin_messages_path, :class => 'btn'
