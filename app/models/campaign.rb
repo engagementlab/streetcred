@@ -174,7 +174,7 @@ class Campaign
   end
   
   def required_actions_unique
-    errors[:base] << "Required actions can't contain duplicates" if required_actions.collect {|x| x.action_type.try(:name)}.uniq.length != required_actions.length
+    errors[:base] << "Required actions can't contain duplicates" if required_actions.collect {|x| "#{x.action_type.try(:channel).try(:name)}-#{x.action_type.try(:name)}.uniq.length != required_actions.length
   end
   
 end
