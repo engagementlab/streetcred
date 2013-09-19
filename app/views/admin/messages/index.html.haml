@@ -17,10 +17,11 @@
       %td= message.subject
       %td= truncate(message.body, length: 400)
       %td= message.campaigns.collect {|x| x.name}
-      - if message.action_number.present?
-        %td= message.action_number
-      - elsif message.action.present?
-        %td= message.action
+      %td
+        - if message.action_number.present?
+          = message.action_number
+        - elsif message.action.present?
+          = message.action
       %td{width: 35}= link_to 'Edit', edit_admin_message_path(message), :class => 'btn btn-mini'
       %td{width: 55}= link_to 'Delete', admin_message_path(message), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'
 
