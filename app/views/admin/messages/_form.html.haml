@@ -26,13 +26,13 @@
 
 .field
   = f.label :action, "Predefined action"
-  = f.select :action, ['Welcome', 'Campaign Completion']
+  = f.select :action, ['Welcome', 'Campaign Completion'], include_blank: true
 
 == - or - 
 
 .field
   = f.label :action_number, "Action #"
-  = f.select :action_number, (1..500).to_a
+  = f.select :action_number, (1..500).to_a, include_blank: true
 
   
 .actions
