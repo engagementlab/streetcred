@@ -148,7 +148,7 @@ class API::ActionsController < ApplicationController
         instagram_uid = params[:_json].first['object_id']
         provider = Provider.where(provider_uid: instagram_uid).first
         user = User.where(_id: provider.user_id).first
-        token = provider.token
+        token = provider.try(:token)
 
         recent_photo = HTTParty.get("https://api.instagram.com/v1/users/self/feed?access_token=#{token}&count=1")
 

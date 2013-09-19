@@ -57,9 +57,9 @@
   %tr
     %td Timestamp:
     %td= @action.created_at
-  %tr
-    %td Photo:
-    %td= image_tag(@action.photo_url)
+
+%div
+  = image_tag(@action.photo_url)
 
 %br/
 = link_to 'Back', admin_actions_path, :class => 'btn'
