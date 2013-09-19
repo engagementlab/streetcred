@@ -154,7 +154,7 @@ class API::ActionsController < ApplicationController
 
         tags = recent_photo['data'].first['tags']
         tags.collect! {|x| "#" + x}
-        
+
         action_type = ActionType.where(channel_id: channel.id).in(provider_uid: tags).first
 
         if user.present? && action_type.present?
@@ -162,6 +162,10 @@ class API::ActionsController < ApplicationController
             action_type_id: action_type.id,
             api_key: channel.api_key,
             record_id: recent_photo['data'].first['id'],
+            latitude: recent_photo['data'].first['location']['latitude'],
+            longitude: recent_photo['data'].first['location']['longitude'],
+            url: recent_photo['data'].first['link'],
+            photo_url: recent_photo['data'].first['images']['standard_resolution']['url'],
             timestamp: Time.now
           )
           render nothing: true
