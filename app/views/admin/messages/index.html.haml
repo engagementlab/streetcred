@@ -15,7 +15,7 @@
   - @messages.each do |message|
     %tr
       %td= message.subject
-      %td= message.body
+      %td= truncate(message.body, length: 400)
       %td= message.campaigns.collect {|x| x.name}
       %td= message.action_number
       %td{width: 35}= link_to 'Edit', edit_admin_message_path(message), :class => 'btn btn-mini'
