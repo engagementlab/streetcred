@@ -153,7 +153,8 @@ class API::ActionsController < ApplicationController
         recent_photo = HTTParty.get("https://api.instagram.com/v1/users/self/feed?access_token=#{token}&count=1")
 
         tags = recent_photo['data'].first['tags']
-
+        tags.collect! {|x| "#" + x}
+        
         action_type = ActionType.where(channel_id: channel.id).in(provider_uid: tags).first
 
         if user.present? && action_type.present?
