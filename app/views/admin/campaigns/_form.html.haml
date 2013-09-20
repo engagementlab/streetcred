@@ -96,17 +96,6 @@
       = image_tag @campaign.community_badge.url(:badge)
     = f.file_field :community_badge
 
-%h3 Messages
-
-- if @campaign.messages.blank?
-  == No messages have been associated with this campaign. Please add them at #{link_to 'here', admin_messages_url}
-- else
-  %ul
-    - for message in @campaign.messages
-      %li= link_to message.subject, edit_admin_message_path(message)
-
-
-
 .actions
   = f.submit 'Save', :class => 'btn btn-success'
   = link_to 'Cancel', admin_campaigns_path, :class => 'btn'

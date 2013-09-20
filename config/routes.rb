@@ -30,7 +30,7 @@ Streetcred::Application.routes.draw do
     resources :action_types
     resources :campaigns
     resources :channels
-    resources :messages
+    # resources :messages
     resources :users, :only => [:index, :show]
   end
   
