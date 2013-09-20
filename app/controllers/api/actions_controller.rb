@@ -16,7 +16,11 @@ class API::ActionsController < ApplicationController
 				if params['email'].present?
 
 					@user = User.where(email: params['email']).first_or_initialize
-					new_user = true unless @user.persisted?
+					if @user.persisted?
+						new_user = false
+					else
+						new_user = true
+					end
 					# Create a User with a random password if @user doesn't yet exist
 					if new_user == true
 						@user = create_devise_user(@user)
@@ -50,7 +54,11 @@ class API::ActionsController < ApplicationController
 
 		if message.present?
 			@user = User.where(email: message.from.first).first_or_initialize
-			new_user = true unless @user.persisted?
+			if @user.persisted?
+				new_user = false
+			else
+				new_user = true
+			end
 			# Create a User with a random password if @user doesn't yet exist
 			if new_user == true
 				@user = create_devise_user(@user) 
