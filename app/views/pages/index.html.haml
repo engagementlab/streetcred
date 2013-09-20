@@ -77,11 +77,11 @@
 				%div.text-center
 					= image_tag('sample-badge-individual-award.png')
 					%h3.blue
-						Individual Awards
+						Personal Awards
 				%p
-					Individual awards are earned by completing all of the required actions on a campaign. Actions include things like Citizen Connect reports, Foursquare checkins, and Instagram photos. 
+					Personal awards are earned by completing all of the required actions on a campaign. Actions include things like Citizen Connect reports, Foursquare checkins, and Instagram photos. 
 					- if current_user
-						== You can check your progress toward individual awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
+						== You can check your progress toward personal awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
 
 			.span4
 				%div.text-center
@@ -89,7 +89,7 @@
 					%h3.blue
 						Community Awards
 				%p
-					Once you earn your individual award, you can continue to contribute to the bigger, community goal. Once the community goal has been met, everyone will earn the community award.
+					Once you earn a personal award, you can continue to contribute to the broader, community goal. Once the community goal has been met, all individual participants will earn the community award.
 					- if current_user
 						== You can check your progress toward community awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
 
