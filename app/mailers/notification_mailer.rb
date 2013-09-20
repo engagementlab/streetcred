@@ -5,8 +5,7 @@ class NotificationMailer < ActionMailer::Base
   def welcome(user, action)
     @user = user
     @action = action
-    @completed_campaigns = user.campaigns_completed_by_action(action)
-    @in_progress_campaigns = user.campaigns_in_progress_by_action(action)
+    @current_campaigns = Campaign.active
     mail(:to => user.email,
          :subject => "Welcome to StreetCred!")
   end
