@@ -16,18 +16,18 @@
 
 			.span1.stat.text-center
 				%h1
-					= participant.score
+					= @participant.score
 				Score
 
 			.span1.stat.text-center
 				%h1
-					= participant.actions.count
-				= pluralizer_helper('Actions', participant.actions.count)
+					= @participant.actions.count
+				= pluralizer_helper('Actions', @participant.actions.count)
 
 			.span1.stat.text-center
 				%h1
-					= participant.completed_campaigns.count
-				= pluralizer_helper('Awards', participant.completed_campaigns.count)
+					= @participant.completed_campaigns.count
+				= pluralizer_helper('Awards', @participant.completed_campaigns.count)
 
 			.span2.pull-right.details-button.text-right
 				= form_for(@participant, :as => :user, :url => password_path(:user), :html => { :method => :post }) do |f|
