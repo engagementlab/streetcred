@@ -96,7 +96,7 @@ class User
     # all user.campaigns have been completed; those associated with the action were completed by the action
     # however, this is probably not ideal since it's only the campaign.actions.last that actually completed the campaign
     if action.user == self
-      campaigns.select {|campaign| campaign if ((campaign.actions.where(user_id: self.id).count == campaign.required_individual_occurrences) && (campaign.campaign.actions.where(user_id: self.id).asc(:created_at).last == action))}
+      campaigns.select {|campaign| campaign if ((campaign.actions.where(user_id: self.id).count == campaign.required_individual_occurrences) && (campaign.actions.where(user_id: self.id).asc(:created_at).last == action))}
     end
   end
   
