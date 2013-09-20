@@ -3,19 +3,35 @@
 	%head
 		%meta{'content' => "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
 	%body
-		%h2 Congratulations!
-		%h4== You just completed the #{@campaign.name} Campaign
+		- if @completed_campaigns.count == 1
+			%h2 Congratulations!
+			%h4== You just completed the following campaign:
+			%div
+				- campaign = @completed_campaigns.first
+				%h3= campaign.name
+				%p
+					== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
+				%p
+					= campaign.description
+				%p
+					== Personal Goal: report #{campaign.required_individual_occurrences}
+					%br/
+					== Community Goal: report #{campaign.required_community_occurrences}
+		- else
+			%h2 Congratulations!
+			%h4== You just completed the following campaigns:
 
-		%div
-			%h3= campaign.name
-			%p
-				== #{campaign.start_time} &mdash; #{campaign.end_time}
-			%p
-				= campaign.description
-			%p
-				== Personal Goal: report #{campaign.required_individual_occurrences}
-				%br/
-				== Community Goal: report #{campaign.required_community_occurrences}
+			- for campaign in @completed_campaigns
+				%div
+					%h3= campaign.name
+					%p
+						== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
+					%p
+						= campaign.description
+					%p
+						== Personal Goal: report #{campaign.required_individual_occurrences}
+						%br/
+						== Community Goal: report #{campaign.required_community_occurrences}
 
 		%p
 			== Please visit your #{link_to 'dashboard page', participant_path(@user)} to claim your award and send your badge to Mozilla Backpack.
