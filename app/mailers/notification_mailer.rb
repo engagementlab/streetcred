@@ -2,7 +2,7 @@ class NotificationMailer < ActionMailer::Base
   default from: "notifications@streetcred.us"
   add_template_helper(ApplicationHelper)
   
-  def welcome(user, action, new_user)
+  def welcome(user, action)
     @user = user
     @action = action
     @new_user = new_user
@@ -12,7 +12,7 @@ class NotificationMailer < ActionMailer::Base
          :subject => "Welcome to StreetCred!")
   end
 
-  def completed_campaign(user, action, new_user)
+  def completed_campaign(user, action)
     @user = user
     @action = action
     @new_user = new_user
@@ -22,7 +22,7 @@ class NotificationMailer < ActionMailer::Base
          :subject => "You just completed a StreetCred campaign")
   end
 
-  def progress(user, action, new_user)
+  def progress(user, action)
     @user = user
     @action = action
     @new_user = new_user

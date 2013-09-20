@@ -27,7 +27,7 @@ class API::ActionsController < ApplicationController
 					@action.action_type_id = action_type.id
 					@action.save!
 					@completed_campaigns = @user.campaigns_completed_by_action(@action)
-					NotificationMailer.status_email(@user, @action).deliver
+					send_notification_email(@user, @action, new_user)
 					respond_with(@completed_campaigns)
 				else
 					@error_message = "email parameter is missing"
@@ -66,7 +66,7 @@ class API::ActionsController < ApplicationController
 						api_key: channel.api_key,
 						timestamp: message.date
 					)
-					send_notification_email(@user, @action)
+					send_notification_email(@user, @action, new_user)
 				else
 					@error_message = "Subject line must match an existing ActionType"
 					render 'errors'
@@ -182,7 +182,8 @@ class API::ActionsController < ApplicationController
 			end
 			if @user.present?
 				# Create a User with a random password if @user doesn't yet exist
-				unless @user.persisted?
+				new_user == true unless @user.persisted?
+				if new_user == true
 					@user = create_devise_user(@user)
 				end
 
@@ -204,7 +205,7 @@ class API::ActionsController < ApplicationController
 						timestamp:      params['report']['timestamp']
 					)
 					@completed_campaigns = @user.campaigns_completed_by_action(action)
-					NotificationMailer.status_email(@user, action).deliver
+					send_notification_email(@user, action, new_user)
 					respond_with(@completed_campaigns)
 				else
 					@error_message = "'report' parameters are missing (e.g. {'report':{params}})"
