@@ -55,10 +55,8 @@ class API::ActionsController < ApplicationController
 		if message.present?
 			@user = User.where(email: message.from.first).first_or_initialize
 			if @user.persisted?
-				logger.info "********************* new_user = false"
 				new_user = false
 			else
-				logger.info "********************* new_user = true"
 				new_user = true
 			end
 			# Create a User with a random password if @user doesn't yet exist
@@ -192,7 +190,11 @@ class API::ActionsController < ApplicationController
 			end
 			if @user.present?
 				# Create a User with a random password if @user doesn't yet exist
-				new_user == true unless @user.persisted?
+				if @user.persisted?
+					new_user = false
+				else
+					new_user = true
+				end
 				if new_user == true
 					@user = create_devise_user(@user)
 				end
@@ -286,13 +288,11 @@ class API::ActionsController < ApplicationController
 	end
 
 	def send_notification_email(user, action, new_user)
-		completed_campaigns = user.campaigns_completed_by_action(action)
-		in_progress_campaigns = user.campaigns_in_progress_by_action(action)
 		if new_user == true
 			NotificationMailer.welcome(user, action).deliver
-		elsif completed_campaigns.present?
+		elsif user.campaigns_completed_by_action(action).present?
 			NotificationMailer.completed_campaign(user, action).deliver
-		elsif in_progress_campaigns.present?
+		elsif user.campaigns_in_progress_by_action(action).present?
 			NotificationMailer.progress(user, action).deliver
 		end
 	end
