@@ -16,8 +16,9 @@ class API::ActionsController < ApplicationController
 				if params['email'].present?
 
 					@user = User.where(email: params['email']).first_or_initialize
+					new_user = true unless @user.persisted?
 					# Create a User with a random password if @user doesn't yet exist
-					unless @user.persisted?
+					if new_user == true
 						@user = create_devise_user(@user)
 					end
 
@@ -49,9 +50,9 @@ class API::ActionsController < ApplicationController
 
 		if message.present?
 			@user = User.where(email: message.from.first).first_or_initialize
-			
+			new_user = true unless @user.persisted?
 			# Create a User with a random password if @user doesn't yet exist
-			unless @user.persisted?
+			if new_user == true
 				@user = create_devise_user(@user) 
 			end
 
@@ -65,11 +66,7 @@ class API::ActionsController < ApplicationController
 						api_key: channel.api_key,
 						timestamp: message.date
 					)
-					@completed_campaigns = @user.campaigns_completed_by_action(@action)
-					@in_progress_campaigns = @user.campaigns_in_progress_by_action(@action)
-					if @in_progress_campaigns.present? || @completed_campaigns.present?
-						NotificationMailer.status_email(@user, @action).deliver
-					end
+					send_notification_email(@user, @action)
 				else
 					@error_message = "Subject line must match an existing ActionType"
 					render 'errors'
@@ -188,7 +185,7 @@ class API::ActionsController < ApplicationController
 				unless @user.persisted?
 					@user = create_devise_user(@user)
 				end
-				
+
 				if params['report'].present?
 					# Citizens Connect is allowed to create new action types on the fly ('first_or_create')
 					action_type = ActionType.where(channel_id: channel.id).where(name: params['report']['service']).first_or_create
@@ -275,6 +272,18 @@ class API::ActionsController < ApplicationController
 		user.password_confirmation = password
 		user.save!
 		return user
+	end
+
+	def send_notification_email(user, action, new_user)
+		completed_campaigns = user.campaigns_completed_by_action(action)
+		in_progress_campaigns = user.campaigns_in_progress_by_action(action)
+		if new_user == true
+			NotificationMailer.welcome_email(user, action).deliver
+		elsif completed_campaigns.present?
+			NotificationMailer.completed_campaign_email(user, action).deliver
+		elsif in_progress_campaigns.present?
+			NotificationMailer.progress_email(user, action).deliver
+		end
 	end
 
 	# def verify_api_token

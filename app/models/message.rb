@@ -19,9 +19,9 @@ class Message
 
   def campaign_completion_or_campaign_countdown
   	if self.campaign_percentage.blank? && campaign_countdown.blank?
-  		errors[:base] << "Campaign percentage and campaign countdown can't both be blank"
+  		errors[:base] << "Campaign completion and campaign countdown can't both be blank"
   	elsif self.campaign_percentage.present? && self.campaign_countdown.present?
-  		errors[:base] << "Campaign percentage and campaign countdown cannot both be selected"
+  		errors[:base] << "Campaign completion and campaign countdown cannot both be selected"
 		end  		
   end
 end

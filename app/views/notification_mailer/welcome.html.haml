@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+%html
+	%head
+		%meta{'content' => "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
+	%body
+		- if @user.full_name.present?
+			%p
+				== Dear #{@user.full_name,
+
+		%p
+			== Thanks for signing up for StreetCred! We’re excited to have you on board. The next step is to sign up for a campaign. You can check out our featured campaigns below, or visit the Street Cred #{link_to 'Campaign Page', campaigns_url} for a complete list of active campaigns in your area.
+
+		%h2
+			Featured Campaigns:
+
+		- for campaign in @current_campaigns
+			%div
+				%h3= campaign.name
+				%p
+					== #{campaign.start_time} &mdash; #{campaign.end_time}
+				%p
+					= campaign.description
+				%p
+					== Personal Goal: report #{campaign.required_individual_occurrences}
+					%br/
+					== Community Goal: report #{campaign.required_community_occurrences}
+
+		%h2 What is a Campaign?
+		%p
+			A Street Cred Campaign is a series of actions that relate to a common theme. A campaign can be about anything, but all campaigns have been custom designed around an important challenge facing your community. 
+		%p
+			Reporting a pothole on Citizens Connect puts you one step closer to completing the Pothole Patroller campaign, and using Foursquare to check in at a local park will put you on the path to becoming a Park Explorer. Each action earns you Cred, and when you’ve accomplished them all, you’ve completed the campaign!
+		%p
+			Each campaign has an individual goal and a team goal to measure your individual impact as well as the progress of your community.
+		%p
+			== Learn more and view active campaigns on the #{link_to 'Campaign Page', campaigns_url}. 
+
