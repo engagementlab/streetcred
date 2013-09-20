@@ -279,11 +279,11 @@ class API::ActionsController < ApplicationController
 		completed_campaigns = user.campaigns_completed_by_action(action)
 		in_progress_campaigns = user.campaigns_in_progress_by_action(action)
 		if new_user == true
-			NotificationMailer.welcome_email(user, action).deliver
+			NotificationMailer.welcome(user, action).deliver
 		elsif completed_campaigns.present?
-			NotificationMailer.completed_campaign_email(user, action).deliver
+			NotificationMailer.completed_campaign(user, action).deliver
 		elsif in_progress_campaigns.present?
-			NotificationMailer.progress_email(user, action).deliver
+			NotificationMailer.progress(user, action).deliver
 		end
 	end
 
