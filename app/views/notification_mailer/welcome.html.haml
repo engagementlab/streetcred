@@ -15,7 +15,7 @@
 			%div
 				%h3= campaign.name
 				%p
-					== #{campaign.start_time} &mdash; #{campaign.end_time}
+					== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
 				%p
 					= campaign.description
 				%p
