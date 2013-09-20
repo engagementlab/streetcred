@@ -3,14 +3,18 @@
 	%head
 		%meta{'content' => "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
 	%body
-		%h2 Congratulations!
-		%h4 You just made progress on the following campaigns.
+		- if @in_progress_campaigns == 1
+			%h2 Congratulations!
+			You just made progress on the following campaign:
+		- else
+			%h2 Congratulations!
+			You just made progress on the following campaigns:
 
 		- for campaign in @in_progress_campaigns
 			%div
 				%h3= campaign.name
 				%p
-					== #{campaign.start_time} &mdash; #{campaign.end_time}
+					== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
 				%p
 					= campaign.description
 				%p
