@@ -58,19 +58,19 @@ class API::ActionsController < ApplicationController
 			if new_user == true
 				@user = create_devise_user(@user) 
 			end
-			
+
 			# Find Channel and ActionType
 			channel = Channel.where(name: 'Email').first
 			if channel.present?
 				action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
 				if action_type.present?
-					action = @user.actions.create(
+					@action = @user.actions.create(
 						action_type_id: action_type.id, 
 						api_key: channel.api_key,
 						timestamp: message.date
 					)
-					@completed_campaigns = @user.campaigns_completed_by_action(action)
-					@in_progress_campaigns = @user.campaigns_in_progress_by_action(action)
+					@completed_campaigns = @user.campaigns_completed_by_action(@action)
+					@in_progress_campaigns = @user.campaigns_in_progress_by_action(@action)
 					if @in_progress_campaigns.present? || @completed_campaigns.present?
 						if new_user == true
 							NotificationMailer.status_email(@user, @action, true).deliver
