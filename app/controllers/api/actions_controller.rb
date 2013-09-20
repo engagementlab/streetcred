@@ -55,8 +55,10 @@ class API::ActionsController < ApplicationController
 		if message.present?
 			@user = User.where(email: message.from.first).first_or_initialize
 			if @user.persisted?
+				logger.info "********************* new_user = false"
 				new_user = false
 			else
+				logger.info "********************* new_user = true"
 				new_user = true
 			end
 			# Create a User with a random password if @user doesn't yet exist
