@@ -20,19 +20,26 @@
     %div
       = check_box_tag 'message[campaign_ids][]', campaign.id, @message.campaigns.include?(campaign)
       = campaign.name
-%br/
+  %br/
 
 %h3 Trigger
 
 .field
-  = f.label :action, "Predefined action"
-  = f.select :action, ['Welcome', 'Campaign Completion'], include_blank: true
+  = f.radio_button :campaign_type, "individual"
+  Individual Goal
+  %br/
+  = f.radio_button :campaign_type, "community"
+  Community Goal
+
+.field
+  = f.label :campaign_percentage, "Campaign Completion (%)"
+  = f.select :campaign_percentage, [['1%', 0.01],['10%', 0.1],['25%', 0.25],['50%', 0.5],['75%', 0.75],['100%', 1]], include_blank: true
 
 == - or - 
 
 .field
-  = f.label :action_number, "Action #"
-  = f.select :action_number, (1..500).to_a, include_blank: true
+  = f.label :campaign_countdown, "Campaign Countdown (days)"
+  = f.select :campaign_countdown, (1..30).to_a, include_blank: true
 
   
 .actions

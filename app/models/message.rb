@@ -9,8 +9,19 @@ class Message
   field :first_action, type: Boolean, default: false
   field :last_action, type: Boolean, default: false
   field :action, type: String
-  field :action_number, type: Integer
+  field :campaign_type, type: String
+  field :campaign_percentage, type: BigDecimal
+  field :campaign_countdown, type: Integer
   field :api_key, type: String
   
+  validates_presence_of :subject, :body, :campaign_type
+  validate :campaign_completion_or_campaign_countdown
 
+  def campaign_completion_or_campaign_countdown
+  	if self.campaign_percentage.blank? && campaign_countdown.blank?
+  		errors[:base] << "Campaign percentage and campaign countdown can't both be blank"
+  	elsif self.campaign_percentage.present? && self.campaign_countdown.present?
+  		errors[:base] << "Campaign percentage and campaign countdown cannot both be selected"
+		end  		
+  end
 end
