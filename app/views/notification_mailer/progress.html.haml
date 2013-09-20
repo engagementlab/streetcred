@@ -12,7 +12,7 @@
 
 		- for campaign in @in_progress_campaigns
 			%div
-				%h3= link_to campaign.name, campaign_url
+				%h3= link_to campaign.name, campaign_url(campaign)
 				%p
 					== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
 				%p
