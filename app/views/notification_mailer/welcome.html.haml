@@ -8,12 +8,12 @@
 				== Dear #{@user.first_name},
 		%p
 			== Thanks for signing up for StreetCred! We’re excited to have you on board. The next step is to sign up for a campaign. You can check out our featured campaigns below, or visit the Street Cred #{link_to 'Campaign Page', campaigns_url} for a complete list of active campaigns in your area.
-		%h2
+		%h1
 			Featured Campaigns:
 
 		- for campaign in @current_campaigns
 			%div
-				%h3= campaign.name
+				%h3= link_to campaign.name, campaign_url
 				%p
 					== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
 				%p
@@ -23,7 +23,7 @@
 					%br/
 					== Community Goal: report #{campaign.required_community_occurrences}
 
-		%h2 What is a Campaign?
+		%h1 What is a Campaign?
 		%p
 			A Street Cred Campaign is a series of actions that relate to a common theme. A campaign can be about anything, but all campaigns have been custom designed around an important challenge facing your community. 
 		%p
