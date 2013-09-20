@@ -20,7 +20,7 @@ module Oauth
       signed_in_resource.update_attributes( first_name: data['info']['first_name']) if signed_in_resource.first_name.blank? 
       signed_in_resource.update_attributes( last_name: data['info']['last_name']) if signed_in_resource.last_name.blank? 
       signed_in_resource.update_attributes( email: data['info']['email']) if signed_in_resource.email.blank? 
-      signed_in_resource.update_attributes( nickname: data['info']['nickname']) if signed_in_resource.nickname.blank?
+      # signed_in_resource.update_attributes( nickname: data['info']['nickname']) if signed_in_resource.nickname.blank?
       signed_in_resource.providers.create( info: data['info'], 
             credentials:      data['credentials'], 
             extra:            data['extra'],
