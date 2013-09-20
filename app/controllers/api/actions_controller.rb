@@ -56,7 +56,7 @@ class API::ActionsController < ApplicationController
 			
 			# Create a User with a random password if @user doesn't yet exist
 			if new_user == true
-				@user = create_devise_user(@user) 
+				create_devise_user(@user) 
 			end
 
 			# Find Channel and ActionType
