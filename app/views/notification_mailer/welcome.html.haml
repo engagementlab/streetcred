@@ -5,7 +5,7 @@
 	%body
 		- if @user.full_name.present?
 			%p
-				== Dear #{@user.full_name},
+				== Dear #{@user.first_name},
 		%p
 			== Thanks for signing up for StreetCred! We’re excited to have you on board. The next step is to sign up for a campaign. You can check out our featured campaigns below, or visit the Street Cred #{link_to 'Campaign Page', campaigns_url} for a complete list of active campaigns in your area.
 		%h2
