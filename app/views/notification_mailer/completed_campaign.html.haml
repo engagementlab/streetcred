@@ -13,14 +13,12 @@
 		- for campaign in @completed_campaigns
 			%div
 				%h3= link_to campaign.name, campaign_url(campaign)
-				%p
-					== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
-				%p
-					= campaign.description
+				%p= campaign.description
 				%p
 					== Personal Goal: report #{campaign.required_individual_occurrences}
 					%br/
 					== Community Goal: report #{campaign.required_community_occurrences}
+				%p== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
 
 		%p
 			== Please visit your #{link_to 'dashboard page', participant_path(@user)} to claim your award and send your badge to Mozilla Backpack.
