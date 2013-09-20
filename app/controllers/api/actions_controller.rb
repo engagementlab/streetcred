@@ -16,20 +16,17 @@ class API::ActionsController < ApplicationController
 				if params['email'].present?
 
 					@user = User.where(email: params['email']).first_or_initialize
-					new_user = true unless @user.persisted?
 					# Create a User with a random password if @user doesn't yet exist
-					create_devise_user(@user) if new_user == true
+					unless @user.persisted?
+						@user = create_devise_user(@user)
+					end
 
 					@action = Action.new(params)
 					@action.user_id = @user.id
 					@action.action_type_id = action_type.id
 					@action.save!
 					@completed_campaigns = @user.campaigns_completed_by_action(@action)
-					if new_user == true
-						NotificationMailer.status_email(@user, @action, true).deliver
-					else
-						NotificationMailer.status_email(@user, @action, false).deliver
-					end
+					NotificationMailer.status_email(@user, @action).deliver
 					respond_with(@completed_campaigns)
 				else
 					@error_message = "email parameter is missing"
@@ -52,10 +49,9 @@ class API::ActionsController < ApplicationController
 
 		if message.present?
 			@user = User.where(email: message.from.first).first_or_initialize
-			new_user = true unless @user.persisted?
 			
 			# Create a User with a random password if @user doesn't yet exist
-			if new_user == true
+			unless @user.persisted?
 				@user = create_devise_user(@user) 
 			end
 
@@ -72,11 +68,7 @@ class API::ActionsController < ApplicationController
 					@completed_campaigns = @user.campaigns_completed_by_action(@action)
 					@in_progress_campaigns = @user.campaigns_in_progress_by_action(@action)
 					if @in_progress_campaigns.present? || @completed_campaigns.present?
-						if new_user == true
-							NotificationMailer.status_email(@user, @action, true).deliver
-						else
-							NotificationMailer.status_email(@user, @action, false).deliver
-						end
+						NotificationMailer.status_email(@user, @action).deliver
 					end
 				else
 					@error_message = "Subject line must match an existing ActionType"
@@ -193,8 +185,10 @@ class API::ActionsController < ApplicationController
 			end
 			if @user.present?
 				# Create a User with a random password if @user doesn't yet exist
-				create_devise_user(@user) unless @user.persisted?
-
+				unless @user.persisted?
+					@user = create_devise_user(@user)
+				end
+				
 				if params['report'].present?
 					# Citizens Connect is allowed to create new action types on the fly ('first_or_create')
 					action_type = ActionType.where(channel_id: channel.id).where(name: params['report']['service']).first_or_create
