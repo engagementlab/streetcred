@@ -52,6 +52,7 @@ class API::ActionsController < ApplicationController
 
 		if message.present?
 			@user = User.where(email: message.from.first).first_or_initialize
+			new_user = true unless @user.presisted?
 			# Create a User with a random password if @user doesn't yet exist
 			create_devise_user(@user) if new_user == true
 
