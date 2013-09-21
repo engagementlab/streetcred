@@ -21,4 +21,11 @@
 				%p== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
 
 		%p
-			== Please visit your #{link_to 'dashboard page', participant_path(@user)} to check your progress.
+			What’s next?
+		%ul
+			%li 
+				== Check your #{link_to 'dashboard page', participant_url(@user)} to monitor your progress
+			%li 
+				== View the #{link_to 'participants page', participants_url} to see how you stack up
+			%li
+				== Visit the #{link_to 'campaigns page', campaigns_url} to find a new campaign to start
