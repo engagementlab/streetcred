@@ -3,12 +3,18 @@
 	%head
 		%meta{'content' => "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
 	%body
-		- if @completed_campaigns.count == 1
-			%h2 Congratulations!
-			== You just completed the following campaign:
-		- else
-			%h2 Congratulations!
-			== You just completed the following campaigns:
+		%h2 Congratulations!
+		You earned some major street cred
+
+		- if @user.first_name.present?
+			%p
+				== Hey #{@user.first_name},
+
+		%p
+			- if @completed_campaigns.count == 1
+				Give yourself a pat on the back. You just completed a campaign. Your community, and your fellow Street Credders thank you.
+			- else
+				== Give yourself a pat on the back. You just completed #{@completed_campaigns.count} campaigns. Your community, and your fellow Street Credders thank you.
 
 		- for campaign in @completed_campaigns
 			%div
@@ -21,4 +27,13 @@
 				%p== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
 
 		%p
-			== Please visit your #{link_to 'dashboard page', participant_path(@user)} to claim your award and send your badge to Mozilla Backpack.
+			What’s next?
+		%ul
+			%li 
+				== Check your #{link_to 'dashboard page', participant_url(@user)} to see your progress on other campaigns
+			%li 
+				== View the #{link_to 'participants page', participants_url} to see how you stack up
+			%li
+				== Visit the #{link_to 'campaigns page', campaigns_url} to find a new campaign to start.
+			%li
+				== Send your new awards to Mozilla Backpack from your #{link_to 'dashboard page', participant_url(@user)}
