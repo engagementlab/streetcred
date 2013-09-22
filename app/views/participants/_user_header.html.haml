@@ -14,13 +14,13 @@
 
 			.span1.stat.text-center
 				%h1
-					= @participant.actions.count
-				= pluralizer_helper('Actions', @participant.actions.count)
+					= @participant.completed_campaigns.count
+				= pluralizer_helper('Awards', @participant.completed_campaigns.count)
 
 			.span1.stat.text-center
 				%h1
-					= @participant.completed_campaigns.count
-				= pluralizer_helper('Awards', @participant.completed_campaigns.count)
+					= @participant.actions.count
+				= pluralizer_helper('Actions', @participant.actions.count)
 
 			.span2.stat.text-center
 				- if @participant == current_user
