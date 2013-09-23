@@ -148,38 +148,43 @@ class API::ActionsController < ApplicationController
       elsif request.post?
         instagram_uid = params[:_json].first['object_id']
         provider = Provider.where(provider_uid: instagram_uid).first
-        user = User.where(_id: provider.user_id).first
-        token = provider.try(:token)
+        if provider.present?
+	        token = provider.try(:token)
+  	      user = User.where(_id: provider.user_id).first
 
-        recent_photo = HTTParty.get("https://api.instagram.com/v1/users/self/feed?access_token=#{token}&count=1")
+	        recent_photo = HTTParty.get("https://api.instagram.com/v1/users/self/feed?access_token=#{token}&count=1")
 
-        if recent_photo.present?
-	        tags = recent_photo['data'].first['tags'].collect {|x| "#" + x}
+	        if recent_photo.present? && user.present?
+		        tags = recent_photo['data'].first['tags'].collect {|x| "#" + x}
 
-	        action_type = ActionType.where(channel_id: channel.id).in(provider_uid: tags).first
+		        action_type = ActionType.where(channel_id: channel.id).in(provider_uid: tags).first
 
-	        if user.present? && action_type.present?
-	          user.actions.create(
-	            action_type_id: action_type.id,
-	            api_key: channel.api_key,
-	            record_id: recent_photo['data'].first['id'],
-	            latitude: recent_photo['data'].first['location'].try(:[], 'latitude'),
-	            longitude: recent_photo['data'].first['location'].try(:[], 'longitude'),
-	            url: recent_photo['data'].first['link'],
-	            photo_url: recent_photo['data'].first['images'].try(:[], 'standard_resolution').try(:[], 'url'),
-	            timestamp: Time.now
-	          )
-	          render nothing: true
+		        if user.present? && action_type.present?
+		          user.actions.create(
+		            action_type_id: action_type.id,
+		            api_key: channel.api_key,
+		            record_id: recent_photo['data'].first['id'],
+		            latitude: recent_photo['data'].first['location'].try(:[], 'latitude'),
+		            longitude: recent_photo['data'].first['location'].try(:[], 'longitude'),
+		            url: recent_photo['data'].first['link'],
+		            photo_url: recent_photo['data'].first['images'].try(:[], 'standard_resolution').try(:[], 'url'),
+		            timestamp: Time.now
+		          )
+		          render nothing: true
+		        else
+		          @error_message = "no matching action"
+		          render 'errors'
+		        end
 	        else
-	          @error_message = "no matching action"
-	          render 'errors'
+	        	@error_message = "photo not found"
+	        	render 'errors'
 	        end
-        else
-        	@error_message = "photo not found"
+	      else
+        	@error_message = "provider not found"
         	render 'errors'
-        end
-      end
-    else
+	      end
+	    end
+	  else
       @error_message = "api_key is invalid"
       render 'errors'
     end
