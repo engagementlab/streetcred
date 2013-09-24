@@ -1,9 +1,12 @@
 class ActionType
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Slug
   
   belongs_to :channel
   has_many :actions
+
+  slug :name
   
   field :name, type: String
   field :description, type: String

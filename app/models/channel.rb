@@ -1,9 +1,12 @@
 class Channel
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Slug
   
   has_many :action_types, dependent: :delete
   has_many :actions, :foreign_key => 'api_key', :primary_key => 'api_key'
+  
+  slug :name
   
   field :name, type: String
   field :api_key, type: String

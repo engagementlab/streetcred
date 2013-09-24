@@ -3,6 +3,7 @@ class Campaign
   include Mongoid::MultiParameterAttributes
   include Mongoid::Timestamps
   include Mongoid::Paperclip
+  include Mongoid::Slug
 
   has_and_belongs_to_many :actions, index: true
   has_and_belongs_to_many :messages, index: true
@@ -15,6 +16,8 @@ class Campaign
 
   validates_presence_of :name, :required_actions
   validate :required_actions_unique
+
+  slug :name
   
   field :name, type: String
   field :short_description, type: String
