@@ -23,11 +23,12 @@
 .page
 	.container
 		.row
-			.span12
-				%br/
-				%h3 Description
-				= @campaign.description
-				%br/
+			.span6
+				- if @campaign.description.present?
+					%br/
+					%h3 Description
+					= @campaign.description
+					%br/
 
 				%br/
 				%h3 Requirements
@@ -78,3 +79,11 @@
 					%br/
 					%h4
 						= link_to raw('&larr; Campaigns'), campaigns_path
+
+			.span6
+				- if current_user.present? && @campaign.contributing_individual_actions(current_user).present?
+					%br/
+					%h3 Your Matching Actions
+					%ul
+						- for action in @campaign.contributing_individual_actions(current_user)
+							%li== #{action.action_type.try(:channel).try(:name)} - #{formatted_date(action.created_at)}

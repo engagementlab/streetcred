@@ -11,9 +11,11 @@
 	.progress-row
 		.progress
 			.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
+		.pull-left
+			0
 		.pull-right
 			= campaign.required_community_occurrences
-		0
+	
 .list-row-link
 	= link_to 'details', campaign_path(campaign), class: 'btn btn-info'
 .clear
