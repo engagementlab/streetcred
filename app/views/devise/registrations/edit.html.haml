@@ -26,6 +26,10 @@
 					= f.text_field :last_name
 
 				.field
+					= f.label :neighborhood
+					= f.select :neighborhood, ['Allston', 'Brighton', 'Back Bay', 'Bay Village', 'Beacon Hill', 'Chinatown', 'Charlestown', 'Dorchester', 'Downtown', 'East Boston', 'Fenway', 'Harbor Islands', 'Hyde Park', 'Innovation District', 'Jamaica Plain', 'Kenmore', 'Leather District', 'Longwood', 'Mattapan', 'Mission Hill', 'North End', 'Roslindale', 'Roxbury', 'South Boston', 'South End', 'West Roxbury', 'West End'], include_blank: true
+
+				.field
 					= f.label :email
 				= f.email_field :email
 

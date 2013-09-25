@@ -16,6 +16,7 @@ class User
   field :contact_id, type: String, default: ""
   field :first_name, type: String, default: ""
   field :last_name, type: String, default: ""
+  field :neighborhood, type: String
   field :email, type: String, default: ""
   field :phone, type: String, default: ""
   field :slug, type: String
