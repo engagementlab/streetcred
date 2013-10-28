@@ -53,7 +53,8 @@ class API::ActionsController < ApplicationController
 		message = Mail.new(params)
 
 		if message.present?
-			@user = User.where(email: message.from.first).first_or_initialize
+			logger.info("************************** #{message.from.first} **********************")
+			@user = User.where(email: message.from.first.downcase).first_or_initialize
 			if @user.persisted?
 				new_user = false
 			else
@@ -195,8 +196,8 @@ class API::ActionsController < ApplicationController
 		if channel.present?
 			if params['user']['email'].present?
 				@user = User.where(email: params['user']['email']).first_or_initialize
-			elsif params['user']['contact_id'].present?
-				@user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
+			# elsif params['user']['contact_id'].present?
+			# 	@user = User.where(contact_id: params['user']['contact_id']).first_or_initialize
 			end
 			if @user.present?
 				# Create a User with a random password if @user doesn't yet exist
