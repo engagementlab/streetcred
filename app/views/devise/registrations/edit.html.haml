@@ -64,6 +64,12 @@
 					= f.label :password_confirmation
 					= f.password_field :password_confirmation
 
+				.field
+					= f.label :gravatar
+					- if @user.gravatar.present?
+						= image_tag @user.gravatar.url(:thumbnail)
+					= f.file_field :gravatar
+
 				.actions
 					= f.submit "Update", :class => 'btn btn-info'
 

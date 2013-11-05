@@ -9,7 +9,10 @@
 		
 		.row.user.well
 			.span1.gravatar
-				= image_tag @participant.gravatar_url
+				- if @participant.gravatar.present?
+					= image_tag @participant.gravatar.url(:thumbnail)
+				- else
+					= image_tag @participant.gravatar_url
 			.span4.user-name
 				%h3= @participant.display_name
 				== Member since #{formatted_month_year(@participant.created_at)}

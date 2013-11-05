@@ -1,6 +1,7 @@
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Paperclip
   include Gravtastic
   gravtastic
   
@@ -60,6 +61,12 @@ class User
   
   # index({ provider_uid: 1 }, { unique: true})
   index({ slug: 1 }, { unique: true})
+
+  if Rails.env == 'production'
+    has_mongoid_attached_file :gravatar, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { icon: '30x30#', thumbnail: '70x70#', large: '150x150>' }
+  else
+    has_mongoid_attached_file :gravatar, :url => "users/:style/:filename", :path => "#{Rails.root}/public/assets/users/:style/:filename", styles: { icon: '30x30#', thumbnail: '70x70#', large: '150x150>' }
+  end
 
   def claimed?
     sign_in_count.present? && sign_in_count > 0
