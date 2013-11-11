@@ -2,7 +2,9 @@ module Oauth
   
   def self.find_or_create_from_oauth(data, provider_name, signed_in_resource=nil)
     provider = Provider.where(provider: provider_name, provider_uid: data['uid']).first
+    logger.info "*********************** searching for user with email address #{data['info']['email']}"
     user = User.where(email: data['info']['email']).first
+    logger.info "*********************** user = #{user}"
 
     if provider.present? && provider.user.present?
       provider.update_attributes( info: data['info'], 
