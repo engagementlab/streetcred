@@ -62,40 +62,6 @@
 					.span3.text-left.home-description.white
 						See how your actions on these campaigns are improving the city.
 
-.full-width-large
-	.container
-		.row
-			.span12.text-center
-				%h1
-					How it works
-				%br/
-			.span4
-				%div.text-center
-					= image_tag('sample-badge-icon.png')
-					%h3.blue
-						Campaigns
-				%p
-					== Campaigns are projects that are defined by City Hall. Campaigns are active for a limited time-frame. You contribute to campaigns by taking qualified actions. #{link_to 'Click here', campaigns_path} to see a list of current campaigns.
-			.span4
-				%div.text-center
-					= image_tag('sample-badge-individual-award.png')
-					%h3.blue
-						Personal Awards
-				%p
-					Personal awards are earned by completing all of the required actions on a campaign. Actions include things like Citizen Connect reports, Foursquare check-ins, and Instagram photos. 
-					- if current_user
-						== You can check your progress toward personal awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
-
-			.span4
-				%div.text-center
-					= image_tag('sample-badge-community-award.png')
-					%h3.blue
-						Community Awards
-				%p
-					Once you earn a personal award, you can continue to contribute to the broader, community goal. Once the community goal has been met, all individual participants will earn the community award.
-					- if current_user
-						== You can check your progress toward community awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
-
 - unless current_user
 	.full-width-medium.light-yellow-background#get-started
 		.container
@@ -114,6 +80,41 @@
 						%li.more -or -
 						%li.more
 							= link_to 'Sign In', sign_in_path
+
+
+.full-width-large
+	.container
+		.row
+			.span12.text-center
+				%h1
+					How it works
+				%br/
+			.span4
+				%div.text-center
+					= image_tag('sample-badge-icon.png')
+					%h3.blue
+						Campaigns
+				%p
+					== Campaigns are projects that are defined by City Hall and community partners. Campaigns are active for a limited time-frame. You contribute to campaigns by taking qualified actions.  #{link_to 'Click here', campaigns_path} to see a list of current campaigns.
+			.span4
+				%div.text-center
+					= image_tag('sample-badge-individual-award.png')
+					%h3.blue
+						Personal Awards
+				%p
+					Personal awards are earned by taking actions specific to each campaign. Actions can include submitting issues using Citizen Connect, checking-in using Foursquare, sharing photos using Instagram, and reporting acts using email.
+					- if current_user
+						== You can check your progress toward personal awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
+
+			.span4
+				%div.text-center
+					= image_tag('sample-badge-community-award.png')
+					%h3.blue
+						Community Awards
+				%p
+					Once you earn a personal award, you can continue to contribute to the broader, community goal. Once the community goal has been met, all individual participants will earn the community award.
+					- if current_user
+						== You can check your progress toward community awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
 
 .full-width-large.dark-gray-background
 	.container
