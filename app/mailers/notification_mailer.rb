@@ -2,9 +2,8 @@ class NotificationMailer < ActionMailer::Base
   default from: "notifications@streetcred.us"
   add_template_helper(ApplicationHelper)
   
-  def welcome(user, action)
+  def welcome(user)
     @user = user
-    @action = action
     @current_campaigns = Campaign.active
     mail(:to => user.email,
          :subject => "Welcome to StreetCred!")

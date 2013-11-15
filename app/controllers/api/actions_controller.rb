@@ -53,9 +53,9 @@ class API::ActionsController < ApplicationController
 		message = Mail.new(params)
 
 		if message.present?
-			logger.info("************************** found exisitng user with email #{message.from.first} **********************")
 			@user = User.where(email: message.from.first.downcase).first_or_initialize
 			if @user.persisted?
+				logger.info("************************** found existing user with email #{message.from.first} **********************")
 				new_user = false
 			else
 				logger.info("************************** created new user with email #{message.from.first} **********************")
@@ -77,6 +77,8 @@ class API::ActionsController < ApplicationController
 						timestamp: message.date
 					)
 					send_notification_email(@user, @action, new_user)
+				elsif new_user == true
+					send_notification_email(@user, nil, new_user)
 				else
 					@error_message = "Subject line must match an existing ActionType"
 					render 'errors'
@@ -301,7 +303,7 @@ class API::ActionsController < ApplicationController
 
 	def send_notification_email(user, action, new_user)
 		if new_user == true
-			NotificationMailer.welcome(user, action).deliver
+			NotificationMailer.welcome(user).deliver
 		elsif user.campaigns_completed_by_action(action).present?
 			NotificationMailer.completed_campaign(user, action).deliver
 		elsif user.campaigns_in_progress_by_action(action).present?

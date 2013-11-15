@@ -17,7 +17,7 @@
 			.span3.offset1.text-right.home-navigation.white
 				%ul.slidesjs-pagination
 					%li#nav-item-1.nav-item{:style=>'color: white; cursor: pointer; cursor: hand;'}
-						get&nbsp;an&nbsp;app
+						get&nbsp;started
 						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-1', style: 'visibility: visible'
 					%li#nav-item-2.nav-item{:style=>'color: #95ddeb; cursor: pointer; cursor: hand;'}
 						take&nbsp;action
@@ -35,7 +35,13 @@
 						= image_tag('/assets/iphone-1.png')
 					.span3.text-left.home-description.white
 						%p
-							To get started, download an app to your phone. StreetCred supports Instagram, Foursquare and Citizens Connect.
+							Start using StreetCred by sending an email to reports@streetcred.us or by filing a report with your Citizens Connect account (make sure to add your email address to your Citizens Connect profile.)  You'll be notified by email with instructions on how to claim your account.
+				%div
+					.span4.text-center
+						= image_tag('/assets/iphone-4.png')
+					.span3.text-left.home-description.white
+						Support a StreetCred campaign by using Citizens Connect, Instagram, Foursquare and email to report, share and check-in across the city, making your community even better.
+						%br/
 						%br/
 						= link_to image_tag('/assets/app-store.jpg'), 'https://itunes.apple.com/us/app/boston-citizens-connect/id330894558?mt=8'
 						%br/
@@ -43,21 +49,18 @@
 
 				%div
 					.span4.text-center
-						= image_tag('/assets/iphone-4.png')
-					.span3.text-left.home-description.white
-						Now the fun begins. Use the app to report issues in your neighborhood. The app will automatically configure your StreetCred account, which you can claim by loggin in here. Get started on the current campaigns.
-
-				%div
-					.span4.text-center
 						= image_tag('/assets/iphone-3.png')
 					.span3.text-left.home-description.white
-						With each action you take, you'll earn cred. And when you complete campaigns, you'll earn a digital badge to celebrate your work. You can export your badges to Mozilla Backpack to share your work.
+						With each action you take, you'll earn cred. And when you complete campaigns, you'll earn a digital badge to celebrate your work. StreetCred badges are compatible with the Mozilla OpenBadges format, so you can share your achievements with the broader community.
+						%br/
+						%br/
+						= link_to image_tag('/assets/OpenBadges.png'), 'http://openbadges.org/'
 
 				%div
 					.span4.text-center
 						= image_tag('/assets/iphone-2.png')
 					.span3.text-left.home-description.white
-						You're taking action, working on campaigns, and seeing the change. Isn't it great to improve your city?
+						See how your actions on these campaigns are improving the city.
 
 .full-width-large
 	.container
@@ -72,14 +75,14 @@
 					%h3.blue
 						Campaigns
 				%p
-					== Campaigns are city-wide projects that are defined by City Hall. Campaigns are active for a limited time-frame. You contribute to campaigns by taking qualified actions. #{link_to 'Click here', campaigns_path} to see a list of current campaigns.
+					== Campaigns are projects that are defined by City Hall. Campaigns are active for a limited time-frame. You contribute to campaigns by taking qualified actions. #{link_to 'Click here', campaigns_path} to see a list of current campaigns.
 			.span4
 				%div.text-center
 					= image_tag('sample-badge-individual-award.png')
 					%h3.blue
 						Personal Awards
 				%p
-					Personal awards are earned by completing all of the required actions on a campaign. Actions include things like Citizen Connect reports, Foursquare checkins, and Instagram photos. 
+					Personal awards are earned by completing all of the required actions on a campaign. Actions include things like Citizen Connect reports, Foursquare check-ins, and Instagram photos. 
 					- if current_user
 						== You can check your progress toward personal awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
 
