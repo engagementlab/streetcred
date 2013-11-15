@@ -12,7 +12,7 @@ class User
   scope :active, where(:sign_in_count.exists => true).where(:sign_in_count.gt => 0 )
   scope :visible, where(:shared => true)
 
-  devise :database_authenticatable, :recoverable, :trackable, :omniauthable, :omniauth_providers => [:foursquare, :instagram]
+  devise :database_authenticatable, :registerable, :recoverable, :trackable, :omniauthable, :omniauth_providers => [:foursquare, :instagram]
 
   field :contact_id, type: String, default: ""
   field :first_name, type: String, default: ""

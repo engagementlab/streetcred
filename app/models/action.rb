@@ -10,6 +10,7 @@ class Action
   has_and_belongs_to_many :campaigns, dependent: :nullify, index: true
   
   scope :mappable, exists(latitude: true).exists(longitude: true)
+  scope :owned, exists(user_id: true)
 
   field :api_key, type: String
   field :record_id, type: String # provider UID
@@ -38,7 +39,7 @@ class Action
 
   before_create :set_coordinates
   after_create :assign_campaigns
-  
+
   def reversed_coordinates
     coordinates.try(:reverse)
   end
@@ -46,6 +47,7 @@ class Action
   def matching_campaigns
     Campaign.elem_match(required_actions: {action_type_id: action_type.id}).lt(start_time: created_at).gt(end_time: created_at)
   end
+
 
   private
   
