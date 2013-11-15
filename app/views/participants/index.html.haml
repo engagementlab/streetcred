@@ -3,6 +3,9 @@
 
 	%p.medium
 		== Users take part in StreetCred by performing qualifying actions through approved channels. As of today, participants have taken <span class="larger bold">#{Action.count}</span> actions. Through those actions, they have earned <span class="larger bold">#{User.completed_campaigns.count}</span> awards, and completed <span class="larger bold">#{Campaign.completed_community_campaigns.count}</span> community campaigns.
+	%p
+		Participants earns 5 points for every action taken. They even earn 5 points for every  report they make through Citizens Connect, even if it is not part of a campaign.  If they earn an individual award by completing a campaign, they earn 25 points.  If they their action helps the community meet its goal, they earn an additional 50 points.  
+
 	%br/
 
 	- @participants.each do |participant|
