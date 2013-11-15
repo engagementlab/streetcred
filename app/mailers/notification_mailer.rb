@@ -6,7 +6,7 @@ class NotificationMailer < ActionMailer::Base
     @user = user
     @current_campaigns = Campaign.active
     mail(:to => user.email,
-         :subject => "Welcome to StreetCred!")
+         :subject => "Welcome to StreetCred")
   end
 
   def completed_campaign(user, action)
@@ -14,7 +14,7 @@ class NotificationMailer < ActionMailer::Base
     @action = action
     @completed_campaigns = user.campaigns_completed_by_action(action)
     mail(:to => user.email,
-         :subject => "You just completed a StreetCred campaign")
+         :subject => "Congratulations! Campaign Completed!")
   end
 
   def progress(user, action)

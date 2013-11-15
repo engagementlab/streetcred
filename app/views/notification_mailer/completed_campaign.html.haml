@@ -3,12 +3,9 @@
 	%head
 		%meta{'content' => "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
 	%body
-		%h2 Congratulations!
-		You earned some major street cred
-
 		- if @user.first_name.present?
 			%p
-				== Hey #{@user.first_name},
+				== Dear #{@user.first_name},
 
 		%p
 			- if @completed_campaigns.count == 1
@@ -37,3 +34,7 @@
 				== Visit the #{link_to 'campaigns page', campaigns_url} to find a new campaign to start
 			%li
 				== Send your new awards to Mozilla Backpack from your #{link_to 'dashboard page', participant_url(@user)}
+
+		%p Thanks again for all your work.
+
+		%p - The Street Cred Team
