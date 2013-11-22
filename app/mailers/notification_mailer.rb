@@ -9,6 +9,20 @@ class NotificationMailer < ActionMailer::Base
          :subject => "Welcome to StreetCred")
   end
 
+  def email_welcome(user)
+    @user = user
+    @current_campaigns = Campaign.active
+    mail(:to => user.email,
+         :subject => "Welcome to StreetCred")
+  end
+
+  def citizens_connect_welcome(user)
+    @user = user
+    @current_campaigns = Campaign.active
+    mail(:to => user.email,
+         :subject => "You Just Earned Street Cred!")
+  end
+
   def completed_campaign(user, action)
     @user = user
     @action = action

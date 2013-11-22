@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+%html
+	%head
+		%meta{'content' => "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
+	%body
+		- if @user.first_name.present?
+			%p
+				== Dear #{@user.first_name},
+		
+		%p Thanks for wanting to join StreetCred!
+
+		%p You're one step away from joining the team.  Just click here to claim your profile:
+
+		%p= link_to 'www.streetcred.us/sign_in', "http://www.streetcred.us/sign_in?email=#{@user.email}"
+	
+		%p Soon you will be on your way to earning recognition for all the good deeds you do across the City.
+
+		%p Thank you for all you do to make Boston great!
+
+		%p - The Street Cred Team
+

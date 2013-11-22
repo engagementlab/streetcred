@@ -53,7 +53,7 @@ class API::ActionsController < ApplicationController
 		message = Mail.new(params)
 
 		if message.present?
-			@user = User.where(email: message.from.first.downcase).first_or_initialize
+			@user = User.where(email: message.from.first.downcase.try(:strip)).first_or_initialize
 			if @user.persisted?
 				logger.info("************************** found existing user with email #{message.from.first} **********************")
 				new_user = false
@@ -76,9 +76,15 @@ class API::ActionsController < ApplicationController
 						api_key: channel.api_key,
 						timestamp: message.date
 					)
-					send_notification_email(@user, @action, new_user)
+					if new_user == true
+						NotificationMailer.email_welcome(@user).deliver
+					elsif user.campaigns_completed_by_action(action).present?
+						NotificationMailer.completed_campaign(@user, action).deliver
+					elsif user.campaigns_in_progress_by_action(action).present?
+						NotificationMailer.progress(@user, action).deliver
+					end
 				elsif new_user == true
-					send_notification_email(@user, nil, new_user)
+					NotificationMailer.email_welcome(@user).deliver
 				else
 					@error_message = "Subject line must match an existing ActionType"
 					render 'errors'
@@ -231,7 +237,13 @@ class API::ActionsController < ApplicationController
 						timestamp:      params['report']['timestamp']
 					)
 					@completed_campaigns = @user.campaigns_completed_by_action(action)
-					send_notification_email(@user, action, new_user)
+					if new_user == true
+						NotificationMailer.citizens_connect_welcome(@user).deliver
+					elsif user.campaigns_completed_by_action(action).present?
+						NotificationMailer.completed_campaign(@user, action).deliver
+					elsif user.campaigns_in_progress_by_action(action).present?
+						NotificationMailer.progress(@user, action).deliver
+					end
 					respond_with(@completed_campaigns)
 				else
 					@error_message = "'report' parameters are missing (e.g. {'report':{params}})"

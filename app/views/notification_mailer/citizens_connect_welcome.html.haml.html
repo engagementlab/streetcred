@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+%html
+	%head
+		%meta{'content' => "text/html; charset=UTF-8", 'http-equiv' => "Content-Type"}
+	%body
+		- if @user.first_name.present?
+			%p
+				== Dear #{@user.first_name},
+		
+		%p Thanks for just using Citizens Connect!
+
+		%p You just made your neighborhood a little better, and the City of Boston wants to thank you for it.
+
+		%p We're piloting a new platform called StreetCred. This is an effort by the City of Boston, in collaboration with Emerson College, to recognize those local heroes who take action to make their neighborhoods better. Participants earn cred for good deeds - such as the one you just did, as part of specific community campaigns.
+
+		%p To learn more about StreetCred and some of the on-going campaigns, and to claim your StreetCred profile, click here:
+
+		%p= link_to 'www.streetcred.us/sign_in', "http://www.streetcred.us/sign_in?email=#{@user.email}"
+
+		%p Thank you for all you do to make Boston great!
+
+		%p - The Street Cred Team

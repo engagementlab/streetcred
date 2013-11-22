@@ -7,12 +7,27 @@
 			%p
 				== Dear #{@user.first_name},
 		%p
-			Thanks for taking action!  
+			== Thanks for signing up for StreetCred! We're excited to have you on board. The next step is to sign up for a campaign. You can check out our featured campaigns below, or visit the Street Cred #{link_to 'Campaign Page', campaigns_url} for a complete list of active campaigns in your area.
+		%h2
+			Featured Campaigns:
 
-		%p By using Citizens Connect or by sending an email to reports@streetcred.us, you have earned the chance to join Street Cred. This is an effort by the City of Boston to recognize those local heroes who take action to make their neighborhoods better. Participants earn cred for good deeds done across the city, as part of specific community campaigns.
+		- for campaign in @current_campaigns
+			%div
+				%h3= link_to campaign.name, campaign_url(campaign)
+				%p= campaign.description
+				%p
+					== Personal Goal: report #{campaign.required_individual_occurrences}
+					%br/
+					== Community Goal: report #{campaign.required_community_occurrences}
+				%p== #{formatted_date(campaign.start_time)} &mdash; #{formatted_date(campaign.end_time)}
 
-		%p To get started, visit Street Cred and sign in.  Once you’ve claimed your profile, check out some of the current campaigns.
+		%h2 What is a Campaign?
+		%p
+			A Street Cred Campaign is a series of actions that relate to a common theme. A campaign can be about anything, but all campaigns have been custom designed around an important challenge facing your community. 
+		%p
+			Reporting a pothole on Citizens Connect puts you one step closer to completing the Pothole Patroller campaign, and using Foursquare to check in at a local park will put you on the path to becoming a Park Explorer. Each action earns you Cred, and when you've accomplished them all, you've completed the campaign!
+		%p
+			Each campaign has a personal goal and a community goal to measure your individual impact as well as the progress of your community.
+		%p
+			== Learn more and view active campaigns on the #{link_to 'Campaign Page', campaigns_url}. 
 
-		%p We look look forward to working with you!
-
-		%p - The Street Cred Team
