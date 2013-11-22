@@ -239,9 +239,9 @@ class API::ActionsController < ApplicationController
 					@completed_campaigns = @user.campaigns_completed_by_action(action)
 					if new_user == true
 						NotificationMailer.citizens_connect_welcome(@user).deliver
-					elsif user.campaigns_completed_by_action(action).present?
+					elsif @user.campaigns_completed_by_action(action).present?
 						NotificationMailer.completed_campaign(@user, action).deliver
-					elsif user.campaigns_in_progress_by_action(action).present?
+					elsif @user.campaigns_in_progress_by_action(action).present?
 						NotificationMailer.progress(@user, action).deliver
 					end
 					respond_with(@completed_campaigns)
