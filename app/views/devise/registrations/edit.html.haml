@@ -82,7 +82,7 @@
 		.span4
 			%h3 Connect Your Accounts
 			%p
-				StreetCred allows you to use apps like Foursquare and Instagram to earn points &mdash; but you must connect your accounts (you can disconnect your accounts from within the app at any time.)
+				StreetCred allows you to use apps like Foursquare and Instagram to earn points &mdash; but first you must connect your accounts.
 			%br/
 
 			- if resource == current_user
@@ -103,3 +103,5 @@
 					%div
 						= link_to image_tag('instagram.png'), user_omniauth_authorize_path('instagram')
 						= link_to 'Connect Instagram Account', user_omniauth_authorize_path('instagram')
+
+				%p Note: you can disconnect your accounts from within the app at any time.
