@@ -30,27 +30,24 @@
 			.actions
 				= submit_tag 'Search', class: 'btn btn-info'
 	- else
-		- unless current_user
-			.full-width-medium.light-yellow-background#get-started
-				.container
-					.row
-						.span3
-							%h2 New here?
-						.span9
-							%ul.inline
-								%li
-									%h3 Search for your account
-								%li
-									= form_tag('/participants/search', method: :get)
-									- if params[:email].present?
-										= email_field_tag :email, nil, value: params[:email]
-									- else
-										= email_field_tag :email, nil, placeholder: 'Your email address'
-
-								%li
-									= submit_tag 'Search', class: 'btn btn-info'
-							
 		.container.page
+			- unless current_user
+				%h2 New here?
+				<form accept-charset="UTF-8" action="/participants/search" method="get">
+				<div style="margin:0;padding:0;display:inline">
+				<input name="utf8" type="hidden" value="✓">
+				</div>
+				<div class="field">
+				<label for="user_email">Search for your account</label>
+				<input id="email" name="email" placeholder="Your email address" type="email">
+				</div>
+				<div>
+				<br />
+				<input class="btn btn-info" name="commit" type="submit" value="Search">
+				</div>
+				</form>
+				%br/
+
 			- if flash[:notice]
 				.alert.alert-success
 					= flash[:notice]
@@ -60,21 +57,22 @@
 
 			%h2 Returning user?
 
-			= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-				.field
-					= f.label :email
-					= f.email_field :email, :autofocus => true
+			%div
+				= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+					.field
+						= f.label :email
+						= f.email_field :email, :autofocus => true
 
-				.field
-					= f.label :password
-					= f.password_field :password
+					.field
+						= f.label :password
+						= f.password_field :password
 
-				.actions
-					= f.submit "Sign in", :class => "btn btn-info"
+					.actions
+						= f.submit "Sign in", :class => "btn btn-info"
 
-				%div
-					%br/
-					= link_to 'Forgot password?', new_user_password_url
+					%div
+						%br/
+						= link_to 'Forgot password?', new_user_password_url
 
 			%br/
 			%h3 No Account?
