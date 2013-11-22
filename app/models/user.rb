@@ -99,6 +99,10 @@ class User
   def completed_campaigns
     Campaign.all.select {|x| x.requirements_met_by_individual?(self)}
   end
+
+  def completed_expired_campaigns
+    Campaign.all.select {|x| x.requirements_met_by_individual?(self) && x.end_time < Time.now}
+  end
   
   def campaigns_completed_by_action(action)
     # all user.campaigns have been completed; those associated with the action were completed by the action
