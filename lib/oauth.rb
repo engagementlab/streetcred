@@ -2,9 +2,9 @@ module Oauth
   
   def self.find_or_create_from_oauth(data, provider_name, signed_in_resource=nil)
     provider = Provider.where(provider: provider_name, provider_uid: data['uid']).first
-    puts "*********************** searching for user with email address #{data['info']['email']}"
-    user = User.where(email: data['info']['email']).first
-    puts "*********************** user = #{user}"
+    # puts "*********************** searching for user with email address #{data['info']['email']}"
+    # user = User.where(email: data['info']['email']).first
+    # puts "*********************** user = #{user}"
 
     if provider.present? && provider.user.present?
       provider.update_attributes( info: data['info'], 
@@ -32,18 +32,18 @@ module Oauth
       )
       return signed_in_resource
 
-    elsif user.present? && provider.blank?
-      user.update_attributes( first_name: data['info']['first_name'], 
-            last_name: data['info']['last_name']
-      )
-      user.providers.create( info: data['info'], 
-            credentials:  data['credentials'], 
-            extra:        data['extra'],
-            provider_uid: data['uid'],
-            provider:     provider_name,
-            token: data['credentials']['token']
-      )
-      return user
+    # elsif user.present? && provider.blank?
+    #   user.update_attributes( first_name: data['info']['first_name'], 
+    #         last_name: data['info']['last_name']
+    #   )
+    #   user.providers.create( info: data['info'], 
+    #         credentials:  data['credentials'], 
+    #         extra:        data['extra'],
+    #         provider_uid: data['uid'],
+    #         provider:     provider_name,
+    #         token: data['credentials']['token']
+    #   )
+    #   return user
 
     else # provider.blank? && user.blank? && signed_in_resource.blank?
       if data['info'] && data['info']['location']
