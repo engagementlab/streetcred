@@ -1,50 +1,73 @@
-- unless current_user
-	.full-width-medium.light-yellow-background#get-started
-		.container
-			.row
-				.span3
-					%h2 New here?
-				.span9
-					%ul.inline
-						%li
-							%h3 Search for your account
-						%li
-							= form_tag('/participants/search', method: :get)
-							- if params[:email].present?
-								= email_field_tag :email, nil, value: params[:email]
-							- else
-								= email_field_tag :email, nil, placeholder: 'Your email address'
+- if params[:controller] == 'admin/sessions'
+	.container.page
+	
+		%h2 Sign In
 
-						%li
-							= submit_tag 'Search', class: 'btn btn-info'
-					
-.container.page
-	- if flash[:notice]
-		.alert.alert-success
-			= flash[:notice]
-	- if flash[:alert]
-		.alert.alert-error
-			=raw flash[:alert]
+		= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+			.field
+				= f.label :email
+				= f.email_field :email, :autofocus => true
 
-	%h2 Returning user?
+			.field
+				= f.label :password
+				= f.password_field :password
 
-	= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-		.field
-			= f.label :email
-			= f.email_field :email, :autofocus => true
+			.actions
+				= f.submit "Sign in", :class => "btn btn-info"
 
-		.field
-			= f.label :password
-			= f.password_field :password
+			%div
+				%br/
+				= link_to 'Forgot password?', new_user_password_url
 
-		.actions
-			= f.submit "Sign in", :class => "btn btn-info"
+- else
 
-		%div
-			%br/
-			= link_to 'Forgot password?', new_user_password_url
+	- unless current_user
+		.full-width-medium.light-yellow-background#get-started
+			.container
+				.row
+					.span3
+						%h2 New here?
+					.span9
+						%ul.inline
+							%li
+								%h3 Search for your account
+							%li
+								= form_tag('/participants/search', method: :get)
+								- if params[:email].present?
+									= email_field_tag :email, nil, value: params[:email]
+								- else
+									= email_field_tag :email, nil, placeholder: 'Your email address'
 
-	%br/
-	%h3 No Account?
-	%p
-		== Get started by sending us an email to #{mail_to 'reports@streetcred.us', 'reports@streetcred.us'}.   Make sure to use the same email account as you use with Citizens Connect; otherwise you will create separate accounts.
+							%li
+								= submit_tag 'Search', class: 'btn btn-info'
+						
+	.container.page
+		- if flash[:notice]
+			.alert.alert-success
+				= flash[:notice]
+		- if flash[:alert]
+			.alert.alert-error
+				=raw flash[:alert]
+
+		%h2 Returning user?
+
+		= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+			.field
+				= f.label :email
+				= f.email_field :email, :autofocus => true
+
+			.field
+				= f.label :password
+				= f.password_field :password
+
+			.actions
+				= f.submit "Sign in", :class => "btn btn-info"
+
+			%div
+				%br/
+				= link_to 'Forgot password?', new_user_password_url
+
+		%br/
+		%h3 No Account?
+		%p
+			== Get started by sending us an email to #{mail_to 'reports@streetcred.us', 'reports@streetcred.us'}.   Make sure to use the same email account as you use with Citizens Connect; otherwise you will create separate accounts.
