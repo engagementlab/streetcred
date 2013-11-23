@@ -10,7 +10,8 @@ module Oauth
       provider.update_attributes( info: data['info'], 
             credentials: data['credentials'], 
             extra: data['extra'],
-            token: data['credentials']['token']
+            token: data['credentials']['token'],
+            user_id: signed_in_resource.id
       )
       return signed_in_resource
 
