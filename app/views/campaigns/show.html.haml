@@ -72,7 +72,7 @@
 		- if @campaign.radius.present?
 			.row
 				.span12
-					%h4 Location
+					%h2 Location
 					%p== Radius: #{@campaign.radius} miles
 					- if @campaign.latitude.present?
 						%p== Center Latitude: #{@campaign.latitude} 
@@ -81,7 +81,7 @@
 
 		.row
 			.span12.center
-				%h3 Duration
+				%h2 Duration
 				%p
 					== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
 
@@ -95,7 +95,7 @@
 			.span12.Center
 				- if current_user.present? && @campaign.contributing_individual_actions(current_user).present?
 					%br/
-					%h3 Your Matching Actions
+					%h2 Your Matching Actions
 					%ul
 						- for action in @campaign.contributing_individual_actions(current_user)
 							%li== #{action.action_type.try(:channel).try(:name)} - #{formatted_date(action.created_at)}
