@@ -1,6 +1,4 @@
 ---
-OpenBadges.png: OpenBadges-9ca6f171767d2659bd7eb8bd9bc7ecc6.png
-OpenBadges/index.png: OpenBadges-9ca6f171767d2659bd7eb8bd9bc7ecc6.png
 android-store.jpg: android-store-f42b81fd7337dec83ae5216e5c613b32.jpg
 android-store/index.jpg: android-store-f42b81fd7337dec83ae5216e5c613b32.jpg
 app-store.jpg: app-store-8922a3586572d99c0b711795d0e6d34d.jpg
@@ -49,14 +47,16 @@ missing.png: missing-e9f52703748e7b48f05f6613ce094405.png
 missing/index.png: missing-e9f52703748e7b48f05f6613ce094405.png
 monum.png: monum-d88eea2a3123cf44dc5a074821e1e358.png
 monum/index.png: monum-d88eea2a3123cf44dc5a074821e1e358.png
-open_badges.png: open_badges-3ac5121ce9206c4de8d2e4dab81169dd.png
-open_badges/index.png: open_badges-3ac5121ce9206c4de8d2e4dab81169dd.png
+open_badges_issuer.png: open_badges_issuer-9ca6f171767d2659bd7eb8bd9bc7ecc6.png
+open_badges_issuer/index.png: open_badges_issuer-9ca6f171767d2659bd7eb8bd9bc7ecc6.png
 sample-badge-community-award.png: sample-badge-community-award-5785526352803234b5036121d27e86dc.png
 sample-badge-community-award/index.png: sample-badge-community-award-5785526352803234b5036121d27e86dc.png
 sample-badge-icon.png: sample-badge-icon-e9749e2b4d1daec6599ecd9565717d26.png
 sample-badge-icon/index.png: sample-badge-icon-e9749e2b4d1daec6599ecd9565717d26.png
 sample-badge-individual-award.png: sample-badge-individual-award-73f721d108e97628eca10ffc8f11c2c6.png
 sample-badge-individual-award/index.png: sample-badge-individual-award-73f721d108e97628eca10ffc8f11c2c6.png
+send_to_open_badges.png: send_to_open_badges-962100f904b02de9aa3063d64fff525a.png
+send_to_open_badges/index.png: send_to_open_badges-962100f904b02de9aa3063d64fff525a.png
 application.js: application-2c23a546d9b85acf8b53336ac998ff35.js
 application/index.js: application-2c23a546d9b85acf8b53336ac998ff35.js
 application.css: application-101d0dd6e70326da66628debed375e12.css
