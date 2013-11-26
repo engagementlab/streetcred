@@ -60,7 +60,7 @@
 							%table
 								%tr
 									%td{style: 'padding-right: 20px;'}
-										= image_tag channel.icon.url(:large)
+										= image_tag channel.logo.url(:original)
 									%td
 										- for required_action in @campaign.required_actions
 											- if required_action.action_type.try(:channel) == channel
