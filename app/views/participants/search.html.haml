@@ -35,4 +35,4 @@
 			.span2.pull-right.details-button.text-right
 				= form_for(@participant, :as => :user, :url => password_path(:user), :html => { :method => :post }) do |f|
 					= f.hidden_field :email, value: @participant.email
-					= f.submit 'Claim Profile', class: 'btn btn-info'
+					= f.submit 'Claim Your Profile', class: 'btn btn-info'
