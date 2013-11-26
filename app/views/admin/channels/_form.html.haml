@@ -12,7 +12,7 @@
 .field
   = f.label :logo
   - if @channel.logo.present?
-    = image_tag @channel.logo.url(:original)
+    = image_tag @channel.logo.url(:thumb)
   = f.file_field :logo
 %br/
 

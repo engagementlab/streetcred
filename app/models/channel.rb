@@ -20,9 +20,9 @@ class Channel
   before_create :generate_api_key
   
   if Rails.env == 'production'
-    has_mongoid_attached_file :logo, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }
+    has_mongoid_attached_file :logo, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { thumb: '48x48#' }
   else
-    has_mongoid_attached_file :logo, :url => "channels/:style/:filename", :path => "#{Rails.root}/public/assets/channels/:style/:filename"
+    has_mongoid_attached_file :logo, :url => "channels/:style/:filename", :path => "#{Rails.root}/public/assets/channels/:style/:filename", styles: { thumb: '48x48#'}
   end
 
   def rekey!
