@@ -74,17 +74,25 @@ class User
 
   def score
     score = 0
-    score += (self.actions.count * 5)
-    score += (self.completed_campaigns.count * 25)
-    score += (self.completed_community_campaigns.count * 50)
+    score += (actions.count * 5)
+    score += (completed_campaigns.count * 25)
+    score += (completed_community_campaigns.count * 50)
     score
   end
 
   def display_name
-    if self.first_name.blank? && self.last_name.blank?
+    if first_name.blank? && last_name.blank?
       'anonymous'
     else
       "#{self.first_name} #{self.last_name}"
+    end
+  end
+
+  def name_or_email
+    if first_name.present? && last_name.present?
+      "#{first_name} #{last_name}"
+    else
+      email
     end
   end
 

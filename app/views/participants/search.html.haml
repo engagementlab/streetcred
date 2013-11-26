@@ -5,7 +5,7 @@
 			== Please #{link_to 'create an account', new_user_registration_path}.
 
 	- else
-		%h3 We found one matching profile:
+		%h3 Is this you?
 		
 		.row.user.well
 			.span1.gravatar
@@ -14,7 +14,7 @@
 				- else
 					= image_tag @participant.gravatar_url
 			.span4.user-name
-				%h3= @participant.display_name
+				%h3= @participant.name_or_email
 				== Member since #{formatted_month_year(@participant.created_at)}
 
 			.span1.stat.text-center
