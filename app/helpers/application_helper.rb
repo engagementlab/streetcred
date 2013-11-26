@@ -23,16 +23,10 @@ module ApplicationHelper
   	if user.present?
       # only show the community badge if the user has earned the individual badge
 			if campaign.progress_by_individual(user) >= 1 && campaign.progress_by_community >= 1
-				link_to image_tag(campaign.community_badge.url(:badge)), '#', class: 'openbadge-link', :data => { :api => "#{badge_api_path(user, campaign)}" } +
-        "<div style='margin-top: 15px;'>" +
-        image_tag('send_to_open_badges.png', class: 'openbadge-link') +
-        "</div>"
+				link_to image_tag(campaign.community_badge.url(:badge)), '#', class: 'openbadge-link', :data => { :api => "#{badge_api_path(user, campaign)}" }
 			elsif campaign.progress_by_individual(user) >= 1
-				link_to image_tag(campaign.individual_badge.url(:badge)), '#', class: 'openbadge-link', :data => { :api => "#{badge_api_path(user, campaign)}" } +
-        "<div style='margin-top: 15px;'>" +
-        image_tag('send_to_open_badges.png', class: 'openbadge-link') +
-        "</div>"			
-      else
+				link_to image_tag(campaign.individual_badge.url(:badge)), '#', class: 'openbadge-link', :data => { :api => "#{badge_api_path(user, campaign)}" }
+			else
 				image_tag '/assets/badge-blank.png'
 			end
 		else
