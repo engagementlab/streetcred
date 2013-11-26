@@ -76,7 +76,7 @@ class User
     score = 0
     score += (self.actions.count * 5)
     score += (self.completed_campaigns.count * 25)
-    score += (Campaign.completed_community_campaigns.count * 50)
+    score += (self.completed_community_campaigns.count * 50)
     score
   end
 
@@ -98,6 +98,10 @@ class User
 
   def completed_campaigns
     Campaign.all.select {|x| x.requirements_met_by_individual?(self)}
+  end
+
+  def completed_community_campaigns
+    Campaign.all.select {|x| x.requirements_met_by_individual?(self) && x.requirements_met_by_community?}
   end
 
   def completed_expired_campaigns
