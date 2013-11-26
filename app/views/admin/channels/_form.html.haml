@@ -9,9 +9,16 @@
   = f.label :name
   = f.text_field :name
 
+.field
+  = f.label :icon
+  - if @channel.icon.present?
+    = image_tag @channel.icon.url(:medium)
+  = f.file_field :icon
+%br/
+
 - if @channel.api_key.present?
   .field
-    Key: 
+    = f.label :key
     = @channel.api_key
   .field
     %br/

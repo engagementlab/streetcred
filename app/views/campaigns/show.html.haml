@@ -22,25 +22,16 @@
 				.clear
 .page
 	.container
-		.row
-			.span6
-				- if @campaign.description.present?
-					%br/
-					%h3 Description
+		- if @campaign.description.present?
+			.row
+				.span12
 					= @campaign.description
 					%br/
-
+		
+		.row
+			.span12.center
 				%br/
-				%h3 Requirements
-				%ul
-					- for channel in @campaign.channels
-						%li
-							= channel.try(:name)
-							%ul
-								- for required_action in @campaign.required_actions
-									- if required_action.action_type.try(:channel) == channel
-										%li= required_action.action_type.try(:name)
-						%br/
+				%h2 Requirements
 				%p
 					%em
 						- if @campaign.all_actions_required?
@@ -59,9 +50,27 @@
 						%strong
 							== #{@campaign.required_community_occurrences} actions
 						to earch this award.
+				%br/
 
-				- if @campaign.radius.present?
-					%br/
+		- if @campaign.channels.present?
+			.row
+				.span10.offset1
+					- for channel in @campaign.channels
+						.span4.well
+							%table
+								%tr
+									%td{style: 'padding-right: 20px;'}
+										= image_tag channel.icon.url(:large)
+									%td
+										- for required_action in @campaign.required_actions
+											- if required_action.action_type.try(:channel) == channel
+												%p
+													= required_action.action_type.try(:name)
+
+
+		- if @campaign.radius.present?
+			.row
+				.span12
 					%h4 Location
 					%p== Radius: #{@campaign.radius} miles
 					- if @campaign.latitude.present?
@@ -69,18 +78,20 @@
 					- if @campaign.longitude.present?
 						%p== Center Longitude: #{@campaign.longitude} 
 
-				%br/
+		.row
+			.span12.center
 				%h3 Duration
 				%p
 					== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
 
+			.span12
 				%p
 					%br/
 					%br/
 					%h4
 						= link_to raw('&larr; Campaigns'), campaigns_path
 
-			.span6
+			.span12.Center
 				- if current_user.present? && @campaign.contributing_individual_actions(current_user).present?
 					%br/
 					%h3 Your Matching Actions

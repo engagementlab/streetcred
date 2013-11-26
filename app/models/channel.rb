@@ -1,6 +1,7 @@
 class Channel
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Paperclip
   include Mongoid::Slug
   
   has_many :action_types, dependent: :delete
@@ -18,6 +19,12 @@ class Channel
   
   before_create :generate_api_key
   
+  if Rails.env == 'production'
+    has_mongoid_attached_file :icon, storage: :s3, url: ':s3_domain_url', path: '/:class/:attachment/:id_partition/:style/:filename', s3_protocol: 'https', s3_credentials: { bucket: ENV['AWS_BUCKET'], access_key_id: ENV['AWS_ACCESS_KEY_ID'], secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] }, styles: { small: ['30x30#', :png], medium: ['50x50#', :png], large: ['70x70#', :png] }
+  else
+    has_mongoid_attached_file :icon, :url => "channels/:style/:filename", :path => "#{Rails.root}/public/assets/channels/:style/:filename", styles: { small: ['30x30#', :png], medium: ['50x50#', :png], large: ['70x70#', :png] }
+  end
+
   def rekey!
     self.update_attribute(:api_key, SecureRandom.hex(20)) 
   end
