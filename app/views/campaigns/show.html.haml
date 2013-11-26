@@ -72,7 +72,7 @@
 		- if @campaign.radius.present?
 			.row
 				.span12
-					%h2 Location
+					%h3 Location
 					%p== Radius: #{@campaign.radius} miles
 					- if @campaign.latitude.present?
 						%p== Center Latitude: #{@campaign.latitude} 
@@ -81,7 +81,7 @@
 
 		.row
 			.span12.center
-				%h2 Duration
+				%h3 Duration
 				%p
 					== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
 
