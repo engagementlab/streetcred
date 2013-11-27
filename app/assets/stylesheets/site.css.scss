@@ -52,16 +52,16 @@ a.black:hover { color: #222; text-decoration: underline; }
 
 span.large { font-size: 1.2em; font-weight: 300; }
 
-h1 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
-h2 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
-h3 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
-h4 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
-h5 { font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
+h1 { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
+h2 { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
+h3 { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
+h4 { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
+h5 { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-weight: 600; }
 
 html,
 body {
   height: 100%;
-	font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 #wrap {
   min-height: 100%;
@@ -133,7 +133,7 @@ body {
 }
 .campaign {
 	.title{
-		font-family: "adelle","Helvetica Neue",Helvetica,Arial,sans-serif;; 
+		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;; 
 		margin-bottom: .7em;
 		.main-title { font-size: 1.8em; font-weight: 600; }
 		.sub-title { font-size: 1.2em; font-weight: 300; font-style: italic; }
@@ -204,7 +204,6 @@ body {
 	text-align: left;
 }
 .community {
-	font-family: "adelle", serif;
 	font-weight: 300;
 	font-style: italic;
 	padding-top: 45px;
