@@ -25,13 +25,14 @@
 		- if @campaign.description.present?
 			.row
 				.span12
+					%h3 Campaign Goals
 					= @campaign.description
 					%br/
 		
 		.row
 			.span12.center
 				%br/
-				%h2 Requirements
+				%h3 Campaign Tools
 				%p
 					%em
 						- if @campaign.all_actions_required?
@@ -72,7 +73,7 @@
 		- if @campaign.radius.present?
 			.row
 				.span12
-					%h3 Location
+					%h3 Campaign Location
 					%p== Radius: #{@campaign.radius} miles
 					- if @campaign.latitude.present?
 						%p== Center Latitude: #{@campaign.latitude} 
@@ -81,7 +82,7 @@
 
 		.row
 			.span12.center
-				%h3 Duration
+				%h3 Campaign Duration
 				%p
 					== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
 
