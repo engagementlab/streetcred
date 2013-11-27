@@ -95,3 +95,11 @@
 					%ul
 						- for action in @campaign.contributing_individual_actions(current_user)
 							%li== #{action.action_type.try(:channel).try(:name)} - #{formatted_date(action.created_at)}
+
+		.row
+			.span12
+				%p
+					%br/
+					%br/
+					%h4
+						= link_to raw('&larr; Campaigns'), campaigns_path
