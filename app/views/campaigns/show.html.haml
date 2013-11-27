@@ -24,8 +24,8 @@
 	.container
 		- if @campaign.description.present?
 			.row
-				.span12
-					%h3 Campaign Goals
+				.span12.center
+					%h2 Campaign Goals
 					= @campaign.description
 					%br/
 		
@@ -72,7 +72,7 @@
 
 		- if @campaign.radius.present?
 			.row
-				.span12
+				.span12.center
 					%h3 Campaign Location
 					%p== Radius: #{@campaign.radius} miles
 					- if @campaign.latitude.present?
@@ -86,15 +86,10 @@
 				%p
 					== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
 
-			.span12
-				%p
-					%br/
-					%br/
-					%h4
-						= link_to raw('&larr; Campaigns'), campaigns_path
 
-			.span12.Center
-				- if current_user.present? && @campaign.contributing_individual_actions(current_user).present?
+		- if current_user.present? && @campaign.contributing_individual_actions(current_user).present?
+			.row
+				.span12.center
 					%br/
 					%h2 Your Matching Actions
 					%ul
