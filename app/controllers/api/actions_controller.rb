@@ -77,7 +77,7 @@ class API::ActionsController < ApplicationController
 						timestamp: message.date
 					)
 					if new_user == true
-						NotificationMailer.email_welcome(@user).deliver
+						@user.send_reset_password_instructions
 					elsif @user.campaigns_completed_by_action(action).present?
 						NotificationMailer.completed_campaign(@user, action).deliver
 					elsif @user.campaigns_in_progress_by_action(action).present?
