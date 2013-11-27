@@ -69,7 +69,7 @@ class API::ActionsController < ApplicationController
 			# Find Channel and ActionType
 			channel = Channel.where(name: 'Email').first
 			if channel.present?
-				action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip)).first
+				action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip).try(:downcase)).first
 				if action_type.present?
 					@action = @user.actions.create(
 						action_type_id: action_type.id, 
