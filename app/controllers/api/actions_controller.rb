@@ -84,7 +84,7 @@ class API::ActionsController < ApplicationController
 						NotificationMailer.progress(@user, action).deliver
 					end
 				elsif new_user == true
-					NotificationMailer.email_welcome(@user).deliver
+					@user.send_reset_password_instructions
 				else
 					@error_message = "Subject line must match an existing ActionType"
 					render 'errors'
