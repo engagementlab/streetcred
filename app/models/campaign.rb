@@ -149,7 +149,8 @@ class Campaign
   def radius_exceeded?(actions)
     if radius.present?
       # make sure the actions have coordinates
-      actions_with_coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
+      # actions_with_coordinates = actions.exists(coordinates: true).ne(coordinates: nil)
+      actions_with_coordinates = actions.exists(coordinates: true)
       if actions_with_coordinates.present?
         if latitude.present? && longitude.present?
           center_point = [longitude.to_f, latitude.to_f]
