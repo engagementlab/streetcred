@@ -141,10 +141,7 @@ class Campaign
 
 
   ##### REACH CALCULATIONS #####
-  
-  def actions_within_radius(actions, center_point)
-    actions.within_circle(coordinates: [center_point, self.radius])
-  end
+
   
   def radius_exceeded?(actions)
     if radius.present?
@@ -159,7 +156,7 @@ class Campaign
         end
         max_distance = actions_with_coordinates.geo_near(center_point).spherical.distance_multiplier(3959).max_distance
         # make sure the distance exceeds the radius and that at least one action is within the circle
-        max_distance > radius && actions_within_circle(actions_with_coordinates, center_point).present?
+        (max_distance > radius) && (actions_with_coordinates.within_circle(coordinates: [center_point, self.radius]).present?)
       else
         return false
       end
