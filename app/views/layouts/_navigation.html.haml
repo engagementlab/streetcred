@@ -6,9 +6,9 @@
 			%ul.nav.nav-pills.yellow
 				- if current_user
 					- if params[:controller] == 'participants' && params[:action] == 'show' && params[:id] == current_user.id.to_s
-						%li= link_to 'My&nbsp;Dashboard', participant_path(current_user), class: 'active'
+						%li= link_to 'My Dashboard', participant_path(current_user), class: 'active'
 					- else
-						%li= link_to 'My&nbsp;Dashboard', participant_path(current_user)
+						%li= link_to 'My Dashboard', participant_path(current_user)
 
 				- if params[:controller] == 'campaigns'
 					%li= link_to 'Campaigns', campaigns_url, class: 'active'
