@@ -2,6 +2,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def foursquare
     @user = Oauth.find_or_create_from_oauth(env['omniauth.auth'], 'foursquare', current_user)
+    puts "******************************** #{env['omniauth.auth']}"
 
     if @user.persisted?
       sign_in @user, :event => :authentication
@@ -15,6 +16,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def instagram
     @user = Oauth.find_or_create_from_oauth(env['omniauth.auth'], 'instagram', current_user)
+    puts "******************************** #{env['omniauth.auth']}"
 
     if @user.persisted?
       sign_in @user, :event => :authentication
