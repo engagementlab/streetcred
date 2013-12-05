@@ -66,7 +66,6 @@
 										- for required_action in @campaign.required_actions
 											%div
 												- if required_action.action_type.try(:channel) == channel
-													== - #{required_action.action_type.try(:name)}
 													- if required_action.action_type.try(:description).present?
 														== (#{required_action.action_type.description})
 													
