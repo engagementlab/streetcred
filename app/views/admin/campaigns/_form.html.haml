@@ -71,11 +71,11 @@
 .fields_group
   .field
     = f.label :start_date
-    = f.date_select(:start_time, order: [:month, :day, :year], start_year: Date.today.year)
+    = f.datetime_select(:start_time, order: [:month, :day, :year], start_year: Date.today.year)
 
   .field
     = f.label :end_date
-    = f.date_select(:end_time, order: [:month, :day, :year], start_year: Date.today.year)
+    = f.datetime_select(:end_time, order: [:month, :day, :year], start_year: Date.today.year)
 
 %h3 Badges
 
