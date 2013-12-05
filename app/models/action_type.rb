@@ -16,16 +16,12 @@ class ActionType
   index({ provider_uid: 1 })
   
   validates_presence_of :channel
-  before_save :strip_name, :strip_provider_uid, :downcase_provider_uid
+  before_save :strip_name, :strip_provider_uid
   
   private
   
   def strip_name
     name.strip if name.present?
-  end
-
-  def downcase_provider_uid
-    provider_uid.downcase if provider_uid.present?
   end
   
   def strip_provider_uid
