@@ -2,7 +2,7 @@
 	= image_tag(campaign.badge_icon.url(:badge))
 .list-row-description
 	%h3
-		== #{campaign.name}&nbsp;
+		== #{link_to campaign.name, campaign_path(campaign), class: 'black'}&nbsp;
 		- if campaign.active?
 			%small.black.active
 				== #{distance_of_time_in_words(campaign.time_left)} left
