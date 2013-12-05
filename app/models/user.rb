@@ -113,7 +113,7 @@ class User
   end
 
   def completed_expired_campaigns
-    Campaign.all.select {|x| x.requirements_met_by_individual?(self) && x.end_time < Time.now}
+    Campaign.all.select {|x| x.requirements_met_by_individual?(self) && x.expired?}
   end
   
   def campaigns_completed_by_action(action)

@@ -11,8 +11,8 @@ class Campaign
   embeds_many :required_actions
   accepts_nested_attributes_for :required_actions, allow_destroy: true
     
-  scope :active, -> { lt(start_time: Time.now).gt(end_time: Time.now).asc(:end_time) }
-  scope :completed, -> { lt(end_time: Time.now).desc(:end_time) }
+  scope :active, -> { lt(start_time: Time.now).gte(end_time: Time.now).asc(:end_time) }
+  scope :completed, -> { lte(end_time: Time.now).desc(:end_time) }
 
   validates_presence_of :name, :required_actions
   validate :required_actions_unique
@@ -65,7 +65,15 @@ class Campaign
 
   def active?
     if start_time.present? && end_time.present?
-      start_time < Time.now && end_time > Time.now
+      start_time < Time.now && end_time >= Time.now
+    else
+      false
+    end
+  end
+
+  def expired?
+    if end_time.present?
+      end_time < Time.now
     else
       false
     end
@@ -85,7 +93,7 @@ class Campaign
   ##### COMMUNITY CALCULATIONS #####
 
   def contributing_community_actions
-    Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lt(created_at: end_time)
+    Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lte(created_at: end_time)
   end
 
   def progress_by_community
@@ -108,7 +116,7 @@ class Campaign
   ##### INDIVIDUAL CALCULATIONS #####
 
   def contributing_individual_actions(user)
-    Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lt(created_at: end_time).where(user_id: user.id)
+    Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lte(created_at: end_time).where(user_id: user.id)
   end
 
   def progress_by_individual(user)

@@ -45,7 +45,7 @@ class Action
   end
 
   def matching_campaigns
-    Campaign.elem_match(required_actions: {action_type_id: action_type.id}).lt(start_time: created_at).gt(end_time: created_at)
+    Campaign.elem_match(required_actions: {action_type_id: action_type.id}).lt(start_time: created_at).gte(end_time: created_at)
   end
 
 

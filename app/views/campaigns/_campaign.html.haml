@@ -3,7 +3,7 @@
 .list-row-description
 	%h3
 		== #{campaign.name}&nbsp;
-		- if campaign.end_time > Time.now
+		- if campaign.active?
 			%small.black.active
 				== #{distance_of_time_in_words(campaign.time_left)} left
 	= campaign.short_description
