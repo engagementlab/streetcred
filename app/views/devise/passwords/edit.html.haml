@@ -1,6 +1,6 @@
 .container.page
 
-	- if resource.created_at > Time.now.yesterday
+	- if resource.try(:created_at).present? && resource.try(:created_at) > Time.now.yesterday
 
 		%h2 Claim your account
 
