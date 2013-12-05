@@ -78,10 +78,10 @@ class API::ActionsController < ApplicationController
 					)
 					if new_user == true
 						@user.send_reset_password_instructions
-					elsif @user.campaigns_completed_by_action(action).present?
-						NotificationMailer.completed_campaign(@user, action).deliver
-					elsif @user.campaigns_in_progress_by_action(action).present?
-						NotificationMailer.progress(@user, action).deliver
+					elsif @user.campaigns_completed_by_action(@action).present?
+						NotificationMailer.completed_campaign(@user, @action).deliver
+					elsif @user.campaigns_in_progress_by_action(@action).present?
+						NotificationMailer.progress(@user, @action).deliver
 					end
 				elsif new_user == true
 					@user.send_reset_password_instructions
