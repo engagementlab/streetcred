@@ -67,8 +67,8 @@
 											%div
 												- if required_action.action_type.try(:channel) == channel
 													- if required_action.action_type.try(:description).present?
-														== (#{required_action.action_type.description})
-													
+														= required_action.action_type.description
+														%hr													
 
 
 		- if @campaign.radius.present?
