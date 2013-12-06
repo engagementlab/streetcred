@@ -1,0 +1,7 @@
+.span1
+	= image_tag(campaign.badge_icon.url(:badge))
+
+.span3
+	%h4
+		= campaign.name
+	= formatted_date(campaign.end_time)
