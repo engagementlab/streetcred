@@ -11,25 +11,27 @@
 		.row
 			.span7
 				.progress-row
+					%div{:style=>"margin-bottom: 5px;"}
+						Individual
 					.progress
 						.bar.blue{:style=>"width: #{individual_progress_bar_helper(campaign, @participant)};"}
-					.progress-measure{:style=>"margin-left: #{individual_progress_bar_helper(campaign, @participant)};"}
-						= campaign.contributing_community_actions.try(:count)
+					%div{:style=>"font-size: 11px; margin-left: #{individual_progress_bar_helper(campaign, @participant)};"}
+						= campaign.contributing_individual_actions(@participant).try(:count)
 				.progress-row
+					%div{:style=>"margin-bottom: 5px;"}
+						Community
 					.progress
 						.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
-					.progress-measure{:style=>"margin-left: #{community_progress_bar_helper(campaign)};"}
+					%div{:style=>"font-size: 11px; margin-left: #{community_progress_bar_helper(campaign)};"}
 						= campaign.contributing_community_actions.try(:count)
 						
 			.span2
-				.progress-row
-					.goal
-						.sub-title
-							== #{campaign.required_individual_occurrences}&nbsp;&nbsp;Individual
-				.progress-row
-					.goal
-						.sub-title
-							== #{campaign.required_community_occurrences}&nbsp;&nbsp;Community
+				.progress-goal
+					%span.goal
+						== #{campaign.required_individual_occurrences}
+				.progress-goal
+					%span.goal
+						== #{campaign.required_community_occurrences}
 
 			.span2.badges.center
 				= raw badge_helper(campaign, @participant)
