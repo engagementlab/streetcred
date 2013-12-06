@@ -112,8 +112,12 @@ class User
     Campaign.all.select {|x| x.requirements_met_by_individual?(self) && x.requirements_met_by_community?}
   end
 
-  def completed_expired_campaigns
+  def expired_completed_campaigns
     Campaign.all.select {|x| x.requirements_met_by_individual?(self) && x.expired?}
+  end
+
+  def expired_contributed_to_campaigns
+    Campaign.all.select {|x| x.contributing_individual_actions(self).present? && x.expired?}    
   end
   
   def campaigns_completed_by_action(action)

@@ -14,14 +14,14 @@
       - for campaign in @active_campaigns
         = render partial: 'active_campaign', locals: {campaign: campaign}
           
-    - if @earned_campaigns.present?
+    - if @expired_contributed_to_campaigns.present?
       %hr
       .row
         .span12
           %h2 Completed Campaigns
       
       .row
-        - for campaign in @completed_earned_campaigns
+        - for campaign in @expired_contributed_to_campaigns
           = render partial: 'completed_campaign', locals: {campaign: campaign}
 
     %br/

@@ -135,16 +135,16 @@ body {
 	.title{
 		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;; 
 		margin-bottom: .7em;
-		.main-title { font-size: 1.8em; font-weight: 600; }
-		.sub-title { font-size: 1.2em; font-weight: 300; font-style: italic; }
 	}
+	.main-title { font-size: 1.8em; font-weight: 600; }
+	.sub-title { font-size: 1.2em; font-weight: 300; font-style: italic; }
 }
 .active-campaign {
 	margin-top: 30px;
 	padding-bottom: 30px;
 }
 .progress-row{
-	margin-top: 15px;
+	margin-top: 20px;
 	.progress{
 		height: 26px;
 		margin-bottom: 5px;
@@ -260,6 +260,10 @@ ul.nav {
 }
 .gravatar {
 	margin-top: 15px;
+}
+.goal {
+	padding-top: 5px;
+	margin-bottom: 45px;
 }
 .user-name {
 	margin-top: 25px;
