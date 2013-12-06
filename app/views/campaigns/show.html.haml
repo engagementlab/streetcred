@@ -54,23 +54,25 @@
 				%br/
 
 		- if @campaign.channels.present?
-			.row
-				.span12{style: 'margin-left: 12.5%;'}
-					- for channel in @campaign.channels
-						.span4.well
-							%table
-								%tr
-									%td{style: 'width: 50px; padding-right: 20px;'}
-										= image_tag channel.logo.url(:thumb)
-									%td
-										- required_actions = @campaign.required_actions.in(action_type_id: ActionType.where(channel_id: channel.id).to_a)
-										- for required_action in required_actions
-											%div
-												- if required_action == required_actions.last
-													= required_action.action_type.description											
-												- else
-													.divider
-														= required_action.action_type.description											
+			- for row in @campaign.channels.in_groups_of(2)
+				.row
+					.span12{style: 'margin-left: 12.5%;'}
+						- for channel in row
+							- unless channel.blank?
+								.span4.well
+									%table
+										%tr
+											%td{style: 'width: 50px; padding-right: 20px;'}
+												= image_tag channel.logo.url(:thumb)
+											%td
+												- required_actions = @campaign.required_actions.in(action_type_id: ActionType.where(channel_id: channel.id).to_a)
+												- for required_action in required_actions
+													%div
+														- if required_action == required_actions.last
+															= required_action.action_type.description											
+														- else
+															.divider
+																= required_action.action_type.description											
 
 		- if @campaign.radius.present?
 			.row
