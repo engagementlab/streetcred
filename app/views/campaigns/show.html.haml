@@ -7,7 +7,7 @@
 				.list-row-description
 					%h3
 						== #{@campaign.name}&nbsp;
-						- if @campaign.end_time > Time.now
+						- if @campaign.expired?
 							%small.black.active
 								== #{distance_of_time_in_words(@campaign.time_left)} left
 					= @campaign.short_description
@@ -63,13 +63,14 @@
 									%td{style: 'width: 50px; padding-right: 20px;'}
 										= image_tag channel.logo.url(:thumb)
 									%td
-										- for required_action in @campaign.required_actions
+										- required_actions = @campaign.required_actions.in(action_type_id: ActionType.where(channel_id: channel.id).to_a)
+										- for required_action in required_actions
 											%div
-												- if required_action.action_type.try(:channel) == channel
-													- if required_action.action_type.try(:description).present?
-														= required_action.action_type.description
-														%hr													
-
+												- if required_action == required_actions.last
+													= required_action.action_type.description											
+												- else
+													.divider
+														= required_action.action_type.description											
 
 		- if @campaign.radius.present?
 			.row
