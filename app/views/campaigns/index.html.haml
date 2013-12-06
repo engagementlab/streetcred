@@ -10,14 +10,13 @@
       (You earn 5 points for every action you take and 5 points for every report you make through Citizens Connect, even if it is not part of a campaign.  If you earn an individual award by completing a campaign, you earn an additional 25 points.  If your action helps the community meet its goal, you earn another 50 points.)
   %br/
 
-  %h2 Active Campaigns
-  %br/
   - for campaign in @active_campaigns
     .well
       = render partial: 'campaign', locals: {campaign: campaign}
 
-  %h2 Previous Campaigns
-  %br/
-  - for campaign in @completed_campaigns
-    .well
-      = render partial: 'completed_campaign', locals: {campaign: campaign}
+  - if @completed_campaigns.present?
+    %h3 Previous Campaigns
+    %br/
+    - for campaign in @completed_campaigns
+      .well
+        = render partial: 'completed_campaign', locals: {campaign: campaign}
