@@ -110,38 +110,52 @@ class API::ActionsController < ApplicationController
 					puts "********************** params['checkin'] is blank"
 					render nothing: true
 				else
-					checkin = Oj.load(params['checkin'])
+	        checkin = Oj.load(params['checkin'])
 					puts "********************** params['checkin'] = #{checkin}"
-					user = User.where(_id: provider.user_id).first
-					if ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).present?
-						action_type = ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).first
-						puts "********************** action_type = #{action_type}"
-					elsif ActionType.where(channel_id: channel.id).where(name: checkin['venue']['name']).present?
-						action_type = ActionType.where(channel_id: channel.id).where(name: checkin['venue']['name']).first
-						puts "********************** action_type = #{action_type}"
-					end
-					if user.present? && action_type.present?
-						puts "********************** action_type & user are present"
-						# update the venue name if we have the venue_id
-						if action_type.name.blank?
-							action_type.update_attribute(:name, checkin['venue']['name'])
+						
+	        provider = Provider.where(provider_uid: params['checkin']['user']['id']).first
+	        if provider.present?
+						puts "********************** provider = #{provider}"
+						
+						user = User.where(_id: provider.user_id).first
+						puts "********************** user = #{user}"
+
+						if ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).present?
+							action_type = ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).first
+							puts "********************** action_type = #{action_type}"
+						elsif ActionType.where(channel_id: channel.id).where(name: checkin['venue']['name']).present?
+							action_type = ActionType.where(channel_id: channel.id).where(name: checkin['venue']['name']).first
+							puts "********************** action_type = #{action_type}"
 						end
-						user.actions.create(
-							action_type_id: action_type.id,
-							api_key: channel.api_key,
-							record_id: checkin['id'],
-							case_id: checkin['id'],
-							description: checkin['shout'],
-							latitude: checkin['venue']['location']['lat'],
-							longitude: checkin['venue']['location']['lng'],
-							address: checkin['venue']['location']['address'],
-							city: checkin['venue']['location']['city'],
-							zipcode: checkin['venue']['location']['postalCode'],
-							state: checkin['venue']['location']['state'],
-							timestamp: Time.now
-						)
-						render nothing: true
+						if user.present? && action_type.present?
+							puts "********************** action_type & user are present"
+							# update the venue name if we have the venue_id
+							if action_type.name.blank?
+								action_type.update_attribute(:name, checkin['venue']['name'])
+							end
+							user.actions.create(
+								action_type_id: action_type.id,
+								api_key: channel.api_key,
+								record_id: checkin['id'],
+								case_id: checkin['id'],
+								description: checkin['shout'],
+								latitude: checkin['venue']['location']['lat'],
+								longitude: checkin['venue']['location']['lng'],
+								address: checkin['venue']['location']['address'],
+								city: checkin['venue']['location']['city'],
+								zipcode: checkin['venue']['location']['postalCode'],
+								state: checkin['venue']['location']['state'],
+								timestamp: Time.now
+							)
+							render nothing: true
+						end
+					else
+        		@error_message = "provider not found"
+        		render 'errors'
 					end
+				else
+        	@error_message = "checkin params are blank"
+        	render 'errors'
 				end
 			else
 				@error_message = "api_key is invalid"
