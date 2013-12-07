@@ -89,30 +89,6 @@ class Campaign
     end
   end
 
-
-  ##### COMMUNITY CALCULATIONS #####
-
-  def contributing_community_actions
-    Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lte(created_at: end_time)
-  end
-
-  def progress_by_community
-    contributing_community_actions.count / required_community_occurrences.to_f
-  end
-
-  def requirements_met_by_community?
-    if contributing_community_actions.count >= required_community_occurrences
-      if radius.blank?
-        return true
-      elsif radius.present?
-        radius_exceeded?(contributing_community_actions)
-      end
-    else # if contributing_community_actions < required_individual_occurrences
-      return false
-    end
-  end
-
-
   ##### INDIVIDUAL CALCULATIONS #####
 
   def contributing_individual_actions(user)
@@ -133,24 +109,34 @@ class Campaign
 
   def requirements_met_by_individual?(user)
     if contributing_individual_actions(user).count >= required_individual_occurrences
-      if all_actions_required?
-        if required_action_types == (required_action_types & contributing_individual_actions(user).collect {|x| x.action_type})
-          if radius.blank?
-            return true
-          elsif radius.present?
-            radius_exceeded?(contributing_individual_actions(user))
-          end
-        else
-          return false
-        end
-      else
-        if radius.blank?
-          return true
-        elsif radius.present?
-          radius_exceeded?(contributing_individual_actions(user))
-        end
+      if radius.blank?
+        return true
+      elsif radius.present?
+        radius_exceeded?(contributing_individual_actions(user))
       end
     else # if contributing_indivudal_actions < required_individual_occurrences
+      return false
+    end
+  end
+
+  ##### COMMUNITY CALCULATIONS #####
+
+  def contributing_community_actions
+    User.all.collect {|x| self.contributing_individual_actions(x)}.compact
+  end
+
+  def progress_by_community
+    contributing_community_actions.count / required_community_occurrences.to_f
+  end
+
+  def requirements_met_by_community?
+    if contributing_community_actions.count >= required_community_occurrences
+      if radius.blank?
+        return true
+      elsif radius.present?
+        radius_exceeded?(contributing_community_actions)
+      end
+    else # if contributing_community_actions < required_individual_occurrences
       return false
     end
   end
