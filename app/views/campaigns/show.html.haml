@@ -66,14 +66,24 @@
 												= image_tag channel.logo.url(:thumb)
 											%td
 												- required_actions = @campaign.required_actions.in(action_type_id: ActionType.where(channel_id: channel.id).to_a)
-												- for required_action in required_actions
-													%div
-														- if required_action == required_actions.last
-															= required_action.action_type.description											
-														- else
-															.divider
-																= required_action.action_type.description											
+												- if channel == Channel.where(name: 'Citizens Connect').first && (channel.action_types - @campaign.required_action_types).blank?
+													Use Citizens Connect to report issues in your neighborhood.										
 
+												- else
+													- for required_action in required_actions
+														%div
+															- if required_action == required_actions.last
+																- if required_action.action_type.description.blank?
+																	= required_action.action_type.name
+																- else
+																	= required_action.action_type.description											
+															- else
+																.divider
+																	- if required_action.action_type.description.blank?
+																		= required_action.action_type.name
+																	- else
+																		= required_action.action_type.description		
+		
 		- if @campaign.radius.present?
 			.row
 				.span12.center
