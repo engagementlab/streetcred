@@ -122,7 +122,11 @@ class Campaign
   ##### COMMUNITY CALCULATIONS #####
 
   def contributing_community_actions
-    User.all.collect {|x| self.contributing_individual_actions(x)}.compact
+    if all_actions_required?
+      User.all.collect {|x| self.contributing_individual_actions(x)}.compact
+    else
+      Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lte(created_at: end_time)
+    end
   end
 
   def progress_by_community
