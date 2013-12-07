@@ -144,7 +144,7 @@ body {
 	padding-bottom: 30px;
 }
 .progress-row{
-	margin-top: 20px;
+	margin-top: 15px;
 	.progress{
 		height: 26px;
 		margin-bottom: 5px;
@@ -261,9 +261,13 @@ ul.nav {
 .gravatar {
 	margin-top: 15px;
 }
+.progress-goal {
+	margin-top: 45px;
+	margin-bottom: 68px;
+}
 .goal {
-	padding-top: 5px;
-	margin-bottom: 45px;
+	padding: 5px 0 0 15px;
+	font-size: 20px;
 }
 .user-name {
 	margin-top: 25px;
