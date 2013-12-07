@@ -2,8 +2,10 @@ module Oauth
   
   def self.find_or_create_from_oauth(data, provider_name, signed_in_resource=nil)
     provider = Provider.where(provider: provider_name, provider_uid: data['uid']).first_or_create
+    puts "******************************* prover = #{provider}"
 
     if signed_in_resource.present?
+      puts "******************************* found signed_in_resource = #{signed_in_resource}"
       signed_in_resource.update_attributes( first_name: data['info']['first_name']) if signed_in_resource.first_name.blank? 
       signed_in_resource.update_attributes( last_name: data['info']['last_name']) if signed_in_resource.last_name.blank? 
       signed_in_resource.update_attributes( email: data['info']['email']) if signed_in_resource.email.blank? 
@@ -16,6 +18,7 @@ module Oauth
       return signed_in_resource
 
     else # provider.blank? && user.blank? && signed_in_resource.blank?
+      puts "******************************* no signed_in_resource present"
       return nil
     end
   end
