@@ -105,17 +105,23 @@ class API::ActionsController < ApplicationController
 		if params['secret'] == ENV['FOURSQUARE_PUSH_SECRET'] # 'BOL410IIRYOQ1FEAYT1PZYGYDVN5OYUYI1JO5CI2SW3UNO20'
 			channel = Channel.where(name: 'Foursquare').first
 			if channel.present?
+				puts "********************** channel = #{channel}"
 				if params['checkin'].blank?
+					puts "********************** params['checkin'] is blank"
 					render nothing: true
 				else
 					checkin = Oj.load(params['checkin'])
+					puts "********************** params['checkin'] = #{checkin}"
 					user = User.where(provider_uid: checkin['user']['id']).first
 					if ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).present?
 						action_type = ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).first
+						puts "********************** action_type = #{action_type}"
 					elsif ActionType.where(channel_id: channel.id).where(name: checkin['venue']['name']).present?
 						action_type = ActionType.where(channel_id: channel.id).where(name: checkin['venue']['name']).first
+						puts "********************** action_type = #{action_type}"
 					end
 					if user.present? && action_type.present?
+						puts "********************** action_type & user are present"
 						# update the venue name if we have the venue_id
 						if action_type.name.blank?
 							action_type.update_attribute(:name, checkin['venue']['name'])
