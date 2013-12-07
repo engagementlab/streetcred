@@ -110,12 +110,13 @@ class API::ActionsController < ApplicationController
 					puts "********************** params['checkin'] is blank"
 					render nothing: true
 				else
-	        checkin = Oj.load(params['checkin'])
+	        checkin = Oj.load(params['checkin'], bigdecimal_load: :float)
 					puts "********************** params['checkin'] = #{checkin}"
 						
-	        provider = Provider.where(provider_uid: params['checkin']['user']['id']).first
+	        provider = Provider.where(provider_uid: checkin['user']['id']).first
+					puts "********************** provider = #{provider}"
+	        
 	        if provider.present?
-						puts "********************** provider = #{provider}"
 						
 						user = User.where(_id: provider.user_id).first
 						puts "********************** user = #{user}"
@@ -150,16 +151,16 @@ class API::ActionsController < ApplicationController
 							render nothing: true
 						end
 					else
-        		@error_message = "provider not found"
+        		puts "*********************** provider not found"
         		render 'errors'
 					end
 				end
 			else
-				@error_message = "api_key is invalid"
+				puts "*********************** api_key is invalid"
 				render 'errors'
 			end
 		else
-			@error_message = "FOURSQUARE_PUSH_SECRET is missing or invalid"
+			puts "*********************** FOURSQUARE_PUSH_SECRET is missing or invalid"
 			render 'errors'
 		end
 	end
