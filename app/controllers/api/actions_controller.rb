@@ -112,7 +112,7 @@ class API::ActionsController < ApplicationController
 				else
 					checkin = Oj.load(params['checkin'])
 					puts "********************** params['checkin'] = #{checkin}"
-					user = User.where(provider_uid: checkin['user']['id']).first
+					user = User.where(_id: provider.user_id).first
 					if ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).present?
 						action_type = ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).first
 						puts "********************** action_type = #{action_type}"
