@@ -153,9 +153,6 @@ class API::ActionsController < ApplicationController
         		@error_message = "provider not found"
         		render 'errors'
 					end
-				else
-        	@error_message = "checkin params are blank"
-        	render 'errors'
 				end
 			else
 				@error_message = "api_key is invalid"
