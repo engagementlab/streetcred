@@ -116,7 +116,15 @@ class Campaign
   ##### INDIVIDUAL CALCULATIONS #####
 
   def contributing_individual_actions(user)
-    Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lte(created_at: end_time).where(user_id: user.id)
+    if all_actions_required?
+      matching_actions = []
+      required_action_types.each do |at|
+        matching_actions << Action.where(action_type_id: at.id).gt(created_at: start_time).lte(created_at: end_time).where(user_id: user.id).first
+      end
+      return matching_actions.compact
+    else
+      Action.in(action_type_id: required_actions.collect(&:action_type_id)).gt(created_at: start_time).lte(created_at: end_time).where(user_id: user.id)
+    end
   end
 
   def progress_by_individual(user)
@@ -126,7 +134,7 @@ class Campaign
   def requirements_met_by_individual?(user)
     if contributing_individual_actions(user).count >= required_individual_occurrences
       if all_actions_required?
-        if required_action_types == (required_action_types & contributing_individual_actions(User.first).collect {|x| x.action_type})
+        if required_action_types == (required_action_types & contributing_individual_actions(user).collect {|x| x.action_type})
           if radius.blank?
             return true
           elsif radius.present?
