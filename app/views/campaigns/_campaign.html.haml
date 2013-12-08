@@ -10,7 +10,7 @@
 .list-row-progress
 	.progress-row
 		.pull-right.goal
-			= campaign.required_community_occurrences
+			== #{campaign.contributing_community_actions.try(:count)}/#{campaign.required_community_occurrences}
 		.progress
 			.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
 	
