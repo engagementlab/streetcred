@@ -22,7 +22,7 @@
       
       .row
         - for campaign in @expired_contributed_to_campaigns
-          = render partial: 'completed_campaign', locals: {campaign: campaign}
+          = render partial: 'active_campaign', locals: {campaign: campaign}
 
     %br/
     %h4= link_to raw('&larr; Participants'), participants_path

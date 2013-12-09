@@ -67,7 +67,7 @@
 											%td
 												- required_actions = @campaign.required_actions.in(action_type_id: ActionType.where(channel_id: channel.id).to_a)
 												- if channel == Channel.where(name: 'Citizens Connect').first && (channel.action_types - @campaign.required_action_types).blank?
-													Use Citizens Connect to report issues in your neighborhood.										
+													Use Citizens Connect to report issues in your community.										
 
 												- else
 													- for required_action in required_actions
