@@ -21,6 +21,6 @@
 					%li= link_to 'Participants', participants_url
 
 				- if current_user
-					%li= link_to 'Sign out', destroy_user_session_url, method: :delete
+					%li= link_to 'Sign Out', destroy_user_session_url, method: :delete
 				- else
-					%li= link_to 'Sign in', sign_in_path
+					%li= link_to 'Sign In', sign_in_path
