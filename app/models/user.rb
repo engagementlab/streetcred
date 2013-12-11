@@ -24,6 +24,7 @@ class User
   field :shared, type: Boolean, default: true
   field :map_visible, type: Boolean, default: true
   field :score, type: Integer, default: 0
+  field :completed_campaigns_count, type: Integer, default: 0
 
   # # Omniauth
   # field :provider, type: String
@@ -73,6 +74,12 @@ class User
     sign_in_count.present? && sign_in_count > 0
   end
 
+  def self.update_scores!
+    self.all.each do |user|
+      user.update_score!
+    end
+  end
+
   def update_score!
     total = 0
     total += (actions.count * 5)
@@ -81,10 +88,8 @@ class User
     self.update_attributes(score: total)
   end
 
-  def self.update_scores!
-    self.all.each do |user|
-      user.update_score!
-    end
+  def update_completed_campaigns_count!
+    self.update_attributes(completed_campaigns_count: self.completed_campaigns.count)
   end
 
   def display_name

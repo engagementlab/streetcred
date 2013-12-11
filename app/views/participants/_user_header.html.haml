@@ -17,8 +17,8 @@
 
 			.span1.stat.text-center
 				%h3
-					= @participant.completed_campaigns.count
-				= pluralizer_helper('Awards', @participant.completed_campaigns.count)
+					= @participant.completed_campaigns_count
+				= pluralizer_helper('Awards', @participant.completed_campaigns_count)
 
 			.span1.stat.text-center
 				%h3

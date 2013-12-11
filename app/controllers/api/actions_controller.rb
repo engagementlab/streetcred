@@ -31,6 +31,7 @@ class API::ActionsController < ApplicationController
 					@action.action_type_id = action_type.id
 					@action.save!
 					User.delay.update_scores!
+					@user.delay.update_completed_campaigns_count!
 					@completed_campaigns = @user.campaigns_completed_by_action(@action)
 					send_notification_email(@user, @action, new_user)
 					respond_with(@completed_campaigns)
@@ -78,6 +79,7 @@ class API::ActionsController < ApplicationController
 						timestamp: message.date
 					)
 					User.delay.update_scores!
+					@user.delay.update_completed_campaigns_count!
 					if new_user == true
 						@user.send_reset_password_instructions
 					elsif @user.campaigns_completed_by_action(@action).present?
@@ -120,8 +122,8 @@ class API::ActionsController < ApplicationController
 	        
 	        if provider.present?
 						
-						user = User.where(_id: provider.user_id).first
-						puts "********************** user = #{user}"
+						@user = User.where(_id: provider.user_id).first
+						puts "********************** user = #{@user}"
 
 						if ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).present?
 							action_type = ActionType.where(channel_id: channel.id).where(provider_uid: checkin['venue']['id']).first
@@ -130,13 +132,13 @@ class API::ActionsController < ApplicationController
 							action_type = ActionType.where(channel_id: channel.id).where(name: checkin['venue']['name']).first
 							puts "********************** action_type = #{action_type}"
 						end
-						if user.present? && action_type.present?
+						if @user.present? && action_type.present?
 							puts "********************** action_type & user are present"
 							# update the venue name if we have the venue_id
 							if action_type.name.blank?
 								action_type.update_attribute(:name, checkin['venue']['name'])
 							end
-							user.actions.create(
+							@user.actions.create(
 								action_type_id: action_type.id,
 								api_key: channel.api_key,
 								record_id: checkin['id'],
@@ -150,7 +152,8 @@ class API::ActionsController < ApplicationController
 								state: checkin['venue']['location']['state'],
 								timestamp: Time.now
 							)
-							user.update_score!
+							User.delay.update_scores!
+							@user.delay.update_completed_campaigns_count!
 							render nothing: true
 						end
 					else
@@ -181,17 +184,17 @@ class API::ActionsController < ApplicationController
         provider = Provider.where(provider_uid: instagram_uid).first
         if provider.present?
 	        token = provider.try(:token)
-  	      user = User.where(_id: provider.user_id).first
+  	      @user = User.where(_id: provider.user_id).first
 
 	        recent_photo = HTTParty.get("https://api.instagram.com/v1/users/self/feed?access_token=#{token}&count=1")
 
-	        if recent_photo.present? && user.present?
+	        if recent_photo.present? && @user.present?
 		        tags = recent_photo['data'].first['tags'].collect {|x| "#" + x}
 
 		        action_type = ActionType.where(channel_id: channel.id).in(provider_uid: tags).first
 
-		        if user.present? && action_type.present?
-		          user.actions.create(
+		        if @user.present? && action_type.present?
+		          @user.actions.create(
 		            action_type_id: action_type.id,
 		            api_key: channel.api_key,
 		            record_id: recent_photo['data'].first['id'],
@@ -201,7 +204,8 @@ class API::ActionsController < ApplicationController
 		            photo_url: recent_photo['data'].first['images'].try(:[], 'standard_resolution').try(:[], 'url'),
 		            timestamp: Time.now
 		          )
-    					user.update_score!
+							User.delay.update_scores!
+							@user.delay.update_completed_campaigns_count!
 		          render nothing: true
 		        else
 		          @error_message = "no matching action"

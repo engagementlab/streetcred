@@ -28,6 +28,11 @@
 
 			.span1.stat.text-center
 				%h3.adjusted
+					= participant.completed_campaigns_count
+				= pluralizer_helper('Awards', participant.completed_campaigns_count)
+
+			.span1.stat.text-center
+				%h3.adjusted
 					= participant.actions.count
 				= pluralizer_helper('Actions', participant.actions.count)
 
