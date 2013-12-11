@@ -23,6 +23,7 @@ class User
   field :slug, type: String
   field :shared, type: Boolean, default: true
   field :map_visible, type: Boolean, default: true
+  field :current_score, type: Integer, default: 0
 
   # # Omniauth
   # field :provider, type: String
