@@ -95,7 +95,7 @@ class User
 
   def self.completed_campaigns_count
     total = 0
-    self.visible.each do |user|
+    self.active.visible.each do |user|
       total += user.completed_campaigns_count
     end
     total
@@ -109,7 +109,7 @@ class User
 
   def self.completed_community_campaigns_count
     total = 0
-    self.visible.each do |user|
+    self.active.visible.each do |user|
       total += user.completed_campaigns_count
     end
     total
@@ -117,7 +117,7 @@ class User
 
   def self.total_actions_count
     total = 0
-    self.visible.each do |user|
+    self.active.visible.each do |user|
       total += user.actions.count
     end
     total
