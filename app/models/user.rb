@@ -95,20 +95,30 @@ class User
 
   def self.completed_campaigns_count
     total = 0
-    self.all.each do |user|
+    self.visible.each do |user|
       total += user.completed_campaigns_count
     end
     total
   end
 
-  def update_completed_community_campaigns_count!
-    self.update_attributes(completed_community_campaigns_count: self.completed_community_campaigns.count)
+  def self.update_completed_community_campaigns_count!
+    self.all.each do |user|
+      user.update_attributes(completed_community_campaigns_count: self.completed_community_campaigns.count)
+    end
   end
 
   def self.completed_community_campaigns_count
     total = 0
-    self.all.each do |user|
+    self.visible.each do |user|
       total += user.completed_campaigns_count
+    end
+    total
+  end
+
+  def self.total_actions_count
+    total = 0
+    self.visible.each do |user|
+      total += user.actions.count
     end
     total
   end
