@@ -78,7 +78,7 @@ class User
     total += (actions.count * 5)
     total += (completed_campaigns.count * 25)
     total += (completed_community_campaigns.count * 50)
-    self.update_column(:score, total)
+    self.update_attributes(score: total)
   end
 
   def self.update_scores!
