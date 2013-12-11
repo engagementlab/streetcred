@@ -30,8 +30,11 @@ class API::ActionsController < ApplicationController
 					@action.user_id = @user.id
 					@action.action_type_id = action_type.id
 					@action.save!
+					
 					User.delay.update_scores!
 					@user.delay.update_completed_campaigns_count!
+					@user.delay.update_completed_community_campaigns_count!
+
 					@completed_campaigns = @user.campaigns_completed_by_action(@action)
 					send_notification_email(@user, @action, new_user)
 					respond_with(@completed_campaigns)
@@ -80,6 +83,8 @@ class API::ActionsController < ApplicationController
 					)
 					User.delay.update_scores!
 					@user.delay.update_completed_campaigns_count!
+					@user.delay.update_completed_community_campaigns_count!
+
 					if new_user == true
 						@user.send_reset_password_instructions
 					elsif @user.campaigns_completed_by_action(@action).present?
@@ -154,6 +159,8 @@ class API::ActionsController < ApplicationController
 							)
 							User.delay.update_scores!
 							@user.delay.update_completed_campaigns_count!
+							@user.delay.update_completed_community_campaigns_count!
+
 							render nothing: true
 						end
 					else
@@ -206,6 +213,8 @@ class API::ActionsController < ApplicationController
 		          )
 							User.delay.update_scores!
 							@user.delay.update_completed_campaigns_count!
+							@user.delay.update_completed_community_campaigns_count!
+
 		          render nothing: true
 		        else
 		          @error_message = "no matching action"
@@ -263,6 +272,9 @@ class API::ActionsController < ApplicationController
 						timestamp:      params['report']['timestamp']
 					)
 					User.delay.update_scores!
+					@user.delay.update_completed_campaigns_count!
+					@user.delay.update_completed_community_campaigns_count!
+
 					@completed_campaigns = @user.campaigns_completed_by_action(action)
 					if new_user == true
 						NotificationMailer.citizens_connect_welcome(@user).deliver

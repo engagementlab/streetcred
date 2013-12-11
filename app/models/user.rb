@@ -25,6 +25,7 @@ class User
   field :map_visible, type: Boolean, default: true
   field :score, type: Integer, default: 0
   field :completed_campaigns_count, type: Integer, default: 0
+  field :completed_community_campaigns_count, type: Integer, default: 0
 
   # # Omniauth
   # field :provider, type: String
@@ -93,6 +94,18 @@ class User
   end
 
   def self.completed_campaigns_count
+    total = 0
+    self.all.each do |user|
+      total += user.completed_campaigns_count
+    end
+    total
+  end
+
+  def update_completed_community_campaigns_count!
+    self.update_attributes(completed_community_campaigns_count: self.completed_community_campaigns.count)
+  end
+
+  def self.completed_community_campaigns_count
     total = 0
     self.all.each do |user|
       total += user.completed_campaigns_count

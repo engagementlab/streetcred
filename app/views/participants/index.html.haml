@@ -2,7 +2,7 @@
 	%h1 Participants
 
 	%p.medium
-		== Users take part in StreetCred by performing qualifying actions through approved channels. As of today, participants have taken <span class="larger bold">#{Action.owned.try(:count)}</span> actions. Through those actions, they have earned <span class="larger bold">#{User.completed_campaigns_count}</span> awards, and completed <span class="larger bold">#{Campaign.completed_community_campaigns.count}</span> community campaigns.
+		== Users take part in StreetCred by performing qualifying actions through approved channels. As of today, participants have taken <span class="larger bold">#{Action.owned.try(:count)}</span> actions. Through those actions, they have earned <span class="larger bold">#{User.completed_campaigns_count}</span> awards, and completed <span class="larger bold">#{Campaign.completed_community_campaigns_count}</span> community campaigns.
 	%p
 		%em
 			%br/
