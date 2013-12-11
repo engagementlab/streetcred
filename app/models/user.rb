@@ -23,7 +23,7 @@ class User
   field :slug, type: String
   field :shared, type: Boolean, default: true
   field :map_visible, type: Boolean, default: true
-  field :current_score, type: Integer, default: 0
+  field :score, type: Integer, default: 0
 
   # # Omniauth
   # field :provider, type: String
@@ -73,12 +73,12 @@ class User
     sign_in_count.present? && sign_in_count > 0
   end
 
-  def score
-    score = 0
-    score += (actions.count * 5)
-    score += (completed_campaigns.count * 25)
-    score += (completed_community_campaigns.count * 50)
-    score
+  def update_score!
+    total = 0
+    total += (actions.count * 5)
+    total += (completed_campaigns.count * 25)
+    total += (completed_community_campaigns.count * 50)
+    self.update_column(:score, total)
   end
 
   def display_name
