@@ -92,6 +92,14 @@ class User
     self.update_attributes(completed_campaigns_count: self.completed_campaigns.count)
   end
 
+  def self.completed_campaigns_count
+    total = 0
+    self.all.each do |user|
+      total += user.completed_campaigns_count
+    end
+    total
+  end
+
   def display_name
     if first_name.blank? && last_name.blank?
       'anonymous'
