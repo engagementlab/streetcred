@@ -81,6 +81,12 @@ class User
     self.update_column(:score, total)
   end
 
+  def self.update_scores!
+    self.all.each do |user|
+      user.update_score!
+    end
+  end
+
   def display_name
     if first_name.blank? && last_name.blank?
       'anonymous'

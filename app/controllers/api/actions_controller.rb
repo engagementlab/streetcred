@@ -30,7 +30,7 @@ class API::ActionsController < ApplicationController
 					@action.user_id = @user.id
 					@action.action_type_id = action_type.id
 					@action.save!
-					@user.update_score!
+					User.delay.update_scores!
 					@completed_campaigns = @user.campaigns_completed_by_action(@action)
 					send_notification_email(@user, @action, new_user)
 					respond_with(@completed_campaigns)
@@ -77,7 +77,7 @@ class API::ActionsController < ApplicationController
 						api_key: channel.api_key,
 						timestamp: message.date
 					)
-					@user.update_score!
+					User.delay.update_scores!
 					if new_user == true
 						@user.send_reset_password_instructions
 					elsif @user.campaigns_completed_by_action(@action).present?
@@ -258,7 +258,7 @@ class API::ActionsController < ApplicationController
 						image_url:      params['report']['image_url'],
 						timestamp:      params['report']['timestamp']
 					)
-					@user.update_score!
+					User.delay.update_scores!
 					@completed_campaigns = @user.campaigns_completed_by_action(action)
 					if new_user == true
 						NotificationMailer.citizens_connect_welcome(@user).deliver

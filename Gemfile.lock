@@ -53,6 +53,11 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    delayed_job (3.0.5)
+      activesupport (~> 3.0)
+    delayed_job_mongoid (2.0.0)
+      delayed_job (~> 3.0)
+      mongoid (~> 3.0)
     devise (2.2.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -240,6 +245,7 @@ DEPENDENCIES
   aws-sdk
   bson_ext
   coffee-rails (~> 3.2.1)
+  delayed_job_mongoid
   devise
   geocoder
   gon
