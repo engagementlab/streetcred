@@ -20,9 +20,8 @@
         .span12
           %h2 Completed Campaigns
       
-      .row
-        - for campaign in @expired_contributed_to_campaigns
-          = render partial: 'active_campaign', locals: {campaign: campaign}
+      - for campaign in @expired_contributed_to_campaigns
+        = render partial: 'active_campaign', locals: {campaign: campaign}
 
     %br/
     %h4= link_to raw('&larr; Participants'), participants_path
