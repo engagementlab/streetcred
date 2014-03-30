@@ -1,0 +1,4 @@
+%h1 Editing Admin User
+
+= form_for(:admin_user, :url => admin_admin_user_path(@admin_user), :html => {:method => :put}) do |f|
+  = render :partial => 'form', :locals => {:f => f}

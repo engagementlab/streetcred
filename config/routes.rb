@@ -15,17 +15,17 @@ Streetcred::Application.routes.draw do
     get "edit_registration", :to => "registrations#edit"
   end
   
-  devise_for :admin_users, :controllers => {:sessions => 'admin/sessions', :registrations => 'admin/registrations'}
+  devise_for :admin_users, :path => 'admin/', :controllers => {:passwords => 'admin/passwords', :sessions => 'admin/sessions', :registrations => 'admin/registrations'}
   devise_scope :admin_user do
     get "admin_sign_in", :to => "admin/sessions#new"
     get "admin_sign_out", :to => "admin/sessions#destroy"
-    get "edit_admin_registration", :to => "admin/registrations#edit"
+    get "admin_edit_registration", :to => "admin/registrations#edit"
   end
   
   namespace :admin do
     root :to => 'campaigns#index'
     match 'campaigns/add_required_action' => 'campaigns#add_required_action', :as => 'add_required_action'
-    resources :admin_users, :only => [:index, :show]
+    resources :admin_users
     resources :actions, :only => [:index, :show]
     resources :action_types
     resources :campaigns

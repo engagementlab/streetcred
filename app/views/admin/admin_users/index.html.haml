@@ -1,12 +1,21 @@
 %h1 Admin Users
 
 %table.table.table-hover
-  %tr
-    %th Email
-    %th
+	%tr
+		%th Name
+		%th Email
+		%th
+		%th
 
-  - @admin_users.each do |user|
-    %tr
-      %td= user.email
-      %td{width: 35}= link_to 'Edit', edit_registration_path(user), :class => 'btn btn-mini'
-      
+	- @admin_users.each do |user|
+		%tr
+			%td= user.name
+			%td= user.email
+			%td{width: 35}= link_to 'Edit', edit_admin_admin_user_path(user), :class => 'btn btn-mini'
+			%td{width: 55}
+				- if user == current_admin_user
+					&nbsp;
+				- else
+					= link_to 'Delete', admin_admin_user_path(user), :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-mini btn-danger'      
+
+= link_to 'New Admin User', new_admin_admin_user_path, :class => 'btn btn-success'
