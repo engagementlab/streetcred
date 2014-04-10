@@ -22,8 +22,10 @@ class Campaign
   field :name, type: String
   field :short_description, type: String
   field :description, type: String
+  field :purpose, type: String #Field to store the purpose of the campaign, why it matters
   field :required_individual_occurrences, type: Integer, :default => 1
   field :required_community_occurrences, type: Integer, :default => 1
+  field :actions_per_level, type: Integer, :default => 1
   field :start_time, type: DateTime
   field :end_time, type: DateTime
   field :latitude, type: BigDecimal

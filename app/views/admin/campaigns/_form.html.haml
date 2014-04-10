@@ -17,6 +17,10 @@
   = f.label :description
   = f.text_area :description, rows: 5
 
+.field
+  = f.label :purpose, "Why Play"
+  = f.text_area :purpose, rows: 5
+
 %br/
 
 %h2 Campaign Rules
@@ -47,6 +51,11 @@
     %p
       %em How many actions are required to complete the community campaign?
     = f.text_field :required_community_occurrences 
+
+  .field
+    %p
+      %em How many actions per level?
+    = f.text_field :actions_per_level 
   
 
 %h3 Location
