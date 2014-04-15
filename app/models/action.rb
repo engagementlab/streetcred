@@ -29,6 +29,12 @@ class Action
   field :url, type: String
   field :photo_url, type: String
   field :timestamp, type: String
+
+  # Message contents for Email Action 
+  field :subject, type: String
+  field :body_plain, type: String
+  field :body_html, type: String
+
   # StreetBump
   field :started_at, type: String
   field :duration, type: BigDecimal

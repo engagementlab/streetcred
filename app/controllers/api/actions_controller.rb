@@ -74,28 +74,41 @@ class API::ActionsController < ApplicationController
 			# Find Channel and ActionType
 			channel = Channel.where(name: 'Email').first
 			if channel.present?
-				action_type = ActionType.where(channel_id: channel.id).where(provider_uid: message.subject.try(:strip).try(:downcase)).first
-				if action_type.present?
-					@action = @user.actions.create(
-						action_type_id: action_type.id, 
-						api_key: channel.api_key,
-						timestamp: message.date
-					)
-					User.delay.update_scores!
-					@user.delay.update_completed_campaigns_count!
-					User.delay.update_completed_community_campaigns_count!
+				# Retrieve array with all #tags in the subject of the email
+				tags = message.subject.try(:downcase).scan(/#\w+/)
 
-					if new_user == true
+				# Check if there are any tags in the email's subject
+				if tags.length > 0
+					# Uses only the first tag for the action_type lookup, even if there is more than one in the email
+					action_type = ActionType.where(channel_id: channel.id).where(provider_uid: tags.first).first
+					if action_type.present?
+						@action = @user.actions.create(
+							action_type_id: action_type.id, 
+							api_key: channel.api_key,
+							timestamp: message.date,
+							body_plain: message.plain,
+							body_html: message.html,
+							subject: message.subject
+						)
+						User.delay.update_scores!
+						@user.delay.update_completed_campaigns_count!
+						User.delay.update_completed_community_campaigns_count!
+
+						if new_user == true
+							@user.send_reset_password_instructions
+						elsif @user.campaigns_completed_by_action(@action).present?
+							NotificationMailer.completed_campaign(@user, @action).deliver
+						elsif @user.campaigns_in_progress_by_action(@action).present?
+							NotificationMailer.progress(@user, @action).deliver
+						end
+					elsif new_user == true
 						@user.send_reset_password_instructions
-					elsif @user.campaigns_completed_by_action(@action).present?
-						NotificationMailer.completed_campaign(@user, @action).deliver
-					elsif @user.campaigns_in_progress_by_action(@action).present?
-						NotificationMailer.progress(@user, @action).deliver
+					else
+						@error_message = "Subject line must match an existing ActionType"
+						render 'errors'
 					end
-				elsif new_user == true
-					@user.send_reset_password_instructions
 				else
-					@error_message = "Subject line must match an existing ActionType"
+					@error_message = "Subject line must contain tag matching an existing ActionType"
 					render 'errors'
 				end
 			else
