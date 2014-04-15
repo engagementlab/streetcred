@@ -32,8 +32,7 @@ class Action
 
   # Message contents for Email Action 
   field :subject, type: String
-  field :body_plain, type: String
-  field :body_html, type: String
+  field :body, type: String
 
   # StreetBump
   field :started_at, type: String

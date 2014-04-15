@@ -86,8 +86,7 @@ class API::ActionsController < ApplicationController
 							action_type_id: action_type.id, 
 							api_key: channel.api_key,
 							timestamp: message.date,
-							body_plain: message.plain,
-							body_html: message.html,
+							body: params[:plain],
 							subject: message.subject
 						)
 						User.delay.update_scores!
