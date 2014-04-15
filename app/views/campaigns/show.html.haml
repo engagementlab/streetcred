@@ -28,6 +28,13 @@
 					%h3 Campaign Goals
 					= @campaign.description
 					%br/
+
+		- if @campaign.purpose.present?
+			.row
+				.span12.center
+					%h3 Why Play
+					= @campaign.purpose
+					%br/
 		
 		.row
 			.span12.center
