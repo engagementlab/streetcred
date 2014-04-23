@@ -24,7 +24,7 @@ class ParticipantsController < ApplicationController
   end
 
   def search
-    @participant = User.where(email: params[:email]).first
+    @participant = User.where(email: params[:email]).first_or_create # If user w/ that email doesn't exist yet, we create it
     if @participant.blank?
       flash[:alert] = "We're sorry, but no profiles matched that email address. Please create a new account by sending an email to reports@streetcred.us and then claim your account, using the search form above."
       redirect_to new_user_session_path
