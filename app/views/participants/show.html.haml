@@ -23,6 +23,31 @@
       - for campaign in @expired_contributed_to_campaigns
         = render partial: 'active_campaign', locals: {campaign: campaign}
 
+    - if @actions_with_text.present?
+      %hr
+      .row
+        .span12
+          %h2 Actions Text
+
+          %ul
+            - for action in @actions_with_text
+              %li
+                - if action.subject.present?
+                  Subject: #{action.subject}
+                - if action.body.present?
+                  | Body: #{action.body}
+
+    - if @actions_with_photos.present?
+      %hr
+      .row
+        .span12
+          %h2 Actions Photos
+
+          %ul
+            - for action in @actions_with_photos
+              %li
+                %img{:src => action.photo_url || action.image_url}
+                
     %br/
     %h4= link_to raw('&larr; Participants'), participants_path
 
