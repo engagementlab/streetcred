@@ -36,6 +36,8 @@
                   Subject: #{action.subject}
                 - if action.body.present?
                   | Body: #{action.body}
+                - if action.campaigns.count > 0
+                  | Campaign(s): #{action.campaigns.pluck(:name).join(" / ")}
 
     - if @actions_with_photos.present?
       %hr
