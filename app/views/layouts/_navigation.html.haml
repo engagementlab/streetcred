@@ -1,9 +1,9 @@
 .row
 	.span12
-		#logo.pull-left
+		#logo.pull-left.col-xs-4
 			= link_to image_tag('/assets/logo.png'), root_url
 		#navigation.pull-right
-			%ul.nav.nav-pills.yellow
+			%ul.nav.nav-pills.yellow.txtSm
 				- if current_user
 					- if params[:controller] == 'participants' && params[:action] == 'show' && params[:id] == current_user.id.to_s
 						%li= link_to 'My Dashboard', participant_path(current_user), class: 'active'

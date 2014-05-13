@@ -1,13 +1,20 @@
+
+
+
 #footer.charcoal-background
 	.container
-		.row
-			.span8
+		.row.paddingHorizontal-md.paddingTop-lg
+			.col-xs-12.col-sm-6.txtXs
 				StreetCred is a collaboration between the Engagement Game Lab at Emerson College and the Mayor's Office of New Urban Mechanics in Boston. The project was made possible through a grant from the McArthur Foundation.
 
-			.span2
-				= link_to image_tag('/assets/monum.png'), 'http://www.newurbanmechanics.org/'
-			.span2
-				= link_to image_tag('/assets/engagement-game-lab.png'), 'http://engagementgamelab.org/'
+			.col-xs-6.col-sm-3
+				=link_to(image_tag("/assets/monum.png"), "http://www.newurbanmechanics.org/", :id => "#fade1", :class => "img-responsive-80-center")
+			.col-xs-6.col-sm-3
+				=link_to(image_tag("/assets/engagement-game-lab.png"), "http://engagementgamelab.org/", :id => "#fade1", :class => "img-responsive-80-center")
+			%br.clear-fix
+		%br.clear-fix
+	%br.clear-fix
+%br.clear-fix
 
 
 %script{ :src => "/assets/application.js", :type=>"text/javascript" }

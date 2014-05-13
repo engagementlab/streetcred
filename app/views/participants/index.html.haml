@@ -1,40 +1,57 @@
-.page.container
-	%h1 Participants
+.page.white-background 
+	.paddingHorizontal-xxl
+		.paddingHorizontal-xxl.paddingBottom-xxl.paddingTop-lg
+			%h4 Participants
 
-	%p.medium
-		== Users take part in StreetCred by performing qualifying actions through approved channels. As of today, participants have taken <span class="larger bold">#{User.total_actions_count}</span> actions. Through those actions, they have earned <span class="larger bold">#{User.completed_campaigns_count}</span> awards, and completed <span class="larger bold">#{User.completed_community_campaigns_count}</span> community campaigns.
-	%p
-		%em
+			%p.txtSm
+				== Users take part in StreetCred by performing qualifying actions through approved channels. As of today, participants have taken <span class="larger bold">#{User.total_actions_count}</span> actions. Through those actions, they have earned <span class="larger bold">#{User.completed_campaigns_count}</span> awards, and completed <span class="larger bold">#{User.completed_community_campaigns_count}</span> community campaigns.
+			%p.txtXs
+				%em
+					%br/
+					(Participants earns 5 points for every action taken. They even earn 5 points for every  report they make through Citizens Connect, even if it is not part of a campaign.  If they earn an individual award by completing a campaign, they earn 25 points.  If they their action helps the community meet its goal, they earn an additional 50 points.)
+
 			%br/
-			(Participants earns 5 points for every action taken. They even earn 5 points for every  report they make through Citizens Connect, even if it is not part of a campaign.  If they earn an individual award by completing a campaign, they earn 25 points.  If they their action helps the community meet its goal, they earn an additional 50 points.)
 
-	%br/
+		- @participants.each do |participant|
+			.col-xs-12.user.well
+				.col-xs-4.col-xs-offset-4.col-sm-2.col-sm-offset-0.gravatar
+					- if participant.gravatar.present?
+						= image_tag participant.gravatar.url(:thumbnail)
+					- else
+						= image_tag participant.gravatar_url
+				.col-xs-12.col-sm-4.user-name.txtSm.txt-center-xs.txt-left-sm
+					%h3= participant.display_name
+					== Member since #{formatted_month_year(participant.created_at)}
+				.col-xs-10.col-xs-offset-2.col-sm-4.col-sm-offset-0.removePadding
+					.col-xs-3.col-sm-3.stat.text-center
+						%h2
+							= participant.score
+						Score
 
-	- @participants.each do |participant|
-		.row.user.well
-			.span1.gravatar
-				- if participant.gravatar.present?
-					= image_tag participant.gravatar.url(:thumbnail)
-				- else
-					= image_tag participant.gravatar_url
-			.span4.user-name
-				%h3= participant.display_name
-				== Member since #{formatted_month_year(participant.created_at)}
+					.col-xs-3.col-sm-3.stat.text-center
+						%h2
+							= participant.completed_campaigns_count
+						= pluralizer_helper('Awards', participant.completed_campaigns_count)
 
-			.span1.stat.text-center
-				%h1
-					= participant.score
-				Score
+					.col-xs-3.col-sm-3.stat.text-center
+						%h2
+							= participant.actions.count
+						= pluralizer_helper('Actions', participant.actions.count)
 
-			.span1.stat.text-center
-				%h3.adjusted
-					= participant.completed_campaigns_count
-				= pluralizer_helper('Awards', participant.completed_campaigns_count)
+				.col-xs-6.col-xs-offset-3.col-sm-2.col-sm-offset-0.details-button.text-right
+					= link_to 'details', participant_path(participant), :class => 'btn btn-info txtSm'
+			%br.clear-fix
 
-			.span1.stat.text-center
-				%h3.adjusted
-					= participant.actions.count
-				= pluralizer_helper('Actions', participant.actions.count)
-
-			.span1.pull-right.details-button.text-right
-				= link_to 'details', participant_path(participant), :class => 'btn btn-info'
+- content_for :scripts do
+	:javascript
+		$(window).load(function() { 
+		$(".gravatar img").each(function(){ 
+		var image = $(this); 
+		if(image.context.naturalWidth == 0 || image.readyState == 'uninitialized'){  
+		$(image).attr('src', '/assets/NoProfilePhoto_sm.jpg');
+		} 
+		}); 
+		});
+		if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		$(window).stellar();
+		}

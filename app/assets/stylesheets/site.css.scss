@@ -62,26 +62,30 @@ html,
 body {
   height: 100%;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	background-color:#5a5e61;
 }
 #wrap {
   min-height: 100%;
   height: auto !important;
   height: 100%;
   margin: 0 auto -100px;
+  overflow:hidden;
 }
 
-#push,
+
+
 #footer {
-  height: 100px;
-}
-#footer {
-	padding-top: 50px;
-	font-weight: 300;
-	line-height: 1.5em;
+	max-height:120px;
+	margin-top:50px;
 	color: $light-gray;
 }
 #logo {
 	margin-top: 10px;
+	max-width:165px;
+}
+#logo a img {
+	width:100%;
+	height:auto;
 }
 #navigation {
 	margin-top: 20px;
@@ -260,7 +264,12 @@ ul.nav {
 	border: solid 3px #bbb;
 }
 .gravatar {
-	margin-top: 15px;
+	margin-top: 0px;
+}
+.gravatar img {
+	width:100%;
+	height:auto;
+	border-radius:100px;
 }
 .progress-goal {
 	margin-top: 44px;

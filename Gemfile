@@ -27,7 +27,7 @@ gem 'mongoid_slug'
 gem 'oj'
 gem 'mongoid-paperclip', :require => 'mongoid_paperclip'
 gem 'rabl'
-gem 'twitter-bootstrap-rails'
+#gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', :branch => 'bootstrap3'
 
 # geocoder needs to load after mongoid to avoid "uninitialized constant Geocoder::Model::Mongoid"
 gem 'geocoder'

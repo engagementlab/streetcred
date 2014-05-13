@@ -1,45 +1,45 @@
-#map-background-blue
+#map-background-blue{"data-stellar-background-ratio" => "2.0"}
 	.container
 
 		/ navigation row
 		= render partial: 'layouts/navigation'
 			
 		/ tagline row
-		.row.tagline
-			.span12.text-center
-				%h1.white
+		.container-fluid.tagline
+			.col-xs-12.text-center
+				%h4.white
 					Take action, earn street cred, improve your city.
 				.slogan.large.white
 					StreetCred connects your civic actions to ongoing campaigns so you can work with your community to achieve big goals.
 
 		/ fader row
-		.row
-			.span3.offset1.text-right.home-navigation.white
+		#slider-wrapper.col-xs-12.marginTop-xxl
+			.col-xs-3.hidden-xs.text-left.home-navigation.white.removePadding
 				%ul.slidesjs-pagination
-					%li#nav-item-1.nav-item{:style=>'color: white; cursor: pointer; cursor: hand;'}
+					%li#nav-item-1.nav-item.txtMd{:style=>'color: white; cursor: pointer; cursor: hand;'}
 						get&nbsp;started
 						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-1', style: 'visibility: visible'
-					%li#nav-item-2.nav-item{:style=>'color: #95ddeb; cursor: pointer; cursor: hand;'}
+					%li#nav-item-2.nav-item.txtMd{:style=>'color: #95ddeb; cursor: pointer; cursor: hand;'}
 						take&nbsp;action
 						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-2', style: 'visibility: hidden'
-					%li#nav-item-3.nav-item{:style=>'color: #95ddeb; cursor: pointer; cursor: hand;'}
+					%li#nav-item-3.nav-item.txtMd{:style=>'color: #95ddeb; cursor: pointer; cursor: hand;'}
 						earn&nbsp;cred
 						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-3', style: 'visibility: hidden'
-					%li#nav-item-4.nav-item{:style=>'color: #95ddeb; cursor: pointer; cursor: hand;'}
+					%li#nav-item-4.nav-item.txtMd{:style=>'color: #95ddeb; cursor: pointer; cursor: hand;'}
 						see&nbsp;change
 						= image_tag '/assets/arrow.png', class: 'nav-arrow', id: 'nav-arrow-4', style: 'visibility: hidden'
 		
-			#slides
+			#slides.col-xs-12.col-sm-8.removePadding
 				%div
-					.span4.text-center
+					.col-xs-12.col-sm-8.text-center.removePadding
 						= image_tag('/assets/iphone-1.png')
-					.span3.text-left.home-description.white
+					.col-xs-12.col-sm-4.txtMd.home-description.white.removePadding
 						%p
 							Start using StreetCred by sending an email to reports@streetcred.us or by filing a report with your Citizens Connect account (make sure to add your email address to your Citizens Connect profile.)  You'll be notified by email with instructions on how to claim your account.
 				%div
-					.span4.text-center
+					.col-xs-8.text-center
 						= image_tag('/assets/iphone-4.png')
-					.span3.text-left.home-description.white
+					.col-xs-12.col-sm-4.txtMd.home-description.white.removePadding
 						Support a StreetCred campaign by using Citizens Connect, Instagram, Foursquare and email to report, share and check-in across the city, making your community even better.
 						%br/
 						%br/
@@ -48,70 +48,70 @@
 						= link_to image_tag('/assets/android-store.jpg'), 'https://play.google.com/store/apps/details?id=gov.cityofboston.citizensconnect'
 
 				%div
-					.span4.text-center
+					.col-xs-12.col-sm-8.text-center.removePadding
 						= image_tag('/assets/iphone-3.png')
-					.span3.text-left.home-description.white
+					.col-xs-12.col-sm-4.txtMd.home-description.white.removePadding
 						With each action you take, you'll earn cred. And when you complete a campaign, you'll earn a digital badge to celebrate your work. StreetCred badges are compatible with Mozilla OpenBadges, so you can share your achievements with your broader network.
 						%br/
 						%br/
 						= link_to image_tag('/assets/open_badges_issuer.png'), 'http://openbadges.org/'
 
 				%div
-					.span4.text-center
+					.col-xs-12.col-sm-8.text-center.removePadding
 						= image_tag('/assets/iphone-2.png')
-					.span3.text-left.home-description.white
+					.col-xs-12.col-sm-4.txtMd.home-description.white.removePadding
 						See how your actions on these campaigns are improving the city.
+			%br.clear-fix
 
 - unless current_user
 	.full-width-medium.light-yellow-background#get-started
 		.container
 			.row
-				.span3
-					%h2 Get Started!
-				.span9
-					%ul.inline
-						%li
-							%h3 Search for your account
-						%li
-							= form_tag('/participants/search', method: :get)
-							= email_field_tag :email, nil, placeholder: 'Your email address'
-						%li
-							= submit_tag 'Search', class: 'btn btn-info'
-						%li.more -or -
-						%li.more
-							= link_to 'Sign In', sign_in_path
+				.col-xs-12.text-center
+					%h4 Get Started!
+				.col-xs-12.paddingTop-lg
+					%div.col-xs-12
+						%h3 Search for your account
+					%div.col-xs-12.col-sm-4.col-md-6
+						= form_tag('/participants/search', method: :get)
+						= email_field_tag :email, nil, placeholder: 'Your email address'
+					%div.col-xs-4.col-xs-offset-4.col-sm-offset-0.col-sm-4.col-md-2.paddingTop-responsive-xs
+						= submit_tag 'Search', class: 'btn btn-info'
+					%div.col-xs-4.col-xs-offset-4.col-sm-offset-0.col-sm-2.more.text-center.txtSm -or -
+					%div.col-xs-4.col-xs-offset-4.col-sm-offset-0.col-sm-2.more.text-center.txtSm
+						= link_to 'Sign In', sign_in_path
 
 
-.full-width-large
+.full-width-large.white-background
 	.container
 		.row
-			.span12.text-center
-				%h1
+			.col-xs-12.text-center
+				%h4
 					How it works
 				%br/
-			.span4
+			.howitworks-wrapper.col-xs-12.col-sm-4.paddingTop-responsive-sm
 				%div.text-center
 					= image_tag('sample-badge-icon.png')
-					%h3.blue
+					%h4.blue
 						Campaigns
-				%p
+				%p.txtSm.text-center
 					== Campaigns are projects that are defined by City Hall and community partners. Campaigns are active for a limited time-frame. You contribute to campaigns by taking qualified actions.  #{link_to 'Click here', campaigns_path} to see a list of current campaigns.
-			.span4
+			.howitworks-wrapper.col-xs-12.col-sm-4.paddingTop-responsive-sm
 				%div.text-center
 					= image_tag('sample-badge-individual-award.png')
-					%h3.blue
+					%h4.blue
 						Personal Awards
-				%p
+				%p.txtSm.text-center
 					Personal awards are earned by taking actions specific to each campaign. Actions can include submitting issues using Citizen Connect, checking-in using Foursquare, sharing photos using Instagram, and reporting acts using email.
 					- if current_user
 						== You can check your progress toward personal awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
 
-			.span4
+			.howitworks-wrapper.col-xs-12.col-sm-4.paddingTop-responsive-xs
 				%div.text-center
 					= image_tag('sample-badge-community-award.png')
-					%h3.blue
+					%h4.blue
 						Community Awards
-				%p
+				%p.txtSm.text-center
 					Once you earn a personal award, you can continue to contribute to the broader, community goal. Once the community goal has been met, all individual participants will earn the community award.
 					- if current_user
 						== You can check your progress toward community awards by visiting your #{link_to 'user dashboard', participant_path(current_user)}
@@ -125,8 +125,12 @@
 
 				<div id='map'></div>
 
-
 - content_for :scripts do
+	:javascript
+		if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		$(window).stellar();
+		}
+
 	:javascript
 		var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
 		map.scrollWheelZoom.disable();
@@ -137,16 +141,16 @@
 		$(function() {
 		$('#slides').slidesjs({
 		width: 200,
-		height: 185,
+		height: 600,
 
 		navigation: {
 		active: false,
-		effect: "fade"
+		effect: "slide"
 		},
 		
 		pagination: {
 		active: true,
-		effect: "fade"
+		effect: "slide"
 		},
 
 		effect: {
@@ -157,8 +161,8 @@
 		
 		play: {
 		active: false,
-		effect: "fade",
-		interval: 5000,
+		effect: "slide",
+		interval: 4000,
 		auto: true,
 		pauseOnHover: false,
 		swap: false
