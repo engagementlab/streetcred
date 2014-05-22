@@ -1,0 +1,30 @@
+.page.container
+  
+  - if @participant.present?
+    %h1 Actions for #{@participant.display_name}
+
+    - if @actions.present?
+      %ul
+        - for action in @actions
+          %li 
+            #{action.action_type.channel.name} - #{action.action_type.name}
+            - if action.campaigns.present?
+              (For 
+              - for action_campaign in action.campaigns
+                = link_to "#{action_campaign.name}", campaign_path(action_campaign)
+              )
+    - else
+      %p No actions available to display
+
+  - if @campaign.present?
+    %h1 Actions for #{@campaign.name}
+
+    - if @actions.present?
+      %ul
+        - for action in @actions
+          %li
+            #{action.action_type.channel.name} - #{action.action_type.name}
+            = link_to "By #{action.user.display_name}", participant_path(action.user)
+    - else
+      %p No actions available to display
+
