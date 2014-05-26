@@ -1,19 +1,35 @@
-.list-row-badge
-	= image_tag(campaign.badge_icon.url(:badge))
-.list-row-description
+.badge-container.list-row-badge.col-xs-4.col-xs-offset-4.col-sm-2.col-sm-offset-0
+	= image_tag(campaign.badge_icon.url(:badge, :class => "badge"))
+.list-row-description.col-xs-12.col-sm-3.removePadding.txt-center-xs.txt-left-sm
 	%h3
 		== #{link_to campaign.name, campaign_path(campaign), class: 'black'}&nbsp;
 		- if campaign.active?
 			%small.black.active
 				== #{distance_of_time_in_words(campaign.time_left)} left
 	= campaign.short_description
-.list-row-progress
+.list-row-progress.col-xs-8.col-xs-offset-2.col-sm-3.col-md-4.col-sm-offset-0.removePadding
 	.progress-row
 		.pull-right.goal
 			== #{campaign.contributing_community_actions.try(:count)}/#{campaign.required_community_occurrences}
-		.progress
+		.progress.borderRadius-lg
 			.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)};"}
 	
-.list-row-link
+.list-row-link.col-xs-6.col-xs-offset-3.col-sm-2.col-sm-offset-0
 	= link_to 'details', campaign_path(campaign), class: 'btn btn-info'
-.clear
+
+%br.clear-fix
+
+- content_for :scripts do
+	:javascript
+		$(window).load(function() { 
+		$(".badge-container img").each(function(){ 
+		var image = $(this); 
+		if(image.context.naturalWidth == 0 || image.readyState == 'uninitialized'){  
+		$(image).attr('src', '/assets/NoProfilePhoto_sm.jpg');
+		} 
+		}); 
+		});
+		$(".badge-container img").css({width:"100%",border:"0px solid", borderRadius:"300px"});
+		if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		$(window).stellar();
+		}

@@ -16,7 +16,7 @@
 						== #{@campaign.contributing_community_actions.try(:count)}/#{@campaign.required_community_occurrences}
 					%div
 						Community
-						.progress
+						.progress.borderRadius-lg
 							.bar.blue{:style=>"width: #{community_progress_bar_helper(@campaign)};"}
 
 				.clear

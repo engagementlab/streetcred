@@ -1,3 +1,66 @@
+.profile-wrapper.col-xs-12.col-sm-6
+  .paddingVertical-lg.colorPrimary-white
+    = image_tag '/assets/profile-img.jpg', class: 'profile-img', style: 'visibility: visible'
+    .col-xs-12
+      %h4.paddingTop-md Peter Kloss
+      .txtSm 7 Campaigns
+      .txtSm 36 Actions
+      .txtSm 2 Awards
+.awards-wrapper.col-xs-12.col-sm-6
+  .col-xs-4.col-sm-4.award
+    %div
+      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
+  .col-xs-4.award
+    %div
+      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
+  .col-xs-4.award
+    %div
+      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
+  .col-xs-4.award
+    %div
+      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
+  .col-xs-4.award
+    %div
+      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
+  .col-xs-4.award
+    %div
+      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
+  %br.clear-fix
+.map-wrapper.col-xs-12.col-sm-6.removePadding
+  #map
+.tiles-wrapper.tiles-wrapper.col-xs-12.col-sm-6.removePadding
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  .tile.col-xs-3.img-height-25.pull-left
+  %br.clear-fix
+.post.col-xs-12.backgroundSecondary-color.padding-xl
+  .col-xs-3.padding-sm.txtMd.colorPrimary-white
+    April 16, 2014
+  .col-xs-9.padding-xl.backgroundSecondary-color-highlight.colorPrimary-white.txtSm.borderRadius-md
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  %br.clear-fix
+.col-xs-12.backgroundSecondary-color-highlight.padding-lg
+  %h4.text-center.colorPrimary-white Newsfeed
+  .col-xs-10.col-xs-offset-1.padding-xl.backgroundPrimary-white.colorPrimary-color.borderRadius-md.txtXs.marginTop-lg
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  .col-xs-10.col-xs-offset-1.padding-xl.backgroundPrimary-white.colorPrimary-color.borderRadius-md.txtXs.marginTop-lg
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+
 - if @participant.last_sign_in_at.blank?
   %h1 Sorry, this user is not visible
   %p 
@@ -52,7 +115,7 @@
                 
     %br/
     %h4= link_to raw('&larr; Participants'), participants_path
-
+  
   - if @participant.map_visible?
     .full-width-large.dark-gray-background
       .container
