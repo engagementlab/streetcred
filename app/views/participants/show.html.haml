@@ -1,11 +1,20 @@
 .profile-wrapper.col-xs-12.col-sm-6
   .paddingVertical-lg.colorPrimary-white
-    = image_tag '/assets/profile-img.jpg', class: 'profile-img', style: 'visibility: visible'
+    - if @participant.gravatar.present?
+      = image_tag @participant.gravatar.url(:thumbnail), class: 'profile-img', style: 'visibility: visible'
+    - else
+      = image_tag @participant.gravatar_url, class: 'profile-img', style: 'visibility: visible'
     .col-xs-12
-      %h4.paddingTop-md Peter Kloss
-      .txtSm 7 Campaigns
-      .txtSm 36 Actions
-      .txtSm 2 Awards
+      %h4.paddingTop-md= @participant.display_name
+      .txtSm 
+        = @earned_awards.count
+        = pluralizer_helper('Awards', @earned_awards.count)
+      .txtSm 
+        = @participant.completed_campaigns_count
+        = pluralizer_helper('Campaigns', @participant.completed_campaigns_count)
+      .txtSm
+        = @participant.actions.count
+        = pluralizer_helper('Actions', @participant.actions.count)
 .awards-wrapper.col-xs-12.col-sm-6
   .col-xs-4.col-sm-4.award
     %div
@@ -26,103 +35,58 @@
     %div
       = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
   %br.clear-fix
-.map-wrapper.col-xs-12.col-sm-6.removePadding
-  #map
-.tiles-wrapper.tiles-wrapper.col-xs-12.col-sm-6.removePadding
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  .tile.col-xs-3.img-height-25.pull-left
-  %br.clear-fix
-.post.col-xs-12.backgroundSecondary-color.padding-xl
-  .col-xs-3.padding-sm.txtMd.colorPrimary-white
-    April 16, 2014
-  .col-xs-9.padding-xl.backgroundSecondary-color-highlight.colorPrimary-white.txtSm.borderRadius-md
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  %br.clear-fix
-.col-xs-12.backgroundSecondary-color-highlight.padding-lg
-  %h4.text-center.colorPrimary-white Newsfeed
-  .col-xs-10.col-xs-offset-1.padding-xl.backgroundPrimary-white.colorPrimary-color.borderRadius-md.txtXs.marginTop-lg
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  .col-xs-10.col-xs-offset-1.padding-xl.backgroundPrimary-white.colorPrimary-color.borderRadius-md.txtXs.marginTop-lg
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-
-
-- if @participant.last_sign_in_at.blank?
-  %h1 Sorry, this user is not visible
-  %p 
-    == If you think this might be your own profile, please claim your profile #{link_to 'here', edit_user_password_path(@participant)}
-- else
-  = render partial: 'user_header'
-
-  .page.container
-    %p.medium
-      The Dashboard shows the progress you've made toward each campaign goal. When you meet an individual goal, you'll earn the award. After you've earned the award, you can continue to contribute to the community goal. Your badge will be displayed with a ribbon once the community goal has been achieved.
-    %br/
-
-    - if @active_campaigns.present?
-      - for campaign in @active_campaigns
-        = render partial: 'active_campaign', locals: {campaign: campaign}
-          
-    - if @expired_contributed_to_campaigns.present?
-      %hr
-      .row
-        .span12
-          %h2 Completed Campaigns
-      
-      - for campaign in @expired_contributed_to_campaigns
-        = render partial: 'active_campaign', locals: {campaign: campaign}
-
-    - if @actions_with_text.present?
-      %hr
-      .row
-        .span12
-          %h2 Actions Text
-
-          %ul
-            - for action in @actions_with_text
-              %li
-                - if action.subject.present?
-                  Subject: #{action.subject}
-                - if action.body.present?
-                  | Body: #{action.body}
-                - if action.campaigns.count > 0
-                  | Campaign(s): #{action.campaigns.pluck(:name).join(" / ")}
-
-    - if @actions_with_photos.present?
-      %hr
-      .row
-        .span12
-          %h2 Actions Photos
-
-          %ul
-            - for action in @actions_with_photos
-              %li
-                %img{:src => action.photo_url || action.image_url}
-                
-    %br/
-    %h4= link_to raw('&larr; Participants'), participants_path
-  
+- if @actions_with_photos.present?
   - if @participant.map_visible?
-    .full-width-large.dark-gray-background
-      .container
-        %h3.white
-          Your Actions
+    .map-wrapper.col-xs-12.col-sm-6.removePadding
+      #map
+    .tiles-wrapper.tiles-wrapper.col-xs-12.col-sm-6.removePadding
+      - for action in @actions_with_photos
+        .tile.col-xs-3.img-height-25.pull-left(style="background-image: url('#{action.photo_url || action.image_url}');")
+      - for i in 1..(16-@actions_with_photos.count)
+        .tile.col-xs-3.img-height-25.pull-left
+      %br.clear-fix
+  - else
+    .tiles-wrapper.tiles-wrapper.col-xs-12.col-sm-12.removePadding
+      - for action in @actions_with_photos
+        .tile.col-xs-3.img-height-25.pull-left(style="background-image: url('#{action.photo_url || action.image_url}');")
+      - for i in 1..(16-@actions_with_photos.count)
+        .tile.col-xs-3.img-height-25.pull-left
+      %br.clear-fix
 
-        <div id='map'></div>
+- else
+  - if @participant.map_visible?
+    .map-wrapper.col-xs-12.col-sm-12.removePadding
+      #map
+
+- if @actions_with_text.present?
+  .post.col-xs-12.backgroundSecondary-color.padding-xl
+    - for action in @actions_with_text
+      .col-xs-3.padding-sm.txtMd.colorPrimary-white
+        = action.created_at.strftime("%B %d, %Y")
+      .col-xs-9.padding-xl.backgroundSecondary-color-highlight.colorPrimary-white.txtSm.borderRadius-md
+        - if action.subject.present?
+          Subject: #{action.subject}
+        - if action.body.present?
+          | Body: #{action.body}
+        - if action.campaigns.count > 0
+          | Campaign(s): #{action.campaigns.pluck(:name).join(" / ")}
+    %br.clear-fix
+
+- if @actions_recent.present?
+  .col-xs-12.backgroundSecondary-color-highlight.padding-lg
+    %h4.text-center.colorPrimary-white Newsfeed
+    - for action in @actions_recent
+      .col-xs-10.col-xs-offset-1.padding-xl.backgroundPrimary-white.colorPrimary-color.borderRadius-md.txtXs.marginTop-lg
+        Action #{action.action_type.channel.name} - #{action.action_type.name}
+        - if action.campaigns.present?
+          taken in  
+          - action.campaigns.each_with_index do |action_campaign, index|
+            - if index > 0
+              \/
+            = link_to "#{action_campaign.name}", campaign_path(action_campaign)
+          = pluralizer_helper('Campaigns', action.campaigns.count)
+    %br.clear-fix
 
   - content_for :scripts do
     :javascript
