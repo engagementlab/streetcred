@@ -1,0 +1,53 @@
+.page.container
+  
+  - if @action.present?
+    %h1
+      = @action.action_type.channel.name
+
+    - if @action.user.gravatar.present?
+      = image_tag @action.user.gravatar.url(:thumbnail), class: 'profile-img', style: 'visibility: visible'
+    - else
+      = image_tag @action.user.gravatar_url, class: 'profile-img', style: 'visibility: visible'
+
+    %p
+      = @action.user.display_name
+    %p
+      = @action.created_at.strftime("%B %d, %Y %I:%M:%S %p")
+    %p
+      - @action.campaigns.each_with_index do |action_campaign, index|
+        - if index > 0
+          &
+        = link_to "#{action_campaign.name}", campaign_path(action_campaign)
+
+    %br
+
+    - if @action.subject.present?
+      %p
+        "
+        = @action.subject
+        %br
+        = @action.body
+        "
+
+    - if @action.description.present?
+      %p
+        "
+        = @action.description
+        "
+
+    - if @action.photo_url.present? || @action.image_url.present?
+      = image_tag (@action.photo_url || @action.image_url)
+
+    %p
+
+    - if @action.user.map_visible?
+      #map
+
+    - content_for :scripts do
+      :javascript
+        var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
+        map.scrollWheelZoom.disable();
+        L.mapbox.markerLayer(gon.markers).addTo(map);
+  
+  - else
+    %p No action available to display

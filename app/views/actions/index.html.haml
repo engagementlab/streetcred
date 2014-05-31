@@ -7,7 +7,7 @@
       %ul
         - for action in @actions
           %li 
-            #{action.action_type.channel.name} - #{action.action_type.name}
+            = link_to "#{action.action_type.channel.name}", participant_action_path(@participant, action)
             - if action.campaigns.present?
               (For 
               - for action_campaign in action.campaigns
@@ -23,7 +23,7 @@
       %ul
         - for action in @actions
           %li
-            #{action.action_type.channel.name} - #{action.action_type.name}
+            = link_to "#{action.action_type.channel.name}", campaign_action_path(@campaign, action)
             = link_to "By #{action.user.display_name}", participant_path(action.user)
     - else
       %p No actions available to display

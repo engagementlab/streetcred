@@ -2,12 +2,12 @@ Streetcred::Application.routes.draw do
   root :to => 'pages#index' 
   
   resources :campaigns, :only => [:index, :show] do
-    resources :actions, :only => [:index]
+    resources :actions, :only => [:index, :show]
   end
   resources :pages, :only => [:index, :show]
   resources :participants do
     get 'search', on: :collection
-    resources :actions, :only => [:index]
+    resources :actions, :only => [:index, :show]
   end
   
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks", :sessions => 'sessions', :registrations => 'registrations'}
