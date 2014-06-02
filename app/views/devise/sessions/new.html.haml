@@ -57,39 +57,17 @@
 
 
 					%h4.paddingTop-lg Returning User?
-					<form accept-charset="UTF-8" action="/participants/search" method="get">
-					<div>
-					<input name="utf8" type="hidden" value="✓">
-					</div>
-					<div class="user well field txtSm paddingBottom-xl">
-					<label style="font-weight:400 !important;" for="user_email">Enter your email</label>
-					<input id="email" class="marginTop-sm padding-sm borderRadius-sm removeBorder boxShadow-inset-xs" name="email" placeholder="Your email address" type="email">
-					<br />
-					<label style="font-weight:400 !important;" for="user_email">Enter your password</label>
-					<input id="email" class="marginTop-sm padding-sm borderRadius-sm removeBorder boxShadow-inset-xs" name="email" placeholder="Your password" type="email">
-					<br />
-					<input class="btn btn-info marginTop-xl" name="commit" type="submit" value="Sign In">
-					</div>
-					</form>
-
-
-
-
-					%br/		
-					%h4 Returning user?
-
-					%div.user.well.field.txtSm.paddingBottom-xl
-						= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-							.field
-								= f.label :email
-								= f.email_field :email, :autofocus => true
-
-							.field
-								= f.label :password
-								= f.password_field :password
-
-							.actions
-								= f.submit "Sign in", :class => "btn btn-info"
+					= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+						%div.user.well.field.txtSm.paddingBottom-xl
+							= f.label :email, "Enter your email", :style => "font-weight:400 !important; width:100%;"
+							= f.email_field :email, :autofocus => true, :class => "marginTop-sm padding-sm borderRadius-sm removeBorder boxShadow-inset-xs"
+							
+							%br/
+							= f.label :password, "Enter your password", :style => "font-weight:400 !important; width:100%;"
+							= f.password_field :password, :class => "marginTop-sm padding-sm borderRadius-sm removeBorder boxShadow-inset-xs"
+							
+							%br/
+							= f.submit "Sign in", :class => "btn btn-info marginTop-xl"
 
 							%div
 								%br/
