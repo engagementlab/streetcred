@@ -63,14 +63,20 @@
   .post.col-xs-12.backgroundSecondary-color.padding-xl
     - for action in @actions_with_text
       .col-xs-3.padding-sm.txtMd.colorPrimary-white
-        = action.created_at.strftime("%B %d, %Y")
-      .col-xs-9.padding-xl.backgroundSecondary-color-highlight.colorPrimary-white.txtSm.borderRadius-md
+        = link_to "#{action.created_at.strftime('%B %d, %Y')}", participant_action_path(@participant, action), :class => "colorPrimary-gray"
+      .col-xs-9.padding-xl.backgroundSecondary-color-highlight.colorPrimary-white.txtSm.borderRadius-md.marginTop-sm
         - if action.subject.present?
           Subject: #{action.subject}
         - if action.body.present?
-          | Body: #{action.body}
+          %br/
+          #{action.body}
         - if action.campaigns.count > 0
-          | Campaign(s): #{action.campaigns.pluck(:name).join(" / ")}
+          %br/
+          For Campaign:
+          - action.campaigns.each_with_index do |action_campaign, index|
+            - if index > 0
+              &
+            = link_to "#{action_campaign.name}", campaign_path(action_campaign), :class => "colorPrimary-gray"
     %br.clear-fix
 
 - if @actions_recent.present?
@@ -78,12 +84,12 @@
     %h4.text-center.colorPrimary-white Newsfeed
     - for action in @actions_recent
       .col-xs-10.col-xs-offset-1.padding-xl.backgroundPrimary-white.colorPrimary-color.borderRadius-md.txtXs.marginTop-lg
-        Action #{action.action_type.channel.name} - #{action.action_type.name}
+        = link_to "#{action.created_at.strftime("%B %d, %Y %I:%M %p")} - #{action.action_type.channel.name}", participant_action_path(@participant, action)
         - if action.campaigns.present?
           taken in  
           - action.campaigns.each_with_index do |action_campaign, index|
             - if index > 0
-              \/
+              &
             = link_to "#{action_campaign.name}", campaign_path(action_campaign)
           = pluralizer_helper('Campaigns', action.campaigns.count)
     %br.clear-fix

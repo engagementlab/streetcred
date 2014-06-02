@@ -7,10 +7,10 @@
 
         - if @action.user.gravatar.present?
           .col-xs-2.col-md-1.removePadding
-            = image_tag @action.user.gravatar.url(:thumbnail), class: 'actionProfile-img', style: 'visibility: visible'
+            = image_tag @action.user.gravatar.url(:thumbnail), :class => 'actionProfile-img', :style => 'visibility: visible'
         - else
           .col-xs-2.col-md-1.removePadding
-            = image_tag @action.user.gravatar_url, class: 'actionProfile-img', style: 'visibility: visible'
+            = image_tag @action.user.gravatar_url, :class => 'actionProfile-img', :style => 'visibility: visible'
 
         .col-xs-12.col-sm-10
           %p.txtLg
@@ -45,8 +45,7 @@
               "
 
         - if @action.photo_url.present? || @action.image_url.present?
-          .actionImg-post.boxShadow-md.col-xs-12.col-sm-6.col-md-4.removePadding.marginBottom-lg
-            = image_tag (@action.photo_url || @action.image_url)
+          .actionImg-post.boxShadow-md.col-xs-12.col-sm-6.col-md-4.removePadding.marginBottom-lg(style="background-image: url('#{@action.photo_url || @action.image_url}');")
 
         %p
 
