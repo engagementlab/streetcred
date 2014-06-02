@@ -1,4 +1,4 @@
-.page.white-background 
+.page.colorPrimary-white
   .paddingHorizontal-xxl.paddingBottom-lg
     .paddingHorizontal-xxl.paddingBottom-xxl.paddingTop-lg
       %h4 Campaigns
@@ -12,7 +12,7 @@
       %br/
 
     - for campaign in @active_campaigns
-      .well
+      .well.colorSecondary-black.boxShadow-md
         = render partial: 'campaign', locals: {campaign: campaign}
 
     - if @completed_campaigns.present?
@@ -21,3 +21,20 @@
       - for campaign in @completed_campaigns
         .well
           = render partial: 'campaign', locals: {campaign: campaign}
+
+- content_for :scripts do
+  :javascript
+    $(window).load(function() { 
+    $("#wrap").css({
+    backgroundColor:"#5b6469"
+    });
+    $(".gravatar img").each(function(){ 
+    var image = $(this); 
+    if(image.context.naturalWidth == 0 || image.readyState == 'uninitialized'){  
+    $(image).attr('src', '/assets/NoProfilePhoto_sm.jpg');
+    } 
+    }); 
+    });
+    if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    $(window).stellar();
+    }

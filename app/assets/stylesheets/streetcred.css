@@ -322,44 +322,44 @@ nav {
   height: auto;
 }
 .boxShadow-xs {
-  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .boxShadow-sm {
-  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .boxShadow-md {
-  -webkit-box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .boxShadow-lg {
-  -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .boxShadow-xl {
-  -webkit-box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .boxShadow-inset-xs {
-  -webkit-box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.3) !important;
+  box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .boxShadow-inset-sm {
-  -webkit-box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.3) !important;
+  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .boxShadow-inset-md {
-  -webkit-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.3) !important;
+  box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .boxShadow-inset-lg {
-  -webkit-box-shadow: inset 0 0 20px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0 0 20px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 20px 0 rgba(0, 0, 0, 0.3) !important;
+  box-shadow: inset 0 0 20px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .boxShadow-inset-xl {
-  -webkit-box-shadow: inset 0 0 25px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: inset 0 0 25px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 25px 0 rgba(0, 0, 0, 0.3) !important;
+  box-shadow: inset 0 0 25px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .borderRadius-xs {
   -webkit-border-radius: 5px;

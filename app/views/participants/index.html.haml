@@ -1,4 +1,4 @@
-.page.white-background 
+.page.colorPrimary-white
 	.paddingHorizontal-xxl
 		.paddingHorizontal-xxl.paddingBottom-xxl.paddingTop-lg
 			%h4 Participants
@@ -13,7 +13,7 @@
 			%br/
 
 		- @participants.each do |participant|
-			.col-xs-12.user.well
+			.col-xs-12.user.well.colorSecondary-black.boxShadow-md
 				.col-xs-4.col-xs-offset-4.col-sm-2.col-sm-offset-0.gravatar
 					- if participant.gravatar.present?
 						= image_tag participant.gravatar.url(:thumbnail)
@@ -45,6 +45,9 @@
 - content_for :scripts do
 	:javascript
 		$(window).load(function() { 
+		$("#wrap").css({
+		backgroundColor:"#5b6469"
+		});
 		$(".gravatar img").each(function(){ 
 		var image = $(this); 
 		if(image.context.naturalWidth == 0 || image.readyState == 'uninitialized'){  
