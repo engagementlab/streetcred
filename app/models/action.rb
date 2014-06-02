@@ -28,6 +28,7 @@ class Action
   field :state, type: String
   field :url, type: String
   field :photo_url, type: String
+  field :image_url, type: String # Citizens Connect
   field :timestamp, type: String
 
   # Message contents for Email Action 
