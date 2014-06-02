@@ -73,7 +73,6 @@
   overflow: hidden;
 }
 .tile {
-  background-image: url('../assets/dummy-img.jpg') !important;
   background-size: cover;
   background-position: 50% 50%;
   height: 25%;
