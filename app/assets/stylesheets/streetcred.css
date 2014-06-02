@@ -401,6 +401,10 @@ nav {
   padding-left: 30px;
   padding-right: 30px;
 }
+.paddingHorizontal-xxl {
+  padding-left: 60px;
+  padding-right: 60px;
+}
 .paddingVertical-xs {
   padding-top: 5px;
   padding-bottom: 5px;
