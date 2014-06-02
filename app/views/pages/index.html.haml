@@ -74,7 +74,7 @@
 						%h3 Search for your account
 					%div.col-xs-12.col-sm-4.col-md-6
 						= form_tag('/participants/search', method: :get)
-						= email_field_tag :email, nil, placeholder: 'Your email address'
+						= email_field_tag :email, nil, placeholder: 'Your email address', class: 'padding-sm borderRadius-sm removeBorder boxShadow-inset-xs marginBottom-sm'
 					%div.col-xs-4.col-xs-offset-4.col-sm-offset-0.col-sm-4.col-md-2.paddingTop-responsive-xs
 						= submit_tag 'Search', class: 'btn btn-info'
 					%div.col-xs-4.col-xs-offset-4.col-sm-offset-0.col-sm-2.more.text-center.txtSm -or -

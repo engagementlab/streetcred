@@ -30,51 +30,72 @@
 			.actions
 				= submit_tag 'Search', class: 'btn btn-info'
 	- else
-		.container.page
-			- unless current_user
-				%h2 New here?
-				<form accept-charset="UTF-8" action="/participants/search" method="get">
-				<div style="margin:0;padding:0;display:inline">
-				<input name="utf8" type="hidden" value="✓">
-				</div>
-				<div class="field">
-				<label for="user_email">Enter your email</label>
-				<input id="email" name="email" placeholder="Your email address" type="email">
-				</div>
-				<div>
-				<br />
-				<input class="btn btn-info" name="commit" type="submit" value="Register">
-				</div>
-				</form>
-				%br/
-
-			- if flash[:notice]
-				.alert.alert-success
-					= flash[:notice]
-			- if flash[:alert]
-				.alert.alert-error
-					=raw flash[:alert]
-
-			%h2 Returning user?
-
-			%div.col-xs-12.col-sm-8.col-sm-offset-4.col-md-6.col-md-offset-3
-				= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-					.field
-						= f.label :email
-						= f.email_field :email, :autofocus => true
-
-					.field
-						= f.label :password
-						= f.password_field :password
-
-					.actions
-						= f.submit "Sign in", :class => "btn btn-info"
-
-					%div
+		.page.white-background 
+			.paddingHorizontal-xxl
+				.paddingHorizontal-xxl.paddingBottom-xxl.paddingTop-lg
+					- unless current_user
+						%h4.paddingTop-lg New here?
+						<form accept-charset="UTF-8" action="/participants/search" method="get">
+						<div>
+						<input name="utf8" type="hidden" value="✓">
+						</div>
+						<div class="user well field txtSm paddingBottom-xl">
+						<label style="font-weight:400 !important;" for="user_email">Enter your email</label>
+						<input id="email" class="marginTop-sm padding-sm borderRadius-sm removeBorder boxShadow-inset-xs" name="email" placeholder="Your email address" type="email">
+						<br />
+						<input class="btn btn-info marginTop-xl" name="commit" type="submit" value="Register">
+						</div>
+						</form>
 						%br/
-						= link_to 'Forgot password?', new_user_password_url
 
-			%br/
-			%h3.col-xs-12 No Account?
-			%p.col-xs-12
-				== Get started by sending us an email to #{mail_to 'reports@streetcred.us', 'reports@streetcred.us'}.   Make sure to use the same email account as you use with Citizens Connect; otherwise you will create separate accounts.
+					- if flash[:notice]
+						.alert.alert-success
+							= flash[:notice]
+					- if flash[:alert]
+						.alert.alert-error
+							=raw flash[:alert]
+
+
+					%h4.paddingTop-lg Returning User?
+					<form accept-charset="UTF-8" action="/participants/search" method="get">
+					<div>
+					<input name="utf8" type="hidden" value="✓">
+					</div>
+					<div class="user well field txtSm paddingBottom-xl">
+					<label style="font-weight:400 !important;" for="user_email">Enter your email</label>
+					<input id="email" class="marginTop-sm padding-sm borderRadius-sm removeBorder boxShadow-inset-xs" name="email" placeholder="Your email address" type="email">
+					<br />
+					<label style="font-weight:400 !important;" for="user_email">Enter your password</label>
+					<input id="email" class="marginTop-sm padding-sm borderRadius-sm removeBorder boxShadow-inset-xs" name="email" placeholder="Your email address" type="email">
+					<br />
+					<input class="btn btn-info marginTop-xl" name="commit" type="submit" value="Sign In">
+					</div>
+					</form>
+
+
+
+					
+					%br/		
+					%h4 Returning user?
+
+					%div.user.well.field.txtSm.paddingBottom-xl
+						= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+							.field
+								= f.label :email
+								= f.email_field :email, :autofocus => true
+
+							.field
+								= f.label :password
+								= f.password_field :password
+
+							.actions
+								= f.submit "Sign in", :class => "btn btn-info"
+
+							%div
+								%br/
+								= link_to 'Forgot password?', new_user_password_url
+
+					%br/
+					%h3.col-xs-12 No Account?
+					%p.col-xs-12
+						== Get started by sending us an email to #{mail_to 'reports@streetcred.us', 'reports@streetcred.us'}.   Make sure to use the same email account as you use with Citizens Connect; otherwise you will create separate accounts.

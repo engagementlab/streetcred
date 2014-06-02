@@ -41,7 +41,7 @@
   overflow: hidden;
 }
 .tile {
-  background-image: url('../assets/dummy-img.jpg');
+  background-image: url('../assets/dummy-img.jpg') !important;
   background-size: cover;
   background-position: 50% 50%;
   height: 25%;
@@ -225,6 +225,9 @@ nav {
 .border {
   border: 1px solid red;
 }
+.removeBorder {
+  border: 0px;
+}
 .center-horizontally {
   display: block;
   margin-left: auto;
@@ -331,12 +334,32 @@ nav {
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
 }
 .boxShadow-lg {
-  -webkit-box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
-}
-.boxShadow-xl {
   -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+}
+.boxShadow-xl {
+  -webkit-box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.3);
+}
+.boxShadow-inset-xs {
+  -webkit-box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.3);
+}
+.boxShadow-inset-sm {
+  -webkit-box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+.boxShadow-inset-md {
+  -webkit-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.3);
+}
+.boxShadow-inset-lg {
+  -webkit-box-shadow: inset 0 0 20px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 20px 0 rgba(0, 0, 0, 0.3);
+}
+.boxShadow-inset-xl {
+  -webkit-box-shadow: inset 0 0 25px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 25px 0 rgba(0, 0, 0, 0.3);
 }
 .borderRadius-xs {
   -webkit-border-radius: 5px;
@@ -367,238 +390,238 @@ nav {
   padding: 0px !important;
 }
 .padding-xs {
-  padding: 5px;
+  padding: 5px !important;
 }
 .padding-sm {
-  padding: 10px;
+  padding: 10px !important;
 }
 .padding-md {
-  padding: 15px;
+  padding: 15px !important;
 }
 .padding-lg {
-  padding: 20px;
+  padding: 20px !important;
 }
 .padding-xl {
   padding: 30px !important;
 }
 .paddingHorizontal-xs {
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
 }
 .paddingHorizontal-sm {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
 }
 .paddingHorizontal-md {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
 }
 .paddingHorizontal-lg {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
 }
 .paddingHorizontal-xl {
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
 }
 .paddingHorizontal-xxl {
-  padding-left: 60px;
-  padding-right: 60px;
+  padding-left: 60px !important;
+  padding-right: 60px !important;
 }
 .paddingVertical-xs {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
 }
 .paddingVertical-sm {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 }
 .paddingVertical-md {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
 }
 .paddingVertical-lg {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
 }
 .paddingVertical-xl {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
 }
 .paddingLeft-xs {
-  padding-left: 5px;
+  padding-left: 5px !important;
 }
 .paddingLeft-sm {
-  padding-left: 10px;
+  padding-left: 10px !important;
 }
 .paddingLeft-md {
-  padding-left: 15px;
+  padding-left: 15px !important;
 }
 .paddingLeft-lg {
-  padding-left: 20px;
+  padding-left: 20px !important;
 }
 .paddingLeft-xl {
-  padding-left: 30px;
+  padding-left: 30px !important;
 }
 .paddingRight-xs {
-  padding-right: 5px;
+  padding-right: 5px !important;
 }
 .paddingRight-sm {
-  padding-right: 10px;
+  padding-right: 10px !important;
 }
 .paddingRight-md {
-  padding-right: 15px;
+  padding-right: 15px !important;
 }
 .paddingRight-lg {
-  padding-right: 20px;
+  padding-right: 20px !important;
 }
 .paddingRight-xl {
-  padding-right: 30px;
+  padding-right: 30px !important;
 }
 .paddingTop-xs {
-  padding-top: 5px;
+  padding-top: 5px !important;
 }
 .paddingTop-sm {
-  padding-top: 10px;
+  padding-top: 10px !important;
 }
 .paddingTop-md {
-  padding-top: 15px;
+  padding-top: 15px !important;
 }
 .paddingTop-lg {
-  padding-top: 20px;
+  padding-top: 20px !important;
 }
 .paddingTop-xl {
-  padding-top: 30px;
+  padding-top: 30px !important;
 }
 .paddingBottom-xs {
-  padding-bottom: 5px;
+  padding-bottom: 5px !important;
 }
 .paddingBottom-sm {
-  padding-bottom: 10px;
+  padding-bottom: 10px !important;
 }
 .paddingBottom-md {
-  padding-bottom: 15px;
+  padding-bottom: 15px !important;
 }
 .paddingBottom-lg {
-  padding-bottom: 20px;
+  padding-bottom: 20px !important;
 }
 .paddingBottom-xl {
-  padding-bottom: 30px;
+  padding-bottom: 30px !important;
 }
 .margin-xs {
-  margin: 5px;
+  margin: 5px !important;
 }
 .margin-sm {
-  margin: 10px;
+  margin: 10px !important;
 }
 .margin-md {
-  margin: 15px;
+  margin: 15px !important;
 }
 .margin-lg {
-  margin: 20px;
+  margin: 20px !important;
 }
 .margin-xl {
-  margin: 30px;
+  margin: 30px !important;
 }
 .marginHorizontal-xs {
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
 }
 .marginHorizontal-sm {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
 }
 .marginHorizontal-md {
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-left: 15px !important;
+  margin-right: 15px !important;
 }
 .marginHorizontal-lg {
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 20px !important;
+  margin-right: 20px !important;
 }
 .marginHorizontal-xl {
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 30px !important;
+  margin-right: 30px !important;
 }
 .marginVertical-xs {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
 }
 .marginVertical-sm {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
 }
 .marginVertical-md {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
 }
 .marginVertical-lg {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
 }
 .marginVertical-xl {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 30px !important;
+  margin-bottom: 30px !important;
 }
 .marginLeft-xs {
-  margin-left: 5px;
+  margin-left: 5px !important;
 }
 .marginLeft-sm {
-  margin-left: 10px;
+  margin-left: 10px !important;
 }
 .marginLeft-md {
-  margin-left: 15px;
+  margin-left: 15px !important;
 }
 .marginLeft-lg {
-  margin-left: 20px;
+  margin-left: 20px !important;
 }
 .marginLeft-xl {
-  margin-left: 30px;
+  margin-left: 30px !important;
 }
 .marginRight-xs {
-  margin-right: 5px;
+  margin-right: 5px !important;
 }
 .marginRight-sm {
-  margin-right: 10px;
+  margin-right: 10px !important;
 }
 .marginRight-md {
-  margin-right: 15px;
+  margin-right: 15px !important;
 }
 .marginRight-lg {
-  margin-right: 20px;
+  margin-right: 20px !important;
 }
 .marginRight-xl {
-  margin-right: 30px;
+  margin-right: 30px !important;
 }
 .marginTop-xs {
-  margin-top: 5px;
+  margin-top: 5px !important;
 }
 .marginTop-sm {
-  margin-top: 10px;
+  margin-top: 10px !important;
 }
 .marginTop-md {
   margin-top: 15px !important;
 }
 .marginTop-lg {
-  margin-top: 20px;
+  margin-top: 20px !important;
 }
 .marginTop-xl {
-  margin-top: 30px;
+  margin-top: 30px !important;
 }
 .marginBottom-xs {
-  margin-bottom: 5px;
+  margin-bottom: 5px !important;
 }
 .marginBottom-sm {
-  margin-bottom: 10px;
+  margin-bottom: 10px !important;
 }
 .marginBottom-md {
-  margin-bottom: 15px;
+  margin-bottom: 15px !important;
 }
 .marginBottom-lg {
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
 }
 .marginBottom-xl {
-  margin-bottom: 30px;
+  margin-bottom: 30px !important;
 }
 h1 {
   font-weight: 500;
