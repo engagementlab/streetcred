@@ -10,7 +10,6 @@
   border: 5px solid white;
   border-radius: 3px;
   -webkit-border-radius: 3px;
-  background-image: url('../assets/dummy-img.jpg') !important;
   background-size: cover;
   background-position: 50% 50%;
 }
