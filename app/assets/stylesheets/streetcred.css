@@ -38,6 +38,8 @@
 .profile-img {
   width: auto;
   height: 150px;
+  border-radius: 1000px;
+  -webkit-border-radius: 1000px;
 }
 .awards-wrapper {
   background-color: #01e59a;
