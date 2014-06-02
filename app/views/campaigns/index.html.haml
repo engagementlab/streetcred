@@ -12,7 +12,7 @@
       %br/
 
     - for campaign in @active_campaigns
-      .well.colorSecondary-black.boxShadow-md
+      .well.colorSecondary-black.boxShadow-md.borderRadius-sm
         = render partial: 'campaign', locals: {campaign: campaign}
 
     - if @completed_campaigns.present?
@@ -25,7 +25,7 @@
 - content_for :scripts do
   :javascript
     $(window).load(function() { 
-    $("#wrap").css({
+    $("#wrap, #footer").css({
     backgroundColor:"#5b6469"
     });
     $(".gravatar img").each(function(){ 

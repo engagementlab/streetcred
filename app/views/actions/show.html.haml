@@ -1,53 +1,80 @@
-.page.container
-  
-  - if @action.present?
-    %h1
-      = @action.action_type.channel.name
+.page.paddingHorizontal-xxl
+  .col-xs-12.paddingHorizontal-xxl.paddingBottom-lg.colorPrimary-white.marginBottom-xl
+    .paddingHorizontal-md.paddingBottom-xxl.paddingTop-lg
+      - if @action.present?
+        %h4.paddingBottom-sm
+          = @action.action_type.channel.name
 
-    - if @action.user.gravatar.present?
-      = image_tag @action.user.gravatar.url(:thumbnail), class: 'profile-img', style: 'visibility: visible'
-    - else
-      = image_tag @action.user.gravatar_url, class: 'profile-img', style: 'visibility: visible'
+        - if @action.user.gravatar.present?
+          .col-xs-2.col-md-1.removePadding
+            = image_tag @action.user.gravatar.url(:thumbnail), class: 'actionProfile-img', style: 'visibility: visible'
+        - else
+          .col-xs-2.col-md-1.removePadding
+            = image_tag @action.user.gravatar_url, class: 'actionProfile-img', style: 'visibility: visible'
 
-    %p
-      = @action.user.display_name
-    %p
-      = @action.created_at.strftime("%B %d, %Y %I:%M:%S %p")
-    %p
-      - @action.campaigns.each_with_index do |action_campaign, index|
-        - if index > 0
-          &
-        = link_to "#{action_campaign.name}", campaign_path(action_campaign)
+        .col-xs-12.col-sm-10
+          %p.txtLg
+            = @action.user.display_name
+          %p.txtXs
+            = @action.created_at.strftime("%B %d, %Y %I:%M:%S %p")
+          %p.txtXs
+            - @action.campaigns.each_with_index do |action_campaign, index|
+              - if index > 0
+                &
+              = link_to "#{action_campaign.name}", campaign_path(action_campaign)
 
-    %br
+        %br.clear-fix
+      - else
+        %p No action available to display
+  .col-xs-12.paddingHorizontal-xl.paddingBottom-lg.backgroundPrimary-white.borderRadius-sm.boxShadow-md.marginBottom-xl
+    .paddingHorizontal-md.paddingBottom-xl.paddingTop-lg
+      - if @action.present?
+        - if @action.subject.present?
+          %p
+            "
+            = @action.subject
+            %br
+            = @action.body
+            "
 
-    - if @action.subject.present?
-      %p
-        "
-        = @action.subject
-        %br
-        = @action.body
-        "
+        - if @action.description.present?
+          %p.txtLg.colorSecondary-gray.paddingBottom-md.paddingTop-xxl.marginTop-xl
+            %em
+              "
+              = @action.description
+              "
 
-    - if @action.description.present?
-      %p
-        "
-        = @action.description
-        "
+        - if @action.photo_url.present? || @action.image_url.present?
+          .actionImg-post.boxShadow-md.col-xs-12.col-sm-6.col-md-4.removePadding.marginBottom-lg
+            = image_tag (@action.photo_url || @action.image_url)
 
-    - if @action.photo_url.present? || @action.image_url.present?
-      = image_tag (@action.photo_url || @action.image_url)
+        %p
 
-    %p
+        - if @action.user.map_visible?
+          #map.mapBorder.boxShadow-md
 
-    - if @action.user.map_visible?
-      #map
+        - content_for :scripts do
+          :javascript
+            var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
+            map.scrollWheelZoom.disable();
+            L.mapbox.markerLayer(gon.markers).addTo(map);
+      
+      - else
+        %p No action available to display
 
-    - content_for :scripts do
-      :javascript
-        var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
-        map.scrollWheelZoom.disable();
-        L.mapbox.markerLayer(gon.markers).addTo(map);
-  
-  - else
-    %p No action available to display
+- content_for :scripts do
+  :javascript
+    $(window).load(function() { 
+    $("#wrap, #footer").css({
+    backgroundColor:"#5b6469"
+    });
+    $(".gravatar img").each(function(){ 
+    var image = $(this); 
+    if(image.context.naturalWidth == 0 || image.readyState == 'uninitialized'){  
+    $(image).attr('src', '/assets/NoProfilePhoto_sm.jpg');
+    } 
+    }); 
+    });
+    if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    $(window).stellar();
+    }

@@ -13,7 +13,7 @@
 			%br/
 
 		- @participants.each do |participant|
-			.col-xs-12.user.well.colorSecondary-black.boxShadow-md
+			.col-xs-12.user.well.colorSecondary-black.boxShadow-md.borderRadius-sm
 				.col-xs-4.col-xs-offset-4.col-sm-2.col-sm-offset-0.gravatar
 					- if participant.gravatar.present?
 						= image_tag participant.gravatar.url(:thumbnail)
@@ -45,7 +45,7 @@
 - content_for :scripts do
 	:javascript
 		$(window).load(function() { 
-		$("#wrap").css({
+		$("#wrap, #footer").css({
 		backgroundColor:"#5b6469"
 		});
 		$(".gravatar img").each(function(){ 
