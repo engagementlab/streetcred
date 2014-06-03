@@ -42,7 +42,7 @@
       #map
     .tiles-wrapper.tiles-wrapper.col-xs-12.col-sm-6.removePadding
       - for action in @actions_with_photos
-        .tile.col-xs-3.img-height-25.pull-left(style="background-image: url('#{action.photo_url || action.image_url}');")
+        .tile.col-xs-3.img-height-25.pull-left{:style => "background-image: url('#{action.photo_url || action.image_url}'); cursor: pointer; cursor: hand;", :onclick => "window.location.href = '#{participant_action_path(@participant, action)}'; return false;"}
       - for i in 1..(16-@actions_with_photos.count)
         .tile.col-xs-3.img-height-25.pull-left
       %br.clear-fix
