@@ -70,14 +70,20 @@
 						.col-xs-2.txtSm{ :style => "color:#7fdcfb;" }
 							== #{@campaign.contributing_community_actions.try(:count)}/#{@campaign.required_community_occurrences}
 
-.map-wrapper.col-xs-12.col-sm-6.removePadding{ :style => "height:650px;" }
-	#map
-.tiles-wrapper.tiles-wrapper.col-xs-12.col-sm-6.removePadding{ :style => "height:650px;" }
-	- for action in @actions_with_photos
-		.tile.col-xs-3.img-height-25.pull-left{:style => "background-image: url('#{action.photo_url || action.image_url}'); cursor: pointer; cursor: hand;", :onclick => "window.location.href = '#{campaign_action_path(@campaign, action)}'; return false;"}
-	- for i in 1..(16-@actions_with_photos.count)
-		.tile.col-xs-3.img-height-25.pull-left
-	%br.clear-fix
+- if @actions_with_photos.present?
+	.map-wrapper.col-xs-12.col-sm-6.removePadding{ :style => "height:650px;" }
+		#map
+- else
+	.map-wrapper.col-xs-12.col-sm-12.removePadding{ :style => "height:650px;" }
+		#map
+
+- if @actions_with_photos.present?
+	.tiles-wrapper.tiles-wrapper.col-xs-12.col-sm-6.removePadding{ :style => "height:650px;" }
+		- for action in @actions_with_photos
+			.tile.col-xs-3.img-height-25.pull-left{:style => "background-image: url('#{action.photo_url || action.image_url}'); cursor: pointer; cursor: hand;", :onclick => "window.location.href = '#{campaign_action_path(@campaign, action)}'; return false;"}
+		- for i in 1..(16-@actions_with_photos.count)
+			.tile.col-xs-3.img-height-25.pull-left
+		%br.clear-fix
 
 - content_for :scripts do
 	:javascript
