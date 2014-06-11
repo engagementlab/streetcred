@@ -2,195 +2,85 @@
 	.paddingVertical-lg.colorPrimary-white
 		.col-xs-8
 			.txtXl
-				Campaign Title
+				== #{@campaign.name}&nbsp;
 			.txtMd
-				Dates
+				== #{@campaign.start_time.try(:to_date)} &mdash; #{@campaign.end_time.try(:to_date)}
 			.txtSm.colorSecondary-black.marginTop-md
-				Description <br>
-				rest of description
-			.txtSm.colorSecondary-black.marginTop-md
-				What for <br>
-				rest of what for
+				= @campaign.short_description
+			- if @campaign.description.present?
+				.txtSm.colorSecondary-black.marginTop-md
+					= @campaign.description
+			- if @campaign.purpose.present?
+				.txtSm.colorSecondary-black.marginTop-md
+					= @campaign.purpose
 		.col-xs-4
-			= image_tag '/assets/personal_badge.png', class: 'img-width-100', id: '', style: 'max-height:194px;'
-			= image_tag '/assets/personal_badge.png', class: 'img-width-100', id: '', style: 'max-height:194px;'
+			= image_tag @campaign.individual_badge.url(:badge), class: 'img-width-100', id: '', style: 'max-height:194px;'
+			= image_tag @campaign.community_badge.url(:badge), class: 'img-width-100', id: '', style: 'max-height:194px;'
 .profile-wrapper.col-xs-12.col-sm-6.removePadding{ :style => "height:650px;" }
 	.paddingVertical-lg.colorPrimary-white
 		.col-xs-12.removePadding
 			.txtXl.paddingHorizontal-xl
 				Actions Needed
 			.txtMd.paddingHorizontal-xl
-				Individuals must complete (#) actiosn below to earn the award.<br>
+				Individuals must complete (#) actions below to earn the award.
+				%br/
+				%h2{ :style => "display:inline-block;" }
+					= @campaign.try(:actions_per_level)
+				total actions earn you a level
+				%h2{ :style => "display:inline-block;" }
+					2
+				award.
+				%br/
 
-				<h2 style="display:inline-block;">4</h2> total actions ear your a level <h2 style="display:inline-block;">2</h2> award. <br>
-
-				<h2 style="display:inline-block;"> 250 </h2> actions taken by all members of the community ears the community badge.
+				%h2{ :style => "display:inline-block;" }
+					= @campaign.try(:required_community_occurrences)
+				actions taken by all members of the community earns the community badge.
 			.paddingVertical-md.marginVertical-md{ :style => "background:#69c0dd;" }
-				.col-xs-6.padding-md
-					.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;height:60px;" }
-						.col-xs-3.removePadding{ :style => "height:100%;"}
-							= image_tag '/assets/flat_instagram_logo.png', class: '', id: '', style: 'height:100%;'
-						.col-xs-9.removePadding.txtXs
-							share a pic using of a pothole using #pothole
-						%br.clear-fix
-				.col-xs-6.padding-md
-					.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;height:60px;" }
-						.col-xs-3.removePadding{ :style => "height:100%;"}
-							= image_tag '/assets/citizens_connect_logo.png', class: '', id: '', style: 'height:100%;'
-						.col-xs-9.removePadding.txtXs
-							report an issue using Citizens Connect
-						%br.clear-fix
-				.col-xs-6.padding-md
-					.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;height:60px;" }
-						.col-xs-3.removePadding{ :style => "height:100%;"}
-							= image_tag '/assets/foursquare_logo_flat_lite.png', class: '', id: '', style: 'height:100%;'
-						.col-xs-9.removePadding.txtXs
-							check in at a restaurant on FourSquare
-						%br.clear-fix
-				.col-xs-6.padding-md
-					.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;height:60px;" }
-						.col-xs-3.removePadding{ :style => "height:100%;"}
-							= image_tag '/assets/flat_instagram_logo.png', class: '', id: '', style: 'height:100%;'
-						.col-xs-9.removePadding.txtXs
-							share a pic using of a pothole using #pothole
-						%br.clear-fix
+				- if @campaign.channels.present?
+					- for channel in @campaign.channels
+						- unless channel.blank?
+							- required_actions = @campaign.required_actions.in(action_type_id: ActionType.where(channel_id: channel.id).to_a)
+							- if channel == Channel.where(name: 'Citizens Connect').first && (channel.action_types - @campaign.required_action_types).blank?
+								.col-xs-6.padding-md
+									.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;height:60px;" }
+										.col-xs-3.removePadding{ :style => "height:100%;"}
+											= image_tag channel.logo.url(:thumb), class: '', id: '', style: 'height:100%;'
+										.col-xs-9.removePadding.txtXs
+											Use Citizens Connect to report issues in your community.
+										%br.clear-fix
+							- else
+								- for required_action in required_actions
+									.col-xs-6.padding-md
+										.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;height:60px;" }
+											.col-xs-3.removePadding{ :style => "height:100%;"}
+												= image_tag channel.logo.url(:thumb), class: '', id: '', style: 'height:100%;'
+											.col-xs-9.removePadding.txtXs
+												- if required_action.action_type.description.blank?
+													= required_action.action_type.name
+												- else
+													= required_action.action_type.description
+											%br.clear-fix
 				%br.clear-fix
 			.txtXl.marginTop-sm.paddingHorizontal-xl
 				Community Progress
 				.paddingVertical-md
 					.col-xs-12.backgroundPrimary-white.padding-xs.borderRadius-xs{ :style => "height:30px;" }
 						.col-xs-10.removePadding{ :style=> "height:100%;" }
-							.borderRadius-xs{ :style => "background:#7fdcfb;height:100%;width:100%;" }
+							.borderRadius-xs{ :style => "background:#7fdcfb;height:100%;width:#{community_progress_bar_helper(@campaign)};" }
 						.col-xs-2.txtSm{ :style => "color:#7fdcfb;" }
-							30/90
+							== #{@campaign.contributing_community_actions.try(:count)}/#{@campaign.required_community_occurrences}
 
 .map-wrapper.col-xs-12.col-sm-6.removePadding{ :style => "height:650px;" }
 	#map
 .tiles-wrapper.tiles-wrapper.col-xs-12.col-sm-6.removePadding{ :style => "height:650px;" }
+	- for action in @actions_with_photos
+		.tile.col-xs-3.img-height-25.pull-left{:style => "background-image: url('#{action.photo_url || action.image_url}'); cursor: pointer; cursor: hand;", :onclick => "window.location.href = '#{campaign_action_path(@campaign, action)}'; return false;"}
+	- for i in 1..(16-@actions_with_photos.count)
+		.tile.col-xs-3.img-height-25.pull-left
+	%br.clear-fix
 
-.full-width-medium.gray-background
-	.container
-		.row
-			.span12
-				.list-row-badge
-					= image_tag(@campaign.badge_icon.url(:badge))
-				.list-row-description
-					%h3
-						== #{@campaign.name}&nbsp;
-						- if @campaign.expired?
-							%small.black.active
-								== #{distance_of_time_in_words(@campaign.time_left)} left
-					= @campaign.short_description
-				.list-row-progress
-					.pull-right.goal{:style=>"margin-top: 19px;"}
-						== #{@campaign.contributing_community_actions.try(:count)}/#{@campaign.required_community_occurrences}
-					%div
-						Community
-						.progress.borderRadius-lg
-							.bar.blue{:style=>"width: #{community_progress_bar_helper(@campaign)};"}
-
-				.clear
-.page
-	.container
-		- if @campaign.description.present?
-			.row
-				.span12.center
-					%h3 Campaign Goals
-					= @campaign.description
-					%br/
-
-		- if @campaign.purpose.present?
-			.row
-				.span12.center
-					%h3 Why Play
-					= @campaign.purpose
-					%br/
-		
-		.row
-			.span12.center
-				%br/
-				%h3 Campaign Tools
-				%p
-					%em
-						- if @campaign.all_actions_required?
-							Individuals must complete 
-							%strong
-								all actions 
-							to earn this award.
-						- else
-							Individuals must complete 
-							%strong
-								== #{@campaign.required_individual_occurrences} actions 
-							to earn this award.
-				%p
-					%em
-						The community must complete
-						%strong
-							== #{@campaign.required_community_occurrences} actions
-						to earch this award.
-				%br/
-
-		- if @campaign.channels.present?
-			- for row in @campaign.channels.in_groups_of(2)
-				.row
-					.span12{style: 'margin-left: 12.5%;'}
-						- for channel in row
-							- unless channel.blank?
-								.span4.well
-									%table
-										%tr
-											%td{style: 'width: 50px; padding-right: 20px;'}
-												= image_tag channel.logo.url(:thumb)
-											%td
-												- required_actions = @campaign.required_actions.in(action_type_id: ActionType.where(channel_id: channel.id).to_a)
-												- if channel == Channel.where(name: 'Citizens Connect').first && (channel.action_types - @campaign.required_action_types).blank?
-													Use Citizens Connect to report issues in your community.										
-
-												- else
-													- for required_action in required_actions
-														%div
-															- if required_action == required_actions.last
-																- if required_action.action_type.description.blank?
-																	= required_action.action_type.name
-																- else
-																	= required_action.action_type.description											
-															- else
-																.divider
-																	- if required_action.action_type.description.blank?
-																		= required_action.action_type.name
-																	- else
-																		= required_action.action_type.description		
-		
-		- if @campaign.radius.present?
-			.row
-				.span12.center
-					%h3 Campaign Location
-					%p== Radius: #{@campaign.radius} miles
-					- if @campaign.latitude.present?
-						%p== Center Latitude: #{@campaign.latitude} 
-					- if @campaign.longitude.present?
-						%p== Center Longitude: #{@campaign.longitude} 
-
-		.row
-			.span12.center
-				%h3 Campaign Duration
-				%p
-					== #{formatted_date(@campaign.start_time)} &mdash; #{formatted_date(@campaign.end_time)}
-
-
-		- if current_user.present? && @campaign.contributing_individual_actions(current_user).present?
-			.row
-				.span12
-					%br/
-					%h3 Your Matching Actions
-					%ul
-						- for action in @campaign.contributing_individual_actions(current_user)
-							%li== #{action.action_type.try(:channel).try(:name)} - #{formatted_date(action.created_at)}
-
-		.row
-			.span12
-				%p
-					%br/
-					%br/
-					%h4
-						= link_to raw('&larr; Campaigns'), campaigns_path
+- content_for :scripts do
+	:javascript
+		var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
+		map.scrollWheelZoom.disable();
+		L.mapbox.markerLayer(gon.markers, {sanitizer: function(x) { return x; } }).addTo(map);
