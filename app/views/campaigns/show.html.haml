@@ -2,14 +2,11 @@
 	.paddingVertical-lg.colorPrimary-white
 		.col-xs-8
 			.txtXl
-				== #{@campaign.name}&nbsp;
+				#{@campaign.name}&nbsp;
 			.txtMd
-				== #{@campaign.start_time.try(:to_date)} &mdash; #{@campaign.end_time.try(:to_date)}
+				#{@campaign.start_time.strftime('%B %d, %Y')} &mdash; #{@campaign.end_time.strftime('%B %d, %Y')}
 			.txtSm.colorSecondary-black.marginTop-md
-				= @campaign.short_description
-			- if @campaign.description.present?
-				.txtSm.colorSecondary-black.marginTop-md
-					= @campaign.description
+				= @campaign.description
 			- if @campaign.purpose.present?
 				.txtSm.colorSecondary-black.marginTop-md
 					= @campaign.purpose
@@ -37,7 +34,7 @@
 				actions taken by all members of the community earns the community badge.
 			.paddingVertical-md.marginVertical-md{ :style => "background:#69c0dd;" }
 				- if @campaign.channels.present?
-					- for channel in @campaign.channels
+					- for channel in @campaign.channels.take(1)
 						- unless channel.blank?
 							- required_actions = @campaign.required_actions.in(action_type_id: ActionType.where(channel_id: channel.id).to_a)
 							- if channel == Channel.where(name: 'Citizens Connect').first && (channel.action_types - @campaign.required_action_types).blank?
@@ -49,7 +46,7 @@
 											Use Citizens Connect to report issues in your community.
 										%br.clear-fix
 							- else
-								- for required_action in required_actions
+								- for required_action in required_actions.take(4)
 									.col-xs-6.padding-md
 										.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;height:60px;" }
 											.col-xs-3.removePadding{ :style => "height:100%;"}

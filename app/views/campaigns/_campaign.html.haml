@@ -4,6 +4,7 @@
 	%h3
 		== #{link_to campaign.name, campaign_path(campaign), class: 'black'}&nbsp;
 		- if campaign.active?
+			%br
 			%small.black.active
 				== #{distance_of_time_in_words(campaign.time_left)} left
 	= campaign.short_description

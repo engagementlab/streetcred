@@ -30,12 +30,11 @@
     .paddingHorizontal-md.paddingBottom-xl.paddingTop-lg
       - if @action.present?
         - if @action.subject.present?
-          %p
-            "
-            = @action.subject
-            %br
-            = @action.body
-            "
+          %p.txtLg.colorSecondary-gray.paddingBottom-md.paddingTop-xxl.marginTop-xl
+            %em
+              "#{@action.subject}
+              %br
+              #{@action.body}"
 
         - if @action.description.present?
           %p.txtLg.colorSecondary-gray.paddingBottom-md.paddingTop-xxl.marginTop-xl
@@ -48,15 +47,15 @@
           .actionImg-post.boxShadow-md.col-xs-12.col-sm-6.col-md-4.removePadding.marginBottom-lg(style="background-image: url('#{@action.photo_url || @action.image_url}');")
 
         %p
+        - if @action.latitude.present? && @action.longitude.present?
+          - if @action.user.map_visible?
+            #map.mapBorder.boxShadow-md
 
-        - if @action.user.map_visible?
-          #map.mapBorder.boxShadow-md
-
-        - content_for :scripts do
-          :javascript
-            var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
-            map.scrollWheelZoom.disable();
-            L.mapbox.markerLayer(gon.markers).addTo(map);
+          - content_for :scripts do
+            :javascript
+              var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
+              map.scrollWheelZoom.disable();
+              L.mapbox.markerLayer(gon.markers).addTo(map);
       
       - else
         %p No action available to display
