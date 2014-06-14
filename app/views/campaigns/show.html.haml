@@ -34,7 +34,7 @@
 				actions taken by all members of the community earns the community badge.
 			.paddingVertical-md.marginVertical-md{ :style => "background:#69c0dd;" }
 				- if @campaign.channels.present?
-					- for channel in @campaign.channels.take(1)
+					- for channel in @campaign.channels
 						- unless channel.blank?
 							- required_actions = @campaign.required_actions.in(action_type_id: ActionType.where(channel_id: channel.id).to_a)
 							- if channel == Channel.where(name: 'Citizens Connect').first && (channel.action_types - @campaign.required_action_types).blank?
@@ -46,7 +46,7 @@
 											Use Citizens Connect to report issues in your community.
 										%br.clear-fix
 							- else
-								- for required_action in required_actions.take(4)
+								- for required_action in required_actions
 									.col-xs-6.padding-md
 										.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;height:60px;" }
 											.col-xs-3.removePadding{ :style => "height:100%;"}
