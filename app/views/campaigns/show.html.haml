@@ -21,7 +21,7 @@
 			.txtXl.paddingHorizontal-xl{ :style => "font-weight: bold;" }
 				Actions Needed
 			.txtMd.paddingHorizontal-xl
-				Individuals must complete #{@campaign.try(:actions_per_level)} actions below to earn the award.
+				Individuals must complete #{@campaign.try(:actions_per_level)} #{pluralizer_helper('actions', @campaign.actions_per_level)} below to earn the award.
 				%br/
 				%h2{ :style => "display:inline-block;" }
 					= (@campaign.try(:actions_per_level) * 2)
