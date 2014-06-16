@@ -11,10 +11,10 @@
 				.txtSm.colorSecondary-black.marginTop-md
 					= @campaign.purpose
 		.col-xs-4
-			= image_tag @campaign.individual_badge.url(:badge), class: 'img-width-100', id: '', style: 'max-height:114px;'
+			= image_tag @campaign.individual_badge.url(:badge), id: '', style: 'max-height:114px;width:100px;'
 			%br/
 			%br/
-			= image_tag @campaign.community_badge.url(:badge), class: 'img-width-100', id: '', style: 'max-height:114px;'
+			= image_tag @campaign.community_badge.url(:badge), id: '', style: 'max-height:114px;width:100px;'
 .profile-wrapper.col-xs-12.col-sm-6.removePadding{ :style => "height:650px;" }
 	.paddingVertical-lg.colorPrimary-white
 		.col-xs-12.removePadding
