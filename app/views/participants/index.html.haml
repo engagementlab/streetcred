@@ -3,8 +3,9 @@
 		.paddingHorizontal-xxl.paddingBottom-xxl.paddingTop-lg
 			%h4 Participants
 
-			%p.txtSm
+			%p.txtMd
 				== Users participate in StreetCred by taking actions and completing campaigns throughout the city. As of today, participants have taken <span class="larger bold">#{User.total_actions_count}</span> actions. Through those actions, they have earned <span class="larger bold">#{User.completed_campaigns_count}</span> awards, and completed <span class="larger bold">#{User.completed_community_campaigns_count}</span> community campaigns.
+
 			%br/
 
 		- @participants.each do |participant|

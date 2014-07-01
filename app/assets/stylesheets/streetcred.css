@@ -92,7 +92,6 @@ input#email {
   width: 100%;
 }
 .btn-info {
-  width: 100%;
   font-weight: 300;
   font-size: 11px !important;
   line-height: 14px !important;
@@ -142,9 +141,6 @@ input#email {
 #footer .container .row div a,
 #footer .container .row div a img {
   max-width: 165px;
-}
-.btn-info {
-  width: 100% !important;
 }
 html,
 body {
@@ -366,6 +362,10 @@ nav {
   width: 100%;
   height: auto;
 }
+.removeBoxShadow {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
 .boxShadow-xs {
   -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3) !important;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3) !important;
@@ -430,6 +430,21 @@ nav {
   -webkit-border-radius: 30px !important;
   -moz-border-radius: 30px !important;
   border-radius: 30px !important;
+}
+.removeBorder {
+  border: 0px !important;
+}
+.removeBorder-top {
+  border-top: 0px !important;
+}
+.removeBorder-bottom {
+  border-bottom: 0px !important;
+}
+.removeBorder-left {
+  border-left: 0px !important;
+}
+.removeBorder-right {
+  border-right: 0px !important;
 }
 .removePadding {
   padding: 0px !important;
@@ -552,6 +567,9 @@ nav {
 }
 .paddingBottom-xl {
   padding-bottom: 30px !important;
+}
+.removeMargin {
+  margin: 0px !important;
 }
 .margin-xs {
   margin: 5px !important;

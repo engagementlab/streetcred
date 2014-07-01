@@ -6,7 +6,7 @@
       = image_tag @participant.gravatar_url, class: 'profile-img', style: 'visibility: visible'
     .col-xs-12
       %h4.paddingTop-md= @participant.display_name
-      .txtSm 
+      .txtSm
         = @earned_awards.count
         = pluralizer_helper('Awards', @earned_awards.count)
       .txtSm 
@@ -92,6 +92,8 @@
               &
             = link_to "#{action_campaign.name}", campaign_path(action_campaign)
           = pluralizer_helper('Campaigns', action.campaigns.count)
+    .col-xs-3.col-xs-offset-3.btn.btn-info.txtSm
+      hello
     %br.clear-fix
 
   - content_for :scripts do

@@ -29,6 +29,7 @@
 				= email_field_tag :email, nil, value: params[:email]
 			.actions
 				= submit_tag 'Search', class: 'btn btn-info'
+			%br.clear-fix
 	- else
 		.page.white-background 
 			.paddingHorizontal-xxl.col-xs-12.col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2.col-lg-6.col-lg-offset-3
@@ -46,7 +47,7 @@
 						<input class="btn btn-info marginTop-xl" name="commit" type="submit" value="Register">
 						</div>
 						</form>
-						%br/
+						%br.clear-fix
 
 					- if flash[:notice]
 						.alert.alert-success
@@ -54,6 +55,7 @@
 					- if flash[:alert]
 						.alert.alert-error
 							=raw flash[:alert]
+						%br.clear-fix
 
 
 					%h4.paddingTop-lg Returning User?
@@ -66,10 +68,14 @@
 							= f.label :password, "Enter your password", :style => "font-weight:400 !important; width:100%;"
 							= f.password_field :password, :class => "marginTop-sm padding-sm borderRadius-sm removeBorder boxShadow-inset-xs"
 							
-							%br/
+							%br.clear-fix
 							= f.submit "Sign in", :class => "btn btn-info marginTop-xl"
 
-					%br/
+					%br.clear-fix
 					%h3.col-xs-12 No Account?
 					%p.col-xs-12
 						== Get started by sending us an email to #{mail_to 'reports@streetcred.us', 'reports@streetcred.us'}.   Make sure to use the same email account as you use with Citizens Connect; otherwise you will create separate accounts.
+					%br.clear-fix
+				%br.clear-fix
+			%br.clear-fix
+		%br.clear-fix
