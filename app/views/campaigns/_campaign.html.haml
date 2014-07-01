@@ -1,6 +1,6 @@
 .badge-container.list-row-badge.col-xs-4.col-xs-offset-4.col-sm-2.col-sm-offset-0
 	= image_tag(campaign.badge_icon.url(:badge, :class => "badge"))
-.list-row-description.col-xs-12.col-sm-3.removePadding.txt-center-xs.txt-left-sm
+.list-row-description.col-xs-12.col-sm-3.removePadding.txt-center-xs.txt-left-sm.colorPrimary-gray
 	%h3
 		== #{link_to campaign.name, campaign_path(campaign), class: 'black'}&nbsp;
 		- if campaign.active?
@@ -10,7 +10,7 @@
 	= campaign.short_description
 .list-row-progress.col-xs-8.col-xs-offset-2.col-sm-3.col-md-4.col-sm-offset-0.removePadding
 	.progress-row
-		.pull-right.goal
+		.pull-right.goal.colorSecondary-black
 			== #{campaign.contributing_community_actions.try(:count)}/#{campaign.required_community_occurrences}
 		.progress.borderRadius-lg
 			.bar.blue{:style=>"width: #{community_progress_bar_helper(campaign)}; height: 100%;"}
