@@ -1,4 +1,4 @@
-.awards-wrapper.col-xs-12.col-sm-6{ :style => "height:650px;" }
+.awards-wrapper.dashboard-wrapper.col-xs-12.col-sm-6{ :style => "" }
 	.paddingVertical-lg.colorPrimary-white
 		.col-xs-8
 			.txtXl{ :style => "font-weight: bold;" }
@@ -15,7 +15,7 @@
 			%br/
 			%br/
 			= image_tag @campaign.community_badge.url(:badge), id: '', style: 'max-height:114px;width:100px;'
-.profile-wrapper.col-xs-12.col-sm-6.removePadding{ :style => "height:650px;" }
+.profile-wrapper.dashboard-wrapper.col-xs-12.col-sm-6.removePadding{ :style => "padding-bottom:20px !important;" }
 	.paddingVertical-lg.colorPrimary-white
 		.col-xs-12.removePadding
 			.txtXl.paddingHorizontal-xl{ :style => "font-weight: bold;" }
@@ -41,19 +41,19 @@
 							- required_actions = @campaign.required_actions.in(action_type_id: ActionType.where(channel_id: channel.id).to_a)
 							- if channel == Channel.where(name: 'Citizens Connect').first && (channel.action_types - @campaign.required_action_types).blank?
 								.col-xs-6.padding-md
-									.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;height:60px;" }
+									.badge-wrapper.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;min-height:50px;" }
 										.col-xs-3.removePadding{ :style => "height:100%;"}
-											= image_tag channel.logo.url(:thumb), class: '', id: '', style: 'height:100%;'
-										.col-xs-9.removePadding.txtXs
+											= image_tag channel.logo.url(:thumb), class: '', id: '', style: 'height:50px;width:auto;'
+										.col-xs-9.removePadding.txtXs.badge-text
 											Use Citizens Connect to report issues in your community.
 										%br.clear-fix
 							- else
 								- for required_action in required_actions
 									.col-xs-6.padding-md
-										.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;height:60px;" }
+										.badge-wrapper.col-xs-12.borderRadius-xs.paddingVertical-xs{ :style => "background:#489ab8;min-height:50px;" }
 											.col-xs-3.removePadding{ :style => "height:100%;"}
-												= image_tag channel.logo.url(:thumb), class: '', id: '', style: 'height:100%;'
-											.col-xs-9.removePadding.txtXs
+												= image_tag channel.logo.url(:thumb), class: '', id: '', style: 'height:50px;width:auto;'
+											.col-xs-9.removePadding.txtXs.badge-text
 												- if required_action.action_type.description.blank?
 													= required_action.action_type.name
 												- else
@@ -89,3 +89,12 @@
 		var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
 		map.scrollWheelZoom.disable();
 		L.mapbox.markerLayer(gon.markers, {sanitizer: function(x) { return x; } }).addTo(map);
+		$(window).load(function(){
+		var elementHeights = $('.badge-height').map(function() {
+		return $(this).height();}).get();
+		var maxHeight = Math.max.apply(null, elementHeights);
+		$('.badge-text').height(maxHeight);
+		var wrapperResize = function() {$(".awards-wrapper").css({height:$(".profile-wrapper").height() + 20});};
+		wrapperResize();
+		$(window).resize(function() {wrapperResize();})
+		});

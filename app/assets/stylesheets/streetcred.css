@@ -32,7 +32,6 @@
 }
 .profile-wrapper {
   background-color: #00a7d1;
-  height: 400px;
   overflow: hidden;
 }
 .profile-img {
@@ -43,7 +42,6 @@
 }
 .awards-wrapper {
   background-color: #01e59a;
-  height: 400px;
   overflow: hidden;
 }
 .award {
