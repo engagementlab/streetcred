@@ -94,5 +94,7 @@
 		return $(this).height();}).get();
 		var maxHeight = Math.max.apply(null, elementHeights);
 		$('.badge-text').height(maxHeight);
-		$(".awards-wrapper").css({height:$(".profile-wrapper").height() + 20});
+		var wrapperResize = function() {$(".awards-wrapper").css({height:$(".profile-wrapper").height() + 20});};
+		wrapperResize();
+		$(window).resize(function() {wrapperResize();})
 		});
