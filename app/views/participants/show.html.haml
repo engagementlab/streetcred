@@ -91,7 +91,7 @@
               &
             = link_to "#{action_campaign.name}", campaign_path(action_campaign)
           = pluralizer_helper('Campaigns', action.campaigns.count)
-    .col-xs-4.col-xs-offset-4.btn.btn-info.txtSm.marginTop-xl
+    .col-xs-4.col-xs-offset-4.btn.btn-info.txtSm.marginTop-xl.js-allactions
       See All Actions
     %br.clear-fix
 
@@ -117,4 +117,5 @@
       wrapperResize();
       $(window).resize(function() {wrapperResize();})
       });
+      $('.js-allactions').click(function(){window.location.href='#{participant_actions_path(@participant)}';});
       });
