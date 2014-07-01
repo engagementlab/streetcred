@@ -109,6 +109,20 @@ class Campaign
     contributing_individual_actions(user).count / required_individual_occurrences.to_f
   end
 
+  def current_level_by_individual(user)
+    # User award is defined by required_individual_occurrences
+    # and award level is defined by actions_per_level
+    # So first level is just required_individual_occurrences, 
+    # and then each subsequent level takes actions_per_level to be completed
+    total_individual_actions = contributing_individual_actions(user).count
+
+    if total_individual_actions < required_individual_occurrences
+      return 0
+    else
+      return 1 + ((total_individual_actions - required_individual_occurrences) / actions_per_level)
+    end
+  end
+
   def requirements_met_by_individual?(user)
     if contributing_individual_actions(user).count >= required_individual_occurrences
       if radius.blank?

@@ -16,24 +16,23 @@
         = @participant.actions.count
         = pluralizer_helper('Actions', @participant.actions.count)
 .awards-wrapper.col-xs-12.col-sm-6
-  .col-xs-4.col-sm-4.award
-    %div
-      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
-  .col-xs-4.award
-    %div
-      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
-  .col-xs-4.award
-    %div
-      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
-  .col-xs-4.award
-    %div
-      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
-  .col-xs-4.award
-    %div
-      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
-  .col-xs-4.award
-    %div
-      = image_tag '/assets/ribbon.png', class: '', style: 'visibility: visible'
+  - for campaign in @earned_awards
+    / Declare variable with user award level achieved for this campaign
+    - participant_award_level = campaign.current_level_by_individual(@participant)
+    - for i in 1..3
+      .col-xs-4.col-sm-4.award
+        %div
+          - if i <= participant_award_level
+            = image_tag '/assets/personal_badge.png', class: '', style: 'visibility: visible'
+          - else
+            = image_tag '/assets/personal badge indentation.png', class: '', style: 'visibility: visible'
+          Level #{i}
+    .col-xs-4.col-sm-4.award
+      %div
+        - if campaign.requirements_met_by_community?
+          = image_tag '/assets/community badge.png', class: '', style: 'visibility: visible'
+        - else
+          = image_tag '/assets/community badge indentation.png', class: '', style: 'visibility: visible'
   %br.clear-fix
 
 - if @actions_with_photos.present?
