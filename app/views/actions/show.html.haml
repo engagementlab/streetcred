@@ -15,9 +15,9 @@
         .col-xs-12.col-sm-10
           %p.txtLg
             = @action.user.display_name
-          %p.txtXs
+          %p.txtMd
             = @action.created_at.strftime("%B %d, %Y %I:%M:%S %p")
-          %p.txtXs
+          %p.txtMd
             - @action.campaigns.each_with_index do |action_campaign, index|
               - if index > 0
                 &
