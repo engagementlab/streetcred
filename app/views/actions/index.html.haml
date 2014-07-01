@@ -1,10 +1,10 @@
 .page.container
   
   - if @participant.present?
-    %h1 Actions for #{@participant.display_name}
+    %h1.colorPrimary-white.paddingVertical-md.paddingHorizontal-md.removeMargin{ :style => "background:#5d6566;" } Actions for #{@participant.display_name}
 
     - if @actions.present?
-      %ul
+      %ul{ :style => "background:#5b5f61;list-style-type: none;"}
         - for action in @actions
           %li 
             = link_to "#{action.action_type.channel.name}", participant_action_path(@participant, action)
@@ -27,4 +27,10 @@
             = link_to "By #{action.user.display_name}", participant_path(action.user)
     - else
       %p No actions available to display
+
+- content_for :scripts do
+  :javascript
+    $(window).load(function(){$(".page").css({padding:0, margin:0, width: '100%'});
+    $("#wrap").css({background:'#5b5f61'});});
+    
 

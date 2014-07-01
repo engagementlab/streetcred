@@ -15,7 +15,7 @@
       .txtSm
         = @participant.actions.count
         = pluralizer_helper('Actions', @participant.actions.count)
-.awards-wrapper.col-xs-12.col-sm-6
+.awards-wrapper.col-xs-12.col-sm-6{ :style => "min-height:300px;max-height:600px;" }
   - for campaign in @earned_awards
     / Declare variable with user award level achieved for this campaign
     - participant_award_level = campaign.current_level_by_individual(@participant)
@@ -41,7 +41,7 @@
       #map
     .tiles-wrapper.tiles-wrapper.col-xs-12.col-sm-6.removePadding
       - for action in @actions_with_photos
-        .tile.col-xs-3.img-height-25.pull-left{:style => "background-image: url('#{action.photo_url || action.image_url}'); cursor: pointer; cursor: hand;", :onclick => "window.location.href = '#{participant_action_path(@participant, action)}'; return false;"}
+        .tile.col-xs-3.img-height-25.pull-left{:style => "background-color:#6666666 !important;background-image: url('#{action.photo_url || action.image_url}'); cursor: pointer; cursor: hand;", :onclick => "window.location.href = '#{participant_action_path(@participant, action)}'; return false;"}
       - for i in 1..(16-@actions_with_photos.count)
         .tile.col-xs-3.img-height-25.pull-left
       %br.clear-fix
@@ -91,8 +91,8 @@
               &
             = link_to "#{action_campaign.name}", campaign_path(action_campaign)
           = pluralizer_helper('Campaigns', action.campaigns.count)
-    .col-xs-3.col-xs-offset-3.btn.btn-info.txtSm
-      hello
+    .col-xs-4.col-xs-offset-4.btn.btn-info.txtSm.marginTop-xl
+      See All Actions
     %br.clear-fix
 
   - content_for :scripts do
@@ -110,5 +110,11 @@
       OpenBadges.issue(campaign, function(errors, successes) {
       console.log(errors,successes);
       });
+      });
+      $(".title").css({backgroundColor:'#666666'});
+      $(window).load(function(){
+      var wrapperResize = function() {$(".profile-wrapper").css({height:$(".awards-wrapper").height()});};
+      wrapperResize();
+      $(window).resize(function() {wrapperResize();})
       });
       });
