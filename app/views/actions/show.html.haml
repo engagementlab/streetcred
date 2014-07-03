@@ -49,7 +49,7 @@
         %p
         - if @action.latitude.present? && @action.longitude.present?
           - if @action.user.map_visible?
-            #map.mapBorder.boxShadow-md
+            #map.mapBorder.boxShadow-md.actionpage
 
           - content_for :scripts do
             :javascript
