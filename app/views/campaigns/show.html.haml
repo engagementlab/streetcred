@@ -6,10 +6,10 @@
 			.txtMd
 				#{@campaign.start_time.strftime('%B %d, %Y')} &mdash; #{@campaign.end_time.strftime('%B %d, %Y')}
 			.txtSm.colorSecondary-black.marginTop-md
-				= @campaign.description
+				= simple_format(@campaign.description)
 			- if @campaign.purpose.present?
 				.txtSm.colorSecondary-black.marginTop-md
-					= @campaign.purpose
+					= simple_format(@campaign.purpose)
 		.col-xs-4
 			= image_tag @campaign.individual_badge.url(:badge), id: '', style: 'max-height:114px;width:100px;'
 			%br/
