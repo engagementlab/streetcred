@@ -4,6 +4,8 @@
       = image_tag @participant.gravatar.url(:thumbnail), class: 'profile-img', style: 'visibility: visible'
     - else
       = image_tag @participant.gravatar_url, class: 'profile-img', style: 'visibility: visible'
+    - if @participant == current_user
+      = link_to 'edit profile', edit_user_registration_path(@participant), class: 'btn'
     .col-xs-12
       %h4.paddingTop-md= @participant.display_name
       .txtSm
