@@ -1,3 +1,7 @@
+#fade1 img {
+  width: 100% !important;
+  height: auto !important;
+}
 .actionProfile-img {
   width: 100%;
   height: auto;
@@ -138,7 +142,7 @@ input#email {
 }
 #footer .container .row div a,
 #footer .container .row div a img {
-  max-width: 165px;
+  width: 100%;
 }
 html,
 body {
