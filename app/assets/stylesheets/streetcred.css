@@ -1,3 +1,7 @@
+html,
+body {
+  background-color: #5b6469 !important;
+}
 #fade1 img {
   width: 100% !important;
   height: auto !important;
