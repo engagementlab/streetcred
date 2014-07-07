@@ -1,4 +1,4 @@
-.profile-wrapper.col-xs-12.col-sm-6
+.profile-wrapper.col-xs-12.col-sm-6{ :style => "min-height:330px;" }
   .paddingVertical-lg.colorPrimary-white
     - if @participant.gravatar.present?
       = image_tag @participant.gravatar.url(:thumbnail), class: 'profile-img', style: 'visibility: visible'
@@ -17,7 +17,7 @@
       .txtSm
         = @participant.actions.count
         = pluralizer_helper('Actions', @participant.actions.count)
-.awards-wrapper.col-xs-12.col-sm-6{ :style => "min-height:300px;max-height:600px;" }
+.awards-wrapper.col-xs-12.col-sm-6{ :style => "min-height:330px;max-height:600px;" }
   - if @earned_awards.count > 0
     - for campaign in @earned_awards
       / Declare variable with user award level achieved for this campaign
