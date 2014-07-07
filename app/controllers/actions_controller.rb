@@ -4,11 +4,11 @@ class ActionsController < ApplicationController
   def index
     if params[:participant_id].present?
       @participant = User.find(params[:participant_id])
-      @actions = @participant.actions.all.desc(:created_at)
+      @actions = @participant.actions.where(:campaign_ids.exists => true).desc(:created_at)
     else
       if params[:campaign_id].present?
         @campaign = Campaign.find(params[:campaign_id])
-        @actions = @campaign.actions.all.desc(:created_at)
+        @actions = @campaign.actions.where(:campaign_ids.exists => true).desc(:created_at)
       end
     end
     
