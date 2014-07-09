@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="background-color:#ffffff !important;">
 <head>
   <title>StreetCred :: Admin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
   <%= csrf_meta_tags %>
   <style>body { padding: 70px 0 50px 0; }</style>
 </head>
-  <body>
+  <body style="background-color:#ffffff !important;">
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -23,13 +23,13 @@
             <% end %>
           </ul>
           <% if current_admin_user %>
-            <ul class="nav pull-lef">
-              <li><%= link_to 'Campaigns', admin_campaigns_path %></li>
-              <li><%= link_to 'Channels', admin_channels_path %></li>
-              <li><%= link_to 'Action Types', admin_action_types_path %></li>
-              <li><%= link_to 'Actions', admin_actions_path %></li>
-              <li><%= link_to 'Users', admin_users_path %></li>
-              <li><%= link_to 'Admin Users', admin_admin_users_path %></li>
+            <ul class="nav pull-left">
+              <li class="pull-left"><%= link_to 'Campaigns', admin_campaigns_path %></li>
+              <li class="pull-left"><%= link_to 'Channels', admin_channels_path %></li>
+              <li class="pull-left"><%= link_to 'Action Types', admin_action_types_path %></li>
+              <li class="pull-left"><%= link_to 'Actions', admin_actions_path %></li>
+              <li class="pull-left"><%= link_to 'Users', admin_users_path %></li>
+              <li class="pull-left"><%= link_to 'Admin Users', admin_admin_users_path %></li>
             </ul>
           <% end %>
         </div>

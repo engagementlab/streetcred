@@ -1,6 +1,6 @@
-.page.paddingHorizontal-xxl
-  .col-xs-12.paddingHorizontal-xxl.paddingBottom-lg.colorPrimary-white.marginBottom-xl
-    .paddingHorizontal-md.paddingBottom-xxl.paddingTop-lg
+.page.paddingHorizontal-xl-responsive
+  .col-xs-12.paddingHorizontal-xl-responsive.paddingBottom-lg.colorPrimary-white.marginBottom-xl
+    .paddingHorizontal-xl-responsive.paddingBottom-xxl.paddingTop-lg
       - if @action.present?
         %h4.paddingBottom-sm
           = @action.action_type.channel.name
@@ -26,7 +26,7 @@
         %br.clear-fix
       - else
         %p No action available to display
-  .col-xs-12.paddingHorizontal-xl.paddingBottom-lg.backgroundPrimary-white.borderRadius-sm.boxShadow-md.marginBottom-xl
+  .col-xs-12.paddingHorizontal-xl-responsive.paddingBottom-lg.backgroundPrimary-white.borderRadius-sm.boxShadow-md.marginBottom-xl
     .paddingHorizontal-md.paddingBottom-xl.paddingTop-lg
       - if @action.present?
         - if @action.subject.present?

@@ -1,23 +1,28 @@
 - if params[:controller] == 'admin/sessions'
 	.container.page
 
-		%h1 Sign In
+		.col-xs-12.col-sm-6.col-sm-offset-3.backgroundPrimary-white.padding-md.borderRadius-md.boxShadow-md
+			%h1 Sign In
 
-		= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-			.field
-				= f.label :email
-				= f.email_field :email, :autofocus => true
+			= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+				.field
+					= f.label :email, :class => "col-xs-4 removeMargin"
+					= f.email_field :email, :autofocus => true, :class => "col-xs-8 borderRadius-sm boxShadow-inset-xs removeBorder padding-xs"
+					%br.clear-fix
 
-			.field
-				= f.label :password
-				= f.password_field :password
 
-			.actions
-				= f.submit "Sign in", :class => "btn btn-info"
+				.field.marginTop-sm
+					= f.label :password, :class => "col-xs-4 removeMargin"
+					= f.password_field :password, :class => "col-xs-8 borderRadius-sm boxShadow-inset-xs removeBorder padding-xs"
+					%br.clear-fix
 
-			%div
-				%br/
-				= link_to 'Forgot password?', new_user_password_url
+				.marginTop-sm
+					.actions
+						= f.submit "Sign in", :class => "btn btn-info"
+
+				%div
+					%br/
+					= link_to 'Forgot password?', new_user_password_url
 
 - else
 	- if params[:email].present?
