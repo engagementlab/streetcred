@@ -10,11 +10,11 @@
 		%p Below you can see any existing information (e.g. from Citizens Connect) found in our system. Click on "Claim Your Profile" to receive a validation email with instructions on how to set a password for your account.
 		
 		.row.user.well
-			.span1.gravatar
+			.span1
 				- if @participant.gravatar.present?
-					= image_tag @participant.gravatar.url(:thumbnail)
+					= image_tag @participant.gravatar.url(:thumbnail), class: 'profile-img', style: 'visibility: visible'
 				- else
-					= image_tag @participant.gravatar_url
+					= image_tag @participant.gravatar_url, class: 'profile-img', style: 'visibility: visible'
 			.span4.user-name
 				%h3= @participant.name_or_email
 				== Member since #{formatted_month_year(@participant.created_at)}
