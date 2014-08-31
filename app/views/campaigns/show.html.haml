@@ -84,6 +84,36 @@
 			.tile.col-xs-3.img-height-25.pull-left
 		%br.clear-fix
 
+- if @actions_with_text.present?
+	.post.col-xs-12.backgroundSecondary-color.padding-xl
+		- for action in @actions_with_text
+			.col-xs-3.padding-sm.txtMd.colorPrimary-white
+				= link_to "#{action.created_at.strftime('%B %d, %Y')}", participant_action_path(action.user, action), :class => "colorPrimary-gray"
+			.col-xs-9.padding-xl.backgroundSecondary-color-highlight.colorPrimary-white.txtSm.borderRadius-md.marginTop-sm
+				- if action.subject.present?
+					Subject: #{action.subject}
+				- if action.body.present?
+					%br/
+					#{action.body}
+		%br.clear-fix
+
+- if @actions_recent.present?
+	.col-xs-12.backgroundSecondary-color-highlight.padding-lg
+		%h4.text-center.colorPrimary-white Newsfeed
+		- for action in @actions_recent
+			.col-xs-10.col-xs-offset-1.padding-xl.backgroundPrimary-white.colorPrimary-color.borderRadius-md.txtXs.marginTop-lg
+				= link_to "#{action.created_at.strftime("%B %d, %Y %I:%M %p")} - #{action.action_type.channel.name}", participant_action_path(action.user, action)
+				- if action.campaigns.present?
+					taken in  
+					- action.campaigns.each_with_index do |action_campaign, index|
+						- if index > 0
+							&
+						= link_to "#{action_campaign.name}", campaign_path(action_campaign)
+					= pluralizer_helper('Campaigns', action.campaigns.count)
+		.col-xs-4.col-xs-offset-4.btn.btn-info.txtSm.marginTop-xl.js-allactions
+			See All Actions
+		%br.clear-fix
+
 - content_for :scripts do
 	:javascript
 		var map = L.mapbox.map('map', 'joelmahoney.map-20c5njje').setView([42.35917815419112, -71.06001852416991], 13);
@@ -97,4 +127,5 @@
 		var wrapperResize = function() {$(".awards-wrapper").css({height:$(".profile-wrapper").height() + 20});};
 		wrapperResize();
 		$(window).resize(function() {wrapperResize();})
+		$('.js-allactions').click(function(){window.location.href='#{campaign_actions_path(@campaign)}';});
 		});
