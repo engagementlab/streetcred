@@ -74,7 +74,7 @@
   .post.col-xs-12.backgroundSecondary-color.padding-xl
     - for action in @actions_with_text
       .col-xs-3.padding-sm.txtMd.colorPrimary-white
-        = link_to "#{action.created_at.strftime('%B %d, %Y')}", participant_action_path(@participant, action), :class => "colorPrimary-gray"
+        = link_to "#{formatted_month_day_year(action.created_at)}", participant_action_path(@participant, action), :class => "colorPrimary-gray"
       .col-xs-9.padding-xl.backgroundSecondary-color-highlight.colorPrimary-white.txtSm.borderRadius-md.marginTop-sm
         - if action.subject.present?
           Subject: #{action.subject}
@@ -95,7 +95,7 @@
     %h4.text-center.colorPrimary-white Newsfeed
     - for action in @actions_recent
       .col-xs-10.col-xs-offset-1.padding-xl.backgroundPrimary-white.colorPrimary-color.borderRadius-md.txtXs.marginTop-lg
-        = link_to "#{action.created_at.strftime("%B %d, %Y %I:%M %p")} - #{action.action_type.channel.name}", participant_action_path(@participant, action)
+        = link_to "#{formatted_datetime(action.created_at)} - #{action.action_type.channel.name}", participant_action_path(@participant, action)
         - if action.campaigns.present?
           taken in  
           - action.campaigns.each_with_index do |action_campaign, index|

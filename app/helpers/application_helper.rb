@@ -3,12 +3,24 @@ module ApplicationHelper
     "#{campaign.contributing_individual_actions(user).count} out of #{campaign.required_individual_occurrences}"
   end
 
+  def convert_to_local_timezone(date)
+    date.in_time_zone("Eastern Time (US & Canada)")
+  end
+
   def formatted_month_year(date)
-  	date.strftime('%B, %Y')
+  	convert_to_local_timezone(date).strftime('%B, %Y')
   end
 
   def formatted_date(date)
-  	date.strftime('%m/%d/%Y')  	
+  	convert_to_local_timezone(date).strftime('%m/%d/%Y')  	
+  end
+
+  def formatted_datetime(date)
+    convert_to_local_timezone(date).strftime("%B %d, %Y %I:%M %p")
+  end
+
+  def formatted_month_day_year(date)
+    convert_to_local_timezone(date).strftime('%B %d, %Y')
   end
 
   def pluralizer_helper(term, count)

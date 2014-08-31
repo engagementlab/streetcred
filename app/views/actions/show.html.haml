@@ -16,7 +16,7 @@
           %p.txtLg
             = @action.user.display_name
           %p.txtMd
-            = @action.created_at.strftime("%B %d, %Y %I:%M:%S %p")
+            = formatted_datetime(@action.created_at)
           %p.txtMd
             - @action.campaigns.each_with_index do |action_campaign, index|
               - if index > 0

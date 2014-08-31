@@ -20,7 +20,7 @@ class ActionsController < ApplicationController
 
     # Check if action has latitude/longitude to pass as parameters to load map
     if @action.latitude.present? && @action.longitude.present?
-      gon.markers = [{type: 'Feature', geometry: {type: 'Point', coordinates: [@action.longitude, @action.latitude]}, properties: { title: @action.user.try(:display_name), description: "#{@action.action_type.try(:channel).try(:name)}<br />#{@action.action_type.try(:name)}<br />#{@action.created_at.strftime('%m/%d/%Y')}", 'marker-size' => 'small', 'marker-color' => '#ff502d'}}]
+      gon.markers = [{type: 'Feature', geometry: {type: 'Point', coordinates: [@action.longitude, @action.latitude]}, properties: { title: @action.user.try(:display_name), description: "#{@action.action_type.try(:channel).try(:name)}<br />#{@action.action_type.try(:name)}<br />#{formatted_date(@action.created_at)}", 'marker-size' => 'small', 'marker-color' => '#ff502d'}}]
     end
 
     respond_with @action
